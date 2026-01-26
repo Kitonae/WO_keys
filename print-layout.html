@@ -43,16 +43,54 @@
             --font-header: 'Futura', 'Century Gothic', 'Tw Cen MT', sans-serif;
         }
 
+        @keyframes pageReveal {
+            from { 
+                opacity: 0; 
+                transform: translateY(10px);
+                filter: blur(10px);
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0);
+                filter: blur(0);
+            }
+        }
+
+        @keyframes pageExit {
+            from { 
+                opacity: 1; 
+                transform: translateY(0);
+                filter: blur(0);
+            }
+            to { 
+                opacity: 0; 
+                transform: translateY(-10px);
+                filter: blur(10px);
+            }
+        }
+
+        .page-transitioning {
+            animation: pageExit 0.3s ease-in forwards !important;
+        }
+
         body {
             font-family: var(--font-family);
             font-size: 10pt;
             line-height: 1.6;
             color: var(--text-primary);
             background: var(--bg-primary);
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 40px 20px;
             min-height: 100vh;
+            margin: 0;
+            padding: 0;
+            animation: pageReveal 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .app {
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            max-width: 1600px;
+            margin: 0 auto;
         }
 
         body::before {
@@ -98,27 +136,41 @@
 
             .header h1 {
                 color: black !important;
+                -webkit-text-fill-color: black !important;
+                background: none !important;
+            }
+
+            .header .subtitle {
+                color: #666 !important;
             }
 
             .category-header {
                 box-shadow: none !important;
             }
+
+            .view-switcher {
+                display: none !important;
+            }
         }
 
         .header {
-            text-align: center;
-            margin-bottom: 40px;
-            padding: 20px 0 30px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 12px;
+            justify-content: center;
+            text-align: center;
+            gap: 24px;
+            padding: 20px 0 30px;
+            margin-bottom: 40px;
+            width: 100%;
         }
 
         .logo {
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 16px;
+            width: 100%;
         }
 
         .logo-icon {
@@ -130,23 +182,69 @@
             font-family: var(--font-header);
             font-size: 2rem;
             font-weight: 300;
-            color: var(--text-primary);
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, var(--text-primary), var(--text-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
             margin: 0;
-            letter-spacing: -1px;
         }
 
         .logo h1 .highlight {
-            color: var(--accent-secondary);
-            text-shadow: 0 0 20px var(--accent-glow);
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-tertiary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .header .subtitle {
             font-size: 11pt;
             color: var(--text-secondary);
             font-weight: 400;
-            letter-spacing: 2px;
+            letter-spacing: 0.05em;
             text-transform: uppercase;
             opacity: 0.8;
+        }
+
+        .view-switcher {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            background: var(--bg-glass);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 50px;
+            padding: 4px;
+            z-index: 1000;
+        }
+
+        .view-btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 40px;
+            background: transparent;
+            color: var(--text-secondary);
+            font-family: var(--font-header);
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .view-btn:hover {
+            color: var(--text-primary);
+        }
+
+        .view-btn.active {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: white;
         }
 
         .category-section {
@@ -266,7 +364,13 @@
 </head>
 
 <body>
-    <header class="header">
+    <div class="view-switcher">
+        <a href="index.html" class="view-btn">Interactive</a>
+        <a href="print-layout.html" class="view-btn active">Printable</a>
+    </div>
+
+    <div class="app">
+        <header class="header">
         <div class="logo">
             <span class="logo-icon">⌨️</span>
             <h1>WATCHOUT 7 <span class="highlight">Shortcuts</span></h1>
@@ -790,6 +894,22 @@
     <div class="footer">
         <p>WATCHOUT 7 Keyboard Shortcuts Reference Guide • Generated on January 26, 2026</p>
     </div>
+    </div>
+
+    <script>
+        document.querySelectorAll('.view-btn').forEach(link => {
+            link.addEventListener('click', (e) => {
+                const href = link.getAttribute('href');
+                if (href && !href.startsWith('#') && !link.classList.contains('active')) {
+                    e.preventDefault();
+                    document.body.classList.add('page-transitioning');
+                    setTimeout(() => {
+                        window.location.href = href;
+                    }, 300);
+                }
+            });
+        });
+    </script>
 </body>
 
 </html>

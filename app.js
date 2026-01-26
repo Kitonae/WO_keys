@@ -363,3 +363,17 @@ navButtons.forEach(btn => {
 
 // Initialize
 highlightKeysWithShortcuts();
+
+// Page Transition Logic
+document.querySelectorAll('.view-btn').forEach(link => {
+    link.addEventListener('click', (e) => {
+        const href = link.getAttribute('href');
+        if (href && !href.startsWith('#') && !link.classList.contains('active')) {
+            e.preventDefault();
+            document.body.classList.add('page-transitioning');
+            setTimeout(() => {
+                window.location.href = href;
+            }, 300);
+        }
+    });
+});
