@@ -149,6 +149,7 @@ const navButtons = document.querySelectorAll('.nav-btn');
 const keys = document.querySelectorAll('.key');
 
 let currentCategory = 'all';
+let selectedKey = null;
 
 // Find shortcuts for a key
 function findShortcutsForKey(keyName) {
@@ -164,8 +165,15 @@ function findShortcutsForKey(keyName) {
 // Render shortcuts in the info panel
 function renderShortcuts(keyName, keyShortcuts) {
     if (keyShortcuts.length === 0) {
-        infoDefault.style.display = 'flex';
-        infoShortcuts.style.display = 'none';
+        if (selectedKey) {
+            infoDefault.style.display = 'none';
+            infoShortcuts.style.display = 'block';
+            infoKeyDisplay.textContent = keyName;
+            shortcutsList.innerHTML = '<div class="shortcut-item"><div class="shortcut-description"><span class="shortcut-action" style="color: var(--text-muted); font-style: italic;">No shortcuts found for this key in current category.</span></div></div>';
+        } else {
+            infoDefault.style.display = 'flex';
+            infoShortcuts.style.display = 'none';
+        }
         return;
     }
     infoDefault.style.display = 'none';
@@ -208,14 +216,52 @@ function highlightKeysWithShortcuts() {
 
 // Event Listeners
 keys.forEach(key => {
-    key.addEventListener('mouseenter', () => {
+    key.addEventListener('click', (e) => {
+        e.stopPropagation();
         const keyName = key.dataset.key;
-        const keyShortcuts = findShortcutsForKey(keyName);
-        renderShortcuts(keyName, keyShortcuts);
+
+        if (selectedKey === key) {
+            // Deselect if already selected
+            selectedKey.classList.remove('selected');
+            selectedKey = null;
+            resetInfoPanel();
+        } else {
+            // Deselect previous
+            if (selectedKey) {
+                selectedKey.classList.remove('selected');
+            }
+
+            // Select new
+            selectedKey = key;
+            selectedKey.classList.add('selected');
+            
+            const keyShortcuts = findShortcutsForKey(keyName);
+            renderShortcuts(keyName, keyShortcuts);
+        }
     });
+
+    key.addEventListener('mouseenter', () => {
+        if (!selectedKey) {
+            const keyName = key.dataset.key;
+            const keyShortcuts = findShortcutsForKey(keyName);
+            renderShortcuts(keyName, keyShortcuts);
+        }
+    });
+
     key.addEventListener('mouseleave', () => {
-        resetInfoPanel();
+        if (!selectedKey) {
+            resetInfoPanel();
+        }
     });
+});
+
+// Click outside to deselect
+document.addEventListener('click', (e) => {
+    if (selectedKey && !e.target.closest('.key')) {
+        selectedKey.classList.remove('selected');
+        selectedKey = null;
+        resetInfoPanel();
+    }
 });
 
 navButtons.forEach(btn => {
@@ -223,6 +269,13 @@ navButtons.forEach(btn => {
         navButtons.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         currentCategory = btn.dataset.category;
+        
+        // Clear selection
+        if (selectedKey) {
+            selectedKey.classList.remove('selected');
+            selectedKey = null;
+        }
+
         highlightKeysWithShortcuts();
         resetInfoPanel();
     });

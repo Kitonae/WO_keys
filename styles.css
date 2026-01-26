@@ -26,6 +26,7 @@
     --cat-table: #a855f7;
     --cat-warp: #14b8a6;
     --font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-header: 'Futura', 'Century Gothic', 'Tw Cen MT', sans-serif;
     --key-size: 52px;
     --key-gap: 6px;
     --border-radius: 10px;
@@ -45,6 +46,7 @@
 html {
     font-size: 16px;
     scroll-behavior: smooth;
+    overflow-y: scroll;
 }
 
 body {
@@ -96,8 +98,10 @@ body::before {
 }
 
 .logo h1 {
+    font-family: var(--font-header);
     font-size: 2rem;
-    font-weight: 700;
+    font-weight: 300;
+    letter-spacing: -0.02em;
     background: linear-gradient(135deg, var(--text-primary), var(--text-secondary));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -129,7 +133,7 @@ body::before {
     border-radius: 40px;
     background: transparent;
     color: var(--text-secondary);
-    font-family: var(--font-family);
+    font-family: var(--font-header);
     font-size: 0.875rem;
     font-weight: 500;
     cursor: pointer;
@@ -220,6 +224,14 @@ body::before {
     background: var(--key-bg-hover);
     border-color: var(--accent-primary);
     box-shadow: var(--key-shadow-hover);
+}
+
+.key.selected {
+    transform: translateY(-3px) scale(1.02);
+    background: var(--key-bg-hover);
+    border-color: var(--accent-primary);
+    box-shadow: var(--key-shadow-hover), 0 0 30px var(--accent-glow);
+    z-index: 10;
 }
 
 .key.has-shortcut {
