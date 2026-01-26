@@ -92,6 +92,53 @@ body::before {
     gap: 16px;
 }
 
+.controls-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.search-container {
+    position: relative;
+    width: 280px;
+}
+
+.search-input {
+    width: 100%;
+    padding: 12px 20px 12px 45px;
+    background: var(--bg-glass);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 50px;
+    color: var(--text-primary);
+    font-family: var(--font-family);
+    font-size: 1rem;
+    backdrop-filter: blur(12px);
+    transition: all var(--transition-fast);
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: var(--accent-primary);
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 0 20px var(--accent-glow);
+}
+
+.search-icon {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+    pointer-events: none;
+    filter: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+}
+
 .logo-icon {
     font-size: 2.5rem;
     filter: drop-shadow(0 0 20px var(--accent-glow));

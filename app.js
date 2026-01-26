@@ -147,9 +147,11 @@ const infoKeyDisplay = document.getElementById('info-key-display');
 const shortcutsList = document.getElementById('shortcuts-list');
 const navButtons = document.querySelectorAll('.nav-btn');
 const keys = document.querySelectorAll('.key');
+const searchInput = document.getElementById('search-input');
 
 let currentCategory = 'all';
 let selectedKey = null;
+let searchQuery = '';
 
 // Find shortcuts for a key
 function findShortcutsForKey(keyName) {
@@ -202,14 +204,40 @@ function resetInfoPanel() {
 function highlightKeysWithShortcuts() {
     keys.forEach(key => {
         const keyName = key.dataset.key;
-        const keyShortcuts = findShortcutsForKey(keyName);
-        key.classList.toggle('has-shortcut', keyShortcuts.length > 0);
-        if (currentCategory !== 'all' && keyShortcuts.length > 0) {
-            key.classList.add('highlighted');
-            key.style.setProperty('--category-color', categoryColors[currentCategory]);
+        
+        if (searchQuery) {
+            // Search mode highlighting
+            const mappedKeys = keyMapping[keyName] || [keyName];
+            // Filter global shortcuts for query
+            const matchedShortcuts = shortcuts.filter(s => 
+                s.action.toLowerCase().includes(searchQuery) || 
+                s.keys.join(' ').toLowerCase().includes(searchQuery)
+            );
+            
+            // Check if this key is involved in any matched shortcut
+            const isRelated = matchedShortcuts.some(s => 
+                s.keys.some(k => mappedKeys.includes(k))
+            );
+            
+            key.classList.toggle('has-shortcut', isRelated);
+            if (isRelated) {
+                key.classList.add('highlighted');
+                key.style.setProperty('--category-color', 'var(--accent-primary)'); 
+            } else {
+                key.classList.remove('highlighted');
+                key.style.removeProperty('--category-color');
+            }
         } else {
-            key.classList.remove('highlighted');
-            key.style.removeProperty('--category-color');
+            // Normal category mode highlighting
+            const keyShortcuts = findShortcutsForKey(keyName);
+            key.classList.toggle('has-shortcut', keyShortcuts.length > 0);
+            if (currentCategory !== 'all' && keyShortcuts.length > 0) {
+                key.classList.add('highlighted');
+                key.style.setProperty('--category-color', categoryColors[currentCategory]);
+            } else {
+                key.classList.remove('highlighted');
+                key.style.removeProperty('--category-color');
+            }
         }
     });
 }
@@ -241,7 +269,7 @@ keys.forEach(key => {
     });
 
     key.addEventListener('mouseenter', () => {
-        if (!selectedKey) {
+        if (!selectedKey && !searchQuery) {
             const keyName = key.dataset.key;
             const keyShortcuts = findShortcutsForKey(keyName);
             renderShortcuts(keyName, keyShortcuts);
@@ -249,11 +277,59 @@ keys.forEach(key => {
     });
 
     key.addEventListener('mouseleave', () => {
-        if (!selectedKey) {
+        if (!selectedKey && !searchQuery) {
             resetInfoPanel();
         }
     });
 });
+
+// Search functionality
+searchInput.addEventListener('input', (e) => {
+    searchQuery = e.target.value.toLowerCase().trim();
+    
+    // Clear key selection when searching
+    if (selectedKey) {
+        selectedKey.classList.remove('selected');
+        selectedKey = null;
+    }
+
+    if (searchQuery === '') {
+        // Reset to category view
+        highlightKeysWithShortcuts();
+        resetInfoPanel();
+        return;
+    }
+
+    // Filter shortcuts
+    const matchedShortcuts = shortcuts.filter(s => 
+        s.action.toLowerCase().includes(searchQuery) || 
+        s.keys.join(' ').toLowerCase().includes(searchQuery)
+    );
+
+    highlightKeysWithShortcuts();
+    
+    // Display results
+    infoDefault.style.display = 'none';
+    infoShortcuts.style.display = 'block';
+    infoKeyDisplay.textContent = 'Search';
+    
+    if (matchedShortcuts.length === 0) {
+        shortcutsList.innerHTML = '<div class="shortcut-item"><div class="shortcut-description"><span class="shortcut-action" style="color: var(--text-muted); font-style: italic;">No shortcuts found.</span></div></div>';
+    } else {
+        shortcutsList.innerHTML = matchedShortcuts.map(shortcut => `
+            <div class="shortcut-item">
+                <div class="shortcut-keys">
+                    ${shortcut.keys.map((k, i) => `<span class="shortcut-key${i < shortcut.keys.length - 1 ? ' modifier' : ''}">${k}</span>`).join('<span style="color:#64748b">+</span>')}
+                </div>
+                <div class="shortcut-description">
+                    <span class="shortcut-action">${shortcut.action}</span>
+                    <span class="shortcut-category ${shortcut.category}">${shortcut.category}</span>
+                </div>
+            </div>
+        `).join('');
+    }
+});
+
 
 // Click outside to deselect
 document.addEventListener('click', (e) => {
@@ -266,6 +342,10 @@ document.addEventListener('click', (e) => {
 
 navButtons.forEach(btn => {
     btn.addEventListener('click', () => {
+        // Clear search
+        searchQuery = '';
+        searchInput.value = '';
+        
         navButtons.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         currentCategory = btn.dataset.category;
