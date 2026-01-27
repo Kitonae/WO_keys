@@ -141,7 +141,7 @@ const categoryColors = {
 
 // DOM Elements
 const infoPanel = document.getElementById('info-panel');
-const infoDefault = infoPanel.querySelector('.info-default');
+const infoDefault = infoPanel ? infoPanel.querySelector('.info-default') : null;
 const infoShortcuts = document.getElementById('info-shortcuts');
 const infoKeyDisplay = document.getElementById('info-key-display');
 const shortcutsList = document.getElementById('shortcuts-list');
@@ -166,6 +166,8 @@ function findShortcutsForKey(keyName) {
 
 // Render shortcuts in the info panel
 function renderShortcuts(keyName, keyShortcuts) {
+    if (!infoPanel) return;
+
     if (keyShortcuts.length === 0) {
         if (selectedKey) {
             infoDefault.style.display = 'none';
@@ -196,33 +198,36 @@ function renderShortcuts(keyName, keyShortcuts) {
 
 // Reset info panel
 function resetInfoPanel() {
+    if (!infoPanel) return;
     infoDefault.style.display = 'flex';
     infoShortcuts.style.display = 'none';
 }
 
 // Highlight keys with shortcuts
 function highlightKeysWithShortcuts() {
+    if (keys.length === 0) return;
+
     keys.forEach(key => {
         const keyName = key.dataset.key;
-        
+
         if (searchQuery) {
             // Search mode highlighting
             const mappedKeys = keyMapping[keyName] || [keyName];
             // Filter global shortcuts for query
-            const matchedShortcuts = shortcuts.filter(s => 
-                s.action.toLowerCase().includes(searchQuery) || 
+            const matchedShortcuts = shortcuts.filter(s =>
+                s.action.toLowerCase().includes(searchQuery) ||
                 s.keys.join(' ').toLowerCase().includes(searchQuery)
             );
-            
+
             // Check if this key is involved in any matched shortcut
-            const isRelated = matchedShortcuts.some(s => 
+            const isRelated = matchedShortcuts.some(s =>
                 s.keys.some(k => mappedKeys.includes(k))
             );
-            
+
             key.classList.toggle('has-shortcut', isRelated);
             if (isRelated) {
                 key.classList.add('highlighted');
-                key.style.setProperty('--category-color', 'var(--accent-primary)'); 
+                key.style.setProperty('--category-color', 'var(--accent-primary)');
             } else {
                 key.classList.remove('highlighted');
                 key.style.removeProperty('--category-color');
@@ -243,92 +248,98 @@ function highlightKeysWithShortcuts() {
 }
 
 // Event Listeners
-keys.forEach(key => {
-    key.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const keyName = key.dataset.key;
-
-        if (selectedKey === key) {
-            // Deselect if already selected
-            selectedKey.classList.remove('selected');
-            selectedKey = null;
-            resetInfoPanel();
-        } else {
-            // Deselect previous
-            if (selectedKey) {
-                selectedKey.classList.remove('selected');
-            }
-
-            // Select new
-            selectedKey = key;
-            selectedKey.classList.add('selected');
-            
-            const keyShortcuts = findShortcutsForKey(keyName);
-            renderShortcuts(keyName, keyShortcuts);
-        }
-    });
-
-    key.addEventListener('mouseenter', () => {
-        if (!selectedKey && !searchQuery) {
+if (keys.length > 0) {
+    keys.forEach(key => {
+        key.addEventListener('click', (e) => {
+            e.stopPropagation();
             const keyName = key.dataset.key;
-            const keyShortcuts = findShortcutsForKey(keyName);
-            renderShortcuts(keyName, keyShortcuts);
-        }
-    });
 
-    key.addEventListener('mouseleave', () => {
-        if (!selectedKey && !searchQuery) {
-            resetInfoPanel();
-        }
+            if (selectedKey === key) {
+                // Deselect if already selected
+                selectedKey.classList.remove('selected');
+                selectedKey = null;
+                resetInfoPanel();
+            } else {
+                // Deselect previous
+                if (selectedKey) {
+                    selectedKey.classList.remove('selected');
+                }
+
+                // Select new
+                selectedKey = key;
+                selectedKey.classList.add('selected');
+
+                const keyShortcuts = findShortcutsForKey(keyName);
+                renderShortcuts(keyName, keyShortcuts);
+            }
+        });
+
+        key.addEventListener('mouseenter', () => {
+            if (!selectedKey && !searchQuery) {
+                const keyName = key.dataset.key;
+                const keyShortcuts = findShortcutsForKey(keyName);
+                renderShortcuts(keyName, keyShortcuts);
+            }
+        });
+
+        key.addEventListener('mouseleave', () => {
+            if (!selectedKey && !searchQuery) {
+                resetInfoPanel();
+            }
+        });
     });
-});
+}
 
 // Search functionality
-searchInput.addEventListener('input', (e) => {
-    searchQuery = e.target.value.toLowerCase().trim();
-    
-    // Clear key selection when searching
-    if (selectedKey) {
-        selectedKey.classList.remove('selected');
-        selectedKey = null;
-    }
+if (searchInput) {
+    searchInput.addEventListener('input', (e) => {
+        searchQuery = e.target.value.toLowerCase().trim();
 
-    if (searchQuery === '') {
-        // Reset to category view
+        // Clear key selection when searching
+        if (selectedKey) {
+            selectedKey.classList.remove('selected');
+            selectedKey = null;
+        }
+
+        if (searchQuery === '') {
+            // Reset to category view
+            highlightKeysWithShortcuts();
+            resetInfoPanel();
+            return;
+        }
+
+        // Filter shortcuts
+        const matchedShortcuts = shortcuts.filter(s =>
+            s.action.toLowerCase().includes(searchQuery) ||
+            s.keys.join(' ').toLowerCase().includes(searchQuery)
+        );
+
         highlightKeysWithShortcuts();
-        resetInfoPanel();
-        return;
-    }
 
-    // Filter shortcuts
-    const matchedShortcuts = shortcuts.filter(s => 
-        s.action.toLowerCase().includes(searchQuery) || 
-        s.keys.join(' ').toLowerCase().includes(searchQuery)
-    );
+        // Display results
+        if (infoPanel) {
+            infoDefault.style.display = 'none';
+            infoShortcuts.style.display = 'block';
+            infoKeyDisplay.textContent = 'Search';
 
-    highlightKeysWithShortcuts();
-    
-    // Display results
-    infoDefault.style.display = 'none';
-    infoShortcuts.style.display = 'block';
-    infoKeyDisplay.textContent = 'Search';
-    
-    if (matchedShortcuts.length === 0) {
-        shortcutsList.innerHTML = '<div class="shortcut-item"><div class="shortcut-description"><span class="shortcut-action" style="color: var(--text-muted); font-style: italic;">No shortcuts found.</span></div></div>';
-    } else {
-        shortcutsList.innerHTML = matchedShortcuts.map(shortcut => `
-            <div class="shortcut-item">
-                <div class="shortcut-keys">
-                    ${shortcut.keys.map((k, i) => `<span class="shortcut-key${i < shortcut.keys.length - 1 ? ' modifier' : ''}">${k}</span>`).join('<span style="color:#64748b">+</span>')}
+            if (matchedShortcuts.length === 0) {
+                shortcutsList.innerHTML = '<div class="shortcut-item"><div class="shortcut-description"><span class="shortcut-action" style="color: var(--text-muted); font-style: italic;">No shortcuts found.</span></div></div>';
+            } else {
+                shortcutsList.innerHTML = matchedShortcuts.map(shortcut => `
+                <div class="shortcut-item">
+                    <div class="shortcut-keys">
+                        ${shortcut.keys.map((k, i) => `<span class="shortcut-key${i < shortcut.keys.length - 1 ? ' modifier' : ''}">${k}</span>`).join('<span style="color:#64748b">+</span>')}
+                    </div>
+                    <div class="shortcut-description">
+                        <span class="shortcut-action">${shortcut.action}</span>
+                        <span class="shortcut-category ${shortcut.category}">${shortcut.category}</span>
+                    </div>
                 </div>
-                <div class="shortcut-description">
-                    <span class="shortcut-action">${shortcut.action}</span>
-                    <span class="shortcut-category ${shortcut.category}">${shortcut.category}</span>
-                </div>
-            </div>
-        `).join('');
-    }
-});
+            `).join('');
+            }
+        }
+    });
+}
 
 
 // Click outside to deselect
@@ -340,40 +351,95 @@ document.addEventListener('click', (e) => {
     }
 });
 
-navButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-        // Clear search
-        searchQuery = '';
-        searchInput.value = '';
-        
-        navButtons.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        currentCategory = btn.dataset.category;
-        
-        // Clear selection
-        if (selectedKey) {
-            selectedKey.classList.remove('selected');
-            selectedKey = null;
-        }
+if (navButtons.length > 0) {
+    navButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            // Clear search
+            searchQuery = '';
+            if (searchInput) searchInput.value = '';
 
-        highlightKeysWithShortcuts();
-        resetInfoPanel();
+            navButtons.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            currentCategory = btn.dataset.category;
+
+            // Clear selection
+            if (selectedKey) {
+                selectedKey.classList.remove('selected');
+                selectedKey = null;
+            }
+
+            highlightKeysWithShortcuts();
+            highlightKeysWithShortcuts();
+            resetInfoPanel();
+        });
     });
-});
+}
 
 // Initialize
 highlightKeysWithShortcuts();
 
+// View Switcher logic
+const switcherSlider = document.querySelector('.switcher-slider');
+const viewBtns = document.querySelectorAll('.view-btn');
+
+function updateSlider() {
+    const activeBtn = document.querySelector('.view-btn.active');
+    if (activeBtn && switcherSlider) {
+        switcherSlider.style.width = `${activeBtn.offsetWidth}px`;
+        switcherSlider.style.left = `${activeBtn.offsetLeft}px`;
+    }
+}
+
+// Initialize slider position
+if (switcherSlider) {
+    // Small delay to ensure layout is ready
+    setTimeout(updateSlider, 50);
+    window.addEventListener('resize', updateSlider);
+}
+
 // Page Transition Logic
-document.querySelectorAll('.view-btn').forEach(link => {
-    link.addEventListener('click', (e) => {
-        const href = link.getAttribute('href');
-        if (href && !href.startsWith('#') && !link.classList.contains('active')) {
-            e.preventDefault();
-            document.body.classList.add('page-transitioning');
-            setTimeout(() => {
-                window.location.href = href;
-            }, 300);
+// View Switching Logic
+const interactiveView = document.getElementById('interactive-view');
+const printableView = document.getElementById('printable-view');
+const controlsRow = document.querySelector('.controls-row');
+
+function switchView(viewName) {
+    if (!interactiveView || !printableView) return;
+
+    // Update buttons
+    viewBtns.forEach(btn => {
+        if (btn.dataset.view === viewName) {
+            btn.classList.add('active');
+        } else {
+            btn.classList.remove('active');
+        }
+    });
+
+    // Update slider
+    updateSlider();
+
+    // Toggle views
+    if (viewName === 'interactive') {
+        printableView.style.display = 'none';
+        interactiveView.style.display = 'flex';
+        if (controlsRow) controlsRow.style.display = 'flex';
+        // Re-run highlighting to ensure correct state
+        highlightKeysWithShortcuts();
+    } else {
+        interactiveView.style.display = 'none';
+        printableView.style.display = 'flex';
+        if (controlsRow) controlsRow.style.display = 'none';
+    }
+}
+
+viewBtns.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const viewName = btn.dataset.view;
+        if (viewName) {
+            switchView(viewName);
         }
     });
 });
+
+// Initial slider update (already existing, but good to keep in mind)
