@@ -180,7 +180,7 @@ body::before {
 .logo h1 {
     font-family: var(--font-header);
     font-size: 2rem;
-    font-weight: 600;
+    font-weight: 400;
     letter-spacing: -0.02em;
     background: linear-gradient(135deg, var(--text-primary), var(--text-secondary));
     -webkit-background-clip: text;
