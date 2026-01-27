@@ -36,26 +36,28 @@
 }
 
 @keyframes pageReveal {
-    from { 
-        opacity: 0; 
+    from {
+        opacity: 0;
         transform: translateY(10px);
         filter: blur(10px);
     }
-    to { 
-        opacity: 1; 
+
+    to {
+        opacity: 1;
         transform: translateY(0);
         filter: blur(0);
     }
 }
 
 @keyframes pageExit {
-    from { 
-        opacity: 1; 
+    from {
+        opacity: 1;
         transform: translateY(0);
         filter: blur(0);
     }
-    to { 
-        opacity: 0; 
+
+    to {
+        opacity: 0;
         transform: translateY(-10px);
         filter: blur(10px);
     }
@@ -213,7 +215,7 @@ body::before {
     color: var(--text-secondary);
     font-family: var(--font-header);
     font-size: 0.875rem;
-    font-weight: 500;
+    font-weight: 300;
     cursor: pointer;
     transition: all var(--transition-normal);
 }
@@ -783,7 +785,18 @@ body::before {
     }
 
     .keyboard-container {
-        padding: 20px;
+        padding: 20px 10px;
+        overflow-x: auto;
+        justify-content: flex-start;
+        /* Prevents clipping when content overflows */
+        width: 100%;
+    }
+
+    .keyboard {
+        margin: 0 auto;
+        /* Centers content when it fits, allows scrolling when it doesn't */
+        flex-shrink: 0;
+        /* Prevents keyboard from squishing */
     }
 
     .info-panel {
@@ -792,6 +805,51 @@ body::before {
 }
 
 @media (max-width: 600px) {
+    :root {
+        --key-size: 36px;
+        --key-gap: 4px;
+    }
+
+    .key-space {
+        width: 220px;
+    }
+
+    .key-backspace {
+        width: 70px;
+    }
+
+    .key-tab,
+    .key-backslash {
+        width: 56px;
+    }
+
+    .key-caps {
+        width: 66px;
+    }
+
+    .key-enter {
+        width: 86px;
+    }
+
+    .key-shift-left {
+        width: 86px;
+    }
+
+    .key-shift-right {
+        width: 106px;
+    }
+
+    .key-ctrl,
+    .key-win,
+    .key-alt,
+    .key-menu {
+        width: 44px;
+    }
+
+    .key-escape {
+        width: 44px;
+    }
+
     .app {
         padding: 10px;
     }
@@ -800,51 +858,21 @@ body::before {
         font-size: 1.5rem;
     }
 
-    :root {
-        --key-size: 36px;
-        --key-gap: 4px;
+    .key-function {
+        width: 36px;
+        height: 36px;
+    }
+
+    .key-spacer {
+        width: 16px;
+    }
+
+    .key-spacer-small {
+        width: 8px;
     }
 
     .key-label {
         font-size: 0.7rem;
     }
 
-    .key-space {
-        width: 200px;
-    }
-
-    .key-backspace {
-        width: 60px;
-    }
-
-    .key-tab,
-    .key-backslash {
-        width: 55px;
-    }
-
-    .key-caps {
-        width: 60px;
-    }
-
-    .key-enter {
-        width: 75px;
-    }
-
-    .key-shift-left {
-        width: 75px;
-    }
-
-    .key-shift-right {
-        width: 90px;
-    }
-
-    .key-ctrl {
-        width: 50px;
-    }
-
-    .key-win,
-    .key-alt,
-    .key-menu {
-        width: 42px;
-    }
 }
