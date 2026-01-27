@@ -830,39 +830,39 @@ body::before {
 }
 
 .category-general {
-    background: var(--color-general);
+    background: var(--cat-general);
 }
 
 .category-edit {
-    background: var(--color-edit);
+    background: var(--cat-edit);
 }
 
 .category-timeline {
-    background: var(--color-timeline);
+    background: var(--cat-timeline);
 }
 
 .category-stage {
-    background: var(--color-stage);
+    background: var(--cat-stage);
 }
 
 .category-property {
-    background: var(--color-property);
+    background: var(--cat-property);
 }
 
 .category-camera {
-    background: var(--color-camera);
+    background: var(--cat-camera);
 }
 
 .category-effect {
-    background: var(--color-effect);
+    background: var(--cat-effect);
 }
 
 .category-table {
-    background: var(--color-table);
+    background: var(--cat-table);
 }
 
 .category-warp {
-    background: var(--color-warp);
+    background: var(--cat-warp);
 }
 
 /* Table Styles */

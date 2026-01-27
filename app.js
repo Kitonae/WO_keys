@@ -442,4 +442,70 @@ viewBtns.forEach(btn => {
     });
 });
 
+// Printable View rendering
+function renderPrintableView() {
+    const printableGrid = document.getElementById('printable-grid');
+    if (!printableGrid) return;
+
+    // Group shortcuts by category
+    const categories = {};
+    const categoryOrder = [
+        'general', 'edit', 'property', 'stage', 'camera',
+        'timeline', 'table', 'effect', 'warp'
+    ];
+
+    shortcuts.forEach(shortcut => {
+        if (!categories[shortcut.category]) {
+            categories[shortcut.category] = [];
+        }
+        categories[shortcut.category].push(shortcut);
+    });
+
+    // Clear existing content
+    printableGrid.innerHTML = '';
+
+    // Render each category
+    categoryOrder.forEach(category => {
+        if (!categories[category]) return;
+
+        const categoryShortcuts = categories[category];
+        const categoryTitle = category.charAt(0).toUpperCase() + category.slice(1);
+
+        const section = document.createElement('div');
+        section.className = 'category-section';
+
+        const header = document.createElement('h2');
+        header.className = `category-header category-${category}`;
+        header.textContent = categoryTitle;
+        section.appendChild(header);
+
+        const table = document.createElement('table');
+        table.innerHTML = `
+            <thead>
+                <tr>
+                    <th>Shortcut</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                ${categoryShortcuts.map(s => `
+                    <tr>
+                        <td>
+                            <div class="shortcut-keys">
+                                ${s.keys.map(k => `<span class="key-badge">${k}</span>`).join('<span class="key-separator">+</span>')}
+                            </div>
+                        </td>
+                        <td class="action-text">${s.action}</td>
+                    </tr>
+                `).join('')}
+            </tbody>
+        `;
+        section.appendChild(table);
+        printableGrid.appendChild(section);
+    });
+}
+
 // Initial slider update (already existing, but good to keep in mind)
+// Initialize printable view
+renderPrintableView();
+
