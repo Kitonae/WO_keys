@@ -448,10 +448,6 @@ body::before {
 .welcome-hero {
     text-align: center;
     padding: 60px 40px;
-    background: var(--bg-glass);
-    backdrop-filter: blur(16px);
-    border-radius: var(--border-radius-lg);
-    border: 1px solid rgba(255, 255, 255, 0.06);
     margin-bottom: 40px;
 }
 
