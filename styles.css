@@ -289,6 +289,19 @@ body::before {
     background: transparent;
 }
 
+.view-btn.wiki-link {
+    margin-left: 8px;
+    background: linear-gradient(135deg, rgba(107, 37, 221, 0.2), rgba(139, 92, 246, 0.15));
+    border: 1px solid rgba(107, 37, 221, 0.4);
+    border-radius: 40px;
+}
+
+.view-btn.wiki-link:hover {
+    background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+    border-color: transparent;
+    color: white;
+}
+
 @media print {
     body {
         background: white !important;
