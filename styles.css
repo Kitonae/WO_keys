@@ -25,8 +25,8 @@
     --cat-effect: #f43f5e;
     --cat-table: #a855f7;
     --cat-warp: #14b8a6;
-    --font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-    --font-header: 'Futura', 'Century Gothic', 'Tw Cen MT', sans-serif;
+    --font-family: 'Futura Now Text', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-header: 'Futura Now Headline', sans-serif;
     --key-size: 52px;
     --key-gap: 6px;
     --border-radius: 10px;
@@ -180,7 +180,7 @@ body::before {
 .logo h1 {
     font-family: var(--font-header);
     font-size: 2rem;
-    font-weight: 300;
+    font-weight: 600;
     letter-spacing: -0.02em;
     background: linear-gradient(135deg, var(--text-primary), var(--text-secondary));
     -webkit-background-clip: text;
@@ -215,7 +215,7 @@ body::before {
     color: var(--text-secondary);
     font-family: var(--font-header);
     font-size: 0.875rem;
-    font-weight: 300;
+    font-weight: 400;
     cursor: pointer;
     transition: all var(--transition-normal);
 }
@@ -251,7 +251,7 @@ body::before {
     color: var(--text-secondary);
     font-family: var(--font-header);
     font-size: 0.75rem;
-    font-weight: 600;
+    font-weight: 400;
     text-transform: uppercase;
     letter-spacing: 1px;
     cursor: pointer;

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WATCHOUT 7 Keyboard Shortcuts - Print Reference</title>
+    <title>WATCHOUT Keyboard Shortcuts - Print Reference</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -29,7 +29,7 @@
             --text-muted: #64748b;
             --key-bg: linear-gradient(145deg, #1e1e2e, #16161f);
             --key-border: #2a2a3a;
-            
+
             --color-general: #22c55e;
             --color-edit: #3b82f6;
             --color-timeline: #f59e0b;
@@ -39,31 +39,33 @@
             --color-effect: #f43f5e;
             --color-table: #a855f7;
             --color-warp: #14b8a6;
-            --font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            --font-header: 'Futura', 'Century Gothic', 'Tw Cen MT', sans-serif;
+            --font-family: 'Futura Now Text', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-header: 'Futura Now Headline', sans-serif;
         }
 
         @keyframes pageReveal {
-            from { 
-                opacity: 0; 
+            from {
+                opacity: 0;
                 transform: translateY(10px);
                 filter: blur(10px);
             }
-            to { 
-                opacity: 1; 
+
+            to {
+                opacity: 1;
                 transform: translateY(0);
                 filter: blur(0);
             }
         }
 
         @keyframes pageExit {
-            from { 
-                opacity: 1; 
+            from {
+                opacity: 1;
                 transform: translateY(0);
                 filter: blur(0);
             }
-            to { 
-                opacity: 0; 
+
+            to {
+                opacity: 0;
                 transform: translateY(-10px);
                 filter: blur(10px);
             }
@@ -110,7 +112,7 @@
                 color: black !important;
                 padding: 0;
             }
-            
+
             body::before {
                 display: none;
             }
@@ -130,7 +132,8 @@
                 color: #334155 !important;
             }
 
-            td, th {
+            td,
+            th {
                 border-color: #e2e8f0 !important;
             }
 
@@ -181,7 +184,7 @@
         .logo h1 {
             font-family: var(--font-header);
             font-size: 2rem;
-            font-weight: 300;
+            font-weight: 600;
             letter-spacing: -0.02em;
             background: linear-gradient(135deg, var(--text-primary), var(--text-secondary));
             -webkit-background-clip: text;
@@ -227,7 +230,7 @@
             color: var(--text-secondary);
             font-family: var(--font-header);
             font-size: 0.75rem;
-            font-weight: 600;
+            font-weight: 400;
             text-transform: uppercase;
             letter-spacing: 1px;
             cursor: pointer;
@@ -268,15 +271,41 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
         }
 
-        .category-general { background: var(--color-general); }
-        .category-edit { background: var(--color-edit); }
-        .category-timeline { background: var(--color-timeline); }
-        .category-stage { background: var(--color-stage); }
-        .category-property { background: var(--color-property); }
-        .category-camera { background: var(--color-camera); }
-        .category-effect { background: var(--color-effect); }
-        .category-table { background: var(--color-table); }
-        .category-warp { background: var(--color-warp); }
+        .category-general {
+            background: var(--color-general);
+        }
+
+        .category-edit {
+            background: var(--color-edit);
+        }
+
+        .category-timeline {
+            background: var(--color-timeline);
+        }
+
+        .category-stage {
+            background: var(--color-stage);
+        }
+
+        .category-property {
+            background: var(--color-property);
+        }
+
+        .category-camera {
+            background: var(--color-camera);
+        }
+
+        .category-effect {
+            background: var(--color-effect);
+        }
+
+        .category-table {
+            background: var(--color-table);
+        }
+
+        .category-warp {
+            background: var(--color-warp);
+        }
 
         table {
             width: 100%;
@@ -371,529 +400,799 @@
 
     <div class="app">
         <header class="header">
-        <div class="logo">
-            <span class="logo-icon">⌨️</span>
-            <h1>WATCHOUT 7 <span class="highlight">Shortcuts</span></h1>
-        </div>
-        <div class="subtitle">Complete Print Reference Guide</div>
-    </header>
+            <div class="logo">
+                <h1>WATCHOUT SHORTCUTS</h1>
+            </div>
+            <div class="subtitle">Complete Print Reference Guide</div>
+        </header>
 
-    <div class="grid-layout">
-        <!-- GENERAL -->
-        <div class="category-section">
-            <h2 class="category-header category-general">General</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Shortcut</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><div class="shortcut-keys"><span class="key-badge">Ctrl</span><span class="key-separator">+</span><span class="key-badge">O</span></div></td>
-                        <td class="action-text">Open a show file</td>
-                    </tr>
-                    <tr>
-                        <td><div class="shortcut-keys"><span class="key-badge">Ctrl</span><span class="key-separator">+</span><span class="key-badge">S</span></div></td>
-                        <td class="action-text">Save show to disk</td>
-                    </tr>
-                    <tr>
-                        <td><div class="shortcut-keys"><span class="key-badge">Ctrl</span><span class="key-separator">+</span><span class="key-badge">Shift</span><span class="key-separator">+</span><span class="key-badge">S</span></div></td>
-                        <td class="action-text">Save show to disk with new name</td>
-                    </tr>
-                    <tr>
-                        <td><div class="shortcut-keys"><span class="key-badge">Enter</span></div></td>
-                        <td class="action-text">Open Properties window, if closed, or jump to Properties window</td>
-                    </tr>
-                    <tr>
-                        <td><div class="shortcut-keys"><span class="key-badge">Ctrl</span><span class="key-separator">+</span><span class="key-badge">Tab</span></div></td>
-                        <td class="action-text">Cycle over all open windows left to right</td>
-                    </tr>
-                    <tr>
-                        <td><div class="shortcut-keys"><span class="key-badge">Ctrl</span><span class="key-separator">+</span><span class="key-badge">Shift</span><span class="key-separator">+</span><span class="key-badge">Tab</span></div></td>
-                        <td class="action-text">Cycle over all open windows right to left</td>
-                    </tr>
-                    <tr>
-                        <td><div class="shortcut-keys"><span class="key-badge">Ctrl</span><span class="key-separator">+</span><span class="key-badge">F4</span></div></td>
-                        <td class="action-text">Close selected window</td>
-                    </tr>
-                    <tr>
-                        <td><div class="shortcut-keys"><span class="key-badge">Ctrl</span><span class="key-separator">+</span><span class="key-badge">F6</span></div></td>
-                        <td class="action-text">Cycle over all open windows left to right</td>
-                    </tr>
-                    <tr>
-                        <td><div class="shortcut-keys"><span class="key-badge">Ctrl</span><span class="key-separator">+</span><span class="key-badge">Shift</span><span class="key-separator">+</span><span class="key-badge">F6</span></div></td>
-                        <td class="action-text">Cycle over all open windows right to left</td>
-                    </tr>
-                    <tr>
-                        <td><div class="shortcut-keys"><span class="key-badge">Ctrl</span><span class="key-separator">+</span><span class="key-badge">Alt</span><span class="key-separator">+</span><span class="key-badge">A</span></div></td>
-                        <td class="action-text">Open/focus Assets window</td>
-                    </tr>
-                    <tr>
-                        <td><div class="shortcut-keys"><span class="key-badge">Ctrl</span><span class="key-separator">+</span><span class="key-badge">Alt</span><span class="key-separator">+</span><span class="key-badge">S</span></div></td>
-                        <td class="action-text">Open/focus Stage window</td>
-                    </tr>
-                    <tr>
-                        <td><div class="shortcut-keys"><span class="key-badge">Ctrl</span><span class="key-separator">+</span><span class="key-badge">Alt</span><span class="key-separator">+</span><span class="key-badge">T</span></div></td>
-                        <td class="action-text">Open/focus Timelines window</td>
-                    </tr>
-                    <tr>
-                        <td><div class="shortcut-keys"><span class="key-badge">Ctrl</span><span class="key-separator">+</span><span class="key-badge">Alt</span><span class="key-separator">+</span><span class="key-badge">D</span></div></td>
-                        <td class="action-text">Open/focus Devices window</td>
-                    </tr>
-                    <tr>
-                        <td><div class="shortcut-keys"><span class="key-badge">Ctrl</span><span class="key-separator">+</span><span class="key-badge">Alt</span><span class="key-separator">+</span><span class="key-badge">C</span></div></td>
-                        <td class="action-text">Open/focus Cue List window</td>
-                    </tr>
-                    <tr>
-                        <td><div class="shortcut-keys"><span class="key-badge">Ctrl</span><span class="key-separator">+</span><span class="key-badge">Alt</span><span class="key-separator">+</span><span class="key-badge">V</span></div></td>
-                        <td class="action-text">Open/focus Variables window</td>
-                    </tr>
-                </tbody>
-            </table>
+        <div class="grid-layout">
+            <!-- GENERAL -->
+            <div class="category-section">
+                <h2 class="category-header category-general">General</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Shortcut</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="shortcut-keys"><span class="key-badge">Ctrl</span><span
+                                        class="key-separator">+</span><span class="key-badge">O</span></div>
+                            </td>
+                            <td class="action-text">Open a show file</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="shortcut-keys"><span class="key-badge">Ctrl</span><span
+                                        class="key-separator">+</span><span class="key-badge">S</span></div>
+                            </td>
+                            <td class="action-text">Save show to disk</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="shortcut-keys"><span class="key-badge">Ctrl</span><span
+                                        class="key-separator">+</span><span class="key-badge">Shift</span><span
+                                        class="key-separator">+</span><span class="key-badge">S</span></div>
+                            </td>
+                            <td class="action-text">Save show to disk with new name</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="shortcut-keys"><span class="key-badge">Enter</span></div>
+                            </td>
+                            <td class="action-text">Open Properties window, if closed, or jump to Properties window</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="shortcut-keys"><span class="key-badge">Ctrl</span><span
+                                        class="key-separator">+</span><span class="key-badge">Tab</span></div>
+                            </td>
+                            <td class="action-text">Cycle over all open windows left to right</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="shortcut-keys"><span class="key-badge">Ctrl</span><span
+                                        class="key-separator">+</span><span class="key-badge">Shift</span><span
+                                        class="key-separator">+</span><span class="key-badge">Tab</span></div>
+                            </td>
+                            <td class="action-text">Cycle over all open windows right to left</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="shortcut-keys"><span class="key-badge">Ctrl</span><span
+                                        class="key-separator">+</span><span class="key-badge">F4</span></div>
+                            </td>
+                            <td class="action-text">Close selected window</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="shortcut-keys"><span class="key-badge">Ctrl</span><span
+                                        class="key-separator">+</span><span class="key-badge">F6</span></div>
+                            </td>
+                            <td class="action-text">Cycle over all open windows left to right</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="shortcut-keys"><span class="key-badge">Ctrl</span><span
+                                        class="key-separator">+</span><span class="key-badge">Shift</span><span
+                                        class="key-separator">+</span><span class="key-badge">F6</span></div>
+                            </td>
+                            <td class="action-text">Cycle over all open windows right to left</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="shortcut-keys"><span class="key-badge">Ctrl</span><span
+                                        class="key-separator">+</span><span class="key-badge">Alt</span><span
+                                        class="key-separator">+</span><span class="key-badge">A</span></div>
+                            </td>
+                            <td class="action-text">Open/focus Assets window</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="shortcut-keys"><span class="key-badge">Ctrl</span><span
+                                        class="key-separator">+</span><span class="key-badge">Alt</span><span
+                                        class="key-separator">+</span><span class="key-badge">S</span></div>
+                            </td>
+                            <td class="action-text">Open/focus Stage window</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="shortcut-keys"><span class="key-badge">Ctrl</span><span
+                                        class="key-separator">+</span><span class="key-badge">Alt</span><span
+                                        class="key-separator">+</span><span class="key-badge">T</span></div>
+                            </td>
+                            <td class="action-text">Open/focus Timelines window</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="shortcut-keys"><span class="key-badge">Ctrl</span><span
+                                        class="key-separator">+</span><span class="key-badge">Alt</span><span
+                                        class="key-separator">+</span><span class="key-badge">D</span></div>
+                            </td>
+                            <td class="action-text">Open/focus Devices window</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="shortcut-keys"><span class="key-badge">Ctrl</span><span
+                                        class="key-separator">+</span><span class="key-badge">Alt</span><span
+                                        class="key-separator">+</span><span class="key-badge">C</span></div>
+                            </td>
+                            <td class="action-text">Open/focus Cue List window</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="shortcut-keys"><span class="key-badge">Ctrl</span><span
+                                        class="key-separator">+</span><span class="key-badge">Alt</span><span
+                                        class="key-separator">+</span><span class="key-badge">V</span></div>
+                            </td>
+                            <td class="action-text">Open/focus Variables window</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- EDIT -->
+            <div class="category-section">
+                <h2 class="category-header category-edit">Edit</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Shortcut</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="shortcut-keys"><span class="key-badge">Ctrl</span><span
+                                        class="key-separator">+</span><span class="key-badge">Z</span></div>
+                            </td>
+                            <td class="action-text">Undo</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="shortcut-keys"><span class="key-badge">Ctrl</span><span
+                                        class="key-separator">+</span><span class="key-badge">Y</span></div>
+                            </td>
+                            <td class="action-text">Redo</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="shortcut-keys"><span class="key-badge">Ctrl</span><span
+                                        class="key-separator">+</span><span class="key-badge">X</span></div>
+                            </td>
+                            <td class="action-text">Cut</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="shortcut-keys"><span class="key-badge">Ctrl</span><span
+                                        class="key-separator">+</span><span class="key-badge">C</span></div>
+                            </td>
+                            <td class="action-text">Copy</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="shortcut-keys"><span class="key-badge">Ctrl</span><span
+                                        class="key-separator">+</span><span class="key-badge">V</span></div>
+                            </td>
+                            <td class="action-text">Paste</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="shortcut-keys"><span class="key-badge">Delete</span></div>
+                            </td>
+                            <td class="action-text">Delete</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="shortcut-keys"><span class="key-badge">Ctrl</span><span
+                                        class="key-separator">+</span><span class="key-badge">A</span></div>
+                            </td>
+                            <td class="action-text">Select all</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="shortcut-keys"><span class="key-badge">Ctrl</span><span
+                                        class="key-separator">+</span><span class="key-badge">E</span></div>
+                            </td>
+                            <td class="action-text">Select to end</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="shortcut-keys"><span class="key-badge">Ctrl</span><span
+                                        class="key-separator">+</span><span class="key-badge">M</span></div>
+                            </td>
+                            <td class="action-text">Move stage position of selected cues/displays</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="shortcut-keys"><span class="key-badge">Ctrl</span><span
+                                        class="key-separator">+</span><span class="key-badge">F</span></div>
+                            </td>
+                            <td class="action-text">Find</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="shortcut-keys"><span class="key-badge">Ctrl</span><span
+                                        class="key-separator">+</span><span class="key-badge">N</span></div>
+                            </td>
+                            <td class="action-text">Snap (toggle)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- PROPERTY -->
+            <div class="category-section">
+                <h2 class="category-header category-property">Property</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Shortcut</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="shortcut-keys"><span class="key-badge">Tab</span></div>
+                            </td>
+                            <td class="action-text">Move keyboard focus to next field</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="shortcut-keys"><span class="key-badge">Shift</span><span
+                                        class="key-separator">+</span><span class="key-badge">Tab</span></div>
+                            </td>
+                            <td class="action-text">Move keyboard focus to previous field</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="shortcut-keys"><span class="key-badge">Ctrl</span><span
+                                        class="key-separator">+</span><span class="key-badge">Wheel</span></div>
+                            </td>
+                            <td class="action-text">Increase/decrease value in field</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="shortcut-keys"><span class="key-badge">Ctrl</span><span
+                                        class="key-separator">+</span><span class="key-badge">Shift</span><span
+                                        class="key-separator">+</span><span class="key-badge">Wheel</span></div>
+                            </td>
+                            <td class="action-text">Increase/decrease value in field more</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="shortcut-keys"><span class="key-badge">Arrow Up</span></div>
+                            </td>
+                            <td class="action-text">Increment value (in number property)</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="shortcut-keys"><span class="key-badge">Shift</span><span
+                                        class="key-separator">+</span><span class="key-badge">Arrow Up</span></div>
+                            </td>
+                            <td class="action-text">Increment value more (in number/slider/time property)</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="shortcut-keys"><span class="key-badge">Arrow Down</span></div>
+                            </td>
+                            <td class="action-text">Decrement value (in number/slider/time property)</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="shortcut-keys"><span class="key-badge">Shift</span><span
+                                        class="key-separator">+</span><span class="key-badge">Arrow Down</span></div>
+                            </td>
+                            <td class="action-text">Decrement value more (in number/slider/time property)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- TIMELINE -->
+            <div class="category-section">
+                <h2 class="category-header category-timeline">Timeline</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Shortcut</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="shortcut-keys"><span class="key-badge">Ctrl</span><span
+                                        class="key-separator">+</span><span class="key-badge">T</span></div>
+                            </td>
+                            <td class="action-text">Click jumps to time (toggle)</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="shortcut-keys"><span class="key-badge">Ctrl</span><span
+                                        class="key-separator">+</span><span class="key-badge">P</span></div>
+                            </td>
+                            <td class="action-text">Add play control cue</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="shortcut-keys"><span class="key-badge">Ctrl</span><span
+                                        class="key-separator">+</span><span class="key-badge">Shift</span><span
+                                        class="key-separator">+</span><span class="key-badge">P</span></div>
+                            </td>
+                            <td class="action-text">Add pause control cue</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="shortcut-keys"><span class="key-badge">Ctrl</span><span
+                                        class="key-separator">+</span><span class="key-badge">I</span></div>
+                            </td>
+                            <td class="action-text">Insert layer</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="shortcut-keys"><span class="key-badge">Ctrl</span><span
+                                        class="key-separator">+</span><span class="key-badge">Delete</span></div>
+                            </td>
+                            <td class="action-text">Delete layer</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="shortcut-keys"><span class="key-badge">Ctrl</span><span
+                                        class="key-separator">+</span><span class="key-badge">G</span></div>
+                            </td>
+                            <td class="action-text">Group cues into composition</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="shortcut-keys"><span class="key-badge">Ctrl</span><span
+                                        class="key-separator">+</span><span class="key-badge">Shift</span><span
+                                        class="key-separator">+</span><span class="key-badge">G</span></div>
+                            </td>
+                            <td class="action-text">Ungroup cues</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="shortcut-keys"><span class="key-badge">Space</span></div>
+                            </td>
+                            <td class="action-text">Start timeline (toggle)</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="shortcut-keys"><span class="key-badge">Esc</span></div>
+                            </td>
+                            <td class="action-text">Pause timeline (no toggle)</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="shortcut-keys"><span class="key-badge">Num 0</span></div>
+                            </td>
+                            <td class="action-text">Start timeline (no toggle)</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="shortcut-keys"><span class="key-badge">Num +</span></div>
+                            </td>
+                            <td class="action-text">Magnify timeline scale</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="shortcut-keys"><span class="key-badge">Num -</span></div>
+                            </td>
+                            <td class="action-text">Reduce timeline scale</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="shortcut-keys"><span class="key-badge">Ctrl</span><span
+                                        class="key-separator">+</span><span class="key-badge">0</span></div>
+                            </td>
+                            <td class="action-text">Zoom to fit (or zoom to selection)</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="shortcut-keys"><span class="key-badge">Shift</span><span
+                                        class="key-separator">+</span><span class="key-badge">Wheel</span></div>
+                            </td>
+                            <td class="action-text">Move timeline marker 0.1 second</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="shortcut-keys"><span class="key-badge">Ctrl</span><span
+                                        class="key-separator">+</span><span class="key-badge">Shift</span><span
+                                        class="key-separator">+</span><span class="key-badge">Wheel</span></div>
+                            </td>
+                            <td class="action-text">Move timeline marker 1 second</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="shortcut-keys"><span class="key-badge">Ctrl</span><span
+                                        class="key-separator">+</span><span class="key-badge">Wheel</span></div>
+                            </td>
+                            <td class="action-text">Scroll timeline horizontally</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- STAGE & PREVIEW -->
+            <div class="category-section">
+                <h2 class="category-header category-stage">Stage & Preview</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Shortcut</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="shortcut-keys"><span class="key-badge">Ctrl</span><span
+                                        class="key-separator">+</span><span class="key-badge">Shift</span><span
+                                        class="key-separator">+</span><span class="key-badge">D</span></div>
+                            </td>
+                            <td class="action-text">Frame displays</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="shortcut-keys"><span class="key-badge">Ctrl</span><span
+                                        class="key-separator">+</span><span class="key-badge">Shift</span><span
+                                        class="key-separator">+</span><span class="key-badge">O</span></div>
+                            </td>
+                            <td class="action-text">Scroll to origin</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="shortcut-keys"><span class="key-badge">Alt</span><span
+                                        class="key-separator">+</span><span class="key-badge">Drag</span></div>
+                            </td>
+                            <td class="action-text">Zoom scale to rectangle</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="shortcut-keys"><span class="key-badge">Ctrl</span><span
+                                        class="key-separator">+</span><span class="key-badge">Alt</span><span
+                                        class="key-separator">+</span><span class="key-badge">Drag</span></div>
+                            </td>
+                            <td class="action-text">To pan</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="shortcut-keys"><span class="key-badge">Ctrl</span><span
+                                        class="key-separator">+</span><span class="key-badge">Arrow</span></div>
+                            </td>
+                            <td class="action-text">Nudge image of selected cue 1 pixel</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="shortcut-keys"><span class="key-badge">Ctrl</span><span
+                                        class="key-separator">+</span><span class="key-badge">Shift</span><span
+                                        class="key-separator">+</span><span class="key-badge">Arrow</span></div>
+                            </td>
+                            <td class="action-text">Nudge image of selected cue 10 pixels</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="shortcut-keys"><span class="key-badge">Ctrl</span><span
+                                        class="key-separator">+</span><span class="key-badge">1</span></div>
+                            </td>
+                            <td class="action-text">Preview scale 1:16</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="shortcut-keys"><span class="key-badge">Ctrl</span><span
+                                        class="key-separator">+</span><span class="key-badge">2</span></div>
+                            </td>
+                            <td class="action-text">Preview scale 1:8</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="shortcut-keys"><span class="key-badge">Ctrl</span><span
+                                        class="key-separator">+</span><span class="key-badge">3</span></div>
+                            </td>
+                            <td class="action-text">Preview scale 1:4</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="shortcut-keys"><span class="key-badge">Ctrl</span><span
+                                        class="key-separator">+</span><span class="key-badge">4</span></div>
+                            </td>
+                            <td class="action-text">Preview scale 1:2</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="shortcut-keys"><span class="key-badge">Ctrl</span><span
+                                        class="key-separator">+</span><span class="key-badge">5</span></div>
+                            </td>
+                            <td class="action-text">Preview scale 1:1</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- CAMERA MODE NORMAL -->
+            <div class="category-section">
+                <h2 class="category-header category-camera">Camera Mode</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Shortcut</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="shortcut-keys"><span class="key-badge">A</span></div>
+                            </td>
+                            <td class="action-text">Pan left (Camera Normal Mode)</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="shortcut-keys"><span class="key-badge">D</span></div>
+                            </td>
+                            <td class="action-text">Pan right (Camera Normal Mode)</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="shortcut-keys"><span class="key-badge">W</span></div>
+                            </td>
+                            <td class="action-text">Pan up (Camera Normal Mode)</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="shortcut-keys"><span class="key-badge">S</span></div>
+                            </td>
+                            <td class="action-text">Pan down (Camera Normal Mode)</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="shortcut-keys"><span class="key-badge">Wheel</span></div>
+                            </td>
+                            <td class="action-text">Zoom in/out (Camera Mode)</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="shortcut-keys"><span class="key-badge">E</span></div>
+                            </td>
+                            <td class="action-text">Pan up (First Person/Projector Mode)</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="shortcut-keys"><span class="key-badge">Q</span></div>
+                            </td>
+                            <td class="action-text">Pan down (First Person/Projector Mode)</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="shortcut-keys"><span class="key-badge">J</span></div>
+                            </td>
+                            <td class="action-text">Orbit left (First Person Mode)</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="shortcut-keys"><span class="key-badge">L</span></div>
+                            </td>
+                            <td class="action-text">Orbit right (First Person Mode)</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="shortcut-keys"><span class="key-badge">I</span></div>
+                            </td>
+                            <td class="action-text">Orbit up (First Person Mode)</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="shortcut-keys"><span class="key-badge">K</span></div>
+                            </td>
+                            <td class="action-text">Orbit down (First Person Mode)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- TABLE VIEWS -->
+            <div class="category-section">
+                <h2 class="category-header category-table">Table Views</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Shortcut</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="shortcut-keys"><span class="key-badge">Arrow Up</span></div>
+                            </td>
+                            <td class="action-text">Select row above</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="shortcut-keys"><span class="key-badge">Arrow Down</span></div>
+                            </td>
+                            <td class="action-text">Select row below</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="shortcut-keys"><span class="key-badge">Home</span></div>
+                            </td>
+                            <td class="action-text">Jump to first row</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="shortcut-keys"><span class="key-badge">End</span></div>
+                            </td>
+                            <td class="action-text">Jump to last row</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="shortcut-keys"><span class="key-badge">Page Up</span></div>
+                            </td>
+                            <td class="action-text">Scroll up one page</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="shortcut-keys"><span class="key-badge">Page Down</span></div>
+                            </td>
+                            <td class="action-text">Scroll down one page</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- EFFECT -->
+            <div class="category-section">
+                <h2 class="category-header category-effect">Effect</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Shortcut</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="shortcut-keys"><span class="key-badge">Alt</span><span
+                                        class="key-separator">+</span><span class="key-badge">Shift</span><span
+                                        class="key-separator">+</span><span class="key-badge">I</span></div>
+                            </td>
+                            <td class="action-text">Fade-in</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="shortcut-keys"><span class="key-badge">Alt</span><span
+                                        class="key-separator">+</span><span class="key-badge">Shift</span><span
+                                        class="key-separator">+</span><span class="key-badge">O</span></div>
+                            </td>
+                            <td class="action-text">Fade-out</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="shortcut-keys"><span class="key-badge">Alt</span><span
+                                        class="key-separator">+</span><span class="key-badge">Shift</span><span
+                                        class="key-separator">+</span><span class="key-badge">X</span></div>
+                            </td>
+                            <td class="action-text">Cross-fade</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="shortcut-keys"><span class="key-badge">Alt</span><span
+                                        class="key-separator">+</span><span class="key-badge">P</span></div>
+                            </td>
+                            <td class="action-text">Position</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="shortcut-keys"><span class="key-badge">Alt</span><span
+                                        class="key-separator">+</span><span class="key-badge">S</span></div>
+                            </td>
+                            <td class="action-text">Scale</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="shortcut-keys"><span class="key-badge">Alt</span><span
+                                        class="key-separator">+</span><span class="key-badge">O</span></div>
+                            </td>
+                            <td class="action-text">Opacity</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="shortcut-keys"><span class="key-badge">Alt</span><span
+                                        class="key-separator">+</span><span class="key-badge">B</span></div>
+                            </td>
+                            <td class="action-text">Gaussian Blur</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="shortcut-keys"><span class="key-badge">Alt</span><span
+                                        class="key-separator">+</span><span class="key-badge">C</span></div>
+                            </td>
+                            <td class="action-text">Crop All Sides</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="shortcut-keys"><span class="key-badge">Alt</span><span
+                                        class="key-separator">+</span><span class="key-badge">Z</span></div>
+                            </td>
+                            <td class="action-text">Rotation Z-Axis</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="shortcut-keys"><span class="key-badge">Alt</span><span
+                                        class="key-separator">+</span><span class="key-badge">Y</span></div>
+                            </td>
+                            <td class="action-text">Rotation Y-Axis</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="shortcut-keys"><span class="key-badge">Alt</span><span
+                                        class="key-separator">+</span><span class="key-badge">V</span></div>
+                            </td>
+                            <td class="action-text">Volume</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- WARP -->
+            <div class="category-section">
+                <h2 class="category-header category-warp">Warp Display</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Shortcut</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="shortcut-keys"><span class="key-badge">Arrow Up</span></div>
+                            </td>
+                            <td class="action-text">Select next warp point above</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="shortcut-keys"><span class="key-badge">Arrow Down</span></div>
+                            </td>
+                            <td class="action-text">Select next warp point below</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="shortcut-keys"><span class="key-badge">Arrow Left</span></div>
+                            </td>
+                            <td class="action-text">Select next warp point to the left</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="shortcut-keys"><span class="key-badge">Arrow Right</span></div>
+                            </td>
+                            <td class="action-text">Select next warp point to the right</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="shortcut-keys"><span class="key-badge">Ctrl</span><span
+                                        class="key-separator">+</span><span class="key-badge">Left Click</span></div>
+                            </td>
+                            <td class="action-text">Add a warp point (when pointing at a line)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
 
-        <!-- EDIT -->
-        <div class="category-section">
-            <h2 class="category-header category-edit">Edit</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Shortcut</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><div class="shortcut-keys"><span class="key-badge">Ctrl</span><span class="key-separator">+</span><span class="key-badge">Z</span></div></td>
-                        <td class="action-text">Undo</td>
-                    </tr>
-                    <tr>
-                        <td><div class="shortcut-keys"><span class="key-badge">Ctrl</span><span class="key-separator">+</span><span class="key-badge">Y</span></div></td>
-                        <td class="action-text">Redo</td>
-                    </tr>
-                    <tr>
-                        <td><div class="shortcut-keys"><span class="key-badge">Ctrl</span><span class="key-separator">+</span><span class="key-badge">X</span></div></td>
-                        <td class="action-text">Cut</td>
-                    </tr>
-                    <tr>
-                        <td><div class="shortcut-keys"><span class="key-badge">Ctrl</span><span class="key-separator">+</span><span class="key-badge">C</span></div></td>
-                        <td class="action-text">Copy</td>
-                    </tr>
-                    <tr>
-                        <td><div class="shortcut-keys"><span class="key-badge">Ctrl</span><span class="key-separator">+</span><span class="key-badge">V</span></div></td>
-                        <td class="action-text">Paste</td>
-                    </tr>
-                    <tr>
-                        <td><div class="shortcut-keys"><span class="key-badge">Delete</span></div></td>
-                        <td class="action-text">Delete</td>
-                    </tr>
-                    <tr>
-                        <td><div class="shortcut-keys"><span class="key-badge">Ctrl</span><span class="key-separator">+</span><span class="key-badge">A</span></div></td>
-                        <td class="action-text">Select all</td>
-                    </tr>
-                    <tr>
-                        <td><div class="shortcut-keys"><span class="key-badge">Ctrl</span><span class="key-separator">+</span><span class="key-badge">E</span></div></td>
-                        <td class="action-text">Select to end</td>
-                    </tr>
-                    <tr>
-                        <td><div class="shortcut-keys"><span class="key-badge">Ctrl</span><span class="key-separator">+</span><span class="key-badge">M</span></div></td>
-                        <td class="action-text">Move stage position of selected cues/displays</td>
-                    </tr>
-                    <tr>
-                        <td><div class="shortcut-keys"><span class="key-badge">Ctrl</span><span class="key-separator">+</span><span class="key-badge">F</span></div></td>
-                        <td class="action-text">Find</td>
-                    </tr>
-                    <tr>
-                        <td><div class="shortcut-keys"><span class="key-badge">Ctrl</span><span class="key-separator">+</span><span class="key-badge">N</span></div></td>
-                        <td class="action-text">Snap (toggle)</td>
-                    </tr>
-                </tbody>
-            </table>
+        <div class="footer">
+            <p>WATCHOUT Keyboard Shortcuts Reference Guide • Generated on January 26, 2026</p>
         </div>
-
-        <!-- PROPERTY -->
-        <div class="category-section">
-            <h2 class="category-header category-property">Property</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Shortcut</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><div class="shortcut-keys"><span class="key-badge">Tab</span></div></td>
-                        <td class="action-text">Move keyboard focus to next field</td>
-                    </tr>
-                    <tr>
-                        <td><div class="shortcut-keys"><span class="key-badge">Shift</span><span class="key-separator">+</span><span class="key-badge">Tab</span></div></td>
-                        <td class="action-text">Move keyboard focus to previous field</td>
-                    </tr>
-                    <tr>
-                        <td><div class="shortcut-keys"><span class="key-badge">Ctrl</span><span class="key-separator">+</span><span class="key-badge">Wheel</span></div></td>
-                        <td class="action-text">Increase/decrease value in field</td>
-                    </tr>
-                    <tr>
-                        <td><div class="shortcut-keys"><span class="key-badge">Ctrl</span><span class="key-separator">+</span><span class="key-badge">Shift</span><span class="key-separator">+</span><span class="key-badge">Wheel</span></div></td>
-                        <td class="action-text">Increase/decrease value in field more</td>
-                    </tr>
-                    <tr>
-                        <td><div class="shortcut-keys"><span class="key-badge">Arrow Up</span></div></td>
-                        <td class="action-text">Increment value (in number property)</td>
-                    </tr>
-                    <tr>
-                        <td><div class="shortcut-keys"><span class="key-badge">Shift</span><span class="key-separator">+</span><span class="key-badge">Arrow Up</span></div></td>
-                        <td class="action-text">Increment value more (in number/slider/time property)</td>
-                    </tr>
-                    <tr>
-                        <td><div class="shortcut-keys"><span class="key-badge">Arrow Down</span></div></td>
-                        <td class="action-text">Decrement value (in number/slider/time property)</td>
-                    </tr>
-                    <tr>
-                        <td><div class="shortcut-keys"><span class="key-badge">Shift</span><span class="key-separator">+</span><span class="key-badge">Arrow Down</span></div></td>
-                        <td class="action-text">Decrement value more (in number/slider/time property)</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <!-- TIMELINE -->
-        <div class="category-section">
-            <h2 class="category-header category-timeline">Timeline</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Shortcut</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><div class="shortcut-keys"><span class="key-badge">Ctrl</span><span class="key-separator">+</span><span class="key-badge">T</span></div></td>
-                        <td class="action-text">Click jumps to time (toggle)</td>
-                    </tr>
-                    <tr>
-                        <td><div class="shortcut-keys"><span class="key-badge">Ctrl</span><span class="key-separator">+</span><span class="key-badge">P</span></div></td>
-                        <td class="action-text">Add play control cue</td>
-                    </tr>
-                    <tr>
-                        <td><div class="shortcut-keys"><span class="key-badge">Ctrl</span><span class="key-separator">+</span><span class="key-badge">Shift</span><span class="key-separator">+</span><span class="key-badge">P</span></div></td>
-                        <td class="action-text">Add pause control cue</td>
-                    </tr>
-                    <tr>
-                        <td><div class="shortcut-keys"><span class="key-badge">Ctrl</span><span class="key-separator">+</span><span class="key-badge">I</span></div></td>
-                        <td class="action-text">Insert layer</td>
-                    </tr>
-                    <tr>
-                        <td><div class="shortcut-keys"><span class="key-badge">Ctrl</span><span class="key-separator">+</span><span class="key-badge">Delete</span></div></td>
-                        <td class="action-text">Delete layer</td>
-                    </tr>
-                    <tr>
-                        <td><div class="shortcut-keys"><span class="key-badge">Ctrl</span><span class="key-separator">+</span><span class="key-badge">G</span></div></td>
-                        <td class="action-text">Group cues into composition</td>
-                    </tr>
-                    <tr>
-                        <td><div class="shortcut-keys"><span class="key-badge">Ctrl</span><span class="key-separator">+</span><span class="key-badge">Shift</span><span class="key-separator">+</span><span class="key-badge">G</span></div></td>
-                        <td class="action-text">Ungroup cues</td>
-                    </tr>
-                    <tr>
-                        <td><div class="shortcut-keys"><span class="key-badge">Space</span></div></td>
-                        <td class="action-text">Start timeline (toggle)</td>
-                    </tr>
-                    <tr>
-                        <td><div class="shortcut-keys"><span class="key-badge">Esc</span></div></td>
-                        <td class="action-text">Pause timeline (no toggle)</td>
-                    </tr>
-                    <tr>
-                        <td><div class="shortcut-keys"><span class="key-badge">Num 0</span></div></td>
-                        <td class="action-text">Start timeline (no toggle)</td>
-                    </tr>
-                    <tr>
-                        <td><div class="shortcut-keys"><span class="key-badge">Num +</span></div></td>
-                        <td class="action-text">Magnify timeline scale</td>
-                    </tr>
-                    <tr>
-                        <td><div class="shortcut-keys"><span class="key-badge">Num -</span></div></td>
-                        <td class="action-text">Reduce timeline scale</td>
-                    </tr>
-                    <tr>
-                        <td><div class="shortcut-keys"><span class="key-badge">Ctrl</span><span class="key-separator">+</span><span class="key-badge">0</span></div></td>
-                        <td class="action-text">Zoom to fit (or zoom to selection)</td>
-                    </tr>
-                    <tr>
-                        <td><div class="shortcut-keys"><span class="key-badge">Shift</span><span class="key-separator">+</span><span class="key-badge">Wheel</span></div></td>
-                        <td class="action-text">Move timeline marker 0.1 second</td>
-                    </tr>
-                    <tr>
-                        <td><div class="shortcut-keys"><span class="key-badge">Ctrl</span><span class="key-separator">+</span><span class="key-badge">Shift</span><span class="key-separator">+</span><span class="key-badge">Wheel</span></div></td>
-                        <td class="action-text">Move timeline marker 1 second</td>
-                    </tr>
-                    <tr>
-                        <td><div class="shortcut-keys"><span class="key-badge">Ctrl</span><span class="key-separator">+</span><span class="key-badge">Wheel</span></div></td>
-                        <td class="action-text">Scroll timeline horizontally</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <!-- STAGE & PREVIEW -->
-        <div class="category-section">
-            <h2 class="category-header category-stage">Stage & Preview</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Shortcut</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><div class="shortcut-keys"><span class="key-badge">Ctrl</span><span class="key-separator">+</span><span class="key-badge">Shift</span><span class="key-separator">+</span><span class="key-badge">D</span></div></td>
-                        <td class="action-text">Frame displays</td>
-                    </tr>
-                    <tr>
-                        <td><div class="shortcut-keys"><span class="key-badge">Ctrl</span><span class="key-separator">+</span><span class="key-badge">Shift</span><span class="key-separator">+</span><span class="key-badge">O</span></div></td>
-                        <td class="action-text">Scroll to origin</td>
-                    </tr>
-                    <tr>
-                        <td><div class="shortcut-keys"><span class="key-badge">Alt</span><span class="key-separator">+</span><span class="key-badge">Drag</span></div></td>
-                        <td class="action-text">Zoom scale to rectangle</td>
-                    </tr>
-                    <tr>
-                        <td><div class="shortcut-keys"><span class="key-badge">Ctrl</span><span class="key-separator">+</span><span class="key-badge">Alt</span><span class="key-separator">+</span><span class="key-badge">Drag</span></div></td>
-                        <td class="action-text">To pan</td>
-                    </tr>
-                    <tr>
-                        <td><div class="shortcut-keys"><span class="key-badge">Ctrl</span><span class="key-separator">+</span><span class="key-badge">Arrow</span></div></td>
-                        <td class="action-text">Nudge image of selected cue 1 pixel</td>
-                    </tr>
-                    <tr>
-                        <td><div class="shortcut-keys"><span class="key-badge">Ctrl</span><span class="key-separator">+</span><span class="key-badge">Shift</span><span class="key-separator">+</span><span class="key-badge">Arrow</span></div></td>
-                        <td class="action-text">Nudge image of selected cue 10 pixels</td>
-                    </tr>
-                    <tr>
-                        <td><div class="shortcut-keys"><span class="key-badge">Ctrl</span><span class="key-separator">+</span><span class="key-badge">1</span></div></td>
-                        <td class="action-text">Preview scale 1:16</td>
-                    </tr>
-                    <tr>
-                        <td><div class="shortcut-keys"><span class="key-badge">Ctrl</span><span class="key-separator">+</span><span class="key-badge">2</span></div></td>
-                        <td class="action-text">Preview scale 1:8</td>
-                    </tr>
-                    <tr>
-                        <td><div class="shortcut-keys"><span class="key-badge">Ctrl</span><span class="key-separator">+</span><span class="key-badge">3</span></div></td>
-                        <td class="action-text">Preview scale 1:4</td>
-                    </tr>
-                    <tr>
-                        <td><div class="shortcut-keys"><span class="key-badge">Ctrl</span><span class="key-separator">+</span><span class="key-badge">4</span></div></td>
-                        <td class="action-text">Preview scale 1:2</td>
-                    </tr>
-                    <tr>
-                        <td><div class="shortcut-keys"><span class="key-badge">Ctrl</span><span class="key-separator">+</span><span class="key-badge">5</span></div></td>
-                        <td class="action-text">Preview scale 1:1</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <!-- CAMERA MODE NORMAL -->
-        <div class="category-section">
-            <h2 class="category-header category-camera">Camera Mode</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Shortcut</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><div class="shortcut-keys"><span class="key-badge">A</span></div></td>
-                        <td class="action-text">Pan left (Camera Normal Mode)</td>
-                    </tr>
-                    <tr>
-                        <td><div class="shortcut-keys"><span class="key-badge">D</span></div></td>
-                        <td class="action-text">Pan right (Camera Normal Mode)</td>
-                    </tr>
-                    <tr>
-                        <td><div class="shortcut-keys"><span class="key-badge">W</span></div></td>
-                        <td class="action-text">Pan up (Camera Normal Mode)</td>
-                    </tr>
-                    <tr>
-                        <td><div class="shortcut-keys"><span class="key-badge">S</span></div></td>
-                        <td class="action-text">Pan down (Camera Normal Mode)</td>
-                    </tr>
-                    <tr>
-                        <td><div class="shortcut-keys"><span class="key-badge">Wheel</span></div></td>
-                        <td class="action-text">Zoom in/out (Camera Mode)</td>
-                    </tr>
-                    <tr>
-                        <td><div class="shortcut-keys"><span class="key-badge">E</span></div></td>
-                        <td class="action-text">Pan up (First Person/Projector Mode)</td>
-                    </tr>
-                    <tr>
-                        <td><div class="shortcut-keys"><span class="key-badge">Q</span></div></td>
-                        <td class="action-text">Pan down (First Person/Projector Mode)</td>
-                    </tr>
-                    <tr>
-                        <td><div class="shortcut-keys"><span class="key-badge">J</span></div></td>
-                        <td class="action-text">Orbit left (First Person Mode)</td>
-                    </tr>
-                    <tr>
-                        <td><div class="shortcut-keys"><span class="key-badge">L</span></div></td>
-                        <td class="action-text">Orbit right (First Person Mode)</td>
-                    </tr>
-                    <tr>
-                        <td><div class="shortcut-keys"><span class="key-badge">I</span></div></td>
-                        <td class="action-text">Orbit up (First Person Mode)</td>
-                    </tr>
-                    <tr>
-                        <td><div class="shortcut-keys"><span class="key-badge">K</span></div></td>
-                        <td class="action-text">Orbit down (First Person Mode)</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <!-- TABLE VIEWS -->
-        <div class="category-section">
-            <h2 class="category-header category-table">Table Views</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Shortcut</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><div class="shortcut-keys"><span class="key-badge">Arrow Up</span></div></td>
-                        <td class="action-text">Select row above</td>
-                    </tr>
-                    <tr>
-                        <td><div class="shortcut-keys"><span class="key-badge">Arrow Down</span></div></td>
-                        <td class="action-text">Select row below</td>
-                    </tr>
-                    <tr>
-                        <td><div class="shortcut-keys"><span class="key-badge">Home</span></div></td>
-                        <td class="action-text">Jump to first row</td>
-                    </tr>
-                    <tr>
-                        <td><div class="shortcut-keys"><span class="key-badge">End</span></div></td>
-                        <td class="action-text">Jump to last row</td>
-                    </tr>
-                    <tr>
-                        <td><div class="shortcut-keys"><span class="key-badge">Page Up</span></div></td>
-                        <td class="action-text">Scroll up one page</td>
-                    </tr>
-                    <tr>
-                        <td><div class="shortcut-keys"><span class="key-badge">Page Down</span></div></td>
-                        <td class="action-text">Scroll down one page</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <!-- EFFECT -->
-        <div class="category-section">
-            <h2 class="category-header category-effect">Effect</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Shortcut</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><div class="shortcut-keys"><span class="key-badge">Alt</span><span class="key-separator">+</span><span class="key-badge">Shift</span><span class="key-separator">+</span><span class="key-badge">I</span></div></td>
-                        <td class="action-text">Fade-in</td>
-                    </tr>
-                    <tr>
-                        <td><div class="shortcut-keys"><span class="key-badge">Alt</span><span class="key-separator">+</span><span class="key-badge">Shift</span><span class="key-separator">+</span><span class="key-badge">O</span></div></td>
-                        <td class="action-text">Fade-out</td>
-                    </tr>
-                    <tr>
-                        <td><div class="shortcut-keys"><span class="key-badge">Alt</span><span class="key-separator">+</span><span class="key-badge">Shift</span><span class="key-separator">+</span><span class="key-badge">X</span></div></td>
-                        <td class="action-text">Cross-fade</td>
-                    </tr>
-                    <tr>
-                        <td><div class="shortcut-keys"><span class="key-badge">Alt</span><span class="key-separator">+</span><span class="key-badge">P</span></div></td>
-                        <td class="action-text">Position</td>
-                    </tr>
-                    <tr>
-                        <td><div class="shortcut-keys"><span class="key-badge">Alt</span><span class="key-separator">+</span><span class="key-badge">S</span></div></td>
-                        <td class="action-text">Scale</td>
-                    </tr>
-                    <tr>
-                        <td><div class="shortcut-keys"><span class="key-badge">Alt</span><span class="key-separator">+</span><span class="key-badge">O</span></div></td>
-                        <td class="action-text">Opacity</td>
-                    </tr>
-                    <tr>
-                        <td><div class="shortcut-keys"><span class="key-badge">Alt</span><span class="key-separator">+</span><span class="key-badge">B</span></div></td>
-                        <td class="action-text">Gaussian Blur</td>
-                    </tr>
-                    <tr>
-                        <td><div class="shortcut-keys"><span class="key-badge">Alt</span><span class="key-separator">+</span><span class="key-badge">C</span></div></td>
-                        <td class="action-text">Crop All Sides</td>
-                    </tr>
-                    <tr>
-                        <td><div class="shortcut-keys"><span class="key-badge">Alt</span><span class="key-separator">+</span><span class="key-badge">Z</span></div></td>
-                        <td class="action-text">Rotation Z-Axis</td>
-                    </tr>
-                    <tr>
-                        <td><div class="shortcut-keys"><span class="key-badge">Alt</span><span class="key-separator">+</span><span class="key-badge">Y</span></div></td>
-                        <td class="action-text">Rotation Y-Axis</td>
-                    </tr>
-                    <tr>
-                        <td><div class="shortcut-keys"><span class="key-badge">Alt</span><span class="key-separator">+</span><span class="key-badge">V</span></div></td>
-                        <td class="action-text">Volume</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <!-- WARP -->
-        <div class="category-section">
-            <h2 class="category-header category-warp">Warp Display</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Shortcut</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><div class="shortcut-keys"><span class="key-badge">Arrow Up</span></div></td>
-                        <td class="action-text">Select next warp point above</td>
-                    </tr>
-                    <tr>
-                        <td><div class="shortcut-keys"><span class="key-badge">Arrow Down</span></div></td>
-                        <td class="action-text">Select next warp point below</td>
-                    </tr>
-                    <tr>
-                        <td><div class="shortcut-keys"><span class="key-badge">Arrow Left</span></div></td>
-                        <td class="action-text">Select next warp point to the left</td>
-                    </tr>
-                    <tr>
-                        <td><div class="shortcut-keys"><span class="key-badge">Arrow Right</span></div></td>
-                        <td class="action-text">Select next warp point to the right</td>
-                    </tr>
-                    <tr>
-                        <td><div class="shortcut-keys"><span class="key-badge">Ctrl</span><span class="key-separator">+</span><span class="key-badge">Left Click</span></div></td>
-                        <td class="action-text">Add a warp point (when pointing at a line)</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-
-    <div class="footer">
-        <p>WATCHOUT 7 Keyboard Shortcuts Reference Guide • Generated on January 26, 2026</p>
-    </div>
     </div>
 
     <script>
