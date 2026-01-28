@@ -293,7 +293,7 @@ body::before {
 .printable-header {
     width: 100%;
     display: flex;
-    justify-content: flex-start;
+    justify-content: center;
     padding-bottom: 20px;
 }
 
