@@ -642,7 +642,7 @@ body::before {
 .info-panel {
     width: 100%;
     max-width: 800px;
-    height: 260px;
+    max-height: 600px;
     overflow-y: auto;
     background: var(--bg-glass);
     backdrop-filter: blur(16px);
