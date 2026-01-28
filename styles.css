@@ -289,7 +289,41 @@ body::before {
     background: transparent;
 }
 
+/* Printable Header & Download Button */
+.printable-header {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    padding-bottom: 20px;
+}
 
+.download-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 24px;
+    background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+    color: white;
+    border-radius: 50px;
+    text-decoration: none;
+    font-family: var(--font-header);
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: all var(--transition-normal);
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.download-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(99, 102, 241, 0.4);
+    filter: brightness(1.1);
+}
+
+.download-btn svg {
+    width: 20px;
+    height: 20px;
+}
 
 @media print {
     body {
@@ -304,7 +338,8 @@ body::before {
 
     .view-switcher,
     .search-container,
-    .nav {
+    .nav,
+    .printable-header {
         display: none !important;
     }
 
