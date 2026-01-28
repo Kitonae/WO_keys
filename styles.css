@@ -11,7 +11,7 @@
     --accent-glow: rgba(99, 102, 241, 0.4);
     --text-primary: #f8fafc;
     --text-secondary: #94a3b8;
-    --text-muted: #64748b;
+    --text-muted: #8494a7;
     --key-bg: linear-gradient(145deg, #1e1e2e, #16161f);
     --key-bg-hover: linear-gradient(145deg, #2a2a3e, #1e1e2e);
     --key-border: #2a2a3a;
@@ -174,7 +174,8 @@ body::before {
 }
 
 .search-input:focus {
-    outline: none;
+    outline: 2px solid var(--accent-primary);
+    outline-offset: 2px;
     border-color: var(--accent-primary);
     background: rgba(255, 255, 255, 0.08);
     box-shadow: 0 0 20px var(--accent-glow);
@@ -490,7 +491,7 @@ body::before {
 
 .key-function {
     width: 48px;
-    height: 40px;
+    height: 44px;
 }
 
 .key-backspace {
@@ -552,7 +553,7 @@ body::before {
 
 .key-nav {
     width: 45px;
-    height: 40px;
+    height: 44px;
     font-size: 0.7rem;
 }
 
@@ -571,7 +572,7 @@ body::before {
 
 .key-arrow {
     width: 45px;
-    height: 40px;
+    height: 44px;
     font-size: 1.2rem;
 }
 
@@ -1023,4 +1024,30 @@ tr:last-child td {
         margin: 0 auto;
         flex-shrink: 0;
     }
+}
+
+/* Reduced Motion Support - Apple HIG Accessibility */
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* Global Focus-Visible Styles */
+.nav-btn:focus-visible,
+.view-btn:focus-visible,
+.key:focus-visible {
+    outline: 2px solid var(--accent-primary);
+    outline-offset: 2px;
+}
+
+button:focus-visible {
+    outline: 2px solid var(--accent-primary);
+    outline-offset: 2px;
 }

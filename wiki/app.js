@@ -13,11 +13,18 @@ const contentBody = document.getElementById('content-body');
 const welcomeSection = document.querySelector('.welcome-section');
 const sectionContent = document.getElementById('section-content');
 const tocPreviewGrid = document.getElementById('toc-preview-grid');
+const themeToggle = document.getElementById('theme-toggle');
 
 // State
 let currentSection = null;
 let currentChapterIndex = -1;
 let expandedChapters = new Set();
+
+// Theme initialization - apply saved theme before page renders
+(function initTheme() {
+    const savedTheme = localStorage.getItem('watchout-wiki-theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+})();
 
 // Initialize the application
 function init() {
@@ -25,6 +32,32 @@ function init() {
     renderTocPreview();
     setupEventListeners();
     setupQuickLinks();
+    initHeroVideo();
+}
+
+// Initialize hero video
+function initHeroVideo() {
+    const heroMedia = document.getElementById('hero-media');
+    if (!heroMedia) return;
+
+    const videos = [
+        'media/Live_Show_Programmer_Creates_Scene.mp4',
+        'media/Looping_Video_Generation_Complete.mp4',
+        'media/Video_Generation_With_Asian_Male_Operator.mp4'
+    ];
+
+    const randomVideo = videos[Math.floor(Math.random() * videos.length)];
+
+    heroMedia.innerHTML = `
+        <div class="video-wrapper" style="position: relative;">
+            <video autoplay muted loop playsinline>
+                <source src="${randomVideo}" type="video/mp4">
+            </video>
+            <div class="hero-overlay">
+                <img src="media/watchout-logo.webp" alt="WATCHOUT Logo" class="hero-logo">
+            </div>
+        </div>
+    `;
 }
 
 // Render the sidebar table of contents
@@ -124,6 +157,20 @@ function setupEventListeners() {
         sidebarOverlay.addEventListener('click', () => {
             sidebar.classList.remove('open');
             sidebarOverlay.classList.remove('active');
+        });
+    }
+
+    // Theme toggle
+    if (themeToggle) {
+        themeToggle.addEventListener('click', () => {
+            const themes = ['dark', 'light', 'midnight', 'forest', 'synthwave'];
+            const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+            const currentIndex = themes.indexOf(currentTheme);
+            const nextIndex = (currentIndex + 1) % themes.length;
+            const newTheme = themes[nextIndex];
+
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('watchout-wiki-theme', newTheme);
         });
     }
 
@@ -371,11 +418,20 @@ function renderSectionContent(section, chapter, isSubsection) {
     if (sectionTitle) sectionTitle.textContent = section.title;
     if (sectionPage) sectionPage.style.display = 'none'; // Hide page badge
 
+    // Try to get content from wikiContent
+    const chapterContent = typeof wikiContent !== 'undefined' ? wikiContent[chapter.title] : null;
+
     // Generate content based on whether it's a chapter or subsection
     if (!isSubsection && chapter.subsections && chapter.subsections.length > 0) {
-        // Chapter view - show subsections
+        // Chapter view - show overview and subsections
+        let overviewHtml = '';
+        if (chapterContent && chapterContent.overview) {
+            overviewHtml = `<div class="section-overview">${chapterContent.overview}</div>`;
+        }
+
         sectionBody.innerHTML = `
-            <h2>In This Chapter</h2>
+            ${overviewHtml}
+            <h2 style="margin-top: 32px;">In This Chapter</h2>
             <p>This chapter covers the following topics. Click on any section to learn more.</p>
             <div class="subsection-list">
                 ${chapter.subsections.map(sub => `
@@ -397,24 +453,59 @@ function renderSectionContent(section, chapter, isSubsection) {
         });
     } else {
         // Subsection view or chapter without subsections
-        sectionBody.innerHTML = `
-            <h2>${section.title}</h2>
-            <p>
-                This section of the WATCHOUT User Guide covers <strong>${section.title}</strong>.
-                For detailed information, please refer to page ${section.page} of the official Dataton WATCHOUT documentation.
-            </p>
-            <h3>About This Section</h3>
-            <p>
-                The content for this section is available in the PDF documentation starting at page ${section.page}.
-                This wiki provides quick navigation and search functionality to help you find the information you need.
-            </p>
-            <div class="info-card" style="margin-top: 24px; padding: 20px; background: rgba(107, 37, 221, 0.1); border-radius: 12px; border: 1px solid rgba(107, 37, 221, 0.3);">
-                <h4 style="margin-bottom: 8px; color: var(--accent-tertiary); display: flex; align-items: center; gap: 8px;">${icons.book} PDF Reference</h4>
-                <p style="margin: 0; color: var(--text-secondary);">
-                    Open the Dataton WATCHOUT User Guide PDF and navigate to <strong>page ${section.page}</strong> for complete documentation of this topic.
+        let contentHtml = '';
+
+        // Try to find the content in wikiContent
+        if (chapterContent && chapterContent.sections) {
+            // Try exact match first
+            let sectionHtml = chapterContent.sections[section.title];
+
+            // If not found, try case-insensitive match or partial match
+            if (!sectionHtml) {
+                const sectionKeys = Object.keys(chapterContent.sections);
+                for (const key of sectionKeys) {
+                    if (key.toUpperCase() === section.title.toUpperCase() ||
+                        key.toUpperCase().includes(section.title.toUpperCase()) ||
+                        section.title.toUpperCase().includes(key.toUpperCase())) {
+                        sectionHtml = chapterContent.sections[key];
+                        break;
+                    }
+                }
+            }
+
+            if (sectionHtml) {
+                contentHtml = sectionHtml;
+            }
+        }
+
+        if (contentHtml) {
+            // We have actual content from the PDF
+            sectionBody.innerHTML = `
+                <div class="section-content-body">
+                    ${contentHtml}
+                </div>
+            `;
+        } else {
+            // Fallback to placeholder
+            sectionBody.innerHTML = `
+                <h2>${section.title}</h2>
+                <p>
+                    This section of the WATCHOUT User Guide covers <strong>${section.title}</strong>.
+                    For detailed information, please refer to page ${section.page} of the official Dataton WATCHOUT documentation.
                 </p>
-            </div>
-        `;
+                <h3>About This Section</h3>
+                <p>
+                    The content for this section is available in the PDF documentation starting at page ${section.page}.
+                    This wiki provides quick navigation and search functionality to help you find the information you need.
+                </p>
+                <div class="info-card" style="margin-top: 24px; padding: 20px; background: rgba(107, 37, 221, 0.1); border-radius: 12px; border: 1px solid rgba(107, 37, 221, 0.3);">
+                    <h4 style="margin-bottom: 8px; color: var(--accent-tertiary); display: flex; align-items: center; gap: 8px;">${icons.book} PDF Reference</h4>
+                    <p style="margin: 0; color: var(--text-secondary);">
+                        Open the Dataton WATCHOUT User Guide PDF and navigate to <strong>page ${section.page}</strong> for complete documentation of this topic.
+                    </p>
+                </div>
+            `;
+        }
     }
 
     // Scroll to top
