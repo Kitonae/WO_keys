@@ -485,14 +485,12 @@ body::before {
 }
 
 .key:hover {
-    transform: translateY(-3px) scale(1.02);
     background: var(--key-bg-hover);
     border-color: var(--accent-primary);
     box-shadow: var(--key-shadow-hover);
 }
 
 .key.selected {
-    transform: translateY(-3px) scale(1.02);
     background: var(--key-bg-hover);
     border-color: var(--accent-primary);
     box-shadow: var(--key-shadow-hover), 0 0 30px var(--accent-glow);
