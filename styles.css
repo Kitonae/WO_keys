@@ -1,5 +1,13 @@
 /* WATCHOUT Keyboard Shortcuts - Stylesheet */
 
+@font-face {
+    font-family: 'Futura Now Headline';
+    src: url('FuturaNowHeadline-Rg.otf') format('opentype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
 :root {
     --bg-primary: #0a0a0f;
     --bg-secondary: #12121a;
@@ -25,8 +33,8 @@
     --cat-effect: #f43f5e;
     --cat-table: #a855f7;
     --cat-warp: #14b8a6;
-    --font-family: 'Futura', 'Futura Now', -apple-system, BlinkMacSystemFont, sans-serif;
-    --font-header: 'Futura', 'Futura Now Headline', sans-serif;
+    --font-family: 'Futura Now Headline', 'Futura', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-header: 'Futura Now Headline', 'Futura', sans-serif;
     --key-size: 52px;
     --key-gap: 6px;
     --border-radius: 10px;
@@ -290,17 +298,40 @@ body::before {
     background: transparent;
 }
 
-.view-btn.wiki-link {
-    margin-left: 8px;
-    background: linear-gradient(135deg, rgba(107, 37, 221, 0.2), rgba(139, 92, 246, 0.15));
-    border: 1px solid rgba(107, 37, 221, 0.4);
-    border-radius: 40px;
+/* Printable Header & Download Button */
+.printable-header {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding-bottom: 20px;
 }
 
-.view-btn.wiki-link:hover {
+.download-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 24px;
     background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-    border-color: transparent;
     color: white;
+    border-radius: 50px;
+    text-decoration: none;
+    font-family: var(--font-header);
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: all var(--transition-normal);
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.download-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(99, 102, 241, 0.4);
+    filter: brightness(1.1);
+}
+
+.download-btn svg {
+    width: 20px;
+    height: 20px;
 }
 
 @media print {
@@ -316,7 +347,8 @@ body::before {
 
     .view-switcher,
     .search-container,
-    .nav {
+    .nav,
+    .printable-header {
         display: none !important;
     }
 
@@ -431,7 +463,6 @@ body::before {
     border: 1px solid var(--key-border);
     border-radius: var(--border-radius);
     cursor: pointer;
-    transition: all var(--transition-fast);
     position: relative;
     overflow: hidden;
 }
@@ -454,14 +485,12 @@ body::before {
 }
 
 .key:hover {
-    transform: translateY(-3px) scale(1.02);
     background: var(--key-bg-hover);
     border-color: var(--accent-primary);
     box-shadow: var(--key-shadow-hover);
 }
 
 .key.selected {
-    transform: translateY(-3px) scale(1.02);
     background: var(--key-bg-hover);
     border-color: var(--accent-primary);
     box-shadow: var(--key-shadow-hover), 0 0 30px var(--accent-glow);
@@ -614,7 +643,8 @@ body::before {
 .info-panel {
     width: 100%;
     max-width: 800px;
-    min-height: 200px;
+    max-height: 600px;
+    overflow-y: auto;
     background: var(--bg-glass);
     backdrop-filter: blur(16px);
     border-radius: var(--border-radius-lg);
@@ -659,22 +689,6 @@ body::before {
 
 .info-default p {
     color: var(--text-muted);
-}
-
-.info-shortcuts {
-    animation: fadeIn 0.3s ease;
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
 }
 
 .info-header {

@@ -581,28 +581,6 @@ body::before {
     display: flex;
     justify-content: center;
     perspective: 1000px;
-    position: relative;
-    max-width: 640px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.hero-overlay {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 10;
-    pointer-events: none;
-}
-
-.hero-logo {
-    width: 600px;
-    /* Adjust size as needed */
-    height: auto;
-    filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.3));
-    opacity: 0.9;
 }
 
 .hero-media video {
