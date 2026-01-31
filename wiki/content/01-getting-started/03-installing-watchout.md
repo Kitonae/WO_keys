@@ -4,26 +4,31 @@ title: "Installing WATCHOUT"
 
 ## Installing WATCHOUT
 
-### Download and Installation
+Setting up WATCHOUT represents the first step toward creating your show. The installation process is straightforward, but ensuring your system is prepared correctly is key to a stable performance environment.
 
-- Download the WATCHOUT 7 installer from **dataton.com**
+### Getting the Installer
 
-- Run the installer as Administrator
+1.  Visit the official Dataton website at **dataton.com/downloads**.
+2.  Navigate to the **WATCHOUT 7** section.
+3.  Download the latest release installer.
 
-- Follow the on-screen instructions
+### Installation Process
 
-- Restart your computer when prompted
+#### 1. Run as Administrator
+Right-click the downloaded installer file and select **Run as administrator**. This ensures the installer has the necessary permissions to register components and modify system settings.
 
-### License Activation
+#### 3. Drivers and Prerequisites
+The installer checks for and installs several critical system dependencies. It is essential to allow these installations to complete:
 
-WATCHOUT requires a valid license to operate. You can activate your license in the License window accessible from the Help menu.
+*   **CodeMeter Runtime:** This is the background service that manages your Dataton license keys. It ensures your software is properly authorized and handles network licensing if applicable.
+*   **Microsoft WebView2:** Required for certain parts of the user interface (such as the Asset Manager and Help system) that are built on modern web technologies.
+*   **Vulkan Runtime:** A modern, high-performance graphics API. WATCHOUT 7 uses Vulkan for its rendering engine to achieve lower overhead and efficient GPU resource management.
 
-### Firewall Configuration
+#### 4. Restart
+After the installation completes, **restart your computer**. This is mandatory to ensure all system drivers and network services are correctly initialized.
 
-During installation, WATCHOUT automatically configures Windows Firewall rules. If you use third-party firewall software, ensure these ports are open:
+### Post-Installation Checklist
 
-- **TCP 3039** – Primary communication
-
-- **TCP 3040** – Asset transfer
-
-- **UDP 40400-40500** – Discovery and sync
+*   **Windows Settings:** Set "Power & sleep" settings to **Never** for both screen and sleep.
+*   **Notifications:** Turn off "Focus assist" and Windows notifications to prevent interruptions.
+*   **User Account:** It is recommended to run WATCHOUT under a Standard User account with auto-login enabled for Display computers, not Administrator, to prevent accidental system changes during a show.

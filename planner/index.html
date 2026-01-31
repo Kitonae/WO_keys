@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Infrastructure planning tool for WATCHOUT systems using a node-based editor.">
+    <title>WATCHOUT Planner</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <!-- Using FontAwesome for icons if available, otherwise fallback to text/svg -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="app">
+        <header class="header">
+            <div class="logo">
+                <h1>WATCHOUT PLANNER</h1>
+            </div>
+            <div class="toolbar">
+                <button id="add-production" class="tool-btn" title="Add Production Computer">
+                    <i class="fa-solid fa-desktop"></i> Production
+                </button>
+                <button id="add-display" class="tool-btn" title="Add Display Server">
+                    <i class="fa-solid fa-server"></i> Display Server
+                </button>
+                <button id="add-projector" class="tool-btn" title="Add Projector">
+                    <i class="fa-solid fa-video"></i> Projector
+                </button>
+                <button id="add-led" class="tool-btn" title="Add LED Wall">
+                    <i class="fa-solid fa-border-all"></i> LED Wall
+                </button>
+                <button id="add-switch" class="tool-btn" title="Add Network Switch">
+                    <i class="fa-solid fa-network-wired"></i> Switch
+                </button>
+                <div class="separator"></div>
+                <button id="clear-canvas" class="tool-btn danger">
+                    <i class="fa-solid fa-trash"></i> Clear
+                </button>
+                <button id="save-plan" class="tool-btn secondary">
+                    <i class="fa-solid fa-save"></i> Save JSON
+                </button>
+            </div>
+        </header>
+
+        <main class="main-editor">
+            <div id="editor-container" class="editor-container">
+                <svg id="connections-layer" class="connections-layer"></svg>
+                <div id="nodes-layer" class="nodes-layer">
+                    <!-- Nodes will be added here -->
+                </div>
+            </div>
+            <div class="properties-panel" id="properties-panel">
+                <h3>Properties</h3>
+                <div id="properties-content">
+                    <p class="placeholder-text">Select a node to view properties.</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>

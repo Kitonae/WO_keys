@@ -45,27 +45,29 @@ function markdownToHtml(markdown) {
     html = html.replace(/^## (.+)$/gm, '<h2>$1</h2>');
     html = html.replace(/^# (.+)$/gm, '<h1>$1</h1>');
 
-    // Bold and italic
-    html = html.replace(/\*\*\*(.+?)\*\*\*/g, '<strong><em>$1</em></strong>');
-    html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
-    html = html.replace(/\*(.+?)\*/g, '<em>$1</em>');
-
-    // Callout boxes (custom syntax)
-    html = html.replace(/:::info\n([\s\S]*?):::/g, "<div class='info-box'><p>$1</p></div>");
-    html = html.replace(/:::warning\n([\s\S]*?):::/g, "<div class='warning-box'><p>$1</p></div>");
-    html = html.replace(/:::tip\n([\s\S]*?):::/g, "<div class='info-box'><p>$1</p></div>");
-
     // Tables
     html = convertTables(html);
 
-    // Unordered lists
+    // Lists (Process before inline styles to avoid interfering with * styling)
     html = convertLists(html);
-
-    // Ordered lists
     html = convertOrderedLists(html);
 
+    // Callout boxes (custom syntax)
+    // Allow for optional spaces and handle newlines more robustly
+    html = html.replace(/^:::\s*info\s*\n([\s\S]*?)^:::/gm, "<div class='info-box'><p>$1</p></div>");
+    html = html.replace(/^:::\s*warning\s*\n([\s\S]*?)^:::/gm, "<div class='warning-box'><p>$1</p></div>");
+    html = html.replace(/^:::\s*tip\s*\n([\s\S]*?)^:::/gm, "<div class='info-box'><p>$1</p></div>");
+
+    // Bold and italic
+    // Use slightly stricter regex to avoid matching across lines or mismatched tags
+    html = html.replace(/\*\*\*([^\*]+?)\*\*\*/g, '<strong><em>$1</em></strong>');
+    html = html.replace(/\*\*([^\*]+?)\*\*/g, '<strong>$1</strong>');
+    // For italics, ensure we don't match across lines (newlines) to prevent list items 
+    // from being interpreted as italics if list processing fails
+    html = html.replace(/(?<!\*)\*([^\*\n]+?)\*(?!\*)/g, '<em>$1</em>');
+
     // Paragraphs - wrap lines that aren't already wrapped in block-level elements
-    html = html.split('\n\n').map(block => {
+    html = html.split(/\r?\n\r?\n/).map(block => {
         block = block.trim();
         if (!block) return '';
         // Skip blocks that are already block-level HTML elements
@@ -95,7 +97,7 @@ function escapeHtml(text) {
 }
 
 function convertTables(html) {
-    const lines = html.split('\n');
+    const lines = html.split(/\r?\n/);
     const result = [];
     let inTable = false;
     let tableRows = [];
@@ -151,7 +153,7 @@ function buildTable(rows) {
 }
 
 function convertLists(html) {
-    const lines = html.split('\n');
+    const lines = html.split(/\r?\n/);
     const result = [];
     let inList = false;
 
@@ -182,7 +184,7 @@ function convertLists(html) {
 }
 
 function convertOrderedLists(html) {
-    const lines = html.split('\n');
+    const lines = html.split(/\r?\n/);
     const result = [];
     let inList = false;
 
@@ -247,6 +249,33 @@ function parseFrontmatter(content) {
 function getSortOrder(filename) {
     const match = filename.match(/^(\d+)-/);
     return match ? parseInt(match[1], 10) : 999;
+}
+
+// Extract a short description from content
+function extractDescription(content) {
+    // Remove headers
+    let text = content.replace(/^#+\s+.+$/gm, '');
+    // Remove images
+    text = text.replace(/!\[.*?\]\(.*?\)/g, '');
+    // Remove special blocks
+    text = text.replace(/:::.*?:::/gs, '');
+    // Remove scripts
+    text = text.replace(/<script\b[^>]*>([\s\S]*?)<\/script>/gm, "");
+    // Remove tags
+    text = text.replace(/<\/?[^>]+(>|$)/g, "");
+
+    // Get first paragraph
+    const paragraphs = text.split(/\r?\n\r?\n/);
+    for (const p of paragraphs) {
+        const cleanP = p.trim();
+        if (cleanP && cleanP.length > 20) {
+            // Strip markdown formatting like bold/italic
+            let plain = cleanP.replace(/\*\*|__|[*_`]/g, '');
+            // Truncate
+            return plain.length > 120 ? plain.substring(0, 117) + '...' : plain;
+        }
+    }
+    return '';
 }
 
 // Convert filename to title (e.g., "01-welcome.md" -> "Welcome")
@@ -322,10 +351,15 @@ function buildContent() {
             const { metadata, content } = parseFrontmatter(fileContent);
 
             const sectionTitle = metadata.title || filenameToTitle(sectionFile);
+            const sectionDescription = metadata.description || extractDescription(content);
             const sectionHtml = markdownToHtml(content);
 
             sections[sectionTitle] = sectionHtml;
-            tocSections.push({ title: sectionTitle, page: pageCounter++ });
+            tocSections.push({
+                title: sectionTitle,
+                page: pageCounter++,
+                description: sectionDescription
+            });
 
             console.log(`    - ${sectionTitle}`);
         });
@@ -392,7 +426,8 @@ function getIcon(iconName) {
             tocData.push({
                 level: 2,
                 title: sub.title,
-                page: sub.page
+                page: sub.page,
+                description: sub.description
             });
         });
     });
@@ -411,8 +446,13 @@ function processHierarchy() {
 
     tocData.forEach((item) => {
         if (item.level === 1) {
+            const isDisabled = typeof wikiConfig !== 'undefined' && 
+                wikiConfig.disabledChapters && 
+                wikiConfig.disabledChapters.includes(item.title);
+
             currentChapter = {
                 ...item,
+                disabled: isDisabled,
                 subsections: []
             };
             chapters.push(currentChapter);

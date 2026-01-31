@@ -65,8 +65,8 @@ function renderSidebar() {
     if (!tocNav) return;
 
     tocNav.innerHTML = chaptersData.map((chapter, index) => `
-        <div class="toc-chapter" data-index="${index}">
-            <button class="toc-chapter-header" data-title="${chapter.title}">
+        <div class="toc-chapter ${chapter.disabled ? 'disabled' : ''}" data-index="${index}">
+            <button class="toc-chapter-header" data-title="${chapter.title}" ${chapter.disabled ? 'disabled' : ''}>
                 <span class="toc-chapter-icon">${getIcon(chapter.icon)}</span>
                 <span class="toc-chapter-title">${chapter.title}</span>
                 ${chapter.subsections.length > 0 ? `
@@ -93,7 +93,7 @@ function renderTocPreview() {
     if (!tocPreviewGrid) return;
 
     tocPreviewGrid.innerHTML = chaptersData.map(chapter => `
-        <div class="toc-card" data-section="${chapter.title}">
+        <div class="toc-card ${chapter.disabled ? 'disabled' : ''}" data-section="${chapter.title}">
             <h4>
                 <span class="toc-card-icon">${getIcon(chapter.icon)}</span>
                 ${chapter.title}
@@ -112,6 +112,7 @@ function renderTocPreview() {
     // Add click handlers
     tocPreviewGrid.querySelectorAll('.toc-card').forEach(card => {
         card.addEventListener('click', () => {
+            if (card.classList.contains('disabled')) return;
             const sectionTitle = card.dataset.section;
             navigateToSection(sectionTitle);
         });
@@ -163,7 +164,7 @@ function setupEventListeners() {
     // Theme toggle
     if (themeToggle) {
         themeToggle.addEventListener('click', () => {
-            const themes = ['dark', 'light', 'midnight', 'forest', 'synthwave'];
+            const themes = ['dark', 'light', 'midnight'];
             const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
             const currentIndex = themes.indexOf(currentTheme);
             const nextIndex = (currentIndex + 1) % themes.length;
@@ -178,6 +179,14 @@ function setupEventListeners() {
     document.querySelectorAll('.toc-chapter-header').forEach(header => {
         header.addEventListener('click', (e) => {
             const chapter = header.closest('.toc-chapter');
+
+            // Should be handled by css pointer-events, but extra check
+            if (chapter.classList.contains('disabled')) {
+                e.preventDefault();
+                e.stopPropagation();
+                return;
+            }
+
             const index = parseInt(chapter.dataset.index);
             const title = header.dataset.title;
             const subsections = chapter.querySelector('.toc-subsections');
@@ -436,9 +445,9 @@ function renderSectionContent(section, chapter, isSubsection) {
             <div class="subsection-list">
                 ${chapter.subsections.map(sub => `
                     <div class="subsection-item" data-title="${sub.title}">
-                        <span class="subsection-icon">${icons.link}</span>
                         <div class="subsection-details">
                             <h4>${sub.title}</h4>
+                            ${sub.description ? `<p class="subsection-description">${sub.description}</p>` : ''}
                         </div>
                     </div>
                 `).join('')}

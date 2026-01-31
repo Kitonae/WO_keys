@@ -34,27 +34,38 @@ const tocData = [
     {
         "level": 2,
         "title": "Welcome to WATCHOUT 7",
-        "page": 1
+        "page": 1,
+        "description": "WATCHOUT 7 represents the latest evolution of Dataton's award-winning multi-display production and playback system. C..."
     },
     {
         "level": 2,
         "title": "System Requirements",
-        "page": 2
+        "page": 2,
+        "description": "WATCHOUT 7 requires a Windows-based computer with modern hardware to deliver optimal performance. The requirements di..."
     },
     {
         "level": 2,
         "title": "Installing WATCHOUT",
-        "page": 3
+        "page": 3,
+        "description": "Setting up WATCHOUT represents the first step toward creating your show. The installation process is straightforward,..."
     },
     {
         "level": 2,
         "title": "Launching the Application",
-        "page": 4
+        "page": 4,
+        "description": "Once WATCHOUT is installed, you are ready to launch the software. How you launch it depends on whether you are workin..."
+    },
+    {
+        "level": 2,
+        "title": "Network Configuration",
+        "page": 5,
+        "description": "Establishing a robust and properly configured network is critical for WATCHOUT 7. The system relies on the network no..."
     },
     {
         "level": 2,
         "title": "Quick Start Tutorial",
-        "page": 5
+        "page": 6,
+        "description": "Follow these steps to create your first simple presentation."
     },
     {
         "level": 1,
@@ -65,37 +76,44 @@ const tocData = [
     {
         "level": 2,
         "title": "Main Window Overview",
-        "page": 1
+        "page": 1,
+        "description": "The WATCHOUT interface is divided into several dockable windows that can be arranged to suit your workflow."
     },
     {
         "level": 2,
         "title": "The Stage Window",
-        "page": 2
+        "page": 2,
+        "description": "The Stage is your visual canvas – a representation of all your displays and how content appears on them."
     },
     {
         "level": 2,
         "title": "The Timeline Window",
-        "page": 3
+        "page": 3,
+        "description": "The Timeline is where you orchestrate your show – arranging media and controlling precisely when things happen."
     },
     {
         "level": 2,
         "title": "The Assets Window",
-        "page": 4
+        "page": 4,
+        "description": "The Assets window is your media library – all images, videos, and audio files available for use in your show."
     },
     {
         "level": 2,
         "title": "The Properties Panel",
-        "page": 5
+        "page": 5,
+        "description": "The Properties panel shows settings for whatever is currently selected – displays, cues, or media."
     },
     {
         "level": 2,
         "title": "The Network Window",
-        "page": 6
+        "page": 6,
+        "description": "The Network window shows all WATCHOUT devices on your network and their status."
     },
     {
         "level": 2,
         "title": "Customizing Your Workspace",
-        "page": 7
+        "page": 7,
+        "description": "WATCHOUT's interface is fully customizable to match your workflow."
     },
     {
         "level": 1,
@@ -106,22 +124,26 @@ const tocData = [
     {
         "level": 2,
         "title": "Creating a New Show",
-        "page": 1
+        "page": 1,
+        "description": "Start a new project from scratch:"
     },
     {
         "level": 2,
         "title": "Opening Existing Shows",
-        "page": 2
+        "page": 2,
+        "description": "- File → Open or Ctrl+O – Browse for a show file"
     },
     {
         "level": 2,
         "title": "Saving Your Work",
-        "page": 3
+        "page": 3,
+        "description": "- Save (Ctrl+S) – Save to current location"
     },
     {
         "level": 2,
         "title": "Show Properties",
-        "page": 4
+        "page": 4,
+        "description": "Access show-wide settings from File → Properties."
     },
     {
         "level": 1,
@@ -132,37 +154,44 @@ const tocData = [
     {
         "level": 2,
         "title": "Adding Displays",
-        "page": 1
+        "page": 1,
+        "description": "- Go to Stage → Add Display"
     },
     {
         "level": 2,
         "title": "Virtual Displays",
-        "page": 2
+        "page": 2,
+        "description": "Virtual displays are canvas areas that can be used for content composition before mapping to physical displays."
     },
     {
         "level": 2,
         "title": "3D Mapping Projectors",
-        "page": 3
+        "page": 3,
+        "description": "For projection onto 3D surfaces, use 3D mapping projectors."
     },
     {
         "level": 2,
         "title": "Display Grid Setup",
-        "page": 4
+        "page": 4,
+        "description": "Quickly create multi-display arrangements using the grid tool."
     },
     {
         "level": 2,
         "title": "Display Properties",
-        "page": 5
+        "page": 5,
+        "description": "| Property | Description |\n| --- | --- |\n| Name | Identifier for the display |\n| Resolution | Width × Height in pixel..."
     },
     {
         "level": 2,
         "title": "Edge Blending",
-        "page": 6
+        "page": 6,
+        "description": "Create seamless panoramas by blending overlapping projector edges."
     },
     {
         "level": 2,
         "title": "Geometry Correction",
-        "page": 7
+        "page": 7,
+        "description": "WATCHOUT provides multiple tools for correcting projection distortion."
     },
     {
         "level": 1,
@@ -173,42 +202,50 @@ const tocData = [
     {
         "level": 2,
         "title": "Asset Manager",
-        "page": 1
+        "page": 1,
+        "description": "The Asset Manager is a core component of WATCHOUT 7 that manages all media files used in your shows."
     },
     {
         "level": 2,
         "title": "Asset Types",
-        "page": 2
+        "page": 2,
+        "description": "WATCHOUT 7 supports a wide variety of media types, each with specific capabilities and use cases."
     },
     {
         "level": 2,
         "title": "Asset Properties",
-        "page": 3
+        "page": 3,
+        "description": "Each asset has properties that control how it behaves in your show. Access properties by selecting an asset and viewi..."
     },
     {
         "level": 2,
         "title": "Formats & Codecs",
-        "page": 4
+        "page": 4,
+        "description": "Choosing the right format and codec is crucial for optimal playback performance."
     },
     {
         "level": 2,
         "title": "Web User Interface",
-        "page": 5
+        "page": 5,
+        "description": "WATCHOUT 7 includes a web-based interface for managing assets remotely. This allows team members to upload and organi..."
     },
     {
         "level": 2,
         "title": "Asset Watcher",
-        "page": 6
+        "page": 6,
+        "description": "The Asset Watcher automatically monitors designated folders for new or changed files, streamlining the content workflow."
     },
     {
         "level": 2,
         "title": "Asset Transfer",
-        "page": 7
+        "page": 7,
+        "description": "When going online, optimized assets must be transferred to display servers. WATCHOUT manages this automatically."
     },
     {
         "level": 2,
         "title": "Asset Manager Settings",
-        "page": 8
+        "page": 8,
+        "description": "Configure the Asset Manager behavior through the Settings dialog."
     },
     {
         "level": 1,
@@ -219,42 +256,50 @@ const tocData = [
     {
         "level": 2,
         "title": "Understanding the Timeline",
-        "page": 1
+        "page": 1,
+        "description": "- Time Ruler – Shows current position and allows navigation"
     },
     {
         "level": 2,
         "title": "Adding Media Cues",
-        "page": 2
+        "page": 2,
+        "description": "- Drag media from the Assets window onto the Timeline"
     },
     {
         "level": 2,
         "title": "Working with Layers",
-        "page": 3
+        "page": 3,
+        "description": "Higher layers appear in front of lower layers on stage. Use this for overlaying content."
     },
     {
         "level": 2,
         "title": "Adjusting Timing",
-        "page": 4
+        "page": 4,
+        "description": "Drag cues left/right to change their start time. Hold Shift to constrain to horizontal movement."
     },
     {
         "level": 2,
         "title": "Control Cues",
-        "page": 5
+        "page": 5,
+        "description": "Control cues trigger actions rather than displaying content."
     },
     {
         "level": 2,
         "title": "Comment Cues",
-        "page": 6
+        "page": 6,
+        "description": "Add notes and markers to your timeline."
     },
     {
         "level": 2,
         "title": "Output Cues",
-        "page": 7
+        "page": 7,
+        "description": "Send control signals to external devices and systems."
     },
     {
         "level": 2,
         "title": "Grouping Cues",
-        "page": 8
+        "page": 8,
+        "description": "Combine multiple cues into groups for easier management."
     },
     {
         "level": 1,
@@ -265,47 +310,56 @@ const tocData = [
     {
         "level": 2,
         "title": "Understanding Tweens",
-        "page": 1
+        "page": 1,
+        "description": "A tween is an animated change over time. Tweens are shown as colored bars in the timeline."
     },
     {
         "level": 2,
         "title": "Position and Movement",
-        "page": 2
+        "page": 2,
+        "description": "Animate the position of content on stage."
     },
     {
         "level": 2,
         "title": "Scale and Size",
-        "page": 3
+        "page": 3,
+        "description": "Animate the size of content."
     },
     {
         "level": 2,
         "title": "Rotation Effects",
-        "page": 4
+        "page": 4,
+        "description": "Rotate content around different axes."
     },
     {
         "level": 2,
         "title": "Opacity and Fades",
-        "page": 5
+        "page": 5,
+        "description": "Control transparency for fade effects."
     },
     {
         "level": 2,
         "title": "Cropping",
-        "page": 6
+        "page": 6,
+        "description": "Animate the visible area of content."
     },
     {
         "level": 2,
         "title": "Color Adjustments",
-        "page": 7
+        "page": 7,
+        "description": "Animate color properties for dynamic effects."
     },
     {
         "level": 2,
         "title": "Blur Effects",
-        "page": 8
+        "page": 8,
+        "description": "Add blur for depth of field or transition effects."
     },
     {
         "level": 2,
         "title": "Audio Volume",
-        "page": 9
+        "page": 9,
+        "description": "Animate audio levels over time."
     },
     {
         "level": 1,
@@ -316,27 +370,32 @@ const tocData = [
     {
         "level": 2,
         "title": "Starting and Stopping",
-        "page": 1
+        "page": 1,
+        "description": "- Spacebar – Toggle play/pause"
     },
     {
         "level": 2,
         "title": "Preview Mode",
-        "page": 2
+        "page": 2,
+        "description": "Preview your show directly in the Stage window without going online to display servers."
     },
     {
         "level": 2,
         "title": "Connecting to Display Servers",
-        "page": 3
+        "page": 3,
+        "description": "WATCHOUT automatically discovers display servers on the same network. They appear in the Network window."
     },
     {
         "level": 2,
         "title": "Going Online",
-        "page": 4
+        "page": 4,
+        "description": "Going online sends your show data to display servers for synchronized playback."
     },
     {
         "level": 2,
         "title": "Running Your Show",
-        "page": 5
+        "page": 5,
+        "description": "- Go online with all display servers"
     },
     {
         "level": 1,
@@ -347,32 +406,38 @@ const tocData = [
     {
         "level": 2,
         "title": "Network Overview",
-        "page": 1
+        "page": 1,
+        "description": "WATCHOUT uses a star topology with the Producer computer acting as the director, controlling multiple display servers."
     },
     {
         "level": 2,
         "title": "Display Servers",
-        "page": 2
+        "page": 2,
+        "description": "Display servers are computers that render and output video to projectors or screens."
     },
     {
         "level": 2,
         "title": "Connecting Devices",
-        "page": 3
+        "page": 3,
+        "description": "WATCHOUT uses multicast discovery. All devices on the same subnet automatically find each other."
     },
     {
         "level": 2,
         "title": "Firewall Configuration",
-        "page": 4
+        "page": 4,
+        "description": "| Port | Protocol | Purpose |\n| --- | --- | --- |\n| 3039 | TCP | Primary communication |\n| 3040 | TCP | Asset transfe..."
     },
     {
         "level": 2,
         "title": "NDI Video Sources",
-        "page": 5
+        "page": 5,
+        "description": "Network Device Interface (NDI) allows video transmission over standard networks."
     },
     {
         "level": 2,
         "title": "Dante Audio",
-        "page": 6
+        "page": 6,
+        "description": "Dante provides professional-quality networked audio."
     },
     {
         "level": 1,
@@ -383,32 +448,38 @@ const tocData = [
     {
         "level": 2,
         "title": "File Operations",
-        "page": 1
+        "page": 1,
+        "description": "| Shortcut | Action |\n| --- | --- |\n| Ctrl+N | New show |\n| Ctrl+O | Open show |\n| Ctrl+S | Save show |\n| Ctrl+Q | Qu..."
     },
     {
         "level": 2,
         "title": "Edit Commands",
-        "page": 2
+        "page": 2,
+        "description": "| Shortcut | Action |\n| --- | --- |\n| Ctrl+Z | Undo |\n| Ctrl+Shift+Z | Redo |\n| Ctrl+X | Cut |\n| Ctrl+C | Copy |\n| Ct..."
     },
     {
         "level": 2,
         "title": "Stage Navigation",
-        "page": 3
+        "page": 3,
+        "description": "| Shortcut | Action |\n| --- | --- |\n| Ctrl+Shift+D | Frame all displays |\n| Ctrl+Shift+O | Scroll to origin |\n| Ctrl+..."
     },
     {
         "level": 2,
         "title": "Timeline Controls",
-        "page": 4
+        "page": 4,
+        "description": "| Shortcut | Action |\n| --- | --- |\n| Spacebar | Play/Pause toggle |\n| Numpad 0 | Start playback |\n| Escape | Pause |..."
     },
     {
         "level": 2,
         "title": "Tween Shortcuts",
-        "page": 5
+        "page": 5,
+        "description": "| Shortcut | Tween Type |\n| --- | --- |\n| Alt+P | Position |\n| Alt+S | Scale |\n| Alt+O | Opacity |\n| Alt+R | Rotation..."
     },
     {
         "level": 2,
         "title": "Window Management",
-        "page": 6
+        "page": 6,
+        "description": "| Shortcut | Action |\n| --- | --- |\n| Ctrl+Tab | Cycle through windows |\n| Ctrl+L | Toggle online |\n| Ctrl+N | Toggle..."
     },
     {
         "level": 1,
@@ -419,32 +490,38 @@ const tocData = [
     {
         "level": 2,
         "title": "Common Issues",
-        "page": 1
+        "page": 1,
+        "description": "- Run as Administrator"
     },
     {
         "level": 2,
         "title": "Performance Tips",
-        "page": 2
+        "page": 2,
+        "description": "- Use SSD storage for media files"
     },
     {
         "level": 2,
         "title": "Display Problems",
-        "page": 3
+        "page": 3,
+        "description": "- Verify display server is online (green status)"
     },
     {
         "level": 2,
         "title": "Network Issues",
-        "page": 4
+        "page": 4,
+        "description": "- Verify both computers are on the same subnet"
     },
     {
         "level": 2,
         "title": "Media Playback Issues",
-        "page": 5
+        "page": 5,
+        "description": "- Wait for optimization to complete (green icon)"
     },
     {
         "level": 2,
         "title": "Getting Help",
-        "page": 6
+        "page": 6,
+        "description": "- Documentation – dataton.com/watchout-7-users-guide"
     }
 ];
 
@@ -455,8 +532,13 @@ function processHierarchy() {
 
     tocData.forEach((item) => {
         if (item.level === 1) {
+            const isDisabled = typeof wikiConfig !== 'undefined' && 
+                wikiConfig.disabledChapters && 
+                wikiConfig.disabledChapters.includes(item.title);
+
             currentChapter = {
                 ...item,
+                disabled: isDisabled,
                 subsections: []
             };
             chapters.push(currentChapter);
