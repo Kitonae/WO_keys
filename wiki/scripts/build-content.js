@@ -66,12 +66,22 @@ function markdownToHtml(markdown) {
     // from being interpreted as italics if list processing fails
     html = html.replace(/(?<!\*)\*([^\*\n]+?)\*(?!\*)/g, '<em>$1</em>');
 
+    // Images
+    html = html.replace(/!\[(.*?)\]\((.*?)\)/g, '<img src="$2" alt="$1" class="content-image">');
+
+    // Videos (custom syntax: @[alt](src)) - thumbnail with autoplay, muted, loop, no controls
+    // Add timestamp to prevent browser caching issues
+    let timestamp = Date.now();
+    html = html.replace(/@\[(.*?)\]\((.*?)\)/g, (match, alt, src) => {
+        return `<video src="${src}?t=${timestamp++}" class="content-video" autoplay muted loop playsinline title="${alt}"></video>`;
+    });
+
     // Paragraphs - wrap lines that aren't already wrapped in block-level elements
     html = html.split(/\r?\n\r?\n/).map(block => {
         block = block.trim();
         if (!block) return '';
-        // Skip blocks that are already block-level HTML elements
-        if (/^<(h[1-6]|table|ul|ol|div|pre|blockquote)/i.test(block)) return block;
+        // Skip blocks that are already block-level HTML elements (including closing tags)
+        if (/^<\/?(h[1-6]|table|ul|ol|div|pre|blockquote|img|video)/i.test(block)) return block;
         if (block.startsWith('___CODEBLOCK_')) return block;
         if (/^[-*\d]/.test(block)) return block; // List items handled separately
         return `<p>${block.replace(/\n/g, ' ')}</p>`;

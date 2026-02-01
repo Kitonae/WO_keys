@@ -17,6 +17,11 @@ Setting up WATCHOUT represents the first step toward creating your show. The ins
 #### 1. Run as Administrator
 Right-click the downloaded installer file and select **Run as administrator**. This ensures the installer has the necessary permissions to register components and modify system settings.
 
+#### 2. Select Components
+During installation, you will be prompted to select components. Ensure valid options are selected for your needs.
+
+![WATCHOUT Setup - Choose Components](../media/watchout-setup.png)
+
 #### 3. Drivers and Prerequisites
 The installer checks for and installs several critical system dependencies. It is essential to allow these installations to complete:
 

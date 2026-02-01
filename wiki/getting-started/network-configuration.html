@@ -656,7 +656,8 @@
 <li><strong>Wired Connections:</strong> Always use wired Ethernet connections (Cat5e, Cat6, or fiber). Wi-Fi is not supported for show synchronization due to latency and packet loss.</li>
 <li><strong>Quality Components:</strong> Invest in reliable, professional-grade networking equipment. Consumer-grade hardware may introduce latency spikes or dropped packets under sustained load.</li>
 
-<p></ul> <h3>Recommended Network Hardware</h3></p>
+</ul>
+<h3>Recommended Network Hardware</h3>
 
 <p>Choosing the right hardware ensures stable, low-latency communication between your Production and Display computers.</p>
 
@@ -683,14 +684,16 @@
 <li><strong>Mellanox ConnectX-3:</strong> High performance, often used in broadcast environments.</li>
 <li><strong>ASUS XG-C100C:</strong> Cost-effective 10GbE option for smaller budgets.</li>
 
-<p></ul> <h4>Cabling</h4></p>
+</ul>
+<h4>Cabling</h4>
 
 <ul>
 <li><strong>Cat5e:</strong> Suitable for Gigabit Ethernet up to 100 meters.</li>
 <li><strong>Cat6/Cat6a:</strong> Recommended for 10GbE or runs approaching 100 meters with better shielding.</li>
 <li><strong>Fiber Optic (SFP/SFP+):</strong> Essential for long-distance runs (over 100 meters) or electrically noisy environments (near LED walls, dimmers, etc.).</li>
 
-<p></ul> <h3>IP Addressing</h3></p>
+</ul>
+<h3>IP Addressing</h3>
 
 <p>WATCHOUT computers must be on the same subnet to discover each other. We recommend using static IP addresses to ensure consistent connectivity.</p>
 
@@ -701,7 +704,9 @@
 <li><strong>Production Computer:</strong> <code>192.168.1.10</code></li>
 <li><strong>Display Computers:</strong> <code>192.168.1.11</code>, <code>192.168.1.12</code>, etc.</li>
 
-<p></ul> <div class='warning-box'><p><strong>Avoid DHCP:</strong> While WATCHOUT can technically work with auto-assigned IPs (DHCP), it is strongly discouraged for live environments. IPs can change upon reboot, potentially breaking your mapping and control links. </p></div></p>
+</ul>
+<div class='warning-box'><p><strong>Avoid DHCP:</strong> While WATCHOUT can technically work with auto-assigned IPs (DHCP), it is strongly discouraged for live environments. IPs can change upon reboot, potentially breaking your mapping and control links.
+</p></div>
 
 <h3>Windows Firewall</h3>
 
@@ -714,7 +719,8 @@
 <li><strong>UDP Port 3040:</strong> Synchronization.</li>
 <li><strong>Asset Management:</strong> Various ports are used for the new Asset Manager syncing; ensure the <code>Dataton.Watchout.exe</code> and <code>Dataton.Watchout.Display.exe</code> applications are fully allowed through the firewall for both Private and Public profile types.</li>
 
-<p></ul> <h3>Advanced: Jumbo Frames</h3></p>
+</ul>
+<h3>Advanced: Jumbo Frames</h3>
 
 <p>For 10GbE networks or systems pushing very high bandwidth video data (especially NDI or uncompressed streams), enabling <strong>Jumbo Frames</strong> (usually 9000 MTU) on all network cards and switches can improve performance. Ensure every device in the chain supports and is configured for the same MTU size.</p>
 

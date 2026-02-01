@@ -12,9 +12,69 @@ document.addEventListener('DOMContentLoaded', () => {
     setupMobileMenu();
     setupHeroVideo();
     setupSidebarToggle();
-    setupSidebarAccordion(); // Add this
+    setupSidebarAccordion();
+    setupVideoModals();
     renderTocPreview();
 });
+
+// Video Modal Functionality
+function setupVideoModals() {
+    // Create modal container if it doesn't exist
+    if (!document.getElementById('video-modal')) {
+        const modal = document.createElement('div');
+        modal.id = 'video-modal';
+        modal.className = 'video-modal';
+        modal.innerHTML = `
+            <button class="video-modal-close" aria-label="Close">&times;</button>
+            <video id="video-modal-player" class="video-modal-content" controls></video>
+        `;
+        document.body.appendChild(modal);
+
+        // Close modal on background click or close button
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal || e.target.classList.contains('video-modal-close')) {
+                closeVideoModal();
+            }
+        });
+
+        // Close on Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeVideoModal();
+            }
+        });
+    }
+
+    // Attach click handlers to all video thumbnails
+    const videos = document.querySelectorAll('.content-video');
+    videos.forEach(video => {
+        video.addEventListener('click', (e) => {
+            e.preventDefault();
+            // Use getAttribute to get the actual src attribute, not the resolved URL
+            openVideoModal(video.getAttribute('src'));
+        });
+    });
+}
+
+function openVideoModal(videoSrc) {
+    const modal = document.getElementById('video-modal');
+    const player = document.getElementById('video-modal-player');
+    if (modal && player) {
+        player.src = videoSrc;
+        modal.classList.add('active');
+        player.play();
+    }
+}
+
+function closeVideoModal() {
+    const modal = document.getElementById('video-modal');
+    const player = document.getElementById('video-modal-player');
+    if (modal && player) {
+        modal.classList.remove('active');
+        player.pause();
+        player.src = '';
+    }
+}
 
 function setupSidebarAccordion() {
     // This logic needs to run on both index.html (dynamic) and sub-pages (static html)

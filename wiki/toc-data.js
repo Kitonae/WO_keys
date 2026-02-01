@@ -65,7 +65,7 @@ const tocData = [
         "level": 2,
         "title": "Quick Start Tutorial",
         "page": 6,
-        "description": "Follow these steps to create your first simple presentation."
+        "description": "Follow these steps to create your first simple presentation in WATCHOUT 7."
     },
     {
         "level": 1,
