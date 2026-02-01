@@ -115,8 +115,8 @@
     --text-muted: #78716c;
     --key-bg: linear-gradient(145deg, #292524, #1c1917);
     --key-border: #44403c;
-    --bg-gradient-1: rgba(234, 88, 12, 0.15);
-    --bg-gradient-2: rgba(249, 115, 22, 0.1);
+    --bg-gradient-1: rgba(234, 88, 12, 0.05);
+    --bg-gradient-2: rgba(249, 115, 22, 0.03);
     --border-subtle: #44403c;
     --input-bg: #292524;
     --input-bg-hover: #44403c;
@@ -403,21 +403,37 @@ body::before {
 
 .toc-subsections {
     display: none;
-    padding-left: 50px;
-    padding-top: 4px;
-    position: relative;
-    z-index: 0;
-    border-radius: 0 0 var(--border-radius) var(--border-radius);
+    padding: 0;
+    margin: 0;
 }
 
-.toc-subsections.expanded {
+.toc-chapter.expanded .toc-subsections {
     display: block;
+    padding-top: 4px;
 }
 
 .toc-subsection {
     display: block;
-    padding: 8px 12px;
-    color: var(--text-secondary);
+    padding: 8px 12px 8px 50px;
+    /* Restored indentation */
+    color: var(--text-muted);
+    /* Was secondary, moved to muted which is usually lighter/clearer or change to primary? Let's verify */
+    /* Wait, usually 'muted' is darker. 'secondary' is 94a3b8. 'primary' is f8fafc. 
+       The user said "darker font" as a complaint. They want it brighter?
+       Let's try var(--text-secondary) but maybe bump opacity or use a brighter color?
+       Actually, let's look at :root. 
+       --text-primary: #f8fafc (white-ish)
+       --text-secondary: #94a3b8 (grey-ish)
+       If they say "use darker font" they might mean "it currently uses darker font and I don't want that".
+       "the subchapters ... use darker font" -> implies this is bad.
+       So I should use --text-primary or something closer to it.
+       Let's use a custom color or just --text-primary with slight opacity to distinguish?
+       Or just --text-secondary but maybe it's too dark on their screen.
+       Let's try setting it to --text-primary but maybe 0.9 opacity? 
+       Or just stick to --text-primary for high visibility given the complaint.
+    */
+    color: var(--text-primary);
+    opacity: 0.8;
     font-size: 0.85rem;
     text-decoration: none;
     border-radius: 6px;
@@ -429,12 +445,14 @@ body::before {
 .toc-subsection:hover {
     background: rgba(255, 255, 255, 0.05);
     color: var(--text-primary);
+    opacity: 1;
 }
 
 .toc-subsection.active {
     background: rgba(107, 37, 221, 0.15);
     border: 1px solid rgba(107, 37, 221, 0.2);
     color: #ffffff;
+    opacity: 1;
 }
 
 /* Disabled state */

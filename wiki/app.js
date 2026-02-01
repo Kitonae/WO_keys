@@ -12,8 +12,60 @@ document.addEventListener('DOMContentLoaded', () => {
     setupMobileMenu();
     setupHeroVideo();
     setupSidebarToggle();
+    setupSidebarAccordion(); // Add this
     renderTocPreview();
 });
+
+function setupSidebarAccordion() {
+    // This logic needs to run on both index.html (dynamic) and sub-pages (static html)
+    // For index.html, it runs after innerHTML is set.
+    // For sub-pages, the HTML is already there.
+
+    // If we're on index.html, we attach listeners AFTER setupSidebar populates it.
+    // But setupSidebar is only for index.html.
+    // So let's make sure we attach event listeners to all .toc-chapter-header elements.
+
+    const headers = document.querySelectorAll('.toc-chapter-header');
+    headers.forEach(header => {
+        header.addEventListener('click', (e) => {
+            const chapterDiv = header.parentElement;
+            const isExpanded = chapterDiv.classList.contains('expanded');
+
+            // Logic:
+            // 1. If user clicks a chapter header that is already expanded:
+            //    - It should COLLAPSE.
+            //    - It should PREVENT navigation (reloading the page).
+            // 2. If user clicks a chapter header that is NOT expanded:
+            //    - It should NAVIGATE to the chapter page.
+
+            // Check if the clicked header's link is the current page
+            const headerLink = header.getAttribute('href');
+            const currentPath = window.location.pathname;
+            // Normalize paths for comparison (e.g., remove trailing slashes, handle index.html)
+            const normalizedHeaderLink = headerLink.endsWith('/index.html') ? headerLink.replace('/index.html', '/') : headerLink;
+            const normalizedCurrentPath = currentPath.endsWith('/index.html') ? currentPath.replace('/index.html', '/') : currentPath;
+
+            if (normalizedHeaderLink === normalizedCurrentPath ||
+                (normalizedHeaderLink === '/' && normalizedCurrentPath === '/index.html') ||
+                (normalizedHeaderLink === '/index.html' && normalizedCurrentPath === '/')) {
+                // We are on this page.
+                // So "clicking again" means we are clicking the active chapter.
+                e.preventDefault();
+                chapterDiv.classList.toggle('expanded');
+                header.classList.toggle('expanded');
+                return;
+            }
+
+            // Logic for closing when already expanded (but not current page context)
+            if (isExpanded) {
+                e.preventDefault();
+                chapterDiv.classList.remove('expanded');
+                header.classList.remove('expanded');
+            }
+            // Else: let default link behavior happen (navigation)
+        });
+    });
+}
 
 function renderTocPreview() {
     const tocPreviewGrid = document.getElementById('toc-preview-grid');
@@ -85,6 +137,9 @@ function setupSidebar() {
         </div>
         `;
     }).join('');
+
+    // Re-attach listeners now that we've added to DOM
+    setupSidebarAccordion();
 }
 
 function setupThemeToggle() {
