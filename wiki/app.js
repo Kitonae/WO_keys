@@ -63,7 +63,7 @@ function setupSidebar() {
         const chapterSlug = slugify(chapter.title);
 
         return `
-        <div class="toc-chapter">
+        <div class="toc-chapter ${chapter.disabled ? 'disabled' : ''}">
             <a href="${chapterSlug}/index.html" class="toc-chapter-header" style="text-decoration: none; color: inherit; display: flex;">
                 <span class="toc-chapter-icon">${getIcon(chapter.icon)}</span>
                 <span class="toc-chapter-title">${chapter.title}</span>

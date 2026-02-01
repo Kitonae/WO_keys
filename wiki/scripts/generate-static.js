@@ -4,6 +4,7 @@ const path = require('path');
 // --- Configuration ---
 const WIKI_ROOT = path.resolve(__dirname, '..');
 const OUTPUT_DIR = WIKI_ROOT; // Generate in the wiki root
+const CONFIG_PATH = path.join(WIKI_ROOT, 'config.js');
 const CONTENT_DATA_PATH = path.join(WIKI_ROOT, 'content-data.js');
 const TOC_DATA_PATH = path.join(WIKI_ROOT, 'toc-data.js');
 
@@ -26,6 +27,14 @@ function getRelativePath(depth) {
 // We'll read the files and evaluate them in a minimal context or regex parse
 // Since the files use 'const variable = ...', we can strip the declaration and JSON.parse
 // But content-data.js has huge string literals.
+
+function loadConfig() {
+    if (!fs.existsSync(CONFIG_PATH)) return { disabledChapters: [] };
+    const raw = fs.readFileSync(CONFIG_PATH, 'utf8');
+    const match = raw.match(/const wikiConfig = ({[\s\S]*?});/);
+    if (!match) return { disabledChapters: [] };
+    return eval('(' + match[1] + ')');
+}
 
 function loadContentData() {
     const raw = fs.readFileSync(CONTENT_DATA_PATH, 'utf8');
@@ -51,6 +60,7 @@ function loadTocData() {
     return { tocData, icons };
 }
 
+const wikiConfig = loadConfig();
 const wikiContent = loadContentData();
 const { tocData, icons } = loadTocData();
 
@@ -61,9 +71,12 @@ function processHierarchy(flatData) {
 
     flatData.forEach((item) => {
         if (item.level === 1) {
+            const isDisabled = wikiConfig.disabledChapters && wikiConfig.disabledChapters.includes(item.title);
+
             currentChapter = {
                 ...item,
                 slug: slugify(item.title),
+                disabled: isDisabled,
                 subsections: []
             };
             chapters.push(currentChapter);
@@ -277,14 +290,11 @@ function generateSidebar(activeSlug, depth) {
         const isActiveChapter = chapter.slug === activeSlug || chapter.subsections.some(sub => sub.slug === activeSlug);
         const expandedClass = isActiveChapter ? 'expanded' : '';
         const activeClass = (chapter.slug === activeSlug) ? 'active' : '';
+        const disabledClass = chapter.disabled ? 'disabled' : '';
         const iconSvg = icons[chapter.icon] || icons.fileText;
 
-        // We'll use a real link for the chapter header
-        // If it has subsections, it expands. But we also want to visit the chapter page.
-        // Current behavior tries to do both.
-
         return `
-        <div class="toc-chapter ${expandedClass}" data-index="${index}">
+        <div class="toc-chapter ${expandedClass} ${disabledClass}" data-index="${index}">
             <a href="${chapterUrl}" class="toc-chapter-header ${activeClass} ${expandedClass}" style="text-decoration: none; color: inherit; display: flex;">
                 <span class="toc-chapter-icon">${iconSvg}</span>
                 <span class="toc-chapter-title">${chapter.title}</span>
@@ -316,6 +326,12 @@ function generateSidebar(activeSlug, depth) {
 
 // 1. Generate Chapter Pages and Subsection Pages
 chapters.forEach(chapter => {
+    // Skip file generation for disabled chapters
+    if (chapter.disabled) {
+        console.log(`Skipping disabled chapter: ${chapter.title}`);
+        return;
+    }
+
     const chapterDir = path.join(OUTPUT_DIR, chapter.slug);
     if (!fs.existsSync(chapterDir)) {
         fs.mkdirSync(chapterDir, { recursive: true });
@@ -324,6 +340,8 @@ chapters.forEach(chapter => {
     // Get Chapter Content
     const chapterContentData = wikiContent[chapter.title];
     let chapterBody = '';
+
+    // ... rest of generation logic (unchanged)
 
     if (chapterContentData && chapterContentData.overview) {
         chapterBody = `<div class="section-overview">${chapterContentData.overview}</div>`;
