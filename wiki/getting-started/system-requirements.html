@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="WATCHOUT User Guide - System Requirements">
+    <title>System Requirements - WATCHOUT 7 User Guide</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles.css">
+    <script>
+        // Apply saved theme immediately to prevent flash
+        (function () {
+            const theme = localStorage.getItem('watchout-wiki-theme') || 'dark';
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
+</head>
+<body>
+    <div class="app">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <a href="../index.html" class="logo" style="text-decoration: none; color: inherit;">
+                    <span class="logo-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                        </svg>
+                    </span>
+                    <h1>WATCHOUT GUIDE</h1>
+                </a>
+                <button class="sidebar-toggle" id="sidebar-toggle" aria-label="Toggle Sidebar">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="search-container">
+                <span class="search-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                </span>
+                <input type="text" id="search-input" class="search-input" placeholder="Search documentation...">
+                <button class="search-clear" id="search-clear" aria-label="Clear search">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+
+            <nav class="toc-nav" id="toc-nav">
+                
+        <div class="toc-chapter expanded " data-index="0">
+            <a href="../getting-started/index.html" class="toc-chapter-header  expanded" style="text-decoration: none; color: inherit; display: flex;">
+                <span class="toc-chapter-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg></span>
+                <span class="toc-chapter-title">1. Getting Started</span>
+                
+                    <svg class="toc-chapter-arrow" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                
+            </a>
+            
+                <div class="toc-subsections expanded">
+                    
+                        <a class="toc-subsection " href="../getting-started/welcome-to-watchout-7.html">
+                            Welcome to WATCHOUT 7
+                        </a>
+                        
+                        <a class="toc-subsection active" href="../getting-started/system-requirements.html">
+                            System Requirements
+                        </a>
+                        
+                        <a class="toc-subsection " href="../getting-started/installing-watchout.html">
+                            Installing WATCHOUT
+                        </a>
+                        
+                        <a class="toc-subsection " href="../getting-started/launching-the-application.html">
+                            Launching the Application
+                        </a>
+                        
+                        <a class="toc-subsection " href="../getting-started/network-configuration.html">
+                            Network Configuration
+                        </a>
+                        
+                        <a class="toc-subsection " href="../getting-started/quick-start-tutorial.html">
+                            Quick Start Tutorial
+                        </a>
+                        
+                </div>
+            
+        </div>
+        
+        <div class="toc-chapter  disabled" data-index="1">
+            <a href="../the-interface/index.html" class="toc-chapter-header  " style="text-decoration: none; color: inherit; display: flex;">
+                <span class="toc-chapter-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg></span>
+                <span class="toc-chapter-title">2. The Interface</span>
+                
+                    <svg class="toc-chapter-arrow" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                
+            </a>
+            
+                <div class="toc-subsections ">
+                    
+                        <a class="toc-subsection " href="../the-interface/main-window-overview.html">
+                            Main Window Overview
+                        </a>
+                        
+                        <a class="toc-subsection " href="../the-interface/the-stage-window.html">
+                            The Stage Window
+                        </a>
+                        
+                        <a class="toc-subsection " href="../the-interface/the-timeline-window.html">
+                            The Timeline Window
+                        </a>
+                        
+                        <a class="toc-subsection " href="../the-interface/the-assets-window.html">
+                            The Assets Window
+                        </a>
+                        
+                        <a class="toc-subsection " href="../the-interface/the-properties-panel.html">
+                            The Properties Panel
+                        </a>
+                        
+                        <a class="toc-subsection " href="../the-interface/the-network-window.html">
+                            The Network Window
+                        </a>
+                        
+                        <a class="toc-subsection " href="../the-interface/customizing-your-workspace.html">
+                            Customizing Your Workspace
+                        </a>
+                        
+                </div>
+            
+        </div>
+        
+        <div class="toc-chapter  disabled" data-index="2">
+            <a href="../working-with-shows/index.html" class="toc-chapter-header  " style="text-decoration: none; color: inherit; display: flex;">
+                <span class="toc-chapter-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg></span>
+                <span class="toc-chapter-title">3. Working with Shows</span>
+                
+                    <svg class="toc-chapter-arrow" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                
+            </a>
+            
+                <div class="toc-subsections ">
+                    
+                        <a class="toc-subsection " href="../working-with-shows/creating-a-new-show.html">
+                            Creating a New Show
+                        </a>
+                        
+                        <a class="toc-subsection " href="../working-with-shows/opening-existing-shows.html">
+                            Opening Existing Shows
+                        </a>
+                        
+                        <a class="toc-subsection " href="../working-with-shows/saving-your-work.html">
+                            Saving Your Work
+                        </a>
+                        
+                        <a class="toc-subsection " href="../working-with-shows/show-properties.html">
+                            Show Properties
+                        </a>
+                        
+                </div>
+            
+        </div>
+        
+        <div class="toc-chapter  disabled" data-index="3">
+            <a href="../displays-and-outputs/index.html" class="toc-chapter-header  " style="text-decoration: none; color: inherit; display: flex;">
+                <span class="toc-chapter-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg></span>
+                <span class="toc-chapter-title">4. Displays and Outputs</span>
+                
+                    <svg class="toc-chapter-arrow" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                
+            </a>
+            
+                <div class="toc-subsections ">
+                    
+                        <a class="toc-subsection " href="../displays-and-outputs/adding-displays.html">
+                            Adding Displays
+                        </a>
+                        
+                        <a class="toc-subsection " href="../displays-and-outputs/virtual-displays.html">
+                            Virtual Displays
+                        </a>
+                        
+                        <a class="toc-subsection " href="../displays-and-outputs/3d-mapping-projectors.html">
+                            3D Mapping Projectors
+                        </a>
+                        
+                        <a class="toc-subsection " href="../displays-and-outputs/display-grid-setup.html">
+                            Display Grid Setup
+                        </a>
+                        
+                        <a class="toc-subsection " href="../displays-and-outputs/display-properties.html">
+                            Display Properties
+                        </a>
+                        
+                        <a class="toc-subsection " href="../displays-and-outputs/edge-blending.html">
+                            Edge Blending
+                        </a>
+                        
+                        <a class="toc-subsection " href="../displays-and-outputs/geometry-correction.html">
+                            Geometry Correction
+                        </a>
+                        
+                </div>
+            
+        </div>
+        
+        <div class="toc-chapter  disabled" data-index="4">
+            <a href="../assets-asset-manager/index.html" class="toc-chapter-header  " style="text-decoration: none; color: inherit; display: flex;">
+                <span class="toc-chapter-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect><line x1="7" y1="2" x2="7" y2="22"></line><line x1="17" y1="2" x2="17" y2="22"></line><line x1="2" y1="12" x2="22" y2="12"></line><line x1="2" y1="7" x2="7" y2="7"></line><line x1="2" y1="17" x2="7" y2="17"></line><line x1="17" y1="17" x2="22" y2="17"></line><line x1="17" y1="7" x2="22" y2="7"></line></svg></span>
+                <span class="toc-chapter-title">5. Assets & Asset Manager</span>
+                
+                    <svg class="toc-chapter-arrow" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                
+            </a>
+            
+                <div class="toc-subsections ">
+                    
+                        <a class="toc-subsection " href="../assets-asset-manager/asset-manager.html">
+                            Asset Manager
+                        </a>
+                        
+                        <a class="toc-subsection " href="../assets-asset-manager/asset-types.html">
+                            Asset Types
+                        </a>
+                        
+                        <a class="toc-subsection " href="../assets-asset-manager/asset-properties.html">
+                            Asset Properties
+                        </a>
+                        
+                        <a class="toc-subsection " href="../assets-asset-manager/formats-codecs.html">
+                            Formats & Codecs
+                        </a>
+                        
+                        <a class="toc-subsection " href="../assets-asset-manager/web-user-interface.html">
+                            Web User Interface
+                        </a>
+                        
+                        <a class="toc-subsection " href="../assets-asset-manager/asset-watcher.html">
+                            Asset Watcher
+                        </a>
+                        
+                        <a class="toc-subsection " href="../assets-asset-manager/asset-transfer.html">
+                            Asset Transfer
+                        </a>
+                        
+                        <a class="toc-subsection " href="../assets-asset-manager/asset-manager-settings.html">
+                            Asset Manager Settings
+                        </a>
+                        
+                </div>
+            
+        </div>
+        
+        <div class="toc-chapter  disabled" data-index="5">
+            <a href="../timeline-and-cues/index.html" class="toc-chapter-header  " style="text-decoration: none; color: inherit; display: flex;">
+                <span class="toc-chapter-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg></span>
+                <span class="toc-chapter-title">6. Timeline and Cues</span>
+                
+                    <svg class="toc-chapter-arrow" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                
+            </a>
+            
+                <div class="toc-subsections ">
+                    
+                        <a class="toc-subsection " href="../timeline-and-cues/understanding-the-timeline.html">
+                            Understanding the Timeline
+                        </a>
+                        
+                        <a class="toc-subsection " href="../timeline-and-cues/adding-media-cues.html">
+                            Adding Media Cues
+                        </a>
+                        
+                        <a class="toc-subsection " href="../timeline-and-cues/working-with-layers.html">
+                            Working with Layers
+                        </a>
+                        
+                        <a class="toc-subsection " href="../timeline-and-cues/adjusting-timing.html">
+                            Adjusting Timing
+                        </a>
+                        
+                        <a class="toc-subsection " href="../timeline-and-cues/control-cues.html">
+                            Control Cues
+                        </a>
+                        
+                        <a class="toc-subsection " href="../timeline-and-cues/comment-cues.html">
+                            Comment Cues
+                        </a>
+                        
+                        <a class="toc-subsection " href="../timeline-and-cues/output-cues.html">
+                            Output Cues
+                        </a>
+                        
+                        <a class="toc-subsection " href="../timeline-and-cues/grouping-cues.html">
+                            Grouping Cues
+                        </a>
+                        
+                </div>
+            
+        </div>
+        
+        <div class="toc-chapter  disabled" data-index="6">
+            <a href="../effects-and-tweens/index.html" class="toc-chapter-header  " style="text-decoration: none; color: inherit; display: flex;">
+                <span class="toc-chapter-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="21" x2="4" y2="14"></line><line x1="4" y1="10" x2="4" y2="3"></line><line x1="12" y1="21" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="3"></line><line x1="20" y1="21" x2="20" y2="16"></line><line x1="20" y1="12" x2="20" y2="3"></line><line x1="1" y1="14" x2="7" y2="14"></line><line x1="9" y1="8" x2="15" y2="8"></line><line x1="17" y1="16" x2="23" y2="16"></line></svg></span>
+                <span class="toc-chapter-title">7. Effects and Tweens</span>
+                
+                    <svg class="toc-chapter-arrow" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                
+            </a>
+            
+                <div class="toc-subsections ">
+                    
+                        <a class="toc-subsection " href="../effects-and-tweens/understanding-tweens.html">
+                            Understanding Tweens
+                        </a>
+                        
+                        <a class="toc-subsection " href="../effects-and-tweens/position-and-movement.html">
+                            Position and Movement
+                        </a>
+                        
+                        <a class="toc-subsection " href="../effects-and-tweens/scale-and-size.html">
+                            Scale and Size
+                        </a>
+                        
+                        <a class="toc-subsection " href="../effects-and-tweens/rotation-effects.html">
+                            Rotation Effects
+                        </a>
+                        
+                        <a class="toc-subsection " href="../effects-and-tweens/opacity-and-fades.html">
+                            Opacity and Fades
+                        </a>
+                        
+                        <a class="toc-subsection " href="../effects-and-tweens/cropping.html">
+                            Cropping
+                        </a>
+                        
+                        <a class="toc-subsection " href="../effects-and-tweens/color-adjustments.html">
+                            Color Adjustments
+                        </a>
+                        
+                        <a class="toc-subsection " href="../effects-and-tweens/blur-effects.html">
+                            Blur Effects
+                        </a>
+                        
+                        <a class="toc-subsection " href="../effects-and-tweens/audio-volume.html">
+                            Audio Volume
+                        </a>
+                        
+                </div>
+            
+        </div>
+        
+        <div class="toc-chapter  disabled" data-index="7">
+            <a href="../playback/index.html" class="toc-chapter-header  " style="text-decoration: none; color: inherit; display: flex;">
+                <span class="toc-chapter-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg></span>
+                <span class="toc-chapter-title">8. Playback</span>
+                
+                    <svg class="toc-chapter-arrow" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                
+            </a>
+            
+                <div class="toc-subsections ">
+                    
+                        <a class="toc-subsection " href="../playback/starting-and-stopping.html">
+                            Starting and Stopping
+                        </a>
+                        
+                        <a class="toc-subsection " href="../playback/preview-mode.html">
+                            Preview Mode
+                        </a>
+                        
+                        <a class="toc-subsection " href="../playback/connecting-to-display-servers.html">
+                            Connecting to Display Servers
+                        </a>
+                        
+                        <a class="toc-subsection " href="../playback/going-online.html">
+                            Going Online
+                        </a>
+                        
+                        <a class="toc-subsection " href="../playback/running-your-show.html">
+                            Running Your Show
+                        </a>
+                        
+                </div>
+            
+        </div>
+        
+        <div class="toc-chapter  disabled" data-index="8">
+            <a href="../network-setup/index.html" class="toc-chapter-header  " style="text-decoration: none; color: inherit; display: flex;">
+                <span class="toc-chapter-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg></span>
+                <span class="toc-chapter-title">9. Network Setup</span>
+                
+                    <svg class="toc-chapter-arrow" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                
+            </a>
+            
+                <div class="toc-subsections ">
+                    
+                        <a class="toc-subsection " href="../network-setup/network-overview.html">
+                            Network Overview
+                        </a>
+                        
+                        <a class="toc-subsection " href="../network-setup/display-servers.html">
+                            Display Servers
+                        </a>
+                        
+                        <a class="toc-subsection " href="../network-setup/connecting-devices.html">
+                            Connecting Devices
+                        </a>
+                        
+                        <a class="toc-subsection " href="../network-setup/firewall-configuration.html">
+                            Firewall Configuration
+                        </a>
+                        
+                        <a class="toc-subsection " href="../network-setup/ndi-video-sources.html">
+                            NDI Video Sources
+                        </a>
+                        
+                        <a class="toc-subsection " href="../network-setup/dante-audio.html">
+                            Dante Audio
+                        </a>
+                        
+                </div>
+            
+        </div>
+        
+        <div class="toc-chapter  disabled" data-index="9">
+            <a href="../keyboard-shortcuts/index.html" class="toc-chapter-header  " style="text-decoration: none; color: inherit; display: flex;">
+                <span class="toc-chapter-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><path d="M6 8h.001"></path><path d="M10 8h.001"></path><path d="M14 8h.001"></path><path d="M18 8h.001"></path><path d="M8 12h.001"></path><path d="M12 12h.001"></path><path d="M16 12h.001"></path><path d="M7 16h10"></path></svg></span>
+                <span class="toc-chapter-title">10. Keyboard Shortcuts</span>
+                
+                    <svg class="toc-chapter-arrow" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                
+            </a>
+            
+                <div class="toc-subsections ">
+                    
+                        <a class="toc-subsection " href="../keyboard-shortcuts/file-operations.html">
+                            File Operations
+                        </a>
+                        
+                        <a class="toc-subsection " href="../keyboard-shortcuts/edit-commands.html">
+                            Edit Commands
+                        </a>
+                        
+                        <a class="toc-subsection " href="../keyboard-shortcuts/stage-navigation.html">
+                            Stage Navigation
+                        </a>
+                        
+                        <a class="toc-subsection " href="../keyboard-shortcuts/timeline-controls.html">
+                            Timeline Controls
+                        </a>
+                        
+                        <a class="toc-subsection " href="../keyboard-shortcuts/tween-shortcuts.html">
+                            Tween Shortcuts
+                        </a>
+                        
+                        <a class="toc-subsection " href="../keyboard-shortcuts/window-management.html">
+                            Window Management
+                        </a>
+                        
+                </div>
+            
+        </div>
+        
+        <div class="toc-chapter  disabled" data-index="10">
+            <a href="../troubleshooting/index.html" class="toc-chapter-header  " style="text-decoration: none; color: inherit; display: flex;">
+                <span class="toc-chapter-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg></span>
+                <span class="toc-chapter-title">11. Troubleshooting</span>
+                
+                    <svg class="toc-chapter-arrow" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                
+            </a>
+            
+                <div class="toc-subsections ">
+                    
+                        <a class="toc-subsection " href="../troubleshooting/common-issues.html">
+                            Common Issues
+                        </a>
+                        
+                        <a class="toc-subsection " href="../troubleshooting/performance-tips.html">
+                            Performance Tips
+                        </a>
+                        
+                        <a class="toc-subsection " href="../troubleshooting/display-problems.html">
+                            Display Problems
+                        </a>
+                        
+                        <a class="toc-subsection " href="../troubleshooting/network-issues.html">
+                            Network Issues
+                        </a>
+                        
+                        <a class="toc-subsection " href="../troubleshooting/media-playback-issues.html">
+                            Media Playback Issues
+                        </a>
+                        
+                        <a class="toc-subsection " href="../troubleshooting/getting-help.html">
+                            Getting Help
+                        </a>
+                        
+                </div>
+            
+        </div>
+        
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="tools-section">
+                    <span class="tools-label">Tools</span>
+                    <div class="tools-buttons">
+                        <a href="../../shortcuts/index.html" class="tools-btn" title="Keyboard Shortcuts">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect>
+                                <path d="M6 8h.001"></path>
+                                <path d="M10 8h.001"></path>
+                                <path d="M14 8h.001"></path>
+                                <path d="M18 8h.001"></path>
+                                <path d="M8 12h.001"></path>
+                                <path d="M12 12h.001"></path>
+                                <path d="M16 12h.001"></path>
+                                <path d="M7 16h10"></path>
+                            </svg>
+                        </a>
+                        <a href="../../planner/index.html" class="tools-btn" title="Infrastructure Planner">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <circle cx="18" cy="5" r="3"></circle>
+                                <circle cx="6" cy="12" r="3"></circle>
+                                <circle cx="18" cy="19" r="3"></circle>
+                                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+                            </svg>
+                        </a>
+                        <a href="../../test-patterns/index.html" class="tools-btn" title="Test Pattern Generator">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <rect x="3" y="3" width="7" height="7"></rect>
+                                <rect x="14" y="3" width="7" height="7"></rect>
+                                <rect x="14" y="14" width="7" height="7"></rect>
+                                <rect x="3" y="14" width="7" height="7"></rect>
+                            </svg>
+                        </a>
+                        <button class="tools-btn" id="theme-toggle" aria-label="Toggle theme" title="Toggle light/dark theme">
+                             <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                            </svg>
+                            <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="5"></circle>
+                                <line x1="12" y1="1" x2="12" y2="3"></line>
+                                <line x1="12" y1="21" x2="12" y2="23"></line>
+                                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                                <line x1="1" y1="12" x2="3" y2="12"></line>
+                                <line x1="21" y1="12" x2="23" y2="12"></line>
+                                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                            </svg>
+                             <svg class="midnight-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <circle cx="12" cy="12" r="4"></circle>
+                                <line x1="4.93" y1="4.93" x2="9.17" y2="9.17"></line>
+                                <line x1="19.07" y1="19.07" x2="14.83" y2="14.83"></line>
+                                <line x1="4.93" y1="19.07" x2="9.17" y2="14.83"></line>
+                                <line x1="19.07" y1="4.93" x2="14.83" y2="9.17"></line>
+                            </svg>
+                             <svg class="rust-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                                <polyline points="2 17 12 22 22 17"></polyline>
+                                <polyline points="2 12 12 17 22 12"></polyline>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content" id="main-content">
+            <header class="content-header">
+                <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Open Menu">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                </button>
+                <div class="breadcrumb" id="breadcrumb">
+                    
+            <a href="../index.html" class="breadcrumb-item">Home</a>
+            <span class="breadcrumb-separator">›</span>
+            <a href="index.html" class="breadcrumb-item">1. Getting Started</a>
+            <span class="breadcrumb-separator">›</span>
+            <span class="breadcrumb-item current">System Requirements</span>
+        
+                </div>
+            </header>
+
+            <article class="content-body" id="content-body">
+                <div class="section-content" style="display: block;">
+                    <div class="section-content-body"><h2>System Requirements</h2>
+
+<p>WATCHOUT 7 requires a Windows-based computer with modern hardware to deliver optimal performance. The requirements differ between the Producer computer (where you edit shows) and Display computers (which render and output to projectors/screens).</p>
+
+<h3>Producer vs. Display Computer Architecture</h3>
+
+<p>WATCHOUT uses a <strong>client-server architecture</strong> that separates show creation from show playback:</p>
+
+<p><strong>Producer Computer</strong> – This is your creative workstation where you design, edit, and control shows. The Producer software provides the timeline editor, stage view, and all creative tools. You only need <em>one</em> Producer computer per show, and it doesn't need to be connected to any physical outputs—it can preview everything internally. The Producer sends commands and media to Display computers over the network.</p>
+
+<p><strong>Display Computer(s)</strong> – These are dedicated playback machines that render content and drive physical outputs (projectors, LED walls, monitors). Each Display computer runs the WATCHOUT Display software and connects to your actual screens. A single Display computer can drive up to 4-8 outputs depending on the graphics card. For larger installations, you simply add more Display computers—WATCHOUT synchronizes them frame-accurately over the network.</p>
+
+<div class='info-box'><p><strong>Tip:</strong> You can run both Producer and Display on the same computer for small setups or previewing. For production environments, dedicated Display computers ensure reliable, uninterrupted playback.
+</p></div>
+
+<h3>Producer Computer (Editing)</h3>
+
+<table>
+<tr><th>Component</th><th>Minimum</th><th>Recommended</th></tr>
+<tr><td>Operating System</td><td>Windows 10 21H2 (64-bit)</td><td>Windows 11 23H2 or newer (64-bit)</td></tr>
+<tr><td>Processor</td><td>Intel Core i5 (8th Gen+) or AMD Ryzen 5</td><td>Intel Core i7/i9 (12th Gen+) or AMD Ryzen 7/9</td></tr>
+<tr><td>RAM</td><td>16 GB DDR4</td><td>32 GB DDR5 or more</td></tr>
+<tr><td>Graphics</td><td>DirectX 12 compatible GPU with 4 GB VRAM</td><td>NVIDIA RTX 4000 series or AMD Radeon Pro</td></tr>
+<tr><td>Storage</td><td>SSD with 100 GB free</td><td>NVMe SSD (Gen4) with 1 TB+ free</td></tr>
+<tr><td>Network</td><td>Gigabit Ethernet</td><td>10 Gigabit Ethernet</td></tr>
+</table>
+
+<h3>Display Computer (Playback)</h3>
+
+<table>
+<tr><th>Component</th><th>Minimum</th><th>Recommended</th></tr>
+<tr><td>Operating System</td><td>Windows 10 21H2 (64-bit)</td><td>Windows 11 23H2 or newer (64-bit)</td></tr>
+<tr><td>Processor</td><td>Intel Core i5 (8th Gen+) or AMD Ryzen 5</td><td>Intel Core i7/i9 or AMD Ryzen 7/9</td></tr>
+<tr><td>RAM</td><td>16 GB DDR4</td><td>32 GB DDR5 or more</td></tr>
+<tr><td>Graphics</td><td>NVIDIA GeForce RTX or AMD equivalent</td><td><strong>NVIDIA Quadro RTX / RTX Ada Generation</strong></td></tr>
+<tr><td>Storage</td><td>SATA SSD (500+ MB/s read)</td><td>NVMe SSD (Gen4, 3500+ MB/s read)</td></tr>
+<tr><td>Network</td><td>Gigabit Ethernet</td><td>10 Gigabit Ethernet</td></tr>
+</table>
+
+<h4>Windows LTSC vs. Standard Editions</h4>
+
+<p>For display computers in permanent installations, consider using <strong>Windows 10/11 IoT Enterprise LTSC</strong> (Long-Term Servicing Channel) instead of standard Windows editions:</p>
+
+<table>
+<tr><th>Feature</th><th>Standard Windows</th><th>Windows LTSC</th></tr>
+<tr><td>Feature updates</td><td>Every 6-12 months</td><td>None (security only)</td></tr>
+<tr><td>Support lifecycle</td><td>18-24 months</td><td>5-10 years</td></tr>
+<tr><td>Bloatware/Store apps</td><td>Included</td><td>Removed</td></tr>
+<tr><td>Cortana/Edge/Xbox</td><td>Included</td><td>Removed</td></tr>
+<tr><td>Forced restarts</td><td>Can occur</td><td>Fully controllable</td></tr>
+<tr><td>Update scheduling</td><td>Limited control</td><td>Complete control</td></tr>
+</table>
+
+<p><strong>Practical benefits of LTSC for display servers:</strong></p>
+
+<ul>
+<li><strong>No surprise updates</strong> – Feature updates won't change system behavior or require reboots during shows</li>
+<li><strong>Minimal background processes</strong> – No Cortana, Xbox Game Bar, or Store apps consuming resources</li>
+<li><strong>Predictable environment</strong> – The OS stays exactly as you configured it for years</li>
+<li><strong>Extended support</strong> – Security patches available for 5+ years without upgrading</li>
+<li><strong>Reduced attack surface</strong> – Fewer pre-installed applications means fewer potential vulnerabilities</li>
+
+</ul>
+<div class='warning-box'><p><strong>Licensing Note:</strong> Windows IoT Enterprise LTSC requires volume licensing through Microsoft partners and is priced differently than retail Windows. It's designed for embedded and fixed-function devices like kiosks, digital signage, and display servers—making it ideal for WATCHOUT installations.
+</p></div>
+
+<div class='info-box'><p><strong>Note:</strong> Display computers should be dedicated to WATCHOUT playback. Avoid running other applications during live shows to ensure consistent performance.
+
+<p></p></div></p>
+
+<h3>Windows Updates and Rendering Performance</h3>
+
+<p>Keeping Windows up to date is <strong>critical for optimal WATCHOUT performance</strong>. Newer Windows updates deliver significant improvements to rendering stability and visual output quality:</p>
+
+<h4>WDDM (Windows Display Driver Model) Improvements</h4>
+
+<p>Modern Windows versions include updated WDDM drivers that fundamentally improve how the operating system communicates with graphics hardware:</p>
+
+<ul>
+<li><strong>WDDM 3.0+ (Windows 11)</strong> – Reduced latency for frame presentation, better VSync handling, and improved multi-monitor synchronization</li>
+
+<p><li><strong>Hardware-accelerated GPU scheduling</strong> – Enables the GPU to directly manage its own video memory scheduling, reducing CPU overhead and eliminating stutter during complex compositions</li></p>
+
+<p><li><strong>Optimized flip model</strong> – Modern swap chain presentation reduces tearing and improves frame pacing for smoother playback</li></p>
+
+</ul>
+<h4>DirectX 12 Ultimate Enhancements</h4>
+
+<p>Windows updates continuously improve DirectX 12 capabilities:</p>
+
+<ul>
+<li><strong>Enhanced memory management</strong> – Better VRAM allocation reduces out-of-memory errors with large textures and high-resolution video</li>
+
+<p><li><strong>Improved shader compilation</strong> – Faster loading times and reduced hitching during playback</li></p>
+
+<p><li><strong>Multi-adapter support</strong> – Better handling of systems with multiple GPUs</li></p>
+
+</ul>
+<h4>Multi-Head Output Stability</h4>
+
+<p>For display servers driving multiple outputs, Windows updates are essential:</p>
+
+<ul>
+<li><strong>Improved EDID handling</strong> – Better detection and configuration of connected displays, especially when using EDID emulators or matrix switches</li>
+
+<p><li><strong>Hotplug stability</strong> – Reduced crashes and display resets when cables are connected or disconnected</li></p>
+
+<p><li><strong>Resolution persistence</strong> – Display configurations survive reboots more reliably</li></p>
+
+<p><li><strong>Mosaic/Surround mode fixes</strong> – Critical patches for multi-display spanning configurations</li></p>
+
+</ul>
+<h4>Security and Reliability</h4>
+
+<ul>
+<li><strong>Kernel improvements</strong> – Reduced system crashes and blue screens during extended operation</li>
+
+<p><li><strong>Memory leak fixes</strong> – Essential for 24/7 installations where systems run for weeks without restart</li></p>
+
+<p><li><strong>Timer resolution updates</strong> – More accurate timing for frame-perfect synchronization</li></p>
+
+</ul>
+<div class='warning-box'><p><strong>Recommendation:</strong> Always use the latest stable Windows version and cumulative updates. Test updates in a staging environment before deploying to production show computers.
+</p></div>
+
+<h3>NVIDIA Quadro RTX / RTX Ada Professional Graphics</h3>
+
+<p>While consumer GeForce cards can run WATCHOUT, <strong>NVIDIA Quadro RTX and RTX Ada generation professional GPUs</strong> are strongly recommended for display computers in production environments. Here's why:</p>
+
+<h4>Key Benefits of Quadro RTX</h4>
+
+<table>
+<tr><th>Feature</th><th>Quadro RTX / RTX Pro</th><th>GeForce RTX</th></tr>
+<tr><td>ECC Memory</td><td>✓ Error-correcting VRAM</td><td>✗ Not available</td></tr>
+<tr><td>TCC Mode</td><td>✓ Compute-optimized mode</td><td>✗ Windows display only</td></tr>
+<tr><td>Sync Connector</td><td>✓ Hardware genlock/framelock</td><td>✗ Software sync only</td></tr>
+<tr><td>Displays Supported</td><td>Up to 4-8 native outputs</td><td>Typically 4 outputs</td></tr>
+<tr><td>10-bit Color</td><td>✓ Full support in all apps</td><td>Limited application support</td></tr>
+<tr><td>Driver Certification</td><td>✓ ISV certified, extended testing</td><td>Game-focused optimization</td></tr>
+<tr><td>Long-term Support</td><td>✓ Enterprise driver branches</td><td>Consumer update cycle</td></tr>
+</table>
+
+<h4>ECC Memory – Preventing Visual Artifacts</h4>
+
+<p>Quadro RTX cards feature <strong>Error-Correcting Code (ECC) memory</strong> that automatically detects and corrects single-bit memory errors. This prevents:</p>
+
+<ul>
+<li>Random pixel corruption and visual artifacts during playback</li>
+
+<p><li>Frame buffer corruption during extended operation</li></p>
+
+<p><li>Unexplained crashes in mission-critical installations</li></p>
+
+</ul>
+For 24/7 installations like museums, permanent exhibits, or broadcast applications, ECC memory is essential for guaranteed visual integrity.
+
+<h4>Quadro Sync and Framelock</h4>
+
+<p>For multi-projector installations requiring perfect synchronization:</p>
+
+<ul>
+<li><strong>Quadro Sync II cards</strong> enable hardware-level genlock between multiple GPUs and external sync sources</li>
+
+<p><li><strong>Framelock</strong> ensures all outputs across multiple cards/systems swap buffers simultaneously</li></p>
+
+<p><li>Critical for edge-blended panoramas and LED wall installations where frame tearing between panels is visible</li></p>
+
+</ul>
+<h4>Professional Driver Certification</h4>
+
+<p>Quadro drivers undergo extensive testing and certification:</p>
+
+<ul>
+<li><strong>Optimal Drivers for Enterprise (ODE)</strong> – Stability-focused drivers with extended testing cycles</li>
+
+<p><li><strong>ISV certifications</strong> – Guaranteed compatibility with professional applications</li></p>
+
+<p><li><strong>Longer support lifecycle</strong> – Enterprise customers receive driver updates for extended periods</li></p>
+
+<p><li><strong>Better regression testing</strong> – Less risk of updates breaking existing functionality</li></p>
+
+</ul>
+<h4>Recommended Quadro RTX Models</h4>
+
+<table>
+<tr><th>Model</th><th>VRAM</th><th>Outputs</th><th>Best For</th></tr>
+<tr><td>RTX A4000</td><td>16 GB</td><td>4× DP 1.4</td><td>Mid-range installations, 4K playback</td></tr>
+<tr><td>RTX A5000</td><td>24 GB</td><td>4× DP 1.4</td><td>High-res content, multiple 4K outputs</td></tr>
+<tr><td>RTX A6000</td><td>48 GB</td><td>4× DP 1.4</td><td>8K content, demanding installations</td></tr>
+<tr><td>RTX 4000 Ada</td><td>20 GB</td><td>4× DP 1.4a</td><td>Latest generation, AV1 decode</td></tr>
+<tr><td>RTX 5000 Ada</td><td>32 GB</td><td>4× DP 1.4a</td><td>Premium performance, future-proof</td></tr>
+</table>
+
+<div class='info-box'><p><strong>Tip:</strong> For installations requiring more than 4 outputs per machine, consider using multiple Quadro cards with Quadro Sync, or NVIDIA's NVLink bridge technology for unified memory access across GPUs.
+</p></div>
+
+<h3>Storage Recommendations</h3>
+
+<p>Video playback performance depends heavily on storage speed:</p>
+
+<table>
+<tr><th>Content Type</th><th>Minimum Read Speed</th><th>Recommended Storage</th></tr>
+<tr><td>Single 4K HAP video</td><td>400 MB/s</td><td>SATA SSD</td></tr>
+<tr><td>Multiple 4K videos</td><td>1500 MB/s</td><td>NVMe Gen3 SSD</td></tr>
+<tr><td>8K content</td><td>3000+ MB/s</td><td>NVMe Gen4 SSD</td></tr>
+<tr><td>Image sequences</td><td>5000+ MB/s</td><td>NVMe Gen4 or RAID array</td></tr>
+</table>
+
+<h3>Network Requirements</h3>
+
+<table>
+<tr><th>Component</th><th>Minimum</th><th>Recommended</th></tr>
+<tr><td>Speed</td><td>1 Gbps</td><td>10 Gbps</td></tr>
+<tr><td>Switch</td><td>Managed Gigabit switch</td><td>Enterprise-grade with IGMP snooping</td></tr>
+<tr><td>Cabling</td><td>Cat6</td><td>Cat6a or fiber optic</td></tr>
+<tr><td>Topology</td><td>Star (all on same subnet)</td><td>Dedicated VLAN for WATCHOUT</td></tr>
+</table>
+
+<div class='info-box'><p><strong>What is IGMP Snooping?</strong> Internet Group Management Protocol (IGMP) snooping is a switch feature that optimizes multicast traffic. Without it, multicast packets (used by WATCHOUT for synchronization and NDI video) flood all switch ports, wasting bandwidth. With IGMP snooping enabled, the switch intelligently forwards multicast traffic only to devices that need it—reducing network congestion and improving overall performance, especially in systems with multiple display servers or NDI sources.
+</p></div>
+
+<h4>File Transfer Time Comparison</h4>
+
+<p>Network speed dramatically affects how quickly you can deploy media to display servers. The table below shows approximate transfer times for common file sizes:</p>
+
+<table>
+<tr><th>File Size</th><th>1 Gbps (~110 MB/s)</th><th>10 Gbps (~1.1 GB/s)</th><th>Time Saved</th></tr>
+<tr><td>1 GB</td><td>~9 seconds</td><td>~1 second</td><td>8 seconds</td></tr>
+<tr><td>100 GB</td><td>~15 minutes</td><td>~90 seconds</td><td>13.5 minutes</td></tr>
+<tr><td>1 TB</td><td>~2.5 hours</td><td>~15 minutes</td><td>2+ hours</td></tr>
+</table>
+
+<div class='info-box'><p><strong>Note:</strong> Actual transfer speeds depend on disk I/O, network congestion, and switch quality. The values above assume modern SSDs and a well-configured network with minimal overhead.
+</p></div>
+
+<p>For productions with large media libraries or frequent content updates, 10 Gbps networking pays for itself quickly in reduced setup and rehearsal time. Consider 10 GbE especially for:</p>
+
+<ul>
+<li><strong>4K/8K video content</strong> – Single uncompressed 4K frames can exceed 30 MB</li>
+<li><strong>Image sequences</strong> – Thousands of files that benefit from sustained throughput</li>
+<li><strong>Multi-server deployments</strong> – Simultaneous transfers to multiple display computers</li>
+<li><strong>Live event environments</strong> – Last-minute content changes require rapid deployment</li>
+
+</ul></div><div class="section-nav">
+                <a href="welcome-to-watchout-7.html" class="nav-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <polyline points="15 18 9 12 15 6"></polyline>
+                    </svg>
+                    Previous
+                </a>
+                <a href="installing-watchout.html" class="nav-btn">
+                    Next
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </a></div>
+                </div>
+            </article>
+
+            <footer class="content-footer">
+                <p>WATCHOUT User Guide • Dataton Documentation • Generated January 2026</p>
+            </footer>
+        </main>
+    </div>
+
+    <!-- Mobile overlay -->
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+    <script src="../app.js"></script>
+</body>
+</html>

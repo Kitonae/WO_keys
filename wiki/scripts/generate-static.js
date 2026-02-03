@@ -1,0 +1,474 @@
+const fs = require('fs');
+const path = require('path');
+
+// --- Configuration ---
+const WIKI_ROOT = path.resolve(__dirname, '..');
+const OUTPUT_DIR = WIKI_ROOT; // Generate in the wiki root
+const CONFIG_PATH = path.join(WIKI_ROOT, 'config.js');
+const CONTENT_DATA_PATH = path.join(WIKI_ROOT, 'content-data.js');
+const TOC_DATA_PATH = path.join(WIKI_ROOT, 'toc-data.js');
+
+// --- Helper Functions ---
+function slugify(text) {
+    return text.toString().toLowerCase()
+        .replace(/^\d+\.\s+/, '') // Remove leading "1. "
+        .trim()
+        .replace(/\s+/g, '-')     // Replace spaces with -
+        .replace(/[^\w\-]+/g, '') // Remove all non-word chars
+        .replace(/\-\-+/g, '-');  // Replace multiple - with single -
+}
+
+function getRelativePath(depth) {
+    if (depth === 0) return './';
+    return '../'.repeat(depth);
+}
+
+// --- Load Data ---
+// We'll read the files and evaluate them in a minimal context or regex parse
+// Since the files use 'const variable = ...', we can strip the declaration and JSON.parse
+// But content-data.js has huge string literals.
+
+function loadConfig() {
+    if (!fs.existsSync(CONFIG_PATH)) return { disabledChapters: [] };
+    const raw = fs.readFileSync(CONFIG_PATH, 'utf8');
+    const match = raw.match(/const wikiConfig = ({[\s\S]*?});/);
+    if (!match) return { disabledChapters: [] };
+    return eval('(' + match[1] + ')');
+}
+
+function loadContentData() {
+    const raw = fs.readFileSync(CONTENT_DATA_PATH, 'utf8');
+    // Extract the object from `const wikiContent = { ... };`
+    // We'll use a Function to evaluate it safely-ish
+    const match = raw.match(/const wikiContent = ({[\s\S]*?});/);
+    if (!match) throw new Error("Could not find wikiContent object");
+    return eval('(' + match[1] + ')');
+}
+
+// TOC data has functions and logic, so we'll replicate the logic here
+// but read the raw array from the file
+function loadTocData() {
+    const raw = fs.readFileSync(TOC_DATA_PATH, 'utf8');
+    const match = raw.match(/const tocData = (\[[\s\S]*?\]);/);
+    if (!match) throw new Error("Could not find tocData array");
+    const tocData = eval('(' + match[1] + ')');
+
+    // Icons mapping (simplified for static gen)
+    const iconMatch = raw.match(/const icons = ({[\s\S]*?});/);
+    const icons = iconMatch ? eval('(' + iconMatch[1] + ')') : {};
+
+    return { tocData, icons };
+}
+
+const wikiConfig = loadConfig();
+const wikiContent = loadContentData();
+const { tocData, icons } = loadTocData();
+
+// Re-implement processHierarchy
+function processHierarchy(flatData) {
+    const chapters = [];
+    let currentChapter = null;
+
+    flatData.forEach((item) => {
+        if (item.level === 1) {
+            const isDisabled = wikiConfig.disabledChapters && wikiConfig.disabledChapters.includes(item.title);
+
+            currentChapter = {
+                ...item,
+                slug: slugify(item.title),
+                disabled: isDisabled,
+                subsections: []
+            };
+            chapters.push(currentChapter);
+        } else if (item.level === 2 && currentChapter) {
+            currentChapter.subsections.push({
+                ...item,
+                slug: slugify(item.title)
+            });
+        }
+    });
+    return chapters;
+}
+
+const chapters = processHierarchy(tocData);
+
+// --- HTML Template ---
+function generatePageHtml(title, content, sidebarHtml, depth, breadcrumbs) {
+    const relPath = getRelativePath(depth);
+
+    return `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="WATCHOUT User Guide - ${title}">
+    <title>${title} - WATCHOUT 7 User Guide</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="${relPath}styles.css">
+    <script>
+        // Apply saved theme immediately to prevent flash
+        (function () {
+            const theme = localStorage.getItem('watchout-wiki-theme') || 'dark';
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
+</head>
+<body>
+    <div class="app">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <a href="${relPath}index.html" class="logo" style="text-decoration: none; color: inherit;">
+                    <span class="logo-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                        </svg>
+                    </span>
+                    <h1>WATCHOUT GUIDE</h1>
+                </a>
+                <button class="sidebar-toggle" id="sidebar-toggle" aria-label="Toggle Sidebar">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="search-container">
+                <span class="search-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                </span>
+                <input type="text" id="search-input" class="search-input" placeholder="Search documentation...">
+                <button class="search-clear" id="search-clear" aria-label="Clear search">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+
+            <nav class="toc-nav" id="toc-nav">
+                ${sidebarHtml}
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="tools-section">
+                    <span class="tools-label">Tools</span>
+                    <div class="tools-buttons">
+                        <a href="${relPath}../shortcuts/index.html" class="tools-btn" title="Keyboard Shortcuts">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect>
+                                <path d="M6 8h.001"></path>
+                                <path d="M10 8h.001"></path>
+                                <path d="M14 8h.001"></path>
+                                <path d="M18 8h.001"></path>
+                                <path d="M8 12h.001"></path>
+                                <path d="M12 12h.001"></path>
+                                <path d="M16 12h.001"></path>
+                                <path d="M7 16h10"></path>
+                            </svg>
+                        </a>
+                        <a href="${relPath}../planner/index.html" class="tools-btn" title="Infrastructure Planner">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <circle cx="18" cy="5" r="3"></circle>
+                                <circle cx="6" cy="12" r="3"></circle>
+                                <circle cx="18" cy="19" r="3"></circle>
+                                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+                            </svg>
+                        </a>
+                        <a href="${relPath}../test-patterns/index.html" class="tools-btn" title="Test Pattern Generator">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <rect x="3" y="3" width="7" height="7"></rect>
+                                <rect x="14" y="3" width="7" height="7"></rect>
+                                <rect x="14" y="14" width="7" height="7"></rect>
+                                <rect x="3" y="14" width="7" height="7"></rect>
+                            </svg>
+                        </a>
+                        <button class="tools-btn" id="theme-toggle" aria-label="Toggle theme" title="Toggle light/dark theme">
+                             <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                            </svg>
+                            <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="5"></circle>
+                                <line x1="12" y1="1" x2="12" y2="3"></line>
+                                <line x1="12" y1="21" x2="12" y2="23"></line>
+                                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                                <line x1="1" y1="12" x2="3" y2="12"></line>
+                                <line x1="21" y1="12" x2="23" y2="12"></line>
+                                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                            </svg>
+                             <svg class="midnight-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <circle cx="12" cy="12" r="4"></circle>
+                                <line x1="4.93" y1="4.93" x2="9.17" y2="9.17"></line>
+                                <line x1="19.07" y1="19.07" x2="14.83" y2="14.83"></line>
+                                <line x1="4.93" y1="19.07" x2="9.17" y2="14.83"></line>
+                                <line x1="19.07" y1="4.93" x2="14.83" y2="9.17"></line>
+                            </svg>
+                             <svg class="rust-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                                <polyline points="2 17 12 22 22 17"></polyline>
+                                <polyline points="2 12 12 17 22 12"></polyline>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content" id="main-content">
+            <header class="content-header">
+                <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Open Menu">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                </button>
+                <div class="breadcrumb" id="breadcrumb">
+                    ${breadcrumbs}
+                </div>
+            </header>
+
+            <article class="content-body" id="content-body">
+                <div class="section-content" style="display: block;">
+                    ${content}
+                </div>
+            </article>
+
+            <footer class="content-footer">
+                <p>WATCHOUT User Guide • Dataton Documentation • Generated January 2026</p>
+            </footer>
+        </main>
+    </div>
+
+    <!-- Mobile overlay -->
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+    <script src="${relPath}app.js"></script>
+</body>
+</html>`;
+}
+
+// --- Generate Sidebar HTML ---
+// We need to generate the sidebar HTML with correct links
+function generateSidebar(activeSlug, depth) {
+    const relPath = getRelativePath(depth);
+
+    return chapters.map((chapter, index) => {
+        const chapterUrl = `${relPath}${chapter.slug}/index.html`;
+        const isActiveChapter = chapter.slug === activeSlug || chapter.subsections.some(sub => sub.slug === activeSlug);
+        const expandedClass = isActiveChapter ? 'expanded' : '';
+        const activeClass = (chapter.slug === activeSlug) ? 'active' : '';
+        const disabledClass = chapter.disabled ? 'disabled' : '';
+        const iconSvg = icons[chapter.icon] || icons.fileText;
+
+        return `
+        <div class="toc-chapter ${expandedClass} ${disabledClass}" data-index="${index}">
+            <a href="${chapterUrl}" class="toc-chapter-header ${activeClass} ${expandedClass}" style="text-decoration: none; color: inherit; display: flex;">
+                <span class="toc-chapter-icon">${iconSvg}</span>
+                <span class="toc-chapter-title">${chapter.title}</span>
+                ${chapter.subsections.length > 0 ? `
+                    <svg class="toc-chapter-arrow" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                ` : ''}
+            </a>
+            ${chapter.subsections.length > 0 ? `
+                <div class="toc-subsections ${expandedClass}">
+                    ${chapter.subsections.map(sub => {
+            const subUrl = `${relPath}${chapter.slug}/${sub.slug}.html`;
+            const subActive = sub.slug === activeSlug ? 'active' : '';
+            return `
+                        <a class="toc-subsection ${subActive}" href="${subUrl}">
+                            ${sub.title}
+                        </a>
+                        `;
+        }).join('')}
+                </div>
+            ` : ''}
+        </div>
+        `;
+    }).join('');
+}
+
+// --- Generation Loop ---
+
+// 1. Generate Chapter Pages and Subsection Pages
+chapters.forEach(chapter => {
+    // Skip file generation for disabled chapters
+    if (chapter.disabled) {
+        console.log(`Skipping disabled chapter: ${chapter.title}`);
+        return;
+    }
+
+    const chapterDir = path.join(OUTPUT_DIR, chapter.slug);
+    if (!fs.existsSync(chapterDir)) {
+        fs.mkdirSync(chapterDir, { recursive: true });
+    }
+
+    // Get Chapter Content
+    const chapterContentData = wikiContent[chapter.title];
+    let chapterBody = '';
+
+    // ... rest of generation logic (unchanged)
+
+    if (chapterContentData && chapterContentData.overview) {
+        chapterBody = `<div class="section-overview">${chapterContentData.overview}</div>`;
+    }
+
+    // Add "In This Chapter" list
+    if (chapter.subsections.length > 0) {
+        chapterBody += `
+            <h2 style="margin-top: 32px;">In This Chapter</h2>
+            <p>This chapter covers the following topics. Click on any section to learn more.</p>
+            <div class="subsection-list">
+                ${chapter.subsections.map(sub => `
+                    <a href="./${sub.slug}.html" class="subsection-item" style="text-decoration: none; color: inherit; display: block;">
+                        <div class="subsection-details">
+                            <h4>${sub.title}</h4>
+                            ${sub.description ? `<p class="subsection-description">${sub.description}</p>` : ''}
+                        </div>
+                    </a>
+                `).join('')}
+            </div>
+        `;
+    }
+
+    const breadcrumbs = `
+        <a href="../index.html" class="breadcrumb-item">Home</a>
+        <span class="breadcrumb-separator">›</span>
+        <span class="breadcrumb-item current">${chapter.title}</span>
+    `;
+
+    const sidebar = generateSidebar(chapter.slug, 1);
+    const html = generatePageHtml(chapter.title, chapterBody, sidebar, 1, breadcrumbs);
+
+    fs.writeFileSync(path.join(chapterDir, 'index.html'), html);
+    console.log(`Generated: ${chapter.slug}/index.html`);
+
+    // Generate Subsections
+    chapter.subsections.forEach(sub => {
+        let subBody = '';
+
+        // Try to find content
+        if (chapterContentData && chapterContentData.sections) {
+            // Fuzzy match logic from original app.js
+            let sectionHtml = chapterContentData.sections[sub.title];
+            if (!sectionHtml) {
+                const sectionKeys = Object.keys(chapterContentData.sections);
+                for (const key of sectionKeys) {
+                    if (key.toUpperCase() === sub.title.toUpperCase() ||
+                        key.toUpperCase().includes(sub.title.toUpperCase()) ||
+                        sub.title.toUpperCase().includes(key.toUpperCase())) {
+                        sectionHtml = chapterContentData.sections[key];
+                        break;
+                    }
+                }
+            }
+            if (sectionHtml) {
+                subBody = `<div class="section-content-body">${sectionHtml}</div>`;
+            }
+        }
+
+        if (!subBody) {
+            subBody = `
+                <h2>${sub.title}</h2>
+                <p>Content for this section is not available in the wiki data.</p>
+             `;
+        }
+
+        // Add navigation
+        // We need to find previous/next
+        // Flatten list
+        const allPages = [];
+        chapters.forEach(c => {
+            allPages.push({ type: 'chapter', title: c.title, url: `${c.slug}/index.html`, root: c.slug });
+            c.subsections.forEach(s => {
+                allPages.push({ type: 'sub', title: s.title, url: `${c.slug}/${s.slug}.html`, root: c.slug });
+            });
+        });
+
+        const currentIndex = allPages.findIndex(p => p.title === sub.title); // weak match
+        const prev = currentIndex > 0 ? allPages[currentIndex - 1] : null;
+        const next = currentIndex < allPages.length - 1 ? allPages[currentIndex + 1] : null;
+
+        let navHtml = '<div class="section-nav">';
+        if (prev) {
+            const prevUrl = prev.root === chapter.slug ? (prev.type === 'chapter' ? 'index.html' : `${path.basename(prev.url)}`) : `../${prev.url}`;
+            navHtml += `
+                <a href="${prevUrl}" class="nav-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <polyline points="15 18 9 12 15 6"></polyline>
+                    </svg>
+                    Previous
+                </a>`;
+        } else {
+            navHtml += `<button class="nav-btn" disabled>Previous</button>`;
+        }
+
+        if (next) {
+            const nextUrl = next.root === chapter.slug ? (next.type === 'chapter' ? 'index.html' : `${path.basename(next.url)}`) : `../${next.url}`;
+            navHtml += `
+                <a href="${nextUrl}" class="nav-btn">
+                    Next
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </a>`;
+        }
+        navHtml += '</div>';
+
+        subBody += navHtml;
+
+        const subBreadcrumbs = `
+            <a href="../index.html" class="breadcrumb-item">Home</a>
+            <span class="breadcrumb-separator">›</span>
+            <a href="index.html" class="breadcrumb-item">${chapter.title}</a>
+            <span class="breadcrumb-separator">›</span>
+            <span class="breadcrumb-item current">${sub.title}</span>
+        `;
+
+        const subSidebar = generateSidebar(sub.slug, 1);
+        const subHtml = generatePageHtml(sub.title, subBody, subSidebar, 1, subBreadcrumbs);
+
+        fs.writeFileSync(path.join(chapterDir, `${sub.slug}.html`), subHtml);
+        console.log(`Generated: ${chapter.slug}/${sub.slug}.html`);
+    });
+});
+
+console.log("Static generation complete.");

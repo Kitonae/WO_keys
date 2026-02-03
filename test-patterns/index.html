@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Generate custom test patterns for display calibration and testing.">
+    <title>WATCHOUT Test Patterns</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="app">
+        <header class="header">
+            <div class="logo">
+                <h1>WATCHOUT TEST PATTERNS</h1>
+            </div>
+        </header>
+
+        <main class="main">
+            <div class="pattern-container">
+                <div class="pattern-controls">
+                    <div class="control-group">
+                        <label>Resolution</label>
+                        <div class="input-row">
+                            <input type="number" id="pattern-width" value="1920" placeholder="Width">
+                            <span>x</span>
+                            <input type="number" id="pattern-height" value="1080" placeholder="Height">
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label>Pattern Type</label>
+                        <select id="pattern-type">
+                            <option value="grid">Grid</option>
+                            <option value="color-bars">Color Bars</option>
+                            <option value="gradient">Gradient</option>
+                            <option value="checkerboard">Checkerboard</option>
+                            <option value="contrast">Contrast Steps</option>
+                            <option value="cmyk">CMYK</option>
+                        </select>
+                    </div>
+                    <div class="control-group" id="color-control-group">
+                        <label>Primary Color</label>
+                        <input type="color" id="pattern-color" value="#ffffff">
+                    </div>
+                    <div class="control-group" id="grid-controls" style="display: none;">
+                        <div class="input-grid-settings">
+                            <div class="setting-item">
+                                <label>Major Size (px)</label>
+                                <input type="number" id="grid-major-size" value="100" step="10">
+                            </div>
+                            <div class="setting-item">
+                                <label>Subdivisions</label>
+                                <input type="number" id="grid-subdivisions" value="4" min="1" max="20">
+                            </div>
+                            <div class="setting-item">
+                                <label>Major Color</label>
+                                <input type="color" id="grid-major-color" value="#ffffff">
+                            </div>
+                            <div class="setting-item">
+                                <label>Minor Color</label>
+                                <input type="color" id="grid-minor-color" value="#333333">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label>Info Text</label>
+                        <div class="input-row">
+                            <input type="checkbox" id="show-info" checked>
+                            <span style="font-size: 0.9rem; color: var(--text-secondary);">Show Resolution/Time</span>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label>Custom Label</label>
+                        <input type="text" id="custom-label" placeholder="Enter text label...">
+                    </div>
+
+                    <button id="generate-pattern-btn" class="action-btn">Generate</button>
+                    <button id="download-pattern-btn" class="action-btn secondary">Download PNG</button>
+                </div>
+                <div class="pattern-display">
+                    <canvas id="pattern-canvas"></canvas>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p>WATCHOUT Tools • Test Pattern Generator</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
