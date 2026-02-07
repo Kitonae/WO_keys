@@ -589,6 +589,18 @@ body::before {
     }
 }
 
+@keyframes fadeInLogo {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 0.9;
+        transform: translateY(0);
+    }
+}
+
 .welcome-hero {
     text-align: center;
     padding: 60px 40px;
@@ -628,8 +640,9 @@ body::before {
     width: 600px;
     height: auto;
     filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.5));
-    opacity: 0.95;
-    animation: fadeIn 1.5s ease-out;
+    border-radius: 16px;
+    opacity: 0.9;
+    animation: fadeInLogo 1.5s ease-out;
 }
 
 @keyframes float {
