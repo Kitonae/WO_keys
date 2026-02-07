@@ -1,6 +1,13 @@
 /* WATCHOUT Wiki/User Guide - Stylesheet */
 /* Using the same visual style as the shortcuts page */
 
+@font-face {
+    font-family: 'Futura Now Headline';
+    src: url('fonts/FuturaNowHeadline-Rg.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
 :root {
     --bg-primary: #0a0a0f;
     --bg-secondary: #12121a;
