@@ -596,7 +596,7 @@ body::before {
     }
 
     to {
-        opacity: 0.9;
+        opacity: 0.95;
         transform: translateY(0);
     }
 }
@@ -641,7 +641,7 @@ body::before {
     height: auto;
     filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.5));
     border-radius: 16px;
-    opacity: 0.9;
+    opacity: 0.95;
     animation: fadeInLogo 1.5s ease-out;
 }
 
