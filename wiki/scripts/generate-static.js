@@ -275,6 +275,9 @@ function generatePageHtml(title, content, sidebarHtml, depth, breadcrumbs) {
     <!-- Mobile overlay -->
     <div class="sidebar-overlay" id="sidebar-overlay"></div>
 
+    <script src="${relPath}config.js"></script>
+    <script src="${relPath}toc-data.js"></script>
+    <script src="${relPath}content-data.js"></script>
     <script src="${relPath}app.js"></script>
 </body>
 </html>`;

@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setupSidebarToggle();
     setupSidebarAccordion();
     setupVideoModals();
+    setupSearch();
 
     renderTocPreview();
     setupDiagramTheme();
@@ -179,13 +180,7 @@ function renderTocPreview() {
     const tocPreviewGrid = document.getElementById('toc-preview-grid');
     if (!tocPreviewGrid || typeof chaptersData === 'undefined') return;
 
-    // Helper to slugify
-    const slugify = (text) => text.toLowerCase()
-        .replace(/^\d+\.\s+/, '')
-        .trim()
-        .replace(/\s+/g, '-')
-        .replace(/[^\w\-]+/g, '')
-        .replace(/\-\-+/g, '-');
+    if (!tocPreviewGrid || typeof chaptersData === 'undefined') return;
 
     tocPreviewGrid.innerHTML = chaptersData.map(chapter => `
         <a href="${slugify(chapter.title)}/index.html" class="toc-card ${chapter.disabled ? 'disabled' : ''}" style="text-decoration: none; color: inherit; display: block;">
@@ -211,13 +206,8 @@ function setupSidebar() {
     // Only populate if empty (index.html) AND data is available
     if (!tocNav || tocNav.children.length > 0 || typeof chaptersData === 'undefined') return;
 
-    // Helper to slugify (must match the generator's slugify)
-    const slugify = (text) => text.toLowerCase()
-        .replace(/^\d+\.\s+/, '')
-        .trim()
-        .replace(/\s+/g, '-')
-        .replace(/[^\w\-]+/g, '')
-        .replace(/\-\-+/g, '-');
+    // Only populate if empty (index.html) AND data is available
+    if (!tocNav || tocNav.children.length > 0 || typeof chaptersData === 'undefined') return;
 
     tocNav.innerHTML = chaptersData.map(chapter => {
         const chapterSlug = slugify(chapter.title);
@@ -324,4 +314,165 @@ function setupHeroVideo() {
             </div>
         </div>
     `;
+}
+
+// Search Functionality
+function setupSearch() {
+    const searchInput = document.getElementById('search-input');
+    const searchClear = document.getElementById('search-clear');
+    const tocNav = document.getElementById('toc-nav');
+
+    if (!searchInput || !searchClear || !tocNav) return;
+
+    let debounceTimer;
+
+    searchInput.addEventListener('input', (e) => {
+        clearTimeout(debounceTimer);
+        const query = e.target.value.trim();
+
+        if (query.length > 0) {
+            searchClear.style.display = 'flex';
+        } else {
+            searchClear.style.display = 'none';
+            setupSidebar(); // Restore TOC
+            // Force re-setup sidebar accordion listeners if setupSidebar didn't run (it guards against existing children)
+            // Actually setupSidebar guards if children exist. If we clear tocNav to show results, it's empty.
+            return;
+        }
+
+        debounceTimer = setTimeout(() => {
+            if (query.length >= 2) {
+                const results = performSearch(query);
+                renderSearchResults(results, tocNav);
+            } else if (query.length === 0) {
+                // If we clear quickly, restore TOC
+                tocNav.innerHTML = ''; // Clear results to allow setupSidebar to populate
+                setupSidebar();
+            }
+        }, 300);
+    });
+
+    searchClear.addEventListener('click', () => {
+        searchInput.value = '';
+        searchClear.style.display = 'none';
+        tocNav.innerHTML = ''; // Clear results
+        setupSidebar(); // Restore TOC
+        searchInput.focus();
+    });
+}
+
+function performSearch(query) {
+    if (typeof wikiContent === 'undefined') return [];
+
+    const results = [];
+    const lowerQuery = query.toLowerCase();
+
+    // Helper to strip HTML
+    const stripHtml = (html) => {
+        const tmp = document.createElement('DIV');
+        tmp.innerHTML = html;
+        return tmp.textContent || tmp.innerText || '';
+    };
+
+    // Determine relative path to root based on current script location
+    let rootPrefix = '';
+    const appScript = document.querySelector('script[src*="app.js"]');
+    if (appScript) {
+        const src = appScript.getAttribute('src');
+        if (src.includes('../')) {
+            rootPrefix = '../';
+        } else if (src.indexOf('/') === -1 || src.startsWith('./') || src === 'app.js') {
+            rootPrefix = '';
+        }
+    }
+
+    Object.keys(wikiContent).forEach(chapterTitle => {
+        const chapterData = wikiContent[chapterTitle];
+        const chapterSlug = slugify(chapterTitle);
+
+        // Search in Overview (Chapter Index)
+        if (chapterData.overview) {
+            const text = stripHtml(chapterData.overview);
+            if (text.toLowerCase().includes(lowerQuery) || chapterTitle.toLowerCase().includes(lowerQuery)) {
+                results.push({
+                    title: chapterTitle,
+                    subtitle: "Overview",
+                    url: `${rootPrefix}${chapterSlug}/index.html`,
+                    snippet: getSnippet(text, lowerQuery),
+                    score: chapterTitle.toLowerCase().includes(lowerQuery) ? 10 : 5 // Simple scoring
+                });
+            }
+        }
+
+        // Search in Sections
+        if (chapterData.sections) {
+            Object.keys(chapterData.sections).forEach(sectionTitle => {
+                const content = chapterData.sections[sectionTitle];
+                const text = stripHtml(content);
+                const sectionSlug = slugify(sectionTitle);
+
+                if (sectionTitle.toLowerCase().includes(lowerQuery) || text.toLowerCase().includes(lowerQuery)) {
+                    results.push({
+                        title: sectionTitle,
+                        subtitle: chapterTitle,
+                        url: `${rootPrefix}${chapterSlug}/${sectionSlug}.html`,
+                        snippet: getSnippet(text, lowerQuery),
+                        score: sectionTitle.toLowerCase().includes(lowerQuery) ? 10 : 5
+                    });
+                }
+            });
+        }
+    });
+
+    return results.sort((a, b) => b.score - a.score);
+}
+
+function getSnippet(text, query) {
+    const index = text.toLowerCase().indexOf(query);
+    if (index === -1) return text.substring(0, 100) + '...';
+
+    const start = Math.max(0, index - 40);
+    const end = Math.min(text.length, index + query.length + 40);
+
+    return (start > 0 ? '...' : '') +
+        text.substring(start, end) +
+        (end < text.length ? '...' : '');
+}
+
+function renderSearchResults(results, container) {
+    if (results.length === 0) {
+        container.innerHTML = `<div class="search-no-results">No results found</div>`;
+        return;
+    }
+
+    container.innerHTML = `
+        <div class="search-results-header">Search Results (${results.length})</div>
+        <div class="search-results-list">
+            ${results.map(result => `
+                <a href="${result.url}" class="search-result-item">
+                    <div class="search-result-title">${result.title}</div>
+                    <div class="search-result-subtitle">${result.subtitle}</div>
+                    <div class="search-result-snippet">${escapeHtml(result.snippet)}</div>
+                </a>
+            `).join('')}
+        </div>
+    `;
+}
+
+function escapeHtml(text) {
+    return text
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+function slugify(text) {
+    return text.toLowerCase()
+        .replace(/^\d+\.\s+/, '')
+        .trim()
+        .replace(/\s+/g, '-')
+        .replace(/[^\w\-]+/g, '')
+        .replace(/\-\-+/g, '-');
 }

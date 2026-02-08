@@ -1,7 +1,3 @@
----
-title: "System Requirements"
----
-
 ## System Requirements
 
 WATCHOUT 7 requires a Windows-based computer with modern hardware to deliver optimal performance. The requirements differ between the Producer computer (where you edit shows) and Display computers (which render and output to projectors/screens).

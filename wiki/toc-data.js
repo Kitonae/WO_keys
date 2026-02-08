@@ -33,7 +33,7 @@ const tocData = [
     },
     {
         "level": 2,
-        "title": "Welcome to WATCHOUT 7",
+        "title": "Welcome To Watchout 7",
         "page": 1,
         "description": "WATCHOUT 7 is the latest evolution of Dataton's award-winning multi-display production and playback system. Designed ..."
     },
@@ -45,13 +45,13 @@ const tocData = [
     },
     {
         "level": 2,
-        "title": "Installing WATCHOUT",
+        "title": "Installing Watchout",
         "page": 3,
         "description": "Setting up WATCHOUT represents the first step toward creating your show. The installation process is straightforward,..."
     },
     {
         "level": 2,
-        "title": "Launching the Application",
+        "title": "Launching The Application",
         "page": 4,
         "description": "Once WATCHOUT is installed, you are ready to launch the software. How you launch it depends on whether you are workin..."
     },
@@ -119,7 +119,7 @@ const tocData = [
         "level": 2,
         "title": "The Nodes Window",
         "page": 8,
-        "description": "---\r\ntitle: \"The Nodes Window\"\r\n---"
+        "description": "The Nodes window (also known as the Devices & Network window) provides a unified view of your show's output devices a..."
     },
     {
         "level": 1,

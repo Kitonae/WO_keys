@@ -1,7 +1,3 @@
----
-title: "Quick Start Tutorial"
----
-
 ## Quick Start Tutorial
 
 Follow these steps to create your first simple presentation in WATCHOUT 7.
