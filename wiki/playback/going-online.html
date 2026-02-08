@@ -144,6 +144,10 @@
                             Customizing Your Workspace
                         </a>
                         
+                        <a class="toc-subsection " href="../the-interface/the-nodes-window.html">
+                            The Nodes Window
+                        </a>
+                        
                 </div>
             
         </div>
@@ -271,6 +275,10 @@
                             Asset Manager Settings
                         </a>
                         
+                        <a class="toc-subsection " href="../assets-asset-manager/import-export-and-mapping.html">
+                            Import, Export, and Mapping
+                        </a>
+                        
                 </div>
             
         </div>
@@ -318,6 +326,18 @@
                         
                         <a class="toc-subsection " href="../timeline-and-cues/grouping-cues.html">
                             Grouping Cues
+                        </a>
+                        
+                        <a class="toc-subsection " href="../timeline-and-cues/variables-and-variable-cues.html">
+                            Variables and Variable Cues
+                        </a>
+                        
+                        <a class="toc-subsection " href="../timeline-and-cues/timeline-triggers-and-expressions.html">
+                            Timeline Triggers and Expressions
+                        </a>
+                        
+                        <a class="toc-subsection " href="../timeline-and-cues/artnet-fixture-cues.html">
+                            ArtNet Fixture Cues
                         </a>
                         
                 </div>
@@ -449,6 +469,10 @@
                         
                         <a class="toc-subsection " href="../network-setup/dante-audio.html">
                             Dante Audio
+                        </a>
+                        
+                        <a class="toc-subsection " href="../network-setup/node-management-and-maintenance.html">
+                            Node Management and Maintenance
                         </a>
                         
                 </div>
@@ -647,20 +671,39 @@
                 <div class="section-content" style="display: block;">
                     <div class="section-content-body"><h2>Going Online</h2>
 
-<p>Going online sends your show data to display servers for synchronized playback.</p>
+<p>Operationally, going online means your show is actively controlled through a Director with reachable Runner and Asset Manager services.</p>
 
-<h3>Steps</h3>
+<h3>Online Readiness Checklist</h3>
 
 <ul>
-<li>Ensure display servers are connected (green in Network window)</li>
+<li>Producer is connected to the correct <strong>Director</strong></li>
+<li>Required nodes are discovered and healthy</li>
+<li>Asset Manager is reachable</li>
+<li>Displays are routed to expected hosts/channels</li>
+<li>Show state is saved</li>
 
-<p><li>Click the <strong>Online</strong> button or press <code>Ctrl+L</code></li></p>
+</ul>
+<h3>First Online Pass</h3>
 
-<p><li>Wait for assets to transfer to servers</li></p>
+<p>Use a short verification pass:</p>
 
-<p><li>Status turns green when ready</li></p>
+<ol>
+<li>Run a known test timeline.</li>
+<li>Confirm visual outputs on all critical displays.</li>
+<li>Confirm audio/device-trigger behavior.</li>
+<li>Check for warnings in activity/log views.</li>
 
-<p></ul></p></div><div class="section-nav">
+</ol>
+<h3>Common Online Risks</h3>
+
+<ul>
+<li>Director/Runner mismatch (different loaded shows)</li>
+<li>Stale node aliases or duplicate names</li>
+<li>Asset transfer not complete before playback</li>
+
+</ul>
+<div class='warning-box'><p>Never assume online readiness from a single green indicator. Verify end-to-end output behavior.
+</p></div></div><div class="section-nav">
                 <a href="connecting-to-display-servers.html" class="nav-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"

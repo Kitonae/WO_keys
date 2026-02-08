@@ -35,7 +35,7 @@ const tocData = [
         "level": 2,
         "title": "Welcome to WATCHOUT 7",
         "page": 1,
-        "description": "WATCHOUT 7 represents the latest evolution of Dataton's award-winning multi-display production and playback system. C..."
+        "description": "WATCHOUT 7 is the latest evolution of Dataton's award-winning multi-display production and playback system. Designed ..."
     },
     {
         "level": 2,
@@ -77,43 +77,49 @@ const tocData = [
         "level": 2,
         "title": "Main Window Overview",
         "page": 1,
-        "description": "The WATCHOUT interface is divided into several dockable windows that can be arranged to suit your workflow."
+        "description": "The WATCHOUT 7 Producer interface presents a modern, flexible workspace designed for efficient show creation and mana..."
     },
     {
         "level": 2,
         "title": "The Stage Window",
         "page": 2,
-        "description": "The Stage is your visual canvas – a representation of all your displays and how content appears on them."
+        "description": "The Stage is your visual canvas—a representation of all your displays and how content appears on them. It provides a ..."
     },
     {
         "level": 2,
         "title": "The Timeline Window",
         "page": 3,
-        "description": "The Timeline is where you orchestrate your show – arranging media and controlling precisely when things happen."
+        "description": "The Timeline is where you orchestrate your show—arranging media and controlling precisely when things happen. It prov..."
     },
     {
         "level": 2,
         "title": "The Assets Window",
         "page": 4,
-        "description": "The Assets window is your media library – all images, videos, and audio files available for use in your show."
+        "description": "The Assets window is your media library—the central repository for all images, videos, audio files, and other resourc..."
     },
     {
         "level": 2,
         "title": "The Properties Panel",
         "page": 5,
-        "description": "The Properties panel shows settings for whatever is currently selected – displays, cues, or media."
+        "description": "The Properties panel is a context-sensitive inspector that displays settings for whatever is currently selected—displ..."
     },
     {
         "level": 2,
         "title": "The Network Window",
         "page": 6,
-        "description": "The Network window shows all WATCHOUT devices on your network and their status."
+        "description": "The Network window shows all WATCHOUT devices on your network and their status. It provides centralized management of..."
     },
     {
         "level": 2,
         "title": "Customizing Your Workspace",
         "page": 7,
-        "description": "WATCHOUT's interface is fully customizable to match your workflow."
+        "description": "WATCHOUT 7's interface is fully customizable to match your workflow. The flexible window system allows you to arrange..."
+    },
+    {
+        "level": 2,
+        "title": "The Nodes Window",
+        "page": 8,
+        "description": "---\r\ntitle: \"The Nodes Window\"\r\n---"
     },
     {
         "level": 1,
@@ -125,25 +131,25 @@ const tocData = [
         "level": 2,
         "title": "Creating a New Show",
         "page": 1,
-        "description": "Start a new project from scratch:"
+        "description": "Every WATCHOUT project begins with creating a show. A show is the container for all your displays, timelines, cues, a..."
     },
     {
         "level": 2,
         "title": "Opening Existing Shows",
         "page": 2,
-        "description": "- File → Open or Ctrl+O – Browse for a show file"
+        "description": "Most of your time in WATCHOUT will be spent working on shows that already exist—whether you created them yourself in ..."
     },
     {
         "level": 2,
         "title": "Saving Your Work",
         "page": 3,
-        "description": "- Save (Ctrl+S) – Save to current location"
+        "description": "Regular saving is fundamental to any production workflow. WATCHOUT provides several save options to accommodate diffe..."
     },
     {
         "level": 2,
         "title": "Show Properties",
         "page": 4,
-        "description": "Access show-wide settings from File → Properties."
+        "description": "Every show carries a set of properties that define how it behaves globally—settings that affect all timelines, all di..."
     },
     {
         "level": 1,
@@ -155,43 +161,43 @@ const tocData = [
         "level": 2,
         "title": "Adding Displays",
         "page": 1,
-        "description": "- Go to Stage → Add Display"
+        "description": "Displays are the output surfaces your cues render to. In WATCHOUT 7, each display is a configurable device object wit..."
     },
     {
         "level": 2,
         "title": "Virtual Displays",
         "page": 2,
-        "description": "Virtual displays are canvas areas that can be used for content composition before mapping to physical displays."
+        "description": "A virtual display behaves like a normal display in the Stage and Timeline, but it is not tied to a physical connector..."
     },
     {
         "level": 2,
         "title": "3D Mapping Projectors",
         "page": 3,
-        "description": "For projection onto 3D surfaces, use 3D mapping projectors."
+        "description": "Projector displays extend WATCHOUT from flat 2D layouts to spatially mapped output. Projector mode uses camera/frustu..."
     },
     {
         "level": 2,
         "title": "Display Grid Setup",
         "page": 4,
-        "description": "Quickly create multi-display arrangements using the grid tool."
+        "description": "Grid tools speed up setup for LED walls, tiled monitors, and repeated projection arrays."
     },
     {
         "level": 2,
         "title": "Display Properties",
         "page": 5,
-        "description": "| Property | Description |\n| --- | --- |\n| Name | Identifier for the display |\n| Resolution | Width × Height in pixel..."
+        "description": "Display Properties control how each display is rendered, routed, and calibrated."
     },
     {
         "level": 2,
         "title": "Edge Blending",
         "page": 6,
-        "description": "Create seamless panoramas by blending overlapping projector edges."
+        "description": "Edge blending smooths overlap regions between adjacent projected outputs so they appear as one continuous image."
     },
     {
         "level": 2,
         "title": "Geometry Correction",
         "page": 7,
-        "description": "WATCHOUT provides multiple tools for correcting projection distortion."
+        "description": "Geometry correction aligns rendered imagery to real-world surfaces. In WATCHOUT, this is handled through warp geometr..."
     },
     {
         "level": 1,
@@ -248,6 +254,12 @@ const tocData = [
         "description": "Configure the Asset Manager behavior through the Settings dialog."
     },
     {
+        "level": 2,
+        "title": "Import, Export, and Mapping",
+        "page": 9,
+        "description": "Beyond normal drag-and-drop ingest, the Assets window includes transfer workflows for moving asset sets between syste..."
+    },
+    {
         "level": 1,
         "title": "6. Timeline and Cues",
         "page": 1,
@@ -257,49 +269,67 @@ const tocData = [
         "level": 2,
         "title": "Understanding the Timeline",
         "page": 1,
-        "description": "- Time Ruler – Shows current position and allows navigation"
+        "description": "The Timeline is where show logic is sequenced. Cues on layers define what plays, when it plays, and how it behaves."
     },
     {
         "level": 2,
         "title": "Adding Media Cues",
         "page": 2,
-        "description": "- Drag media from the Assets window onto the Timeline"
+        "description": "Media cues are created by placing assets on a timeline."
     },
     {
         "level": 2,
         "title": "Working with Layers",
         "page": 3,
-        "description": "Higher layers appear in front of lower layers on stage. Use this for overlaying content."
+        "description": "Layers determine draw order and help organize complex timelines."
     },
     {
         "level": 2,
         "title": "Adjusting Timing",
         "page": 4,
-        "description": "Drag cues left/right to change their start time. Hold Shift to constrain to horizontal movement."
+        "description": "Precise timing is central to show quality. WATCHOUT provides direct manipulation and command-based timing edits."
     },
     {
         "level": 2,
         "title": "Control Cues",
         "page": 5,
-        "description": "Control cues trigger actions rather than displaying content."
+        "description": "Control cues affect playback state instead of rendering media."
     },
     {
         "level": 2,
         "title": "Comment Cues",
         "page": 6,
-        "description": "Add notes and markers to your timeline."
+        "description": "Comment cues (marker cues) provide timeline annotations for operators, programmers, and show callers."
     },
     {
         "level": 2,
         "title": "Output Cues",
         "page": 7,
-        "description": "Send control signals to external devices and systems."
+        "description": "Output cues transmit external control data during timeline playback."
     },
     {
         "level": 2,
         "title": "Grouping Cues",
         "page": 8,
-        "description": "Combine multiple cues into groups for easier management."
+        "description": "Grouping lets you treat multiple cues as a single composition unit."
+    },
+    {
+        "level": 2,
+        "title": "Variables and Variable Cues",
+        "page": 9,
+        "description": "WATCHOUT variables let you drive timeline behavior and runtime values with explicit numeric controls."
+    },
+    {
+        "level": 2,
+        "title": "Timeline Triggers and Expressions",
+        "page": 10,
+        "description": "Timelines can react automatically to expression-based trigger rules for play, pause, and stop."
+    },
+    {
+        "level": 2,
+        "title": "ArtNet Fixture Cues",
+        "page": 11,
+        "description": "WATCHOUT includes an ArtNet fixture workflow spanning Assets and Cue Properties."
     },
     {
         "level": 1,
@@ -311,55 +341,55 @@ const tocData = [
         "level": 2,
         "title": "Understanding Tweens",
         "page": 1,
-        "description": "A tween is an animated change over time. Tweens are shown as colored bars in the timeline."
+        "description": "Tweens are time-based value changes attached to cues. They define animation curves for motion, opacity, color, crop, ..."
     },
     {
         "level": 2,
         "title": "Position and Movement",
         "page": 2,
-        "description": "Animate the position of content on stage."
+        "description": "Position tweens animate where a cue appears on Stage over time."
     },
     {
         "level": 2,
         "title": "Scale and Size",
         "page": 3,
-        "description": "Animate the size of content."
+        "description": "Scale controls cue size over time and can be driven by tween points or static cue settings."
     },
     {
         "level": 2,
         "title": "Rotation Effects",
         "page": 4,
-        "description": "Rotate content around different axes."
+        "description": "Rotation tweens control orientation in 2D and 3D contexts."
     },
     {
         "level": 2,
         "title": "Opacity and Fades",
         "page": 5,
-        "description": "Control transparency for fade effects."
+        "description": "Opacity and fade controls define visibility transitions for cues."
     },
     {
         "level": 2,
         "title": "Cropping",
         "page": 6,
-        "description": "Animate the visible area of content."
+        "description": "Crop tweens animate the visible bounds of a cue and are useful for reveals, wipes, and framing."
     },
     {
         "level": 2,
         "title": "Color Adjustments",
         "page": 7,
-        "description": "Animate color properties for dynamic effects."
+        "description": "Color tweens let you animate tonal and channel-level color properties directly on cues."
     },
     {
         "level": 2,
         "title": "Blur Effects",
         "page": 8,
-        "description": "Add blur for depth of field or transition effects."
+        "description": "WATCHOUT provides a Gaussian Blur tween for softening and defocusing content over time."
     },
     {
         "level": 2,
         "title": "Audio Volume",
         "page": 9,
-        "description": "Animate audio levels over time."
+        "description": "Volume tweens automate cue loudness over time."
     },
     {
         "level": 1,
@@ -371,31 +401,31 @@ const tocData = [
         "level": 2,
         "title": "Starting and Stopping",
         "page": 1,
-        "description": "- Spacebar – Toggle play/pause"
+        "description": "Playback is controlled per timeline (or composition timeline) using run, pause, and stop states."
     },
     {
         "level": 2,
         "title": "Preview Mode",
         "page": 2,
-        "description": "Preview your show directly in the Stage window without going online to display servers."
+        "description": "Preview mode lets you validate timing, transitions, and composition flow directly in Producer before committing to fu..."
     },
     {
         "level": 2,
         "title": "Connecting to Display Servers",
         "page": 3,
-        "description": "WATCHOUT automatically discovers display servers on the same network. They appear in the Network window."
+        "description": "In WATCHOUT 7, display servers are discovered nodes running Runner/renderer services. Producer uses discovered node m..."
     },
     {
         "level": 2,
         "title": "Going Online",
         "page": 4,
-        "description": "Going online sends your show data to display servers for synchronized playback."
+        "description": "Operationally, going online means your show is actively controlled through a Director with reachable Runner and Asset..."
     },
     {
         "level": 2,
         "title": "Running Your Show",
         "page": 5,
-        "description": "- Go online with all display servers"
+        "description": "Running a show reliably is mostly about repeatable procedure. Build a fixed preflight and execution rhythm."
     },
     {
         "level": 1,
@@ -407,37 +437,43 @@ const tocData = [
         "level": 2,
         "title": "Network Overview",
         "page": 1,
-        "description": "WATCHOUT uses a star topology with the Producer computer acting as the director, controlling multiple display servers."
+        "description": "WATCHOUT 7 is a distributed system where Producer coordinates Director, Runner, and Asset Manager services across the..."
     },
     {
         "level": 2,
         "title": "Display Servers",
         "page": 2,
-        "description": "Display servers are computers that render and output video to projectors or screens."
+        "description": "A display server node is typically a Runner system responsible for rendering and output."
     },
     {
         "level": 2,
         "title": "Connecting Devices",
         "page": 3,
-        "description": "WATCHOUT uses multicast discovery. All devices on the same subnet automatically find each other."
+        "description": "In WATCHOUT, devices (displays, audio devices, capture sources) are bound to discovered node aliases."
     },
     {
         "level": 2,
         "title": "Firewall Configuration",
         "page": 4,
-        "description": "| Port | Protocol | Purpose |\n| --- | --- | --- |\n| 3039 | TCP | Primary communication |\n| 3040 | TCP | Asset transfe..."
+        "description": "WATCHOUT installer scripts create inbound firewall rules for required network behavior and executables."
     },
     {
         "level": 2,
         "title": "NDI Video Sources",
         "page": 5,
-        "description": "Network Device Interface (NDI) allows video transmission over standard networks."
+        "description": "WATCHOUT 7 supports NDI for both ingest and output workflows."
     },
     {
         "level": 2,
         "title": "Dante Audio",
         "page": 6,
-        "description": "Dante provides professional-quality networked audio."
+        "description": "WATCHOUT supports Dante as an audio device type for networked professional audio routing."
+    },
+    {
+        "level": 2,
+        "title": "Node Management and Maintenance",
+        "page": 7,
+        "description": "Node maintenance actions are available in host/device properties under Network Actions."
     },
     {
         "level": 1,
@@ -449,37 +485,37 @@ const tocData = [
         "level": 2,
         "title": "File Operations",
         "page": 1,
-        "description": "| Shortcut | Action |\n| --- | --- |\n| Ctrl+N | New show |\n| Ctrl+O | Open show |\n| Ctrl+S | Save show |\n| Ctrl+Q | Qu..."
+        "description": "These are the primary default shortcuts for show-file work."
     },
     {
         "level": 2,
         "title": "Edit Commands",
         "page": 2,
-        "description": "| Shortcut | Action |\n| --- | --- |\n| Ctrl+Z | Undo |\n| Ctrl+Shift+Z | Redo |\n| Ctrl+X | Cut |\n| Ctrl+C | Copy |\n| Ct..."
+        "description": "These shortcuts are context-sensitive and operate on the active edit target."
     },
     {
         "level": 2,
         "title": "Stage Navigation",
         "page": 3,
-        "description": "| Shortcut | Action |\n| --- | --- |\n| Ctrl+Shift+D | Frame all displays |\n| Ctrl+Shift+O | Scroll to origin |\n| Ctrl+..."
+        "description": "Use these shortcuts to frame, scale, and nudge content quickly in Stage workflows."
     },
     {
         "level": 2,
         "title": "Timeline Controls",
         "page": 4,
-        "description": "| Shortcut | Action |\n| --- | --- |\n| Spacebar | Play/Pause toggle |\n| Numpad 0 | Start playback |\n| Escape | Pause |..."
+        "description": "These shortcuts are central to timeline operation and cue management."
     },
     {
         "level": 2,
         "title": "Tween Shortcuts",
         "page": 5,
-        "description": "| Shortcut | Tween Type |\n| --- | --- |\n| Alt+P | Position |\n| Alt+S | Scale |\n| Alt+O | Opacity |\n| Alt+R | Rotation..."
+        "description": "Tween shortcuts toggle common animation/effect tracks on selected cues."
     },
     {
         "level": 2,
         "title": "Window Management",
         "page": 6,
-        "description": "| Shortcut | Action |\n| --- | --- |\n| Ctrl+Tab | Cycle through windows |\n| Ctrl+L | Toggle online |\n| Ctrl+N | Toggle..."
+        "description": "These shortcuts help you move quickly between WATCHOUT windows and layout presets."
     },
     {
         "level": 1,
@@ -491,37 +527,37 @@ const tocData = [
         "level": 2,
         "title": "Common Issues",
         "page": 1,
-        "description": "- Run as Administrator"
+        "description": "This section covers high-frequency problems seen during setup and rehearsal."
     },
     {
         "level": 2,
         "title": "Performance Tips",
         "page": 2,
-        "description": "- Use SSD storage for media files"
+        "description": "Performance issues are usually a combination of media complexity, output load, and node configuration."
     },
     {
         "level": 2,
         "title": "Display Problems",
         "page": 3,
-        "description": "- Verify display server is online (green status)"
+        "description": "When a display misbehaves, diagnose in this order: routing, output mode, geometry, then content."
     },
     {
         "level": 2,
         "title": "Network Issues",
         "page": 4,
-        "description": "- Verify both computers are on the same subnet"
+        "description": "Most network failures fall into discovery, firewall, or host-alias consistency problems."
     },
     {
         "level": 2,
         "title": "Media Playback Issues",
         "page": 5,
-        "description": "- Wait for optimization to complete (green icon)"
+        "description": "Playback errors usually come from media format compatibility, missing data, or timing/resource pressure."
     },
     {
         "level": 2,
         "title": "Getting Help",
         "page": 6,
-        "description": "- Documentation – dataton.com/watchout-7-users-guide"
+        "description": "When escalation is needed, gather diagnostics first so support can reproduce and resolve quickly."
     }
 ];
 

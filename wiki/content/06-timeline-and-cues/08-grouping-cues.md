@@ -4,14 +4,32 @@ title: "Grouping Cues"
 
 ## Grouping Cues
 
-Combine multiple cues into groups for easier management.
+Grouping lets you treat multiple cues as a single composition unit.
 
-### Creating Groups
+### Why Group Cues
 
-- Select multiple cues
+Use grouping to:
 
-- Go to Timeline → Group Cues
+- Reuse complex multi-cue moments
+- Keep large timelines manageable
+- Apply structure for team collaboration
 
-### Editing Groups
+### Group / Ungroup Operations
 
-Double-click a group to edit its contents. Changes affect all instances.
+| Action | Shortcut |
+| --- | --- |
+| Group selected cues | `Ctrl+G` |
+| Ungroup selected cues | `Ctrl+Shift+G` |
+
+Grouped cues become composition-like structures you can manage independently.
+
+### Practical Workflow
+
+1. Build and test the cue cluster.
+2. Group when behavior is stable.
+3. Name the resulting composition clearly.
+4. Avoid frequent regrouping late in production unless necessary.
+
+### Important Note
+
+Some stage operations (such as projector-mode workflows) are restricted while working in composition-focused contexts. Plan mapping work in the main stage context when needed.

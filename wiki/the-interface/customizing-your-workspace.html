@@ -144,6 +144,10 @@
                             Customizing Your Workspace
                         </a>
                         
+                        <a class="toc-subsection " href="../the-interface/the-nodes-window.html">
+                            The Nodes Window
+                        </a>
+                        
                 </div>
             
         </div>
@@ -271,6 +275,10 @@
                             Asset Manager Settings
                         </a>
                         
+                        <a class="toc-subsection " href="../assets-asset-manager/import-export-and-mapping.html">
+                            Import, Export, and Mapping
+                        </a>
+                        
                 </div>
             
         </div>
@@ -318,6 +326,18 @@
                         
                         <a class="toc-subsection " href="../timeline-and-cues/grouping-cues.html">
                             Grouping Cues
+                        </a>
+                        
+                        <a class="toc-subsection " href="../timeline-and-cues/variables-and-variable-cues.html">
+                            Variables and Variable Cues
+                        </a>
+                        
+                        <a class="toc-subsection " href="../timeline-and-cues/timeline-triggers-and-expressions.html">
+                            Timeline Triggers and Expressions
+                        </a>
+                        
+                        <a class="toc-subsection " href="../timeline-and-cues/artnet-fixture-cues.html">
+                            ArtNet Fixture Cues
                         </a>
                         
                 </div>
@@ -449,6 +469,10 @@
                         
                         <a class="toc-subsection " href="../network-setup/dante-audio.html">
                             Dante Audio
+                        </a>
+                        
+                        <a class="toc-subsection " href="../network-setup/node-management-and-maintenance.html">
+                            Node Management and Maintenance
                         </a>
                         
                 </div>
@@ -647,23 +671,175 @@
                 <div class="section-content" style="display: block;">
                     <div class="section-content-body"><h2>Customizing Your Workspace</h2>
 
-<p>WATCHOUT's interface is fully customizable to match your workflow.</p>
+<p>WATCHOUT 7's interface is fully customizable to match your workflow. The flexible window system allows you to arrange, resize, and organize your workspace exactly as you prefer.</p>
 
-<h3>Rearranging Windows</h3>
+<h3>Window Management</h3>
 
-<p>Drag window title bars to dock them in new locations or float them as separate windows.</p>
+<h4>Moving Windows</h4>
 
-<h3>Saving Layouts</h3>
+<p>Drag any window by its title bar to reposition it within the application. Windows can be placed anywhere on screen and can overlap freely.</p>
 
-<p>Go to <strong>Window → Save Layout</strong> to save your current arrangement. Load saved layouts from the same menu.</p>
+<h4>Resizing Windows</h4>
+
+<p>Drag the edges or corners of any window to resize:</p>
+
+<ul>
+<li><strong>Edges</strong> – Resize in one direction</li>
+<li><strong>Corners</strong> – Resize in both directions simultaneously</li>
+
+</ul>
+Windows maintain a minimum size to ensure controls remain usable.
+
+<h4>Closing Windows</h4>
+
+<p>Click the × button in any window's title bar, or right-click the title bar and select <strong>Close</strong>.</p>
+
+<h4>Reopening Windows</h4>
+
+<p>Closed windows can be reopened via the <strong>Window</strong> menu:</p>
+
+<ul>
+<li><strong>Window → Stage</strong></li>
+<li><strong>Window → Timeline</strong></li>
+<li><strong>Window → Assets</strong></li>
+<li><strong>Window → Properties</strong></li>
+<li><strong>Window → Network</strong></li>
+<li><strong>Window → Variables</strong> (for show variables/inputs)</li>
+
+</ul>
+<h3>Window Docking</h3>
+
+<p>Windows can be <strong>docked</strong> to the edges of the application:</p>
+
+<ol>
+<li>Hold <code>Ctrl</code> and double-click a window's title bar</li>
+<li>The window docks to the nearest edge</li>
+
+</ol>
+Docked windows:
+
+<ul>
+<li>Stretch to fill the edge</li>
+<li>Don't overlap other content</li>
+<li>Stay at their docked position when the application resizes</li>
+
+</ul>
+To undock, hold <code>Ctrl</code> and double-click the title bar again.
 
 <h3>Layout Presets</h3>
 
-<p>Use <code>Ctrl+Shift+1</code> through <code>Ctrl+Shift+9</code> to save quick-access layout presets.</p>
+<p>Save and recall up to 9 custom workspace layouts:</p>
 
-<h3>Theme</h3>
+<h4>Saving Presets</h4>
 
-<p>Toggle between dark and light themes from the Window menu.</p></div><div class="section-nav">
+<ul>
+<li><code>Ctrl+Shift+1</code> through <code>Ctrl+Shift+9</code> – Save current layout to preset 1-9</li>
+
+</ul>
+<h4>Loading Presets</h4>
+
+<ul>
+<li><code>Ctrl+1</code> through <code>Ctrl+9</code> – Load layout preset 1-9</li>
+
+</ul>
+Presets remember:
+
+<ul>
+<li>Window positions</li>
+<li>Window sizes</li>
+<li>Which windows are open</li>
+<li>Docking states</li>
+
+</ul>
+<h3>Layout Files</h3>
+
+<p>For sharing layouts between projects or team members:</p>
+
+<h4>Save Layout to File</h4>
+
+<ul>
+<li><strong>Window → Save Layout</strong> – Export current workspace to a <code>.layout.json</code> file</li>
+
+</ul>
+<h4>Load Layout from File</h4>
+
+<ul>
+<li><strong>Window → Load Layout</strong> – Import a workspace from file</li>
+
+</ul>
+<h3>Reset Layout</h3>
+
+<p>To restore the default workspace arrangement:</p>
+
+<ul>
+<li><strong>Window → Reset Layout</strong></li>
+
+</ul>
+This returns all windows to their original positions and sizes.
+
+<h3>Window Navigation</h3>
+
+<h4>Cycling Windows</h4>
+
+<p>Navigate between windows using keyboard shortcuts:</p>
+
+<table>
+<tr><th>Shortcut</th><th>Action</th></tr>
+<tr><td><code>Ctrl+Tab</code></td><td>Activate next window</td></tr>
+<tr><td><code>Ctrl+Shift+Tab</code></td><td>Activate previous window</td></tr>
+<tr><td><code>Ctrl+\</code><code></td><td>Next window of same type</td></tr>
+<tr><td></code>Ctrl+Shift+\`<code></td><td>Previous window of same type</td></tr>
+</table>
+
+<h4>Direct Window Access</h4>
+
+<p>Jump directly to specific windows:</p>
+
+<ul>
+<li><strong>Stage</strong> – Click in background or use <strong>Window → Stage</strong></li>
+<li><strong>Timeline</strong> – <strong>Window → Timelines</strong></li>
+<li><strong>Assets</strong> – <strong>Window → Assets</strong></li>
+<li><strong>Properties</strong> – <strong>Window → Properties</strong> or </code>Ctrl+P`</li>
+<li><strong>Network</strong> – <strong>Window → Network</strong></li>
+
+</ul>
+<h3>Theme Selection</h3>
+
+<p>Toggle between visual themes via <strong>Window → Light Theme</strong>:</p>
+
+<ul>
+<li><strong>Dark Theme</strong> – Reduced brightness for low-light environments</li>
+<li><strong>Light Theme</strong> – Higher contrast for bright environments</li>
+
+</ul>
+Your theme preference persists across sessions.
+
+<h3>Multiple Timeline Windows</h3>
+
+<p>WATCHOUT supports multiple Timeline windows open simultaneously, useful when working with multiple timelines in your show. Each Timeline window operates independently and can display a different timeline.</p>
+
+<h3>Window Focus Indicators</h3>
+
+<p>The active (focused) window displays:</p>
+
+<ul>
+<li>Brighter title bar text</li>
+<li>Enhanced border color</li>
+<li>Stronger drop shadow</li>
+
+</ul>
+This visual hierarchy helps identify which window receives keyboard input.
+
+<h3>Transparent Stage</h3>
+
+<p>The Stage window can display a transparent background when configured, allowing the operating system desktop or other applications to show through. This is useful for:</p>
+
+<ul>
+<li>Calibration reference</li>
+<li>Matching on-screen content with physical elements</li>
+<li>Presentation previews</li>
+
+</ul></div><div class="section-nav">
                 <a href="the-network-window.html" class="nav-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -672,7 +848,7 @@
                     </svg>
                     Previous
                 </a>
-                <a href="../working-with-shows/index.html" class="nav-btn">
+                <a href="the-nodes-window.html" class="nav-btn">
                     Next
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"

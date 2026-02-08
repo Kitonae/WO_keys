@@ -144,6 +144,10 @@
                             Customizing Your Workspace
                         </a>
                         
+                        <a class="toc-subsection " href="../the-interface/the-nodes-window.html">
+                            The Nodes Window
+                        </a>
+                        
                 </div>
             
         </div>
@@ -271,6 +275,10 @@
                             Asset Manager Settings
                         </a>
                         
+                        <a class="toc-subsection " href="../assets-asset-manager/import-export-and-mapping.html">
+                            Import, Export, and Mapping
+                        </a>
+                        
                 </div>
             
         </div>
@@ -318,6 +326,18 @@
                         
                         <a class="toc-subsection " href="../timeline-and-cues/grouping-cues.html">
                             Grouping Cues
+                        </a>
+                        
+                        <a class="toc-subsection " href="../timeline-and-cues/variables-and-variable-cues.html">
+                            Variables and Variable Cues
+                        </a>
+                        
+                        <a class="toc-subsection " href="../timeline-and-cues/timeline-triggers-and-expressions.html">
+                            Timeline Triggers and Expressions
+                        </a>
+                        
+                        <a class="toc-subsection " href="../timeline-and-cues/artnet-fixture-cues.html">
+                            ArtNet Fixture Cues
                         </a>
                         
                 </div>
@@ -449,6 +469,10 @@
                         
                         <a class="toc-subsection " href="../network-setup/dante-audio.html">
                             Dante Audio
+                        </a>
+                        
+                        <a class="toc-subsection " href="../network-setup/node-management-and-maintenance.html">
+                            Node Management and Maintenance
                         </a>
                         
                 </div>
@@ -647,20 +671,39 @@
                 <div class="section-content" style="display: block;">
                     <div class="section-content-body"><h2>Output Cues</h2>
 
-<p>Send control signals to external devices and systems.</p>
+<p>Output cues transmit external control data during timeline playback.</p>
 
-<h3>Supported Outputs</h3>
+<h3>Output Cue Fields</h3>
+
+<p>Typical output cue properties include:</p>
 
 <ul>
-<li>Art-Net/DMX for lighting</li>
+<li><strong>Protocol</strong></li>
+<li><strong>Address</strong></li>
+<li><strong>Port</strong></li>
+<li><strong>Data payload</strong></li>
 
-<p><li>MIDI for show control</li></p>
+</ul>
+These let you trigger external systems in sync with timeline events.
 
-<p><li>TCP/UDP network commands</li></p>
+<h3>Typical Use Cases</h3>
 
-<p><li>Serial port commands</li></p>
+<ul>
+<li>Triggering automation systems</li>
+<li>Sending commands to control middleware</li>
+<li>Driving external effects synchronized with visuals</li>
 
-<p></ul></p></div><div class="section-nav">
+</ul>
+<h3>Reliability Tips</h3>
+
+<ul>
+<li>Keep payloads deterministic and documented.</li>
+<li>Test cue timing with full show playback speed.</li>
+<li>Validate routing on the same network architecture used in production.</li>
+
+</ul>
+<div class='warning-box'><p>If external systems are safety-critical, include operator confirmation and fallback procedures outside timeline automation.
+</p></div></div><div class="section-nav">
                 <a href="comment-cues.html" class="nav-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"

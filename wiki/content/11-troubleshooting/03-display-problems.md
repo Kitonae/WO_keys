@@ -4,22 +4,31 @@ title: "Display Problems"
 
 ## Display Problems
 
-### No Output on Display
+When a display misbehaves, diagnose in this order: routing, output mode, geometry, then content.
 
-- Verify display server is online (green status)
+### No Signal on a Display
 
-- Check display is assigned to correct output
+Check:
 
-- Verify GPU output is active in Windows
+1. Display is **enabled** and not locked to wrong settings.
+2. Correct **host alias** and **output channel**.
+3. Correct **output type** (GPU/SDI/NDI/Virtual).
+4. Node services are online.
 
-- Check cables and connections
+### Wrong Screen / Wrong Position
 
-### Stuttering Playback
+- Re-check stage placement and display naming.
+- Use **Frame in Stage** and **Frame All Displays**.
+- Validate channel mapping in device properties.
 
-- Use HAP codec instead of H.264/HEVC
+### Visible Seams or Warped Content
 
-- Reduce video resolution if needed
+- Revisit warp geometry and mask edits.
+- Verify soft-edge overlap quality.
+- Re-run projector calibration where required.
 
-- Check disk read speed
+### Interlaced/Color Artifacts
 
-- Reduce number of simultaneous videos
+- Confirm interlaced setting is intentional.
+- Verify color depth/color space settings per output path.
+- Compare with known test pattern media.

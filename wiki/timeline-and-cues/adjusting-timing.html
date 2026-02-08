@@ -144,6 +144,10 @@
                             Customizing Your Workspace
                         </a>
                         
+                        <a class="toc-subsection " href="../the-interface/the-nodes-window.html">
+                            The Nodes Window
+                        </a>
+                        
                 </div>
             
         </div>
@@ -271,6 +275,10 @@
                             Asset Manager Settings
                         </a>
                         
+                        <a class="toc-subsection " href="../assets-asset-manager/import-export-and-mapping.html">
+                            Import, Export, and Mapping
+                        </a>
+                        
                 </div>
             
         </div>
@@ -318,6 +326,18 @@
                         
                         <a class="toc-subsection " href="../timeline-and-cues/grouping-cues.html">
                             Grouping Cues
+                        </a>
+                        
+                        <a class="toc-subsection " href="../timeline-and-cues/variables-and-variable-cues.html">
+                            Variables and Variable Cues
+                        </a>
+                        
+                        <a class="toc-subsection " href="../timeline-and-cues/timeline-triggers-and-expressions.html">
+                            Timeline Triggers and Expressions
+                        </a>
+                        
+                        <a class="toc-subsection " href="../timeline-and-cues/artnet-fixture-cues.html">
+                            ArtNet Fixture Cues
                         </a>
                         
                 </div>
@@ -449,6 +469,10 @@
                         
                         <a class="toc-subsection " href="../network-setup/dante-audio.html">
                             Dante Audio
+                        </a>
+                        
+                        <a class="toc-subsection " href="../network-setup/node-management-and-maintenance.html">
+                            Node Management and Maintenance
                         </a>
                         
                 </div>
@@ -647,22 +671,44 @@
                 <div class="section-content" style="display: block;">
                     <div class="section-content-body"><h2>Adjusting Timing</h2>
 
-<h3>Moving Cues</h3>
+<p>Precise timing is central to show quality. WATCHOUT provides direct manipulation and command-based timing edits.</p>
 
-<p>Drag cues left/right to change their start time. Hold Shift to constrain to horizontal movement.</p>
-
-<h3>Trimming</h3>
+<h3>Common Timing Edits</h3>
 
 <ul>
-<li><strong>Trim Start</strong> – Drag the left edge of a cue</li>
+<li>Drag cue body to move start time</li>
+<li>Drag cue edges to trim duration</li>
+<li>Use trim commands for exact operations</li>
 
-<p><li><strong>Trim End</strong> – Drag the right edge</li></p>
+</ul>
+<h3>Trim and Reset Actions</h3>
 
-<p><li><strong>Slip Edit</strong> – Hold Alt while dragging edges for video content</li></p>
+<p>Available timeline actions include:</p>
 
-<p></ul> <h3>Snapping</h3></p>
+<ul>
+<li><strong>Trim Start</strong></li>
+<li><strong>Trim End</strong></li>
+<li><strong>Reset Duration</strong></li>
+<li><strong>Reset In-Time</strong></li>
 
-<p>Toggle snapping (Ctrl+N) to align cues to other cues or the play head.</p></div><div class="section-nav">
+</ul>
+These are useful when cues need to be quickly normalized after rehearsal changes.
+
+<h3>Snapping</h3>
+
+<p>Snapping helps align edits to meaningful points:</p>
+
+<ul>
+<li>Cue start/end points</li>
+<li>Current play cursor</li>
+<li>Nearby timeline structures</li>
+
+</ul>
+Toggle snapping with <code>Ctrl+N</code>.
+
+<h3>Navigation-Assisted Timing</h3>
+
+<p>Use keyboard navigation to jump between cues on active layer, then adjust timing without losing selection context.</p></div><div class="section-nav">
                 <a href="working-with-layers.html" class="nav-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"

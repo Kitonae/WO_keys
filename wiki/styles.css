@@ -1,6 +1,13 @@
 /* WATCHOUT Wiki/User Guide - Stylesheet */
 /* Using the same visual style as the shortcuts page */
 
+@font-face {
+    font-family: 'Futura Now Headline';
+    src: url('fonts/FuturaNowHeadline-Rg.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
 :root {
     --bg-primary: #0a0a0f;
     --bg-secondary: #12121a;
@@ -582,6 +589,18 @@ body::before {
     }
 }
 
+@keyframes fadeInLogo {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 0.95;
+        transform: translateY(0);
+    }
+}
+
 .welcome-hero {
     text-align: center;
     padding: 60px 40px;
@@ -618,11 +637,13 @@ body::before {
 }
 
 .hero-logo {
-    width: 600px;
+    width: 90%;
+    max-width: 600px;
     height: auto;
     filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.5));
+    border-radius: 16px;
     opacity: 0.95;
-    animation: fadeIn 1.5s ease-out;
+    animation: fadeInLogo 1.5s ease-out;
 }
 
 @keyframes float {
@@ -859,6 +880,26 @@ body::before {
     box-shadow: 0 8px 16px var(--shadow-color);
 }
 
+.video-placeholder {
+    width: 200px;
+    height: 112px;
+    /* Approx 16:9 ratio of 200px width */
+    background: var(--bg-tertiary);
+    border: 1px dashed var(--text-muted);
+    border-radius: var(--border-radius);
+    margin: 0 0 16px 24px;
+    float: right;
+    clear: right;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    box-shadow: 0 4px 6px var(--shadow-color);
+    pointer-events: none;
+    user-select: none;
+}
+
 /* Video Modal Overlay */
 .video-modal {
     display: none;
@@ -932,6 +973,20 @@ body::before {
 
 .warning-box strong {
     color: #fbbf24;
+}
+
+/* Horizontal Divider / Splitter */
+.section-body hr {
+    border: none;
+    height: 1px;
+    background: linear-gradient(90deg,
+            transparent 0%,
+            var(--border-subtle) 15%,
+            var(--accent-primary) 50%,
+            var(--border-subtle) 85%,
+            transparent 100%);
+    margin: 32px 0;
+    opacity: 0.6;
 }
 
 /* h4 headings in section body */

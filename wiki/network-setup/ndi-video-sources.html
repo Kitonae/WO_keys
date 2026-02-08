@@ -144,6 +144,10 @@
                             Customizing Your Workspace
                         </a>
                         
+                        <a class="toc-subsection " href="../the-interface/the-nodes-window.html">
+                            The Nodes Window
+                        </a>
+                        
                 </div>
             
         </div>
@@ -271,6 +275,10 @@
                             Asset Manager Settings
                         </a>
                         
+                        <a class="toc-subsection " href="../assets-asset-manager/import-export-and-mapping.html">
+                            Import, Export, and Mapping
+                        </a>
+                        
                 </div>
             
         </div>
@@ -318,6 +326,18 @@
                         
                         <a class="toc-subsection " href="../timeline-and-cues/grouping-cues.html">
                             Grouping Cues
+                        </a>
+                        
+                        <a class="toc-subsection " href="../timeline-and-cues/variables-and-variable-cues.html">
+                            Variables and Variable Cues
+                        </a>
+                        
+                        <a class="toc-subsection " href="../timeline-and-cues/timeline-triggers-and-expressions.html">
+                            Timeline Triggers and Expressions
+                        </a>
+                        
+                        <a class="toc-subsection " href="../timeline-and-cues/artnet-fixture-cues.html">
+                            ArtNet Fixture Cues
                         </a>
                         
                 </div>
@@ -449,6 +469,10 @@
                         
                         <a class="toc-subsection " href="../network-setup/dante-audio.html">
                             Dante Audio
+                        </a>
+                        
+                        <a class="toc-subsection " href="../network-setup/node-management-and-maintenance.html">
+                            Node Management and Maintenance
                         </a>
                         
                 </div>
@@ -647,18 +671,32 @@
                 <div class="section-content" style="display: block;">
                     <div class="section-content-body"><h2>NDI Video Sources</h2>
 
-<p>Network Device Interface (NDI) allows video transmission over standard networks.</p>
+<p>WATCHOUT 7 supports NDI for both ingest and output workflows.</p>
 
-<h3>Using NDI</h3>
+<h3>NDI Input Workflow</h3>
 
 <ul>
-<li>Add an NDI source in the Assets window</li>
+<li>Add an NDI capture/source in Producer.</li>
+<li>Select the stream by discovered NDI source name.</li>
+<li>Use it like other media cues in timeline and stage workflows.</li>
 
-<p><li>Select the NDI stream from available sources</li></p>
+</ul>
+<h3>NDI Output Workflow</h3>
 
-<p><li>Use like any other media in your timeline</li></p>
+<p>Displays can use <strong>NDI</strong> as output type, enabling network video feeds to downstream systems.</p>
 
-<p></ul></p></div><div class="section-nav">
+<h3>Calibration and Integration</h3>
+
+<p>Display properties include an <strong>NDI calibration stream</strong> field for specific calibration and workflow integrations.</p>
+
+<h3>Reliability Tips</h3>
+
+<ul>
+<li>Keep NDI traffic on robust switched infrastructure.</li>
+<li>Avoid saturated links on mixed control/media VLANs.</li>
+<li>Validate source frame format and timing before show-critical use.</li>
+
+</ul></div><div class="section-nav">
                 <a href="firewall-configuration.html" class="nav-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"

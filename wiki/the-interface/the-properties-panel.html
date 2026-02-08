@@ -144,6 +144,10 @@
                             Customizing Your Workspace
                         </a>
                         
+                        <a class="toc-subsection " href="../the-interface/the-nodes-window.html">
+                            The Nodes Window
+                        </a>
+                        
                 </div>
             
         </div>
@@ -271,6 +275,10 @@
                             Asset Manager Settings
                         </a>
                         
+                        <a class="toc-subsection " href="../assets-asset-manager/import-export-and-mapping.html">
+                            Import, Export, and Mapping
+                        </a>
+                        
                 </div>
             
         </div>
@@ -318,6 +326,18 @@
                         
                         <a class="toc-subsection " href="../timeline-and-cues/grouping-cues.html">
                             Grouping Cues
+                        </a>
+                        
+                        <a class="toc-subsection " href="../timeline-and-cues/variables-and-variable-cues.html">
+                            Variables and Variable Cues
+                        </a>
+                        
+                        <a class="toc-subsection " href="../timeline-and-cues/timeline-triggers-and-expressions.html">
+                            Timeline Triggers and Expressions
+                        </a>
+                        
+                        <a class="toc-subsection " href="../timeline-and-cues/artnet-fixture-cues.html">
+                            ArtNet Fixture Cues
                         </a>
                         
                 </div>
@@ -449,6 +469,10 @@
                         
                         <a class="toc-subsection " href="../network-setup/dante-audio.html">
                             Dante Audio
+                        </a>
+                        
+                        <a class="toc-subsection " href="../network-setup/node-management-and-maintenance.html">
+                            Node Management and Maintenance
                         </a>
                         
                 </div>
@@ -647,29 +671,130 @@
                 <div class="section-content" style="display: block;">
                     <div class="section-content-body"><h2>The Properties Panel</h2>
 
-<p>The Properties panel shows settings for whatever is currently selected – displays, cues, or media.</p>
+<p>The <strong>Properties</strong> panel is a context-sensitive inspector that displays settings for whatever is currently selected—displays, cues, layers, tweens, assets, or application preferences.</p>
+
+<h3>Dynamic Content</h3>
+
+<p>The Properties panel automatically adapts to show relevant settings based on your current selection:</p>
+
+<table>
+<tr><th>Selection</th><th>Properties Shown</th></tr>
+<tr><td><strong>No selection</strong></td><td>Application Preferences</td></tr>
+<tr><td><strong>Cue</strong></td><td>Cue properties (position, timing, effects)</td></tr>
+<tr><td><strong>Layer</strong></td><td>Layer settings (name, key and fill options)</td></tr>
+<tr><td><strong>Tween</strong></td><td>Tween curve properties</td></tr>
+<tr><td><strong>Tween Point</strong></td><td>Individual keyframe values</td></tr>
+<tr><td><strong>Asset</strong></td><td>Media file information</td></tr>
+<tr><td><strong>Display</strong></td><td>Display configuration</td></tr>
+<tr><td><strong>Device</strong></td><td>Network device settings</td></tr>
+<tr><td><strong>Stage (background)</strong></td><td>Stage display settings</td></tr>
+</table>
 
 <h3>Accessing Properties</h3>
 
 <ul>
-<li>Select an item and view its properties automatically</li>
+<li><strong>Automatic</strong> – Select any item and its properties appear</li>
+<li><strong>Double-click</strong> – Double-click items in Stage or Timeline to focus the Properties panel</li>
+<li><strong>Keyboard</strong> – Press <code>Enter</code> with selection to shift focus to Properties</li>
+<li><strong>Menu</strong> – <strong>Window → Properties</strong> or <code>Ctrl+P</code></li>
 
-<p><li>Double-click an item to open detailed settings</li></p>
+</ul>
+<h3>Property Categories</h3>
 
-<p><li>Press <code>Enter</code> with an item selected</li></p>
+<p>Properties are organized into collapsible categories for easier navigation. Each category can be expanded or collapsed by clicking its header.</p>
 
-<p></ul> <h3>Common Properties</h3></p>
+<h4>Cue Properties</h4>
+
+<p>When a media cue is selected:</p>
 
 <ul>
-<li><strong>Position</strong> – X, Y coordinates on stage</li>
+<li><strong>Transform</strong></li>
+<li>Position (X, Y, Z)</li>
+<li>Scale (Width, Height, or unified)</li>
+<li>Rotation (Roll, Pitch, Yaw)</li>
+<li>Anchor Point</li>
 
-<p><li><strong>Scale</strong> – Size as percentage</li></p>
+<p><li><strong>Appearance</strong></li> <li>Opacity</li> <li>Crop (Top, Bottom, Left, Right)</li> <li>Blur</li></p>
 
-<p><li><strong>Rotation</strong> – Rotation in degrees</li></p>
+<p><li><strong>Color</strong></li> <li>Brightness</li> <li>Contrast</li> <li>Gamma</li> <li>Hue</li> <li>Saturation</li> <li>Invert</li> <li>RGB Offset and Gain</li></p>
 
-<p><li><strong>Opacity</strong> – Transparency level</li></p>
+<p><li><strong>Timing</strong></li> <li>Start Time</li> <li>Duration</li> <li>In Point (media offset)</li> <li>Play Rate</li></p>
 
-<p></ul></p></div><div class="section-nav">
+<p><li><strong>Audio</strong></li> <li>Volume</li> <li>Pan</li> <li>Mute</li></p>
+
+</ul>
+<h4>Layer Properties</h4>
+
+<p>When a layer is selected:</p>
+
+<ul>
+<li><strong>Name</strong> – Custom layer identifier</li>
+<li><strong>Key and Fill</strong> – Enable external keying mode</li>
+<li>Mode: Luma, Alpha, Luma Inverted, Alpha Inverted</li>
+<li>Associated fill layer selection</li>
+
+</ul>
+<h4>Timeline Properties</h4>
+
+<p>When a timeline is selected (via layer):</p>
+
+<ul>
+<li><strong>Timeline Name</strong></li>
+<li><strong>Duration</strong></li>
+<li><strong>Frame Rate</strong></li>
+
+</ul>
+<h4>Asset Properties</h4>
+
+<p>When an asset is selected:</p>
+
+<ul>
+<li><strong>File Information</strong> – Path, size, format</li>
+<li><strong>Media Specifications</strong> – Resolution, duration, codec</li>
+<li><strong>Optimization</strong> – Target format settings</li>
+
+</ul>
+<h4>Display Properties</h4>
+
+<p>When a display is selected on the Stage:</p>
+
+<ul>
+<li><strong>Name</strong> – Display identifier</li>
+<li><strong>Resolution</strong> – Output dimensions</li>
+<li><strong>Position</strong> – Location on the Stage canvas</li>
+<li><strong>Rotation</strong> – Display orientation</li>
+<li><strong>Host Assignment</strong> – Which display server renders this output</li>
+<li><strong>Edge Blending</strong> – Overlap and blend settings</li>
+<li><strong>Masking</strong> – Output mask configuration</li>
+
+</ul>
+<h3>Input Fields</h3>
+
+<p>Property values can be edited using various input types:</p>
+
+<ul>
+<li><strong>Text Fields</strong> – Type values directly; press <code>Enter</code> to confirm</li>
+<li><strong>Number Fields</strong> – Type or use increment buttons; drag to scrub values</li>
+<li><strong>Sliders</strong> – Drag for continuous adjustment</li>
+<li><strong>Color Pickers</strong> – Click the swatch to open the color selector</li>
+<li><strong>Dropdowns</strong> – Click to select from available options</li>
+<li><strong>Toggles</strong> – Click to enable/disable boolean settings</li>
+
+</ul>
+<h3>Scroll Position Memory</h3>
+
+<p>The Properties panel remembers scroll position for each property page type, so switching between different selections maintains your viewing position within similar content.</p>
+
+<h3>Focus Behavior</h3>
+
+<p>When the Properties panel receives focus:</p>
+
+<ul>
+<li>Tab navigation cycles through editable fields</li>
+<li>Press <code>Enter</code> to return focus to the previous window</li>
+<li>Changes apply immediately when values are modified</li>
+
+</ul></div><div class="section-nav">
                 <a href="the-assets-window.html" class="nav-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"

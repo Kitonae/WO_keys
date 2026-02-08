@@ -4,12 +4,28 @@ title: "Rotation Effects"
 
 ## Rotation Effects
 
-Rotate content around different axes.
+Rotation tweens control orientation in 2D and 3D contexts.
 
-### Rotation Types
+### Rotation Axes
 
-- **Z Rotation** (Alt+R) – Standard 2D rotation
+WATCHOUT provides:
 
-- **Y Rotation** (Alt+Y) – Flip horizontally in 3D
+- **Rotation Z** (`roll`) for classic 2D spin
+- **Rotation Y** (`yaw`) for horizontal 3D turn
+- **Rotation X** (`pitch`) for vertical 3D tilt
 
-- **X Rotation** – Flip vertically in 3D
+Shortcuts:
+
+- `Alt+Z` for Rotation Z
+- `Alt+Y` for Rotation Y
+
+### Practical Uses
+
+- Badge or logo spins
+- Card-flip style transitions
+- Perspective movement enhancements
+
+### Control Tips
+
+- Keep pivot/anchor placement in mind before animating.
+- Large 3D rotations often need complementary position/scale adjustment.

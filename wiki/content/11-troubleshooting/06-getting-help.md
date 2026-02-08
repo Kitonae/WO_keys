@@ -4,18 +4,34 @@ title: "Getting Help"
 
 ## Getting Help
 
-### Support Resources
+When escalation is needed, gather diagnostics first so support can reproduce and resolve quickly.
 
-- **Documentation** – dataton.com/watchout-7-users-guide
+### Built-In Support Tools
 
-- **Support** – Contact Dataton technical support
+Use the Help menu to:
 
-- **Training** – Official WATCHOUT training courses
+- **Create Feedback Report**
+- **Open Log Directory**
+- Review licensing/version information
 
-### Create Feedback Report
+### What to Collect
 
-Use **Help → Create Feedback Report** to generate a diagnostic package for support.
+Before contacting support, capture:
 
-### Log Files
+- Exact WATCHOUT version/build in use
+- Show file name/version
+- Steps to reproduce
+- Node aliases and roles (Director/Runner/Asset Manager)
+- Relevant timestamps and screenshots/video
 
-Access log files via **Help → Explore Logs** for detailed troubleshooting information.
+### Useful Runtime Context
+
+Include whether the issue occurred:
+
+- During local preview or live network playback
+- With specific outputs (GPU/SDI/NDI)
+- After recent network, driver, or hardware changes
+
+### Team Handoff Tip
+
+Document temporary workarounds in marker cues or operations notes so the next operator can keep the show stable while root-cause analysis continues.

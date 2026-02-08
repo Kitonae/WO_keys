@@ -144,6 +144,10 @@
                             Customizing Your Workspace
                         </a>
                         
+                        <a class="toc-subsection " href="../the-interface/the-nodes-window.html">
+                            The Nodes Window
+                        </a>
+                        
                 </div>
             
         </div>
@@ -271,6 +275,10 @@
                             Asset Manager Settings
                         </a>
                         
+                        <a class="toc-subsection " href="../assets-asset-manager/import-export-and-mapping.html">
+                            Import, Export, and Mapping
+                        </a>
+                        
                 </div>
             
         </div>
@@ -318,6 +326,18 @@
                         
                         <a class="toc-subsection " href="../timeline-and-cues/grouping-cues.html">
                             Grouping Cues
+                        </a>
+                        
+                        <a class="toc-subsection " href="../timeline-and-cues/variables-and-variable-cues.html">
+                            Variables and Variable Cues
+                        </a>
+                        
+                        <a class="toc-subsection " href="../timeline-and-cues/timeline-triggers-and-expressions.html">
+                            Timeline Triggers and Expressions
+                        </a>
+                        
+                        <a class="toc-subsection " href="../timeline-and-cues/artnet-fixture-cues.html">
+                            ArtNet Fixture Cues
                         </a>
                         
                 </div>
@@ -449,6 +469,10 @@
                         
                         <a class="toc-subsection " href="../network-setup/dante-audio.html">
                             Dante Audio
+                        </a>
+                        
+                        <a class="toc-subsection " href="../network-setup/node-management-and-maintenance.html">
+                            Node Management and Maintenance
                         </a>
                         
                 </div>
@@ -647,29 +671,109 @@
                 <div class="section-content" style="display: block;">
                     <div class="section-content-body"><h2>The Stage Window</h2>
 
-<p>The Stage is your visual canvas – a representation of all your displays and how content appears on them.</p>
+<p>The <strong>Stage</strong> is your visual canvas—a representation of all your displays and how content appears on them. It provides a unified view of your entire display arrangement, allowing you to position and manipulate content directly.</p>
 
-<h3>Navigation</h3>
+<h3>Stage Modes</h3>
+
+<p>The Stage window operates in three distinct modes, accessible via the topbar button or the <strong>Stage</strong> menu:</p>
+
+<table>
+<tr><th>Mode</th><th>Description</th></tr>
+<tr><td><strong>Default (Front View)</strong></td><td>Standard 2D editing view for positioning and arranging content</td></tr>
+<tr><td><strong>FPS Camera</strong></td><td>First-person navigation for 3D environments with WASD-style controls</td></tr>
+<tr><td><strong>Projector View</strong></td><td>View the Stage from a selected projector's perspective for calibration</td></tr>
+</table>
+
+<h3>Navigation Controls</h3>
+
+<h4>Pan</h4>
+
+<p>Move your view around the Stage:</p>
 
 <ul>
-<li><strong>Pan</strong> – Hold <code>Ctrl+Alt</code> and drag</li>
+<li><strong>Mouse</strong> – Hold <code>Ctrl+Alt</code> and drag</li>
+<li><strong>Button</strong> – Click the pan button (hand icon) in the top-right toolbar and drag</li>
 
-<p><li><strong>Zoom</strong> – Use <code>Ctrl+Mouse Wheel</code> or zoom buttons</li></p>
+</ul>
+<h4>Zoom / Scale</h4>
 
-<p><li><strong>Frame All</strong> – Press <code>Ctrl+Shift+D</code> to fit all displays in view</li></p>
-
-<p></ul> <h3>View Modes</h3></p>
+<p>Adjust your view magnification:</p>
 
 <ul>
-<li><strong>Default</strong> – Standard 2D editing view</li>
+<li><strong>Mouse Wheel</strong> – <code>Ctrl+Mouse Wheel</code> to zoom in/out</li>
+<li><strong>Button</strong> – Click the magnify button and drag vertically</li>
+<li><strong>Menu</strong> – <strong>Stage → Scale</strong> with preset levels (1:16, 1:8, 1:4, 1:2, 1:1)</li>
 
-<p><li><strong>Perspective</strong> – 3D view for mapping projects</li></p>
+</ul>
+The current scale ratio displays in the title bar when in Front View mode.
 
-<p><li><strong>Projector View</strong> – See content from projector's perspective</li></p>
+<h4>Orbit (3D Views)</h4>
 
-<p></ul> <h3>Working with Content</h3></p>
+<p>When not in Front View:</p>
 
-<p>Select, move, and transform media cues directly on the Stage. Use handles to resize and rotate.</p></div><div class="section-nav">
+<ul>
+<li><strong>Button</strong> – Click the orbit button (rotate icon) and drag to rotate the camera around the Stage</li>
+
+</ul>
+<h4>Camera Velocity</h4>
+
+<p>In 3D modes, adjust movement speed using the velocity slider (running figure icon).</p>
+
+<h3>View Commands</h3>
+
+<table>
+<tr><th>Shortcut</th><th>Command</th><th>Description</th></tr>
+<tr><td><code>Ctrl+Shift+D</code></td><td>Frame All Displays</td><td>Zoom to fit all displays in the viewport</td></tr>
+<tr><td><code>Ctrl+Shift+O</code></td><td>Scroll to Origin</td><td>Center the view on coordinates (0, 0)</td></tr>
+<tr><td><code>Ctrl+Shift+S</code></td><td>Frame Selected</td><td>Zoom to fit selected displays</td></tr>
+</table>
+
+<h3>Working with Content</h3>
+
+<h4>Selection</h4>
+
+<ul>
+<li><strong>Single Click</strong> – Select a cue or display</li>
+<li><strong>Shift+Click</strong> – Add to selection</li>
+<li><strong>Ctrl+Click</strong> – Toggle selection</li>
+<li><strong>Marquee</strong> – Click and drag on empty space to create a selection rectangle</li>
+
+</ul>
+<h4>Transformation</h4>
+
+<p>Selected cues can be manipulated directly on the Stage:</p>
+
+<ul>
+<li><strong>Move</strong> – Drag selected items to reposition</li>
+<li><strong>Resize</strong> – Drag corner or edge handles</li>
+<li><strong>Rotate</strong> – Use rotation handles when available</li>
+<li><strong>Nudge</strong> – Arrow keys move selection by 1 pixel; <code>Shift+Arrow</code> moves by 10 pixels</li>
+
+</ul>
+<h4>Drag and Drop</h4>
+
+<p>Drag media from the <strong>Assets</strong> window directly onto the Stage to create cues at the drop location.</p>
+
+<h3>Display Labels</h3>
+
+<p>When enabled, display names appear centered on each display rectangle, making it easy to identify outputs in complex multi-display configurations.</p>
+
+<h3>Projector Mode</h3>
+
+<p>When viewing from a projector's perspective, additional controls appear for calibration:</p>
+
+<ul>
+<li><strong>View Mode</strong> – Preview content as the projector sees it</li>
+<li><strong>Calibration Mode</strong> – Adjust 2D or 3D calibration points</li>
+<li><strong>Calibration Actions</strong> – Add, move, or remove calibration points</li>
+<li><strong>Snap Toggle</strong> – Enable snapping to geometry</li>
+<li><strong>Link Toggle</strong> – Link calibration points across projectors</li>
+<li><strong>Accuracy Display</strong> – Shows current calibration accuracy percentage</li>
+
+</ul>
+<h3>Composition View</h3>
+
+<p>When editing a <strong>Composition</strong> cue, the Stage displays the composition's internal canvas rather than the main Stage, indicated by a border around the viewport and a gantt chart icon in the title bar.</p></div><div class="section-nav">
                 <a href="main-window-overview.html" class="nav-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"

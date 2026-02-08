@@ -144,6 +144,10 @@
                             Customizing Your Workspace
                         </a>
                         
+                        <a class="toc-subsection " href="../the-interface/the-nodes-window.html">
+                            The Nodes Window
+                        </a>
+                        
                 </div>
             
         </div>
@@ -271,6 +275,10 @@
                             Asset Manager Settings
                         </a>
                         
+                        <a class="toc-subsection " href="../assets-asset-manager/import-export-and-mapping.html">
+                            Import, Export, and Mapping
+                        </a>
+                        
                 </div>
             
         </div>
@@ -318,6 +326,18 @@
                         
                         <a class="toc-subsection " href="../timeline-and-cues/grouping-cues.html">
                             Grouping Cues
+                        </a>
+                        
+                        <a class="toc-subsection " href="../timeline-and-cues/variables-and-variable-cues.html">
+                            Variables and Variable Cues
+                        </a>
+                        
+                        <a class="toc-subsection " href="../timeline-and-cues/timeline-triggers-and-expressions.html">
+                            Timeline Triggers and Expressions
+                        </a>
+                        
+                        <a class="toc-subsection " href="../timeline-and-cues/artnet-fixture-cues.html">
+                            ArtNet Fixture Cues
                         </a>
                         
                 </div>
@@ -449,6 +469,10 @@
                         
                         <a class="toc-subsection " href="../network-setup/dante-audio.html">
                             Dante Audio
+                        </a>
+                        
+                        <a class="toc-subsection " href="../network-setup/node-management-and-maintenance.html">
+                            Node Management and Maintenance
                         </a>
                         
                 </div>
@@ -647,19 +671,69 @@
                 <div class="section-content" style="display: block;">
                     <div class="section-content-body"><h2>Main Window Overview</h2>
 
-<p>The WATCHOUT interface is divided into several dockable windows that can be arranged to suit your workflow.</p>
+<p>The WATCHOUT 7 <strong>Producer</strong> interface presents a modern, flexible workspace designed for efficient show creation and management. The application uses a windowed design where each component operates in its own resizable, repositionable window, allowing you to customize your workspace to match your project requirements and personal preferences.</p>
 
+<h3>Window Architecture</h3>
+
+<p>WATCHOUT 7 employs a <strong>multi-document interface</strong> where all primary functions exist as separate windows within the main application frame:</p>
+
+<ul>
+<li><strong>Stage</strong> – Your visual canvas showing all displays and content positioning</li>
+<li><strong>Timeline</strong> – Where you arrange and time cues for your show</li>
+<li><strong>Assets</strong> – Your media library for managing project files</li>
+<li><strong>Properties</strong> – Context-sensitive settings for selected items</li>
+<li><strong>Network</strong> – Device discovery and connection management</li>
+
+</ul>
+Each window can be:
+
+<ul>
+<li><strong>Moved</strong> – Drag the title bar to reposition</li>
+<li><strong>Resized</strong> – Drag corners or edges to adjust dimensions</li>
+<li><strong>Closed</strong> – Click the × button in the title bar</li>
+<li><strong>Docked</strong> – Hold <code>Ctrl</code> and double-click the title bar to dock to an edge</li>
+
+</ul>
 <h3>Menu Bar</h3>
 
-<p>The menu bar at the top provides access to all commands organized in logical groups: File, Edit, Stage, Media, Timeline, Tween, Window, and Help.</p>
+<p>The <strong>Menu Bar</strong> provides access to all application commands organized in logical groups:</p>
 
-<h3>Toolbar</h3>
+<table>
+<tr><th>Menu</th><th>Purpose</th></tr>
+<tr><td><strong>File</strong></td><td>Create, open, save, and export shows</td></tr>
+<tr><td><strong>Edit</strong></td><td>Undo, redo, cut, copy, paste, and selection commands</td></tr>
+<tr><td><strong>Stage</strong></td><td>Display and projector management, view controls</td></tr>
+<tr><td><strong>Media</strong></td><td>Add and manage media files</td></tr>
+<tr><td><strong>Timeline</strong></td><td>Layer, cue, and playback controls</td></tr>
+<tr><td><strong>Tween</strong></td><td>Animation property toggles</td></tr>
+<tr><td><strong>Window</strong></td><td>Workspace layout and window visibility</td></tr>
+<tr><td><strong>Help</strong></td><td>Documentation, licenses, and about information</td></tr>
+</table>
 
-<p>Quick access buttons for common operations like play, pause, and zoom controls.</p>
+<h3>Keyboard Accelerators</h3>
 
-<h3>Window Areas</h3>
+<p>Most menu commands have associated keyboard shortcuts displayed alongside the command name. Common accelerators follow standard conventions:</p>
 
-<p>The main workspace is divided into panels that can be rearranged, resized, or floated as separate windows.</p></div><div class="section-nav">
+<ul>
+<li><code>Ctrl+N</code> – New show</li>
+<li><code>Ctrl+O</code> – Open show</li>
+<li><code>Ctrl+S</code> – Save show</li>
+<li><code>Ctrl+Z</code> – Undo</li>
+<li><code>Ctrl+Shift+Z</code> – Redo</li>
+<li><code>Spacebar</code> – Toggle playback</li>
+
+</ul>
+<h3>Theme Support</h3>
+
+<p>WATCHOUT 7 supports both <strong>dark</strong> and <strong>light</strong> visual themes. Toggle between themes via <strong>Window → Light Theme</strong> or through preferences. The dark theme reduces eye strain in low-light production environments, while the light theme may be preferred in brighter working conditions.</p>
+
+<h3>Director Connection Status</h3>
+
+<p>The interface displays real-time connection status to the <strong>Director</strong> service. When connected, windows requiring Director communication (such as Timeline and Assets) show full functionality. When disconnected, these windows display an offline indicator with the message "Director offline" and a cloud-off icon.</p>
+
+<h3>Window Focus</h3>
+
+<p>The currently active window displays with enhanced visual prominence—a brighter border and stronger shadow in dark mode. Only the focused window receives keyboard input, and clicking any window brings it to the front and transfers focus.</p></div><div class="section-nav">
                 <a href="index.html" class="nav-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"

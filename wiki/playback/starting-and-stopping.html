@@ -144,6 +144,10 @@
                             Customizing Your Workspace
                         </a>
                         
+                        <a class="toc-subsection " href="../the-interface/the-nodes-window.html">
+                            The Nodes Window
+                        </a>
+                        
                 </div>
             
         </div>
@@ -271,6 +275,10 @@
                             Asset Manager Settings
                         </a>
                         
+                        <a class="toc-subsection " href="../assets-asset-manager/import-export-and-mapping.html">
+                            Import, Export, and Mapping
+                        </a>
+                        
                 </div>
             
         </div>
@@ -318,6 +326,18 @@
                         
                         <a class="toc-subsection " href="../timeline-and-cues/grouping-cues.html">
                             Grouping Cues
+                        </a>
+                        
+                        <a class="toc-subsection " href="../timeline-and-cues/variables-and-variable-cues.html">
+                            Variables and Variable Cues
+                        </a>
+                        
+                        <a class="toc-subsection " href="../timeline-and-cues/timeline-triggers-and-expressions.html">
+                            Timeline Triggers and Expressions
+                        </a>
+                        
+                        <a class="toc-subsection " href="../timeline-and-cues/artnet-fixture-cues.html">
+                            ArtNet Fixture Cues
                         </a>
                         
                 </div>
@@ -449,6 +469,10 @@
                         
                         <a class="toc-subsection " href="../network-setup/dante-audio.html">
                             Dante Audio
+                        </a>
+                        
+                        <a class="toc-subsection " href="../network-setup/node-management-and-maintenance.html">
+                            Node Management and Maintenance
                         </a>
                         
                 </div>
@@ -647,20 +671,40 @@
                 <div class="section-content" style="display: block;">
                     <div class="section-content-body"><h2>Starting and Stopping</h2>
 
-<h3>Playback Controls</h3>
+<p>Playback is controlled per timeline (or composition timeline) using run, pause, and stop states.</p>
+
+<h3>Primary Controls</h3>
+
+<table>
+<tr><th>Action</th><th>Shortcut</th></tr>
+<tr><td>Toggle play/pause</td><td><code>Spacebar</code></td></tr>
+<tr><td>Run timeline</td><td><code>Numpad 0</code> (or Numpad Insert)</td></tr>
+<tr><td>Pause timeline</td><td><code>Escape</code></td></tr>
+<tr><td>Jump to current/last start</td><td><code>Numpad *</code></td></tr>
+</table>
+
+<h3>UI Controls</h3>
+
+<p>Timeline windows provide explicit <strong>Play / Pause / Stop</strong> buttons. The active state is visually highlighted.</p>
+
+<h3>Operational Behavior</h3>
 
 <ul>
-<li><strong>Spacebar</strong> – Toggle play/pause</li>
+<li><strong>Run</strong> starts playback from current timeline time (or defined start behavior).</li>
+<li><strong>Pause</strong> freezes at current position.</li>
+<li><strong>Stop</strong> ends playback and resets active state.</li>
 
-<p><li><strong>Numpad 0</strong> – Start playback</li></p>
+</ul>
+<h3>Good Practice</h3>
 
-<p><li><strong>Escape</strong> – Pause</li></p>
+<p>Before running live:</p>
 
-<p><li><strong>Numpad </strong>* – Jump to last start position</li></p>
+<ol>
+<li>Move play cursor to known start point.</li>
+<li>Confirm target timeline/composition is selected.</li>
+<li>Check that connected nodes/services are healthy.</li>
 
-<p></ul> <h3>Timeline Navigation</h3></p>
-
-<p>Click anywhere in the time ruler to jump to that position. Use keyboard shortcuts for precise navigation.</p></div><div class="section-nav">
+</ol></div><div class="section-nav">
                 <a href="index.html" class="nav-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"

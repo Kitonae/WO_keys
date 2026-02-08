@@ -4,20 +4,30 @@ title: "Common Issues"
 
 ## Common Issues
 
-### Application Won't Start
+This section covers high-frequency problems seen during setup and rehearsal.
 
-- Run as Administrator
+### Producer Opens but Show Actions Fail
 
-- Check for Windows updates
+Check:
 
-- Verify graphics drivers are up to date
+- Director connection state
+- Asset Manager connection state
+- Whether a different show is currently active on the selected Director
 
-- Check license status
+### Cannot Open/Override Show on Director
 
-### Media Won't Import
+- Verify you selected the intended host alias.
+- Confirm team coordination before overriding a running Director show.
+- Resolve unsaved local changes first if prompts are blocking action.
 
-- Verify the file format is supported
+### Menus/Shortcuts Not Acting as Expected
 
-- Check file isn't corrupted
+- Confirm the intended window has focus.
+- Check selection context (timeline, cue, layer, properties).
+- Re-try command from menu to verify availability state.
 
-- Ensure you have read permissions
+### Startup Reliability Tips
+
+- Keep node aliases stable.
+- Avoid running unrelated heavy software on playback nodes.
+- Reboot and validate nodes before show day if system state is uncertain.

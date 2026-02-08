@@ -4,16 +4,27 @@ title: "Color Adjustments"
 
 ## Color Adjustments
 
-Animate color properties for dynamic effects.
+Color tweens let you animate tonal and channel-level color properties directly on cues.
 
-### Available Adjustments
+### Available Color Tweens
 
-- **Brightness** – Overall luminance
+- Brightness
+- Contrast
+- Gamma
+- Hue
+- Saturation
+- Invert
+- Red/Green/Blue Gain
+- Red/Green/Blue Offset
 
-- **Contrast** – Dynamic range
+### Use Cases
 
-- **Saturation** – Color intensity
+- Scene mood transitions
+- Day/night look shifts
+- Corrective matching between mixed media sources
 
-- **Hue** – Color shift
+### Quality Notes
 
-- **RGB Offset/Gain** – Channel-specific adjustments
+- Extreme values can clip highlights or crush shadows.
+- Test color tweens on calibrated outputs when possible.
+- For show-wide looks, prefer consistent per-scene strategy over ad hoc cue edits.

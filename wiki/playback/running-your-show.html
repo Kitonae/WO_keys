@@ -144,6 +144,10 @@
                             Customizing Your Workspace
                         </a>
                         
+                        <a class="toc-subsection " href="../the-interface/the-nodes-window.html">
+                            The Nodes Window
+                        </a>
+                        
                 </div>
             
         </div>
@@ -271,6 +275,10 @@
                             Asset Manager Settings
                         </a>
                         
+                        <a class="toc-subsection " href="../assets-asset-manager/import-export-and-mapping.html">
+                            Import, Export, and Mapping
+                        </a>
+                        
                 </div>
             
         </div>
@@ -318,6 +326,18 @@
                         
                         <a class="toc-subsection " href="../timeline-and-cues/grouping-cues.html">
                             Grouping Cues
+                        </a>
+                        
+                        <a class="toc-subsection " href="../timeline-and-cues/variables-and-variable-cues.html">
+                            Variables and Variable Cues
+                        </a>
+                        
+                        <a class="toc-subsection " href="../timeline-and-cues/timeline-triggers-and-expressions.html">
+                            Timeline Triggers and Expressions
+                        </a>
+                        
+                        <a class="toc-subsection " href="../timeline-and-cues/artnet-fixture-cues.html">
+                            ArtNet Fixture Cues
                         </a>
                         
                 </div>
@@ -449,6 +469,10 @@
                         
                         <a class="toc-subsection " href="../network-setup/dante-audio.html">
                             Dante Audio
+                        </a>
+                        
+                        <a class="toc-subsection " href="../network-setup/node-management-and-maintenance.html">
+                            Node Management and Maintenance
                         </a>
                         
                 </div>
@@ -647,27 +671,43 @@
                 <div class="section-content" style="display: block;">
                     <div class="section-content-body"><h2>Running Your Show</h2>
 
-<h3>Live Playback</h3>
+<p>Running a show reliably is mostly about repeatable procedure. Build a fixed preflight and execution rhythm.</p>
+
+<h3>Preflight (Before Audience)</h3>
 
 <ul>
-<li>Go online with all display servers</li>
+<li>Confirm show file/version</li>
+<li>Confirm Director and Asset Manager hosts</li>
+<li>Confirm display routing and test image pass</li>
+<li>Confirm timeline start points and cue logic</li>
+<li>Confirm critical external outputs (if used)</li>
 
-<p><li>Press Spacebar to start playback</li></p>
+</ul>
+<h3>Live Operation Pattern</h3>
 
-<p><li>All connected servers play in sync</li></p>
+<ol>
+<li>Place play cursor at planned start.</li>
+<li>Run timeline.</li>
+<li>Monitor cue progression and node status.</li>
+<li>Use pause/jump controls only at rehearsed decision points.</li>
 
-<p></ul> <h3>Show Control</h3></p>
-
-<p>During live playback, you can:</p>
+</ol>
+<h3>During-Show Recovery Tactics</h3>
 
 <ul>
-<li>Jump to any point in the timeline</li>
+<li>If timing drifts: pause, reposition cursor, and re-run from cue-safe point.</li>
+<li>If one node fails: continue if design allows, then recover during a planned hold.</li>
+<li>If output commands fail: verify network route and cue target settings.</li>
 
-<p><li>Pause and resume</li></p>
+</ul>
+<h3>Post-Show</h3>
 
-<p><li>Make live adjustments to content</li></p>
+<ul>
+<li>Save an archival copy of the final show state.</li>
+<li>Export diagnostics/logs if any incident occurred.</li>
+<li>Document timeline or routing changes made during operation.</li>
 
-<p></ul></p></div><div class="section-nav">
+</ul></div><div class="section-nav">
                 <a href="going-online.html" class="nav-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"

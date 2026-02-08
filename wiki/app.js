@@ -272,7 +272,7 @@ function setupHeroVideo() {
                 <source src="${randomVideo}" type="video/mp4">
             </video>
             <div class="hero-overlay">
-                <img src="media/watchout-logo.webp" alt="WATCHOUT Logo" class="hero-logo">
+                <img src="media/product_mark_org.png" alt="WATCHOUT Logo" class="hero-logo">
             </div>
         </div>
     `;

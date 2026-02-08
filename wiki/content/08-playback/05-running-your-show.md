@@ -4,20 +4,31 @@ title: "Running Your Show"
 
 ## Running Your Show
 
-### Live Playback
+Running a show reliably is mostly about repeatable procedure. Build a fixed preflight and execution rhythm.
 
-- Go online with all display servers
+### Preflight (Before Audience)
 
-- Press Spacebar to start playback
+- Confirm show file/version
+- Confirm Director and Asset Manager hosts
+- Confirm display routing and test image pass
+- Confirm timeline start points and cue logic
+- Confirm critical external outputs (if used)
 
-- All connected servers play in sync
+### Live Operation Pattern
 
-### Show Control
+1. Place play cursor at planned start.
+2. Run timeline.
+3. Monitor cue progression and node status.
+4. Use pause/jump controls only at rehearsed decision points.
 
-During live playback, you can:
+### During-Show Recovery Tactics
 
-- Jump to any point in the timeline
+- If timing drifts: pause, reposition cursor, and re-run from cue-safe point.
+- If one node fails: continue if design allows, then recover during a planned hold.
+- If output commands fail: verify network route and cue target settings.
 
-- Pause and resume
+### Post-Show
 
-- Make live adjustments to content
+- Save an archival copy of the final show state.
+- Export diagnostics/logs if any incident occurred.
+- Document timeline or routing changes made during operation.

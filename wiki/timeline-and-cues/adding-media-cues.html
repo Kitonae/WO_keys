@@ -144,6 +144,10 @@
                             Customizing Your Workspace
                         </a>
                         
+                        <a class="toc-subsection " href="../the-interface/the-nodes-window.html">
+                            The Nodes Window
+                        </a>
+                        
                 </div>
             
         </div>
@@ -271,6 +275,10 @@
                             Asset Manager Settings
                         </a>
                         
+                        <a class="toc-subsection " href="../assets-asset-manager/import-export-and-mapping.html">
+                            Import, Export, and Mapping
+                        </a>
+                        
                 </div>
             
         </div>
@@ -318,6 +326,18 @@
                         
                         <a class="toc-subsection " href="../timeline-and-cues/grouping-cues.html">
                             Grouping Cues
+                        </a>
+                        
+                        <a class="toc-subsection " href="../timeline-and-cues/variables-and-variable-cues.html">
+                            Variables and Variable Cues
+                        </a>
+                        
+                        <a class="toc-subsection " href="../timeline-and-cues/timeline-triggers-and-expressions.html">
+                            Timeline Triggers and Expressions
+                        </a>
+                        
+                        <a class="toc-subsection " href="../timeline-and-cues/artnet-fixture-cues.html">
+                            ArtNet Fixture Cues
                         </a>
                         
                 </div>
@@ -449,6 +469,10 @@
                         
                         <a class="toc-subsection " href="../network-setup/dante-audio.html">
                             Dante Audio
+                        </a>
+                        
+                        <a class="toc-subsection " href="../network-setup/node-management-and-maintenance.html">
+                            Node Management and Maintenance
                         </a>
                         
                 </div>
@@ -647,18 +671,46 @@
                 <div class="section-content" style="display: block;">
                     <div class="section-content-body"><h2>Adding Media Cues</h2>
 
-<h3>Creating Cues</h3>
+<p>Media cues are created by placing assets on a timeline.</p>
+
+<h3>Add a Cue</h3>
+
+<ol>
+<li>Import media into <strong>Assets</strong>.</li>
+<li>Drag the asset into the Timeline.</li>
+<li>Drop at the desired start time and layer.</li>
+
+</ol>
+<h3>Placement Behavior</h3>
+
+<p>WATCHOUT supports different placement strategies during drag/drop:</p>
 
 <ul>
-<li>Drag media from the Assets window onto the Timeline</li>
+<li><strong>Sequence-oriented</strong> placement</li>
+<li><strong>Layer-oriented</strong> placement</li>
 
-<p><li>Drop on an existing layer or between layers to create a new one</li></p>
+</ul>
+Use modifier behavior (such as <code>Ctrl</code> during drag) when you want to force layer-based placement behavior.
 
-<p><li>Position the cue at the desired start time</li></p>
+<h3>Initial Cue Values</h3>
 
-<p></ul> <h3>Cue Duration</h3></p>
+<p>A newly created media cue usually gets:</p>
 
-<p>Drag the right edge of a cue to adjust its duration. For video, the duration defaults to the clip length.</p></div><div class="section-nav">
+<ul>
+<li>Start time from drop position</li>
+<li>Duration from source media (or default behavior)</li>
+<li>Layer assignment from drop target</li>
+
+</ul>
+<h3>Next Steps After Placement</h3>
+
+<ul>
+<li>Move or trim cue timing</li>
+<li>Add tweens for motion/effects</li>
+<li>Set cue routing/output options if needed</li>
+<li>Test by scrubbing and short playback loops</li>
+
+</ul></div><div class="section-nav">
                 <a href="understanding-the-timeline.html" class="nav-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"

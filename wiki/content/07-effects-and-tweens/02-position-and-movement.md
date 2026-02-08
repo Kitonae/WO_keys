@@ -4,14 +4,25 @@ title: "Position and Movement"
 
 ## Position and Movement
 
-Animate the position of content on stage.
+Position tweens animate where a cue appears on Stage over time.
 
-### Adding Position Tweens
+### Add Position Animation
 
-- Select a cue on the timeline
+Use **Position** tween actions (menu or shortcut `Alt+P`) on selected cues.
 
-- Press `Alt+P` or use Tween → Position
+### Typical Uses
 
-- A position tween track appears
+- Slide-ins and exits
+- Object tracking across LED canvases
+- Camera-like pan effects with layered content
 
-- Add keyframes by clicking on the track
+### Precision Tools
+
+- Add points directly on tween curves for key moments.
+- Combine with cue start/duration edits for exact synchronization.
+- Use nudge commands for fine stage-space adjustments.
+
+### Best Practices
+
+- Animate on one axis first, then add secondary motion.
+- Keep movement curves simple for repeatable live operation.

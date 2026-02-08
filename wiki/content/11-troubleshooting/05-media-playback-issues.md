@@ -4,20 +4,30 @@ title: "Media Playback Issues"
 
 ## Media Playback Issues
 
-### Video Doesn't Play
+Playback errors usually come from media format compatibility, missing data, or timing/resource pressure.
 
-- Wait for optimization to complete (green icon)
+### Media Imports but Will Not Play Correctly
 
-- Try re-optimizing the asset
+Check:
 
-- Check source file isn't corrupted
+- Asset exists and path/version are valid
+- Codec/format is supported for your workflow
+- Asset transfer to nodes completed
 
-- Try converting to HAP format
+### Stutter or Frame Drops
 
-### Audio Issues
+- Reduce simultaneous heavy cues.
+- Verify storage bandwidth on playback nodes.
+- Test with simpler codec/resolution versions of the same content.
 
-- Verify audio device is configured correctly
+### Color or Alpha Looks Wrong
 
-- Check volume levels aren't muted
+- Verify color space/transfer expectations.
+- Confirm key/fill and alpha-capable codec choices.
+- Compare against a trusted reference clip.
 
-- Ensure audio file format is supported
+### NDI/Capture Irregularities
+
+- Verify source stream stability and format.
+- Check network bandwidth headroom.
+- Confirm capture source dimensions/range settings match source.

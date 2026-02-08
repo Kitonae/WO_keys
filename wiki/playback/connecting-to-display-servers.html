@@ -144,6 +144,10 @@
                             Customizing Your Workspace
                         </a>
                         
+                        <a class="toc-subsection " href="../the-interface/the-nodes-window.html">
+                            The Nodes Window
+                        </a>
+                        
                 </div>
             
         </div>
@@ -271,6 +275,10 @@
                             Asset Manager Settings
                         </a>
                         
+                        <a class="toc-subsection " href="../assets-asset-manager/import-export-and-mapping.html">
+                            Import, Export, and Mapping
+                        </a>
+                        
                 </div>
             
         </div>
@@ -318,6 +326,18 @@
                         
                         <a class="toc-subsection " href="../timeline-and-cues/grouping-cues.html">
                             Grouping Cues
+                        </a>
+                        
+                        <a class="toc-subsection " href="../timeline-and-cues/variables-and-variable-cues.html">
+                            Variables and Variable Cues
+                        </a>
+                        
+                        <a class="toc-subsection " href="../timeline-and-cues/timeline-triggers-and-expressions.html">
+                            Timeline Triggers and Expressions
+                        </a>
+                        
+                        <a class="toc-subsection " href="../timeline-and-cues/artnet-fixture-cues.html">
+                            ArtNet Fixture Cues
                         </a>
                         
                 </div>
@@ -449,6 +469,10 @@
                         
                         <a class="toc-subsection " href="../network-setup/dante-audio.html">
                             Dante Audio
+                        </a>
+                        
+                        <a class="toc-subsection " href="../network-setup/node-management-and-maintenance.html">
+                            Node Management and Maintenance
                         </a>
                         
                 </div>
@@ -647,22 +671,37 @@
                 <div class="section-content" style="display: block;">
                     <div class="section-content-body"><h2>Connecting to Display Servers</h2>
 
-<h3>Automatic Discovery</h3>
+<p>In WATCHOUT 7, display servers are discovered nodes running Runner/renderer services. Producer uses discovered node metadata to route displays and monitor service health.</p>
 
-<p>WATCHOUT automatically discovers display servers on the same network. They appear in the Network window.</p>
+<h3>Discovery and Visibility</h3>
 
-<h3>Manual Connection</h3>
-
-<p>If a server doesn't appear, verify:</p>
+<p>Nodes are discovered automatically over multicast and shown in the <strong>Network</strong> window with:</p>
 
 <ul>
-<li>Both computers are on the same network subnet</li>
+<li>Host alias</li>
+<li>Address</li>
+<li>Running services</li>
+<li>Version and status indicators</li>
 
-<p><li>Firewall rules are properly configured</li></p>
+</ul>
+<h3>Typical Connection Workflow</h3>
 
-<p><li>The display server software is running</li></p>
+<ol>
+<li>Open <strong>Network</strong> window.</li>
+<li>Confirm target nodes are visible and not stale.</li>
+<li>Assign display devices to correct host aliases.</li>
+<li>Connect Producer to the intended Director.</li>
 
-<p></ul></p></div><div class="section-nav">
+</ol>
+<h3>If a Node Is Missing</h3>
+
+<ul>
+<li>Verify subnet/routing and multicast handling.</li>
+<li>Check local firewall policy.</li>
+<li>Confirm process-manager services are running on the node.</li>
+<li>Ensure host aliases are unique (except planned fallback scenarios).</li>
+
+</ul></div><div class="section-nav">
                 <a href="preview-mode.html" class="nav-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"

@@ -4,20 +4,28 @@ title: "Performance Tips"
 
 ## Performance Tips
 
-### Optimize Your System
+Performance issues are usually a combination of media complexity, output load, and node configuration.
 
-- Use SSD storage for media files
+### Media and Rendering
 
-- Close unnecessary background applications
+- Prefer playback-friendly codecs and resolutions appropriate for target outputs.
+- Limit unnecessary overlapping high-resolution cues.
+- Use blur/color-heavy effects carefully in dense sections.
 
-- Disable Windows animations and effects
+### Node Health
 
-- Set power plan to High Performance
+- Keep playback nodes dedicated to WATCHOUT services.
+- Watch CPU/GPU/memory indicators in activity views.
+- Verify disk throughput for high-bandwidth media.
 
-### Media Optimization
+### Timeline Practices
 
-- Use HAP codec for best video performance
+- Group stable cue clusters to reduce editing overhead.
+- Use stage tiers and layer organization to simplify active scenes.
+- Avoid last-minute structural changes during live operation.
 
-- Match media resolution to display resolution
+### Network and Sync
 
-- Avoid excessive overlapping content
+- Keep show traffic on reliable wired networking.
+- Verify NTP/time sync behavior on Director/Runner systems.
+- Resolve stale/offline node status before technical run-through.

@@ -4,14 +4,23 @@ title: "Connecting Devices"
 
 ## Connecting Devices
 
-### Automatic Discovery
+In WATCHOUT, devices (displays, audio devices, capture sources) are bound to discovered node aliases.
 
-WATCHOUT uses multicast discovery. All devices on the same subnet automatically find each other.
+### Connection Principles
 
-### Troubleshooting Connection
+- Device routing uses **host references/aliases** rather than fixed IP assumptions.
+- Discovery updates dynamically as nodes appear/disappear.
+- Producer can assign Director and Asset Manager roles to selected nodes.
 
-- Verify all devices have valid IP addresses in the same subnet
+### Best Practices
 
-- Check that multicast traffic is not blocked
+- Give each node a unique, descriptive alias.
+- Keep aliases stable across rehearsals and show days.
+- Reserve duplicate aliases only for intentional failover strategy.
 
-- Disable any WiFi connections on WATCHOUT computers
+### Validation Workflow
+
+1. Confirm node visible in Network view.
+2. Assign device host alias.
+3. Verify service state on that node.
+4. Run test cue and confirm physical output.

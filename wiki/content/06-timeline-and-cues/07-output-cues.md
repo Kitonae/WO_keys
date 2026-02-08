@@ -4,14 +4,31 @@ title: "Output Cues"
 
 ## Output Cues
 
-Send control signals to external devices and systems.
+Output cues transmit external control data during timeline playback.
 
-### Supported Outputs
+### Output Cue Fields
 
-- Art-Net/DMX for lighting
+Typical output cue properties include:
 
-- MIDI for show control
+- **Protocol**
+- **Address**
+- **Port**
+- **Data payload**
 
-- TCP/UDP network commands
+These let you trigger external systems in sync with timeline events.
 
-- Serial port commands
+### Typical Use Cases
+
+- Triggering automation systems
+- Sending commands to control middleware
+- Driving external effects synchronized with visuals
+
+### Reliability Tips
+
+- Keep payloads deterministic and documented.
+- Test cue timing with full show playback speed.
+- Validate routing on the same network architecture used in production.
+
+:::warning
+If external systems are safety-critical, include operator confirmation and fallback procedures outside timeline automation.
+:::

@@ -144,6 +144,10 @@
                             Customizing Your Workspace
                         </a>
                         
+                        <a class="toc-subsection " href="../the-interface/the-nodes-window.html">
+                            The Nodes Window
+                        </a>
+                        
                 </div>
             
         </div>
@@ -271,6 +275,10 @@
                             Asset Manager Settings
                         </a>
                         
+                        <a class="toc-subsection " href="../assets-asset-manager/import-export-and-mapping.html">
+                            Import, Export, and Mapping
+                        </a>
+                        
                 </div>
             
         </div>
@@ -318,6 +326,18 @@
                         
                         <a class="toc-subsection " href="../timeline-and-cues/grouping-cues.html">
                             Grouping Cues
+                        </a>
+                        
+                        <a class="toc-subsection " href="../timeline-and-cues/variables-and-variable-cues.html">
+                            Variables and Variable Cues
+                        </a>
+                        
+                        <a class="toc-subsection " href="../timeline-and-cues/timeline-triggers-and-expressions.html">
+                            Timeline Triggers and Expressions
+                        </a>
+                        
+                        <a class="toc-subsection " href="../timeline-and-cues/artnet-fixture-cues.html">
+                            ArtNet Fixture Cues
                         </a>
                         
                 </div>
@@ -449,6 +469,10 @@
                         
                         <a class="toc-subsection " href="../network-setup/dante-audio.html">
                             Dante Audio
+                        </a>
+                        
+                        <a class="toc-subsection " href="../network-setup/node-management-and-maintenance.html">
+                            Node Management and Maintenance
                         </a>
                         
                 </div>
@@ -647,29 +671,147 @@
                 <div class="section-content" style="display: block;">
                     <div class="section-content-body"><h2>The Timeline Window</h2>
 
-<p>The Timeline is where you orchestrate your show – arranging media and controlling precisely when things happen.</p>
+<p>The <strong>Timeline</strong> is where you orchestrate your show—arranging media and controlling precisely when things happen. It provides a horizontal time-based view of your content, organized in layers.</p>
 
 <h3>Timeline Structure</h3>
 
-<ul>
-<li><strong>Timecode Ruler</strong> – Shows time in hours:minutes:seconds:frames</li>
+<p>The Timeline window is divided into several key areas:</p>
 
-<p><li><strong>Layers</strong> – Horizontal tracks for organizing content (higher layers appear on top)</li></p>
-
-<p><li><strong>Play Cursor</strong> – The red vertical line indicating current playback position</li></p>
-
-<p></ul> <h3>Basic Operations</h3></p>
+<h4>Header Area</h4>
 
 <ul>
-<li><strong>Play/Pause</strong> – Press <code>Spacebar</code></li>
+<li><strong>Timecode Display</strong> – Shows the current playback position in hours:minutes:seconds:frames format. Click to jump to a specific time.</li>
+<li><strong>Sync Indicator</strong> – Displays synchronization status with the Director</li>
+<li><strong>Cue Status Line</strong> – Shows information about selected cues</li>
+<li><strong>Countdown Display</strong> – Indicates time remaining until the next pause cue</li>
 
-<p><li><strong>Jump to Time</strong> – Click in the timecode ruler</li></p>
+</ul>
+<h4>Layer Headers</h4>
 
-<p><li><strong>Zoom</strong> – Use <code>Numpad +/-</code> or zoom controls</li></p>
+<p>The left column displays layer names. Each layer is a horizontal track for organizing content:</p>
 
-<p><li><strong>Add Layer</strong> – Press <code>Ctrl+I</code></li></p>
+<ul>
+<li><strong>Layer Name</strong> – Custom name or default "Layer N" numbering</li>
+<li><strong>Key and Fill Mode</strong> – Icon indicates if a layer uses luma or alpha keying</li>
+<li><strong>Selection Highlight</strong> – Active layer appears with elevated background</li>
 
-<p></ul></p></div><div class="section-nav">
+</ul>
+Layers are ordered with higher numbers appearing on top in the Stage view.
+
+<h4>Time Ruler</h4>
+
+<p>The horizontal ruler at the top of the cue area shows time in your configured format. Features include:</p>
+
+<ul>
+<li><strong>Time Markings</strong> – Major and minor divisions based on zoom level</li>
+<li><strong>Play Cursor Indicator</strong> – Triangle marker showing current time</li>
+<li><strong>Click to Jump</strong> – Click in the ruler to move the play cursor (when "Click Jumps to Time" is enabled)</li>
+
+</ul>
+<h4>Cue Area</h4>
+
+<p>The main workspace where cues are displayed:</p>
+
+<ul>
+<li><strong>Tracks</strong> – Horizontal lanes corresponding to layers</li>
+<li><strong>Cues</strong> – Colored rectangles representing media and control cues</li>
+<li><strong>Play Cursor</strong> – Vertical red line showing current playback position</li>
+<li><strong>Overlap Indicators</strong> – Cues that overlap in time on the same layer show warning styling</li>
+
+</ul>
+<h4>Tween Curves Panel</h4>
+
+<p>When a media cue is selected, the lower panel displays animation curves showing how properties change over time.</p>
+
+<h4>Minimap</h4>
+
+<p>The bottom bar shows a compressed overview of your entire timeline, with:</p>
+
+<ul>
+<li><strong>Visible Range Indicator</strong> – Shows which portion of the timeline is currently displayed</li>
+<li><strong>Pan Control</strong> – Drag to scroll horizontally</li>
+<li><strong>Play Position</strong> – Small indicator of current playback time</li>
+<li><strong>Cue Overview</strong> – Tiny representations of all cues</li>
+
+</ul>
+<h3>Playback Controls</h3>
+
+<table>
+<tr><th>Shortcut</th><th>Action</th></tr>
+<tr><td><code>Spacebar</code></td><td>Toggle play/pause</td></tr>
+<tr><td><code>Numpad 0</code></td><td>Start playback</td></tr>
+<tr><td><code>Escape</code></td><td>Pause</td></tr>
+<tr><td><code>Home</code></td><td>Jump to beginning</td></tr>
+<tr><td><code>End</code></td><td>Jump to end</td></tr>
+<tr><td><code>Numpad +</code></td><td>Zoom in</td></tr>
+<tr><td><code>Numpad -</code></td><td>Zoom out</td></tr>
+</table>
+
+<h3>Working with Layers</h3>
+
+<table>
+<tr><th>Action</th><th>Method</th></tr>
+<tr><td>Add Layer</td><td><strong>Timeline → Append Layer</strong> or <code>Ctrl+I</code></td></tr>
+<tr><td>Insert Layer</td><td><strong>Timeline → Insert Layer</strong></td></tr>
+<tr><td>Delete Layer</td><td><strong>Timeline → Delete Layer</strong></td></tr>
+<tr><td>Select Layer</td><td>Click the layer header</td></tr>
+<tr><td>Rename Layer</td><td>Double-click layer header to open Properties</td></tr>
+</table>
+
+<h3>Working with Cues</h3>
+
+<h4>Adding Cues</h4>
+
+<ul>
+<li><strong>Drag and Drop</strong> – Drag media from Assets onto the Timeline</li>
+<li><strong>Menu</strong> – Use <strong>Timeline → Add</strong> submenu for control cues</li>
+
+</ul>
+<h4>Selecting Cues</h4>
+
+<ul>
+<li><strong>Click</strong> – Select a single cue</li>
+<li><strong>Shift+Click</strong> – Add to selection</li>
+<li><strong>Ctrl+Click</strong> – Toggle selection</li>
+<li><strong>Marquee</strong> – Drag on empty track space to select multiple cues</li>
+
+</ul>
+<h4>Editing Cues</h4>
+
+<ul>
+<li><strong>Move</strong> – Drag cues left/right to change timing; drag up/down to change layers</li>
+<li><strong>Resize Start</strong> – Drag the left edge to adjust in-point</li>
+<li><strong>Resize End</strong> – Drag the right edge to adjust duration</li>
+<li><strong>Trim to Time</strong> – Use <strong>Timeline → Trim Start</strong> or <strong>Trim End</strong> to cut at play cursor</li>
+<li><strong>Double-click</strong> – Open Properties panel for detailed editing</li>
+
+</ul>
+<h4>Cue Context Menu</h4>
+
+<p>Right-click a cue for common actions:</p>
+
+<ul>
+<li>Cut, Copy, Paste, Delete</li>
+<li>Group / Ungroup cues</li>
+<li>Add tweens</li>
+<li>Fade In, Fade Out, Cross Fade</li>
+
+</ul>
+<h3>Snapping</h3>
+
+<p>When <strong>Edit → Snap</strong> is enabled, cues snap to:</p>
+
+<ul>
+<li>Other cue edges</li>
+<li>The play cursor</li>
+<li>Time ruler divisions</li>
+
+</ul>
+A highlight appears when snapping occurs.
+
+<h3>Timeline Identification</h3>
+
+<p>When multiple timelines exist, the window title displays the timeline name and ID number (e.g., "Main #1").</p></div><div class="section-nav">
                 <a href="the-stage-window.html" class="nav-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"

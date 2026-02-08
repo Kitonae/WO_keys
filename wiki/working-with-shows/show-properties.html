@@ -144,6 +144,10 @@
                             Customizing Your Workspace
                         </a>
                         
+                        <a class="toc-subsection " href="../the-interface/the-nodes-window.html">
+                            The Nodes Window
+                        </a>
+                        
                 </div>
             
         </div>
@@ -271,6 +275,10 @@
                             Asset Manager Settings
                         </a>
                         
+                        <a class="toc-subsection " href="../assets-asset-manager/import-export-and-mapping.html">
+                            Import, Export, and Mapping
+                        </a>
+                        
                 </div>
             
         </div>
@@ -318,6 +326,18 @@
                         
                         <a class="toc-subsection " href="../timeline-and-cues/grouping-cues.html">
                             Grouping Cues
+                        </a>
+                        
+                        <a class="toc-subsection " href="../timeline-and-cues/variables-and-variable-cues.html">
+                            Variables and Variable Cues
+                        </a>
+                        
+                        <a class="toc-subsection " href="../timeline-and-cues/timeline-triggers-and-expressions.html">
+                            Timeline Triggers and Expressions
+                        </a>
+                        
+                        <a class="toc-subsection " href="../timeline-and-cues/artnet-fixture-cues.html">
+                            ArtNet Fixture Cues
                         </a>
                         
                 </div>
@@ -449,6 +469,10 @@
                         
                         <a class="toc-subsection " href="../network-setup/dante-audio.html">
                             Dante Audio
+                        </a>
+                        
+                        <a class="toc-subsection " href="../network-setup/node-management-and-maintenance.html">
+                            Node Management and Maintenance
                         </a>
                         
                 </div>
@@ -647,18 +671,160 @@
                 <div class="section-content" style="display: block;">
                     <div class="section-content-body"><h2>Show Properties</h2>
 
-<p>Access show-wide settings from <strong>File → Properties</strong>.</p>
+<p>Every show carries a set of properties that define how it behaves globally—settings that affect all timelines, all displays, and all network interactions. These properties establish the fundamental parameters under which your entire production operates.</p>
 
-<h3>Available Settings</h3>
+<h3>Accessing Show Properties</h3>
+
+<p>Show properties are accessible through the <strong>Properties</strong> panel when no specific element is selected. Alternatively, you can access them via the <strong>Show > Show Properties</strong> menu option. The properties panel displays all configurable settings organized into logical sections.</p>
+
+---
+
+<h2>General Properties</h2>
+
+<h3>Frame Rate</h3>
+
+<p>The <strong>Frame Rate</strong> determines the temporal resolution for all timeline operations throughout your show. This setting affects how precisely you can position cues in time and how smoothly animations play back.</p>
+
+<p><strong>Available Presets:</strong> <ul> <li><strong>23.98 FPS</strong> – Standard film rate (24000/1001)</li> <li><strong>24 FPS</strong> – Film rate</li> <li><strong>25 FPS</strong> – PAL/SECAM broadcast standard</li> <li><strong>29.97 FPS</strong> – NTSC broadcast standard (30000/1001)</li> <li><strong>30 FPS</strong> – Standard video rate</li> <li><strong>48 FPS</strong> – High frame rate film</li> <li><strong>50 FPS</strong> – PAL high frame rate</li> <li><strong>59.94 FPS</strong> – NTSC high frame rate (60000/1001)</li> <li><strong>60 FPS</strong> – High frame rate video</li> <li><strong>120 FPS</strong> – Ultra high frame rate</li> <li><strong>Custom</strong> – Specify any frame rate using numerator and denominator values</li></p>
+
+</ul>
+When selecting <strong>Custom</strong>, you can specify the exact numerator and denominator. The denominator options are <strong>1</strong> (for integer frame rates) or <strong>1.001</strong> (for NTSC-compatible fractional rates).
+
+<p>> <strong>Note:</strong> Frame rate changes affect how timeline positions are calculated. Changing this setting mid-production may shift the timing of existing cues.</p>
+
+<h3>Eye Point</h3>
+
+<p>The <strong>Eye Point</strong> defines the default viewer position in 3D space, used for perspective calculations across displays. This setting consists of three coordinates:</p>
 
 <ul>
-<li><strong>Frame Rate</strong> – Target playback frame rate (30, 60 fps, etc.)</li>
+<li><strong>X</strong> – Horizontal position of the viewer</li>
+<li><strong>Y</strong> – Vertical position (height) of the viewer  </li>
+<li><strong>Z</strong> – Distance from the stage/display plane</li>
 
-<p><li><strong>Stage Size</strong> – Overall coordinate space dimensions</li></p>
+</ul>
+The eye point is particularly important for:
+<ul>
+<li>3D projection mapping scenarios</li>
+<li>Multi-display perspective corrections</li>
+<li>Virtual camera positioning</li>
 
-<p><li><strong>Audio Settings</strong> – Default audio output configuration</li></p>
+</ul>
+<h3>Auto Update Assets</h3>
 
-<p></ul></p></div><div class="section-nav">
+<p>When enabled, the <strong>Auto Update Assets</strong> option automatically refreshes media files when changes are detected on the Asset Manager. This is useful during content development when source files are being actively modified.</p>
+
+<table>
+<tr><th>State</th><th>Behavior</th></tr>
+<tr><td><strong>Enabled</strong></td><td>WATCHOUT monitors source files and updates cues when files change</td></tr>
+<tr><td><strong>Disabled</strong></td><td>Assets remain static until manually refreshed</td></tr>
+</table>
+
+<p>> <strong>Caution:</strong> Enable this setting during content development, but consider disabling it for live shows to prevent unexpected visual changes.</p>
+
+<h3>SDI Genlock</h3>
+
+<p>The <strong>SDI Genlock</strong> option enables hardware synchronization for outputs using SDI (Serial Digital Interface) connections. When enabled, WATCHOUT locks video output timing to an external reference signal.</p>
+
+<table>
+<tr><th>State</th><th>Use Case</th></tr>
+<tr><td><strong>Enabled</strong></td><td>Synchronized multi-display setups with SDI infrastructure</td></tr>
+<tr><td><strong>Disabled</strong></td><td>Standard software-timed output</td></tr>
+</table>
+
+<p>Genlock ensures frame-accurate synchronization across multiple displays, eliminating tearing or timing drift. This requires compatible SDI hardware with genlock input capability.</p>
+
+<h3>Default Anchor Position</h3>
+
+<p>The <strong>Default Anchor Position</strong> determines the reference point for newly created media cues. When you add a media cue to a timeline, this anchor point defines which part of the media aligns with the specified position.</p>
+
+<p><strong>Available Options:</strong></p>
+
+<table>
+<tr><th>Position</th><th>Description</th></tr>
+<tr><td><strong>Top Left</strong></td><td>Upper-left corner as reference</td></tr>
+<tr><td><strong>Top</strong></td><td>Center of top edge</td></tr>
+<tr><td><strong>Top Right</strong></td><td>Upper-right corner</td></tr>
+<tr><td><strong>Left</strong></td><td>Center of left edge</td></tr>
+<tr><td><strong>Center</strong></td><td>Center of the media (default)</td></tr>
+<tr><td><strong>Right</strong></td><td>Center of right edge</td></tr>
+<tr><td><strong>Bottom Left</strong></td><td>Lower-left corner</td></tr>
+<tr><td><strong>Bottom</strong></td><td>Center of bottom edge</td></tr>
+<tr><td><strong>Bottom Right</strong></td><td>Lower-right corner</td></tr>
+</table>
+
+<p>The anchor position is represented visually using a 3×3 grid selector in the Properties panel.</p>
+
+---
+
+<h2>Sync Groups</h2>
+
+<p><strong>Sync Groups</strong> coordinate playback timing across multiple display servers. By grouping nodes together, you ensure their timelines run in lockstep, which is essential for seamless multi-display presentations.</p>
+
+<h3>Managing Sync Groups</h3>
+
+<p>To create a new sync group: <ol> <li>Click <strong>Add Sync Group</strong></li> <li>Enter a name for the group</li> <li>Add member nodes by typing or selecting from available devices</li></p>
+
+</ol>
+Each sync group displays its member nodes, which can be added or removed using the multi-select chip interface. Nodes are identified by their host reference names as they appear on the network.
+
+<h3>When to Use Sync Groups</h3>
+
+<ul>
+<li><strong>Multi-server installations</strong> – When content spans multiple playback machines</li>
+<li><strong>Edge-blended displays</strong> – Where precise frame alignment prevents visible seams</li>
+<li><strong>Redundant systems</strong> – To keep backup servers synchronized with primary units</li>
+
+</ul>
+> <strong>Note:</strong> Nodes must be network-accessible to participate in sync group coordination. Verify network connectivity before adding nodes to sync groups.
+
+---
+
+<h2>Host Configuration</h2>
+
+<p>Host settings define the network infrastructure supporting your show. These properties are typically configured during initial setup and bind the show to specific servers.</p>
+
+<h3>Director</h3>
+
+<p>The <strong>Director</strong> host coordinates overall show playback. This is the central server that: <ul> <li>Manages timeline execution</li> <li>Coordinates commands across all nodes</li> <li>Maintains master timing for the production</li></p>
+
+</ul>
+The Director hostname appears in the menu bar during active connections.
+
+<h3>Asset Manager</h3>
+
+<p>The <strong>Asset Manager</strong> host stores and distributes media files to display nodes. This server: <ul> <li>Maintains the central asset library</li> <li>Handles file distribution to playback nodes</li> <li>Manages asset versioning and updates</li></p>
+
+</ul>
+The Asset Manager connection status enables or disables asset-related operations throughout the application.
+
+<h3>Time Server</h3>
+
+<p>The optional <strong>Time Server</strong> provides network time synchronization for the show. This ensures all nodes reference the same clock source for coordinated playback.</p>
+
+<h3>Log Server</h3>
+
+<p>The optional <strong>Log Server</strong> receives logging output from all nodes in the production. Centralizing logs simplifies troubleshooting and provides a unified view of system activity.</p>
+
+---
+
+<h2>Best Practices</h2>
+
+<h3>During Pre-Production</h3>
+
+<p>Establish your show properties early in the production process: <ul> <li>Set the frame rate to match your content and output requirements</li> <li>Configure host addresses for your network environment</li> <li>Define sync groups based on your display topology</li></p>
+
+</ul>
+<h3>During Technical Rehearsals</h3>
+
+<p>Technical rehearsals often reveal issues related to show properties: <ul> <li>Verify sync group membership matches physical node connections</li> <li>Confirm frame rate compatibility with content and displays</li> <li>Test genlock settings if using synchronized SDI outputs</li></p>
+
+</ul>
+<h3>During Live Shows</h3>
+
+<p>Maintain stability during live operation: <ul> <li>Avoid changing frame rate or host configuration</li> <li>Consider disabling auto-update assets to prevent surprises</li> <li>Document your property settings for quick recovery if needed</li></p>
+
+</ul>
+If a property change becomes necessary during a live show, pause playback to a safe state before making adjustments. The brief transition is preferable to unexpected disruptions during active content playback.</div><div class="section-nav">
                 <a href="saving-your-work.html" class="nav-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"

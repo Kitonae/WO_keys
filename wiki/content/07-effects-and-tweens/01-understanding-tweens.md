@@ -4,12 +4,39 @@ title: "Understanding Tweens"
 
 ## Understanding Tweens
 
-A tween is an animated change over time. Tweens are shown as colored bars in the timeline.
+Tweens are time-based value changes attached to cues. They define animation curves for motion, opacity, color, crop, and other properties.
 
-### Tween Basics
+### Tween Structure
 
-- **Keyframes** – Points where values are defined
+A tween consists of:
 
-- **Interpolation** – How values change between keyframes
+- **Type** (for example position, opacity, blur)
+- **Points** over cue time
+- **Interpolation** between points
+- **Value limits/units** depending on tween type
 
-- **Easing** – Acceleration/deceleration curves
+### Supported Categories
+
+WATCHOUT includes media tweens for:
+
+- Position, scale, rotation
+- Opacity and fades
+- Crop and blur
+- Color controls
+- Audio volume
+
+### Units and Limits
+
+Tween values can use different units depending on type:
+
+- Percent-based values
+- Degree-based values
+- Raw numeric ranges
+
+Value limits are defined per tween type and enforced in the editor.
+
+### Practical Advice
+
+- Start with two-point tweens (start/end), then refine.
+- Keep easing readable and intentional.
+- Avoid unnecessary tween density unless needed for precision.

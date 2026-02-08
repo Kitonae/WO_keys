@@ -144,6 +144,10 @@
                             Customizing Your Workspace
                         </a>
                         
+                        <a class="toc-subsection " href="../the-interface/the-nodes-window.html">
+                            The Nodes Window
+                        </a>
+                        
                 </div>
             
         </div>
@@ -271,6 +275,10 @@
                             Asset Manager Settings
                         </a>
                         
+                        <a class="toc-subsection " href="../assets-asset-manager/import-export-and-mapping.html">
+                            Import, Export, and Mapping
+                        </a>
+                        
                 </div>
             
         </div>
@@ -318,6 +326,18 @@
                         
                         <a class="toc-subsection " href="../timeline-and-cues/grouping-cues.html">
                             Grouping Cues
+                        </a>
+                        
+                        <a class="toc-subsection " href="../timeline-and-cues/variables-and-variable-cues.html">
+                            Variables and Variable Cues
+                        </a>
+                        
+                        <a class="toc-subsection " href="../timeline-and-cues/timeline-triggers-and-expressions.html">
+                            Timeline Triggers and Expressions
+                        </a>
+                        
+                        <a class="toc-subsection " href="../timeline-and-cues/artnet-fixture-cues.html">
+                            ArtNet Fixture Cues
                         </a>
                         
                 </div>
@@ -449,6 +469,10 @@
                         
                         <a class="toc-subsection " href="../network-setup/dante-audio.html">
                             Dante Audio
+                        </a>
+                        
+                        <a class="toc-subsection " href="../network-setup/node-management-and-maintenance.html">
+                            Node Management and Maintenance
                         </a>
                         
                 </div>
@@ -647,18 +671,40 @@
                 <div class="section-content" style="display: block;">
                     <div class="section-content-body"><h2>Rotation Effects</h2>
 
-<p>Rotate content around different axes.</p>
+<p>Rotation tweens control orientation in 2D and 3D contexts.</p>
 
-<h3>Rotation Types</h3>
+<h3>Rotation Axes</h3>
+
+<p>WATCHOUT provides:</p>
 
 <ul>
-<li><strong>Z Rotation</strong> (Alt+R) – Standard 2D rotation</li>
+<li><strong>Rotation Z</strong> (<code>roll</code>) for classic 2D spin</li>
+<li><strong>Rotation Y</strong> (<code>yaw</code>) for horizontal 3D turn</li>
+<li><strong>Rotation X</strong> (<code>pitch</code>) for vertical 3D tilt</li>
 
-<p><li><strong>Y Rotation</strong> (Alt+Y) – Flip horizontally in 3D</li></p>
+</ul>
+Shortcuts:
 
-<p><li><strong>X Rotation</strong> – Flip vertically in 3D</li></p>
+<ul>
+<li><code>Alt+Z</code> for Rotation Z</li>
+<li><code>Alt+Y</code> for Rotation Y</li>
 
-<p></ul></p></div><div class="section-nav">
+</ul>
+<h3>Practical Uses</h3>
+
+<ul>
+<li>Badge or logo spins</li>
+<li>Card-flip style transitions</li>
+<li>Perspective movement enhancements</li>
+
+</ul>
+<h3>Control Tips</h3>
+
+<ul>
+<li>Keep pivot/anchor placement in mind before animating.</li>
+<li>Large 3D rotations often need complementary position/scale adjustment.</li>
+
+</ul></div><div class="section-nav">
                 <a href="scale-and-size.html" class="nav-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
