@@ -11,14 +11,17 @@ Setting up WATCHOUT represents the first step toward creating your show. The ins
 ### Installation Process
 
 #### 1. Run as Administrator
+
 Right-click the downloaded installer file and select **Run as administrator**. This ensures the installer has the necessary permissions to register components and modify system settings.
 
 #### 2. Select Components
+
 During installation, you will be prompted to select components. Ensure valid options are selected for your needs.
 
 ![WATCHOUT Setup - Choose Components](../media/watchout-setup.png)
 
 #### 3. Drivers and Prerequisites
+
 The installer checks for and installs several critical system dependencies. It is essential to allow these installations to complete:
 
 *   **CodeMeter Runtime:** This is the background service that manages your Dataton license keys. It ensures your software is properly authorized and handles network licensing if applicable.
@@ -26,6 +29,7 @@ The installer checks for and installs several critical system dependencies. It i
 *   **Vulkan Runtime:** A modern, high-performance graphics API. WATCHOUT 7 uses Vulkan for its rendering engine to achieve lower overhead and efficient GPU resource management.
 
 #### 4. Restart
+
 After the installation completes, **restart your computer**. This is mandatory to ensure all system drivers and network services are correctly initialized.
 
 ### Post-Installation Checklist

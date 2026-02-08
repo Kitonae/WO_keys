@@ -60,8 +60,10 @@ function markdownToHtml(markdown) {
 
     // Bold and italic
     // Use slightly stricter regex to avoid matching across lines or mismatched tags
-    html = html.replace(/\*\*\*([^\*]+?)\*\*\*/g, '<strong><em>$1</em></strong>');
-    html = html.replace(/\*\*([^\*]+?)\*\*/g, '<strong>$1</strong>');
+    // Bold *** -> <strong><em>
+    html = html.replace(/\*\*\*([\s\S]+?)\*\*\*/g, '<strong><em>$1</em></strong>');
+    // Bold ** -> <strong>
+    html = html.replace(/\*\*([\s\S]+?)\*\*/g, '<strong>$1</strong>');
     // For italics, ensure we don't match across lines (newlines) to prevent list items 
     // from being interpreted as italics if list processing fails
     html = html.replace(/(?<!\*)\*([^\*\n]+?)\*(?!\*)/g, '<em>$1</em>');
