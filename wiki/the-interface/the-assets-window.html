@@ -144,6 +144,10 @@
                             Customizing Your Workspace
                         </a>
                         
+                        <a class="toc-subsection " href="../the-interface/the-nodes-window.html">
+                            The Nodes Window
+                        </a>
+                        
                 </div>
             
         </div>
@@ -647,24 +651,153 @@
                 <div class="section-content" style="display: block;">
                     <div class="section-content-body"><h2>The Assets Window</h2>
 
-<p>The Assets window is your media library – all images, videos, and audio files available for use in your show.</p>
+<p>The <strong>Assets</strong> window is your media library—the central repository for all images, videos, audio files, and other resources available for use in your show. It connects to the <strong>Asset Manager</strong> service to provide organization, search, and status tracking for your project media.</p>
+
+<h3>Asset Manager Connection</h3>
+
+<p>The Assets window requires connection to an <strong>Asset Manager</strong> service to function. Connection status displays in the window:</p>
+
+<ul>
+<li><strong>Connected</strong> – Full functionality available</li>
+<li><strong>Offline</strong> – Window shows "Asset Manager offline" with cloud-off icon</li>
+
+</ul>
+Configure the Asset Manager host via <strong>Network → Use Asset Manager</strong>.
+
+<h3>Interface Layout</h3>
+
+<p>The Assets window displays your media in a hierarchical tree table:</p>
+
+<table>
+<tr><th>Column</th><th>Description</th></tr>
+<tr><td><strong>Name</strong></td><td>File name with icon indicating asset type</td></tr>
+<tr><td><strong>Status</strong></td><td>Optimization and transfer state</td></tr>
+<tr><td><strong>Duration</strong></td><td>Length for video and audio files</td></tr>
+<tr><td><strong>Resolution</strong></td><td>Width × Height for image and video files</td></tr>
+<tr><td><strong>Format</strong></td><td>File type and codec information</td></tr>
+</table>
 
 <h3>Adding Media</h3>
 
+<h4>Drag and Drop</h4>
+
+<p>Drag files directly from Windows Explorer into the Assets window.</p>
+
+<h4>Menu Commands</h4>
+
 <ul>
-<li>Drag files directly into the window</li>
+<li><strong>Media → Add Media File</strong> – Browse and select individual files</li>
+<li><strong>Media → Add Image Sequence</strong> – Select a folder containing numbered image sequences</li>
 
-<p><li>Use <strong>Media → Add Media File</strong></li></p>
+</ul>
+<h4>Supported Formats</h4>
 
-<p><li>Right-click and select <strong>Add Media</strong></li></p>
+<p>WATCHOUT 7 supports a wide variety of media types:</p>
 
-<p></ul> <h3>Organization</h3></p>
+<ul>
+<li><strong>Images</strong> – PNG, JPEG, TIFF, BMP, WebP, EXR, PSD</li>
+<li><strong>Video</strong> – MP4, MOV, AVI, MKV, HAP, ProRes, H.264, H.265/HEVC</li>
+<li><strong>Audio</strong> – WAV, MP3, AAC, FLAC, OGG</li>
+<li><strong>Other</strong> – SVG, PDF, image sequences</li>
 
-<p>Create folders to organize your assets. Right-click and select <strong>Add Folder</strong>.</p>
+</ul>
+<h3>Search and Filtering</h3>
 
-<h3>Asset Information</h3>
+<h4>Search Bar</h4>
 
-<p>Select an asset to see its properties: resolution, duration, file path, and codec information.</p></div><div class="section-nav">
+<p>Click the magnifying glass icon or press <code>Ctrl+F</code> to reveal the search panel:</p>
+
+<ul>
+<li><strong>Text Search</strong> – Find assets by name</li>
+<li><strong>Type Filter</strong> – Filter by media type (images, video, audio, etc.)</li>
+<li><strong>Status Filters</strong> – Show only new assets or assets being prepared</li>
+
+</ul>
+Press <code>Escape</code> to close the search panel and reset filters.
+
+<h4>Filter Options</h4>
+
+<table>
+<tr><th>Filter</th><th>Description</th></tr>
+<tr><td><strong>Only New</strong></td><td>Show assets recently added</td></tr>
+<tr><td><strong>Preparing</strong></td><td>Show assets currently being optimized</td></tr>
+</table>
+
+<h3>Organization</h3>
+
+<h4>Folders</h4>
+
+<p>Create folders to organize your assets:</p>
+
+<ul>
+<li>Right-click and select <strong>Add Folder</strong></li>
+<li>Use <strong>Media → Add Folder</strong></li>
+
+</ul>
+Drag assets into folders to group related media.
+
+<h4>Folder Navigation</h4>
+
+<ul>
+<li><strong>Expand</strong> – Click the arrow or double-click the folder</li>
+<li><strong>Collapse</strong> – Click the arrow or use <strong>Media → Collapse All Folders</strong></li>
+<li><strong>Expand All</strong> – <strong>Media → Expand All Folders</strong></li>
+
+</ul>
+<h3>Asset Status</h3>
+
+<p>Each asset displays a status indicator showing its readiness:</p>
+
+<table>
+<tr><th>Status</th><th>Meaning</th></tr>
+<tr><td><strong>New</strong></td><td>Recently added, not yet processed</td></tr>
+<tr><td><strong>Preparing</strong></td><td>Being optimized for playback</td></tr>
+<tr><td><strong>Ready</strong></td><td>Optimized and available for use</td></tr>
+<tr><td><strong>Transferring</strong></td><td>Being sent to display servers</td></tr>
+<tr><td><strong>Online</strong></td><td>Available on all assigned display servers</td></tr>
+<tr><td><strong>Error</strong></td><td>Problem with file or optimization</td></tr>
+</table>
+
+<h3>Using Assets</h3>
+
+<h4>Add to Timeline</h4>
+
+<p>Drag an asset from the Assets window onto:</p>
+
+<ul>
+<li><strong>Timeline</strong> – Creates a cue at the drop position</li>
+<li><strong>Stage</strong> – Creates a cue at the visual drop location</li>
+<li><strong>Existing Cue</strong> – Replaces the cue's media source</li>
+
+</ul>
+<h4>Find Associated Cues</h4>
+
+<p>Right-click an asset and select <strong>Find Cues</strong> to locate all cues using that asset.</p>
+
+<h3>Asset Properties</h3>
+
+<p>Select an asset and view its properties in the <strong>Properties</strong> panel:</p>
+
+<ul>
+<li><strong>File Path</strong> – Location of the source file</li>
+<li><strong>Resolution</strong> – Native width and height</li>
+<li><strong>Duration</strong> – Length for time-based media</li>
+<li><strong>Frame Rate</strong> – For video files</li>
+<li><strong>Codec</strong> – Encoding information</li>
+<li><strong>Color Space</strong> – HDR and color profile information</li>
+
+</ul>
+<h3>Context Menu</h3>
+
+<p>Right-click assets to access common operations:</p>
+
+<ul>
+<li><strong>Add to Timeline</strong> – Create a cue using this asset</li>
+<li><strong>Reveal in Explorer</strong> – Open the containing folder</li>
+<li><strong>Delete</strong> – Remove from the asset library</li>
+<li><strong>Properties</strong> – Open detailed properties</li>
+
+</ul></div><div class="section-nav">
                 <a href="the-timeline-window.html" class="nav-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"

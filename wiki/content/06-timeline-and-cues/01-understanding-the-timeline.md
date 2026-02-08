@@ -4,20 +4,37 @@ title: "Understanding the Timeline"
 
 ## Understanding the Timeline
 
-### Timeline Components
+The Timeline is where show logic is sequenced. Cues on layers define what plays, when it plays, and how it behaves.
 
-- **Time Ruler** – Shows current position and allows navigation
+### Core Elements
 
-- **Layers** – Horizontal tracks that stack content (higher = on top)
+- **Time ruler**: visual time scale for navigation and placement
+- **Play cursor**: current playback/jump position
+- **Layers**: stacking order for visual priority
+- **Cues**: media or control objects with start and duration
+- **Zoom and scroll**: precision editing across long timelines
 
-- **Cues** – Individual media items placed on layers
+### Cue Sequences
 
-- **Play Head** – Red line showing current playback time
+A timeline can represent:
 
-### Navigation
+- A normal timeline
+- A composition timeline
 
-- **Click** in the time ruler to jump to a position
+Both use the same editing concepts, but compositions are often used as grouped reusable structures.
 
-- **Scroll** horizontally to move through time
+### Navigation Patterns
 
-- **Zoom** with Numpad +/- or timeline zoom controls
+- Click the ruler to move time.
+- Use arrow-key navigation to step between cues on active layer.
+- Use zoom controls (`Numpad +` / `Numpad -`) for fine timing edits.
+
+### Selection Context
+
+The Timeline has context-sensitive behavior:
+
+- Timeline context (global operations)
+- Cue context (cue edits)
+- Layer context (layer properties)
+
+Shortcuts and menu actions can change behavior depending on which context is active.

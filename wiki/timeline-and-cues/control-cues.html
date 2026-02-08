@@ -144,6 +144,10 @@
                             Customizing Your Workspace
                         </a>
                         
+                        <a class="toc-subsection " href="../the-interface/the-nodes-window.html">
+                            The Nodes Window
+                        </a>
+                        
                 </div>
             
         </div>
@@ -647,20 +651,39 @@
                 <div class="section-content" style="display: block;">
                     <div class="section-content-body"><h2>Control Cues</h2>
 
-<p>Control cues trigger actions rather than displaying content.</p>
+<p>Control cues affect playback state instead of rendering media.</p>
 
-<h3>Types</h3>
+<h3>Main Control Cue Types</h3>
 
 <ul>
-<li><strong>Play</strong> – Start playback of another timeline (Ctrl+P)</li>
+<li><strong>Play Control Cue</strong>: starts target timeline/composition</li>
+<li><strong>Pause Control Cue</strong>: pauses target timeline/composition</li>
+<li><strong>Output Cue</strong>: sends external output data</li>
+<li><strong>Variable Cue</strong>: automates show variable values</li>
 
-<p><li><strong>Pause</strong> – Pause playback (Ctrl+Shift+P)</li></p>
+</ul>
+<h3>Creating Control Cues</h3>
 
-<p><li><strong>Output</strong> – Send data to external devices</li></p>
+<p>Use the Timeline menu or shortcuts:</p>
 
-<p><li><strong>Variable</strong> – Set variable values</li></p>
+<ul>
+<li>Add Play Cue: <code>Ctrl+P</code></li>
+<li>Add Pause Cue: <code>Ctrl+Shift+P</code></li>
 
-<p></ul></p></div><div class="section-nav">
+</ul>
+Output and variable cues are available from timeline actions and context menus.
+
+<h3>Targeting Behavior</h3>
+
+<p>Control cues can target:</p>
+
+<ul>
+<li>Enclosing timeline</li>
+<li>Explicit include/exclude lists</li>
+<li>Other timelines or all timelines depending on mode</li>
+
+</ul>
+Use clear naming and color coding so operators can identify control intent quickly.</div><div class="section-nav">
                 <a href="adjusting-timing.html" class="nav-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"

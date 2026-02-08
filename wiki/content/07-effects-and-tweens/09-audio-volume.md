@@ -4,8 +4,24 @@ title: "Audio Volume"
 
 ## Audio Volume
 
-Animate audio levels over time.
+Volume tweens automate cue loudness over time.
 
-### Volume Tween
+### Add Volume Automation
 
-Press `Alt+V` to add volume automation. Create fades and ducking effects.
+Use **Volume** tween actions or shortcut `Alt+V` on cues with audio content.
+
+### Common Scenarios
+
+- Music fade-ins and fade-outs
+- Ducking under voice-over or announcements
+- Layered ambience balancing
+
+### Practical Workflow
+
+1. Set initial cue gain.
+2. Add volume tween points at scene boundaries.
+3. Verify transitions on the target audio routing path.
+
+### Notes for Complex Shows
+
+If you use multiple output buses/channels, validate both cue-level volume and device/channel mapping so automation behaves as expected at the final output.

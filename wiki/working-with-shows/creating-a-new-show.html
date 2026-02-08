@@ -144,6 +144,10 @@
                             Customizing Your Workspace
                         </a>
                         
+                        <a class="toc-subsection " href="../the-interface/the-nodes-window.html">
+                            The Nodes Window
+                        </a>
+                        
                 </div>
             
         </div>
@@ -647,18 +651,60 @@
                 <div class="section-content" style="display: block;">
                     <div class="section-content-body"><h2>Creating a New Show</h2>
 
-<p>Start a new project from scratch:</p>
+<p>Creating a new show sets up the timeline, stage, and routing model for your project. In WATCHOUT 7, a show can be local (on your Producer workstation) or connected to a Director node on the network.</p>
+
+<h3>Ways to Start a New Show</h3>
+
+<p>Use any of the following:</p>
 
 <ul>
-<li>Go to <strong>File → New</strong> or press <code>Ctrl+N</code></li>
+<li><strong>Welcome Screen</strong> → <strong>New Show</strong></li>
+<li><strong>File → New</strong></li>
 
-<p><li>If you have unsaved changes, you'll be prompted to save first</li></p>
+</ul>
+If you already have unsaved edits, WATCHOUT prompts you to save, discard, or cancel before creating the new show.
 
-<p><li>A blank show opens with default settings</li></p>
+<h3>What Gets Created</h3>
 
-<p></ul> <h3>Show File Location</h3></p>
+<p>A new show starts with:</p>
 
-<p>Choose a location for your show file that's accessible from all computers in your setup. Consider using a shared network drive for multi-user projects.</p></div><div class="section-nav">
+<ul>
+<li>An empty <strong>Stage</strong></li>
+<li>At least one <strong>Timeline</strong></li>
+<li>Default show-level settings (frame rate, timing, and routing defaults)</li>
+<li>No displays, cues, or imported assets</li>
+
+</ul>
+<h3>Choose a Good Storage Location</h3>
+
+<p>Store your show in a predictable project folder structure, for example:</p>
+
+<ul>
+<li><code>Shows/ClientName/EventName/</code></li>
+<li><code>Shows/ClientName/EventName/Assets/</code></li>
+<li><code>Shows/ClientName/EventName/Exports/</code></li>
+
+</ul>
+This keeps asset paths and backups organized, especially when multiple operators collaborate.
+
+<div class='info-box'><p><strong>Tip:</strong> Create the folder structure before you begin cue programming. It avoids later relinking work.
+</p></div>
+
+<h3>Director-Aware Behavior</h3>
+
+<p>When you create a show while connected to network nodes, WATCHOUT validates Director state. If the target Director is already running a different show, you will get a warning before overriding it.</p>
+
+<h3>Recommended First Steps</h3>
+
+<p>After creating the show:</p>
+
+<ol>
+<li>Set your <strong>Show Properties</strong>.</li>
+<li>Add displays or projectors on the Stage.</li>
+<li>Connect to the intended Director/Asset Manager.</li>
+<li>Import a small test asset and verify playback.</li>
+
+</ol></div><div class="section-nav">
                 <a href="index.html" class="nav-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"

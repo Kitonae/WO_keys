@@ -144,6 +144,10 @@
                             Customizing Your Workspace
                         </a>
                         
+                        <a class="toc-subsection " href="../the-interface/the-nodes-window.html">
+                            The Nodes Window
+                        </a>
+                        
                 </div>
             
         </div>
@@ -647,16 +651,50 @@
                 <div class="section-content" style="display: block;">
                     <div class="section-content-body"><h2>Display Properties</h2>
 
-<h3>Common Settings</h3>
+<p>Display Properties control how each display is rendered, routed, and calibrated.</p>
+
+<h3>General Properties</h3>
+
+<ul>
+<li><strong>Name / Color / Enabled / Locked</strong></li>
+<li><strong>Address (host alias)</strong></li>
+<li><strong>Placement and orientation</strong></li>
+<li><strong>Tier visibility</strong> (which stage tiers can show cues)</li>
+
+</ul>
+<h3>Output Properties</h3>
 
 <table>
-<tr><th>Property</th><th>Description</th></tr>
-<tr><td>Name</td><td>Identifier for the display</td></tr>
-<tr><td>Resolution</td><td>Width × Height in pixels</td></tr>
-<tr><td>Position</td><td>Stage coordinates (X, Y)</td></tr>
-<tr><td>Output Device</td><td>Which GPU output to use</td></tr>
-<tr><td>Assigned Server</td><td>Which display computer renders this display</td></tr>
-</table></div><div class="section-nav">
+<tr><th>Property</th><th>Purpose</th></tr>
+<tr><td><strong>Output Type</strong></td><td><code>GPU</code>, <code>SDI</code>, <code>NDI</code>, or <code>Virtual</code></td></tr>
+<tr><td><strong>Channel</strong></td><td>Physical/logic output index</td></tr>
+<tr><td><strong>Resolution</strong></td><td>Render target dimensions</td></tr>
+<tr><td><strong>Color Depth</strong></td><td>Output precision (for supported hardware)</td></tr>
+<tr><td><strong>Color Space</strong></td><td>Display color pipeline target</td></tr>
+<tr><td><strong>Interlaced</strong></td><td>Enable interlaced output where required</td></tr>
+<tr><td><strong>Delay Frames</strong></td><td>Output delay compensation</td></tr>
+<tr><td><strong>Max Quality</strong></td><td>Higher quality render path where needed</td></tr>
+</table>
+
+<h3>Signal and Calibration</h3>
+
+<p>Display-level calibration settings include:</p>
+
+<ul>
+<li><strong>White point</strong></li>
+<li><strong>NDI calibration stream</strong></li>
+<li><strong>Render info overlay</strong></li>
+<li><strong>Warp/mask/soft-edge integration</strong></li>
+
+</ul>
+<h3>Practical Advice</h3>
+
+<ul>
+<li>Keep channel numbering consistent with physical labeling.</li>
+<li>Use lock state once routing is approved.</li>
+<li>Document non-default delay/color settings for handoff.</li>
+
+</ul></div><div class="section-nav">
                 <a href="display-grid-setup.html" class="nav-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"

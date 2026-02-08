@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="WATCHOUT User Guide - Connecting to Display Servers">
-    <title>Connecting to Display Servers - WATCHOUT 7 User Guide</title>
+    <meta name="description" content="WATCHOUT User Guide - The Nodes Window">
+    <title>The Nodes Window - WATCHOUT 7 User Guide</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -103,8 +103,8 @@
             
         </div>
         
-        <div class="toc-chapter  " data-index="1">
-            <a href="../the-interface/index.html" class="toc-chapter-header  " style="text-decoration: none; color: inherit; display: flex;">
+        <div class="toc-chapter expanded " data-index="1">
+            <a href="../the-interface/index.html" class="toc-chapter-header  expanded" style="text-decoration: none; color: inherit; display: flex;">
                 <span class="toc-chapter-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg></span>
                 <span class="toc-chapter-title">2. The Interface</span>
                 
@@ -114,7 +114,7 @@
                 
             </a>
             
-                <div class="toc-subsections ">
+                <div class="toc-subsections expanded">
                     
                         <a class="toc-subsection " href="../the-interface/main-window-overview.html">
                             Main Window Overview
@@ -144,7 +144,7 @@
                             Customizing Your Workspace
                         </a>
                         
-                        <a class="toc-subsection " href="../the-interface/the-nodes-window.html">
+                        <a class="toc-subsection active" href="../the-interface/the-nodes-window.html">
                             The Nodes Window
                         </a>
                         
@@ -381,8 +381,8 @@
             
         </div>
         
-        <div class="toc-chapter expanded " data-index="7">
-            <a href="../playback/index.html" class="toc-chapter-header  expanded" style="text-decoration: none; color: inherit; display: flex;">
+        <div class="toc-chapter  " data-index="7">
+            <a href="../playback/index.html" class="toc-chapter-header  " style="text-decoration: none; color: inherit; display: flex;">
                 <span class="toc-chapter-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg></span>
                 <span class="toc-chapter-title">8. Playback</span>
                 
@@ -392,7 +392,7 @@
                 
             </a>
             
-                <div class="toc-subsections expanded">
+                <div class="toc-subsections ">
                     
                         <a class="toc-subsection " href="../playback/starting-and-stopping.html">
                             Starting and Stopping
@@ -402,7 +402,7 @@
                             Preview Mode
                         </a>
                         
-                        <a class="toc-subsection active" href="../playback/connecting-to-display-servers.html">
+                        <a class="toc-subsection " href="../playback/connecting-to-display-servers.html">
                             Connecting to Display Servers
                         </a>
                         
@@ -640,49 +640,185 @@
                     
             <a href="../index.html" class="breadcrumb-item">Home</a>
             <span class="breadcrumb-separator">›</span>
-            <a href="index.html" class="breadcrumb-item">8. Playback</a>
+            <a href="index.html" class="breadcrumb-item">2. The Interface</a>
             <span class="breadcrumb-separator">›</span>
-            <span class="breadcrumb-item current">Connecting to Display Servers</span>
+            <span class="breadcrumb-item current">The Nodes Window</span>
         
                 </div>
             </header>
 
             <article class="content-body" id="content-body">
                 <div class="section-content" style="display: block;">
-                    <div class="section-content-body"><h2>Connecting to Display Servers</h2>
+                    <div class="section-content-body">---
+title: "The Nodes Window"
+---
 
-<p>In WATCHOUT 7, display servers are discovered nodes running Runner/renderer services. Producer uses discovered node metadata to route displays and monitor service health.</p>
+<h2>The Nodes Window</h2>
 
-<h3>Discovery and Visibility</h3>
+<p>The <strong>Nodes</strong> window (also known as the Devices & Network window) provides a unified view of your show's output devices and the WATCHOUT nodes available on your network. It consists of two panes that work together to help you configure and monitor your display system.</p>
 
-<p>Nodes are discovered automatically over multicast and shown in the <strong>Network</strong> window with:</p>
+<h3>Window Layout</h3>
+
+<p>The Nodes window is split into two resizable panes:</p>
+
+<table>
+<tr><th>Pane</th><th>Purpose</th></tr>
+<tr><td><strong>Devices</strong> (left)</td><td>Output devices assigned to your show</td></tr>
+<tr><td><strong>Network</strong> (right)</td><td>WATCHOUT nodes discovered on the network</td></tr>
+</table>
+
+<p>Drag the splitter between panes to adjust their relative sizes.</p>
+
+---
+
+<h2>Devices Pane</h2>
+
+<p>The <strong>Devices</strong> pane lists all output devices configured in your show, including displays, audio devices, and capture sources.</p>
+
+<h3>Device Table</h3>
+
+<table>
+<tr><th>Column</th><th>Description</th></tr>
+<tr><td><strong>Name</strong></td><td>Device name with type icon and optional warning indicators</td></tr>
+<tr><td><strong>Host</strong></td><td>The network node hosting this device, or "Virtual" for virtual displays</td></tr>
+</table>
+
+<h3>Device Types</h3>
+
+<p>Each device displays an icon indicating its type:</p>
+
+<table>
+<tr><th>Icon</th><th>Type</th><th>Description</th></tr>
+<tr><td>Monitor</td><td>Display</td><td>Physical video output</td></tr>
+<tr><td>Monitor (shimmer)</td><td>Virtual Display</td><td>Software-rendered output for compositions</td></tr>
+<tr><td>Volume</td><td>Audio</td><td>Audio output device</td></tr>
+<tr><td>Cast</td><td>Capture</td><td>Video input source</td></tr>
+</table>
+
+<h3>Filtering Devices</h3>
+
+<p>Use the dropdown filter to narrow the device list:</p>
+
+<table>
+<tr><th>Filter</th><th>Shows</th></tr>
+<tr><td><strong>All</strong></td><td>Every device in the show</td></tr>
+<tr><td><strong>Display</strong></td><td>Physical display outputs only</td></tr>
+<tr><td><strong>Virtual</strong></td><td>Virtual displays only</td></tr>
+<tr><td><strong>Capture</strong></td><td>Video capture sources</td></tr>
+<tr><td><strong>Audio</strong></td><td>Audio output devices</td></tr>
+</table>
+
+<h3>Device Status Indicators</h3>
+
+<p>Devices may display warning icons for issues such as:</p>
 
 <ul>
-<li>Host alias</li>
-<li>Address</li>
-<li>Running services</li>
-<li>Version and status indicators</li>
+<li>Missing host assignment</li>
+<li>Offline host</li>
+<li>Configuration errors</li>
+<li>Resolution mismatches</li>
 
 </ul>
-<h3>Typical Connection Workflow</h3>
+Hover over warning icons to see details.
 
-<ol>
-<li>Open <strong>Network</strong> window.</li>
-<li>Confirm target nodes are visible and not stale.</li>
-<li>Assign display devices to correct host aliases.</li>
-<li>Connect Producer to the intended Director.</li>
+<h3>Color Coding</h3>
 
-</ol>
-<h3>If a Node Is Missing</h3>
+<p>Display devices show a colored left border matching their assigned color, making it easy to identify displays across the Stage and Devices views.</p>
+
+<h3>Host Grouping</h3>
+
+<p>When sorted by Host, devices on the same node display a connecting bracket in the left margin, visually grouping outputs by their rendering machine.</p>
+
+<h3>Context Menu Actions</h3>
+
+<p>Right-click devices to access:</p>
 
 <ul>
-<li>Verify subnet/routing and multicast handling.</li>
-<li>Check local firewall policy.</li>
-<li>Confirm process-manager services are running on the node.</li>
-<li>Ensure host aliases are unique (except planned fallback scenarios).</li>
+<li><strong>Enable/Disable Device</strong> – Toggle device output</li>
+<li><strong>Edit Warp</strong> – Open warp correction editor</li>
+<li><strong>Edit Mask</strong> – Open mask editor</li>
+<li><strong>Cut/Copy/Paste/Delete</strong> – Standard editing operations</li>
+<li><strong>Add Capture</strong> – Create a new capture source</li>
+<li><strong>Add Virtual Display</strong> – Create a new virtual display</li>
 
-</ul></div><div class="section-nav">
-                <a href="preview-mode.html" class="nav-btn">
+</ul>
+<h3>Adding Devices</h3>
+
+<p>Create new devices using:</p>
+
+<ul>
+<li><strong>Right-click menu</strong> in the Devices pane</li>
+<li><strong>Stage menu → Add Display/Projector</strong></li>
+<li><strong>Right-click a node</strong> in the Network pane</li>
+
+</ul>
+<h3>Editing Devices</h3>
+
+<ul>
+<li><strong>Double-click</strong> a device to open its properties</li>
+<li><strong>Drag</strong> devices to reorder (when enabled)</li>
+<li>Select multiple devices with <code>Shift+Click</code> or <code>Ctrl+Click</code></li>
+
+</ul>
+---
+
+<h2>Network Pane</h2>
+
+<p>The <strong>Network</strong> pane displays all WATCHOUT nodes discovered on your local network. For detailed information, see [The Network Window](06-the-network-window.md).</p>
+
+<h3>Quick Overview</h3>
+
+<p>The Network pane shows:</p>
+
+<ul>
+<li><strong>Node name</strong> – Hostname or identifier</li>
+<li><strong>Services</strong> – Available WATCHOUT services (Director, Runner, Asset Manager)</li>
+<li><strong>Address</strong> – IP address</li>
+
+</ul>
+<h3>Assigning Devices to Nodes</h3>
+
+<ol>
+<li>Select a node in the Network pane</li>
+<li>Right-click and choose <strong>Add Display</strong> or <strong>Add Audio Device</strong></li>
+<li>The new device is automatically assigned to that node</li>
+
+</ol>
+<h3>Monitoring Node Status</h3>
+
+<p>Nodes display real-time status:</p>
+
+<ul>
+<li>Normal text – Online and responsive</li>
+<li>Dimmed text – Offline or not responding recently</li>
+
+</ul>
+---
+
+<h2>Workflow Tips</h2>
+
+<h3>Efficient Device Management</h3>
+
+<ol>
+<li><strong>Filter by type</strong> when working with many devices</li>
+<li><strong>Sort by Host</strong> to see device groupings per node</li>
+<li><strong>Use color coding</strong> to match devices between Stage and Devices views</li>
+
+</ol>
+<h3>Multi-Selection</h3>
+
+<p>Select multiple devices to:</p>
+
+<ul>
+<li>Enable or disable as a group</li>
+<li>Move to a different host</li>
+<li>Delete in bulk</li>
+
+</ul>
+<h3>Drag and Drop</h3>
+
+<p>Drag devices from the Devices pane to the Stage to reposition displays visually.</p></div><div class="section-nav">
+                <a href="customizing-your-workspace.html" class="nav-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                         stroke-linejoin="round">
@@ -690,7 +826,7 @@
                     </svg>
                     Previous
                 </a>
-                <a href="going-online.html" class="nav-btn">
+                <a href="../working-with-shows/index.html" class="nav-btn">
                     Next
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"

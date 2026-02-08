@@ -144,6 +144,10 @@
                             Customizing Your Workspace
                         </a>
                         
+                        <a class="toc-subsection " href="../the-interface/the-nodes-window.html">
+                            The Nodes Window
+                        </a>
+                        
                 </div>
             
         </div>
@@ -647,29 +651,53 @@
                 <div class="section-content" style="display: block;">
                     <div class="section-content-body"><h2>Adding Displays</h2>
 
-<h3>Adding a Standard Display</h3>
+<p>Displays are the output surfaces your cues render to. In WATCHOUT 7, each display is a configurable device object with placement, routing, and output settings.</p>
+
+<h3>Add a Physical Display</h3>
+
+<p>From the <strong>Stage</strong> window, choose:</p>
 
 <ul>
-<li>Go to <strong>Stage → Add Display</strong></li>
+<li><strong>Stage → Add Display</strong></li>
+<li>Right-click context action for display creation</li>
 
-<p><li>A new display appears on the Stage</li></p>
+</ul>
+You can also add displays from the <strong>Network</strong> window to target a selected node.
 
-<p><li>Position it to match your physical screen arrangement</li></p>
+<h3>Initial Configuration Checklist</h3>
 
-<p><li>Set the resolution in the Properties panel</li></p>
-
-<p></ul> <h3>Display Properties</h3></p>
+<p>After adding a display, set:</p>
 
 <ul>
-<li><strong>Name</strong> – Descriptive label for the display</li>
+<li><strong>Name</strong> (clear operator-friendly label)</li>
+<li><strong>Address / Host</strong> (target node alias)</li>
+<li><strong>Resolution</strong> (<code>width × height</code>)</li>
+<li><strong>Output type</strong> (GPU, SDI, NDI, or Virtual)</li>
+<li><strong>Channel</strong> (physical output channel)</li>
 
-<p><li><strong>Width/Height</strong> – Resolution in pixels</li></p>
+</ul>
+<h3>Placement on Stage</h3>
 
-<p><li><strong>Position</strong> – X, Y coordinates on stage</li></p>
+<p>Set display size and position to match the real-world layout:</p>
 
-<p><li><strong>Output</strong> – Which display server output to use</li></p>
+<ul>
+<li>Use exact pixel dimensions from the processor or projector chain.</li>
+<li>Align displays in stage coordinates before adding cues.</li>
+<li>Use <strong>Frame All Displays</strong> to verify overall layout.</li>
 
-<p></ul></p></div><div class="section-nav">
+</ul>
+<h3>Verify with a Test Cue</h3>
+
+<p>Before building the full show:</p>
+
+<ol>
+<li>Add a simple test image/video cue.</li>
+<li>Route it to the new display.</li>
+<li>Confirm output appears on the expected node and connector.</li>
+
+</ol>
+<div class='info-box'><p><strong>Tip:</strong> Use descriptive names like <code>Left_LED_Wall_A</code> instead of generic names like <code>Display 1</code>.
+</p></div></div><div class="section-nav">
                 <a href="index.html" class="nav-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"

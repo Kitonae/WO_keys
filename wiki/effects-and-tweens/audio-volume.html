@@ -144,6 +144,10 @@
                             Customizing Your Workspace
                         </a>
                         
+                        <a class="toc-subsection " href="../the-interface/the-nodes-window.html">
+                            The Nodes Window
+                        </a>
+                        
                 </div>
             
         </div>
@@ -647,11 +651,31 @@
                 <div class="section-content" style="display: block;">
                     <div class="section-content-body"><h2>Audio Volume</h2>
 
-<p>Animate audio levels over time.</p>
+<p>Volume tweens automate cue loudness over time.</p>
 
-<h3>Volume Tween</h3>
+<h3>Add Volume Automation</h3>
 
-<p>Press <code>Alt+V</code> to add volume automation. Create fades and ducking effects.</p></div><div class="section-nav">
+<p>Use <strong>Volume</strong> tween actions or shortcut <code>Alt+V</code> on cues with audio content.</p>
+
+<h3>Common Scenarios</h3>
+
+<ul>
+<li>Music fade-ins and fade-outs</li>
+<li>Ducking under voice-over or announcements</li>
+<li>Layered ambience balancing</li>
+
+</ul>
+<h3>Practical Workflow</h3>
+
+<ol>
+<li>Set initial cue gain.</li>
+<li>Add volume tween points at scene boundaries.</li>
+<li>Verify transitions on the target audio routing path.</li>
+
+</ol>
+<h3>Notes for Complex Shows</h3>
+
+<p>If you use multiple output buses/channels, validate both cue-level volume and device/channel mapping so automation behaves as expected at the final output.</p></div><div class="section-nav">
                 <a href="blur-effects.html" class="nav-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"

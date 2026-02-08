@@ -144,6 +144,10 @@
                             Customizing Your Workspace
                         </a>
                         
+                        <a class="toc-subsection " href="../the-interface/the-nodes-window.html">
+                            The Nodes Window
+                        </a>
+                        
                 </div>
             
         </div>
@@ -647,20 +651,43 @@
                 <div class="section-content" style="display: block;">
                     <div class="section-content-body"><h2>Edge Blending</h2>
 
-<p>Create seamless panoramas by blending overlapping projector edges.</p>
+<p>Edge blending smooths overlap regions between adjacent projected outputs so they appear as one continuous image.</p>
 
-<h3>Setting Up Edge Blending</h3>
+<h3>Automatic Soft Edges</h3>
+
+<p>WATCHOUT supports automatic soft-edge generation using overlap geometry between displays.</p>
+
+<p>Under the hood, overlap regions are converted into gradient-intensity meshes so brightness can be feathered across boundaries.</p>
+
+<h3>Blend Control Methods</h3>
+
+<p>Common methods include:</p>
 
 <ul>
-<li>Position displays with slight overlap</li>
+<li><strong>Automatic soft edges</strong> from overlapping display geometry</li>
+<li><strong>Mask-based shaping</strong> for custom overlap boundaries</li>
+<li><strong>Manual warp/mask refinement</strong> for irregular surfaces</li>
 
-<p><li>Access display properties</li></p>
+</ul>
+<h3>Calibration Workflow</h3>
 
-<p><li>Configure soft-edge blend curves</li></p>
+<ol>
+<li>Align projector geometry first.</li>
+<li>Enable soft edges and review overlap zones.</li>
+<li>Fine-tune masks where automatic blending is insufficient.</li>
+<li>Validate using grayscale ramps and full-brightness test images.</li>
 
-<p><li>Adjust blend width and gamma</li></p>
+</ol>
+<h3>Common Pitfalls</h3>
 
-<p></ul></p></div><div class="section-nav">
+<ul>
+<li>Incorrect projector black levels can make seams visible.</li>
+<li>Non-uniform brightness or color temperature across projectors reduces blend quality.</li>
+<li>Overly narrow overlaps leave no room for smooth falloff.</li>
+
+</ul>
+<div class='info-box'><p>Blend calibration is most reliable in a controlled lighting environment with stable projector warm-up.
+</p></div></div><div class="section-nav">
                 <a href="display-properties.html" class="nav-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"

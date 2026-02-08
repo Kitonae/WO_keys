@@ -144,6 +144,10 @@
                             Customizing Your Workspace
                         </a>
                         
+                        <a class="toc-subsection " href="../the-interface/the-nodes-window.html">
+                            The Nodes Window
+                        </a>
+                        
                 </div>
             
         </div>
@@ -647,27 +651,40 @@
                 <div class="section-content" style="display: block;">
                     <div class="section-content-body"><h2>Network Issues</h2>
 
-<h3>Display Servers Not Found</h3>
+<p>Most network failures fall into discovery, firewall, or host-alias consistency problems.</p>
+
+<h3>Nodes Not Appearing</h3>
 
 <ul>
-<li>Verify both computers are on the same subnet</li>
+<li>Verify nodes are on reachable network interfaces.</li>
+<li>Check multicast handling (<code>239.2.2.2:3012</code>).</li>
+<li>Confirm firewall allows WATCHOUT services and required UDP ports.</li>
 
-<p><li>Check firewall settings</li></p>
-
-<p><li>Disable WiFi on WATCHOUT computers</li></p>
-
-<p><li>Try pinging between computers</li></p>
-
-<p></ul> <h3>Slow Asset Transfer</h3></p>
+</ul>
+<h3>Node Appears but Goes Stale/Offline</h3>
 
 <ul>
-<li>Use Gigabit or faster network</li>
+<li>Check switch stability and cable quality.</li>
+<li>Verify host is not sleeping/power-throttled.</li>
+<li>Confirm process-manager services are still running.</li>
 
-<p><li>Check for network congestion</li></p>
+</ul>
+<h3>Director/Runner Mismatch Warnings</h3>
 
-<p><li>Consider pre-staging assets on display servers</li></p>
+<ul>
+<li>Ensure all nodes are attached to the intended Director.</li>
+<li>Clear stale show state on nodes if needed.</li>
+<li>Re-run a controlled startup sequence before rehearsal.</li>
 
-<p></ul></p></div><div class="section-nav">
+</ul>
+<h3>NTP/Sync Instability</h3>
+
+<ul>
+<li>Confirm Director and runners use consistent time strategy.</li>
+<li>Check NTP reachability and drift.</li>
+<li>Resolve time sync warnings before running synchronized playback.</li>
+
+</ul></div><div class="section-nav">
                 <a href="display-problems.html" class="nav-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"

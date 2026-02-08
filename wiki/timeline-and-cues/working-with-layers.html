@@ -144,6 +144,10 @@
                             Customizing Your Workspace
                         </a>
                         
+                        <a class="toc-subsection " href="../the-interface/the-nodes-window.html">
+                            The Nodes Window
+                        </a>
+                        
                 </div>
             
         </div>
@@ -647,20 +651,38 @@
                 <div class="section-content" style="display: block;">
                     <div class="section-content-body"><h2>Working with Layers</h2>
 
-<h3>Layer Stacking</h3>
+<p>Layers determine draw order and help organize complex timelines.</p>
 
-<p>Higher layers appear in front of lower layers on stage. Use this for overlaying content.</p>
-
-<h3>Layer Operations</h3>
+<h3>Layer Basics</h3>
 
 <ul>
-<li><strong>Insert Layer</strong> – Ctrl+I</li>
+<li>Higher layers visually stack above lower layers.</li>
+<li>Layer names should reflect purpose (for example <code>BG</code>, <code>FX</code>, <code>Titles</code>).</li>
+<li>Keep a clean layer structure early to avoid late-stage confusion.</li>
 
-<p><li><strong>Delete Layer</strong> – Ctrl+Delete</li></p>
+</ul>
+<h3>Layer Operations</h3>
 
-<p><li><strong>Reorder</strong> – Drag layer headers up/down</li></p>
+<table>
+<tr><th>Action</th><th>Shortcut</th></tr>
+<tr><td>Insert layer</td><td><code>Ctrl+I</code></td></tr>
+<tr><td>Delete active layer</td><td><code>Ctrl+Delete</code></td></tr>
+<tr><td>Select all cues on active layer</td><td><em>(menu action)</em></td></tr>
+</table>
 
-<p></ul></p></div><div class="section-nav">
+<p>You can also append layers and reorder them during timeline editing.</p>
+
+<h3>Layer-Focused Workflow</h3>
+
+<ul>
+<li>Use one layer for each functional category when possible.</li>
+<li>Keep control cues separate from media-heavy layers.</li>
+<li>Lock or minimize edits to stable layers during live programming.</li>
+
+</ul>
+<h3>Key-Layer Considerations</h3>
+
+<p>Some workflows use key/fill logic at layer level. Verify cue compatibility before grouping effects across mixed-purpose layers.</p></div><div class="section-nav">
                 <a href="adding-media-cues.html" class="nav-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"

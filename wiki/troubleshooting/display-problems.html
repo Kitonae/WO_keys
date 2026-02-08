@@ -144,6 +144,10 @@
                             Customizing Your Workspace
                         </a>
                         
+                        <a class="toc-subsection " href="../the-interface/the-nodes-window.html">
+                            The Nodes Window
+                        </a>
+                        
                 </div>
             
         </div>
@@ -647,29 +651,43 @@
                 <div class="section-content" style="display: block;">
                     <div class="section-content-body"><h2>Display Problems</h2>
 
-<h3>No Output on Display</h3>
+<p>When a display misbehaves, diagnose in this order: routing, output mode, geometry, then content.</p>
+
+<h3>No Signal on a Display</h3>
+
+<p>Check:</p>
+
+<ol>
+<li>Display is <strong>enabled</strong> and not locked to wrong settings.</li>
+<li>Correct <strong>host alias</strong> and <strong>output channel</strong>.</li>
+<li>Correct <strong>output type</strong> (GPU/SDI/NDI/Virtual).</li>
+<li>Node services are online.</li>
+
+</ol>
+<h3>Wrong Screen / Wrong Position</h3>
 
 <ul>
-<li>Verify display server is online (green status)</li>
+<li>Re-check stage placement and display naming.</li>
+<li>Use <strong>Frame in Stage</strong> and <strong>Frame All Displays</strong>.</li>
+<li>Validate channel mapping in device properties.</li>
 
-<p><li>Check display is assigned to correct output</li></p>
-
-<p><li>Verify GPU output is active in Windows</li></p>
-
-<p><li>Check cables and connections</li></p>
-
-<p></ul> <h3>Stuttering Playback</h3></p>
+</ul>
+<h3>Visible Seams or Warped Content</h3>
 
 <ul>
-<li>Use HAP codec instead of H.264/HEVC</li>
+<li>Revisit warp geometry and mask edits.</li>
+<li>Verify soft-edge overlap quality.</li>
+<li>Re-run projector calibration where required.</li>
 
-<p><li>Reduce video resolution if needed</li></p>
+</ul>
+<h3>Interlaced/Color Artifacts</h3>
 
-<p><li>Check disk read speed</li></p>
+<ul>
+<li>Confirm interlaced setting is intentional.</li>
+<li>Verify color depth/color space settings per output path.</li>
+<li>Compare with known test pattern media.</li>
 
-<p><li>Reduce number of simultaneous videos</li></p>
-
-<p></ul></p></div><div class="section-nav">
+</ul></div><div class="section-nav">
                 <a href="performance-tips.html" class="nav-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"

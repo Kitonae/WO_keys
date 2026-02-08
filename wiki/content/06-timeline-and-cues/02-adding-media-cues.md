@@ -4,14 +4,34 @@ title: "Adding Media Cues"
 
 ## Adding Media Cues
 
-### Creating Cues
+Media cues are created by placing assets on a timeline.
 
-- Drag media from the Assets window onto the Timeline
+### Add a Cue
 
-- Drop on an existing layer or between layers to create a new one
+1. Import media into **Assets**.
+2. Drag the asset into the Timeline.
+3. Drop at the desired start time and layer.
 
-- Position the cue at the desired start time
+### Placement Behavior
 
-### Cue Duration
+WATCHOUT supports different placement strategies during drag/drop:
 
-Drag the right edge of a cue to adjust its duration. For video, the duration defaults to the clip length.
+- **Sequence-oriented** placement
+- **Layer-oriented** placement
+
+Use modifier behavior (such as `Ctrl` during drag) when you want to force layer-based placement behavior.
+
+### Initial Cue Values
+
+A newly created media cue usually gets:
+
+- Start time from drop position
+- Duration from source media (or default behavior)
+- Layer assignment from drop target
+
+### Next Steps After Placement
+
+- Move or trim cue timing
+- Add tweens for motion/effects
+- Set cue routing/output options if needed
+- Test by scrubbing and short playback loops

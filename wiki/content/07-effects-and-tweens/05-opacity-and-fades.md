@@ -4,16 +4,28 @@ title: "Opacity and Fades"
 
 ## Opacity and Fades
 
-Control transparency for fade effects.
+Opacity and fade controls define visibility transitions for cues.
 
-### Fade In/Out
+### Opacity Tween
 
-- **Fade In** – Select cue, use Tween → Fade In
+Use **Opacity** tween (`Alt+O`) for fully custom transparency animation.
 
-- **Fade Out** – Select cue, use Tween → Fade Out
+### Fade Helpers
 
-- **Cross Fade** – Blend between overlapping cues
+WATCHOUT also supports dedicated fade actions:
 
-### Manual Opacity
+- **Fade In** (`Shift+Alt+I`)
+- **Fade Out** (`Shift+Alt+O`)
+- **Cross Fade** (`Shift+Alt+X`)
 
-Press `Alt+O` to add an opacity tween for custom fade curves.
+These provide fast transition setup with reusable defaults.
+
+### When to Use Which
+
+- Use **fade helpers** for quick standard transitions.
+- Use **opacity tween curves** for precise non-linear behavior.
+
+### Common Mistakes
+
+- Overlapping fades without checking final blend result.
+- Fades that start/end before cue visibility windows.

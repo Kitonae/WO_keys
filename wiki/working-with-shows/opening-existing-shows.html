@@ -144,6 +144,10 @@
                             Customizing Your Workspace
                         </a>
                         
+                        <a class="toc-subsection " href="../the-interface/the-nodes-window.html">
+                            The Nodes Window
+                        </a>
+                        
                 </div>
             
         </div>
@@ -647,18 +651,57 @@
                 <div class="section-content" style="display: block;">
                     <div class="section-content-body"><h2>Opening Existing Shows</h2>
 
-<h3>Open Methods</h3>
+<p>WATCHOUT supports opening shows from disk and attaching to shows currently managed by a Director.</p>
+
+<h3>Open from Disk</h3>
+
+<p>Use:</p>
 
 <ul>
-<li><strong>File → Open</strong> or <code>Ctrl+O</code> – Browse for a show file</li>
+<li><strong>File → Open...</strong></li>
+<li><code>Ctrl+O</code></li>
+<li><strong>File → Open Recent</strong></li>
 
-<p><li><strong>Recent Shows</strong> – Access from File menu</li></p>
+</ul>
+The open dialog filters for WATCHOUT show files (for example <code>*.watch</code>).
 
-<p><li><strong>Double-click</strong> – Open .watch files directly from Windows Explorer</li></p>
+<h3>Open from Director</h3>
 
-<p></ul> <h3>Connecting to a Director</h3></p>
+<p>Use <strong>File → Open Show from Director</strong> (or the Welcome screen connect action) when the show is already running on a network Director node.</p>
 
-<p>To join an existing show session on the network, use <strong>File → Connect to Director</strong> and select the active show.</p></div><div class="section-nav">
+<p>This is useful for:</p>
+
+<ul>
+<li>Taking over programming on an existing production system</li>
+<li>Verifying a show state before live playback</li>
+<li>Fast handoff between operators</li>
+
+</ul>
+<h3>Unsaved Changes Protection</h3>
+
+<p>If your current show has unsaved changes, WATCHOUT displays a prompt before opening another show. You can:</p>
+
+<ul>
+<li>Save current changes</li>
+<li>Continue without saving</li>
+<li>Cancel and stay on the current show</li>
+
+</ul>
+<h3>Director Override Warnings</h3>
+
+<p>If the selected Director is already running a different show, WATCHOUT warns you before replacing it. Treat this as a high-risk action in live environments.</p>
+
+<div class='warning-box'><p><strong>Live systems:</strong> Confirm with your team before overriding a Director during rehearsal or show time.
+</p></div>
+
+<h3>Best Practices</h3>
+
+<ul>
+<li>Prefer <strong>Open Recent</strong> for fast recovery when restarting Producer.</li>
+<li>Verify <strong>Director</strong> and <strong>Asset Manager</strong> connection status after loading.</li>
+<li>Check timeline duration, display routing, and missing assets before going online.</li>
+
+</ul></div><div class="section-nav">
                 <a href="creating-a-new-show.html" class="nav-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"

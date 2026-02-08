@@ -144,6 +144,10 @@
                             Customizing Your Workspace
                         </a>
                         
+                        <a class="toc-subsection " href="../the-interface/the-nodes-window.html">
+                            The Nodes Window
+                        </a>
+                        
                 </div>
             
         </div>
@@ -647,20 +651,46 @@
                 <div class="section-content" style="display: block;">
                     <div class="section-content-body"><h2>Display Grid Setup</h2>
 
-<p>Quickly create multi-display arrangements using the grid tool.</p>
+<p>Grid tools speed up setup for LED walls, tiled monitors, and repeated projection arrays.</p>
 
-<h3>Creating a Grid</h3>
+<h3>Create Display Grid</h3>
+
+<p>Use <strong>Create Display Grid</strong> to generate multiple displays in one operation.</p>
+
+<p>Typical parameters:</p>
 
 <ul>
-<li>Go to <strong>Stage → Create Display Grid</strong></li>
+<li><strong>Columns / Rows</strong></li>
+<li><strong>Display Resolution</strong></li>
+<li><strong>Horizontal / Vertical spacing</strong></li>
+<li><strong>Start position</strong> (left/bottom anchor)</li>
+<li><strong>Create as virtual</strong> (optional)</li>
 
-<p><li>Specify rows and columns</li></p>
+</ul>
+<h3>Arrange Existing Displays as Grid</h3>
 
-<p><li>Set bezel compensation if needed</li></p>
+<p>Use <strong>Arrange as Grid</strong> when displays already exist but need structured alignment.</p>
 
-<p><li>Click OK to generate displays</li></p>
+<p>This is useful after importing or manual creation where displays are slightly misaligned.</p>
 
-<p></ul></p></div><div class="section-nav">
+<h3>Recommended Workflow</h3>
+
+<ol>
+<li>Create or arrange the grid.</li>
+<li>Frame all displays and verify orientation.</li>
+<li>Rename displays logically by row/column.</li>
+<li>Apply output/channel assignments.</li>
+<li>Add test content spanning the full grid.</li>
+
+</ol>
+<h3>Grid Strategy Tips</h3>
+
+<ul>
+<li>For LED processors, match processor canvas dimensions exactly.</li>
+<li>Keep spacing at zero unless you intentionally model physical gaps.</li>
+<li>Use separate stage tiers for alternate grid states (rehearsal vs show variants).</li>
+
+</ul></div><div class="section-nav">
                 <a href="3d-mapping-projectors.html" class="nav-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"

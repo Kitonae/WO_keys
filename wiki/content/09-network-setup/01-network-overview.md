@@ -4,16 +4,29 @@ title: "Network Overview"
 
 ## Network Overview
 
-### Network Architecture
+WATCHOUT 7 is a distributed system where Producer coordinates Director, Runner, and Asset Manager services across the network.
 
-WATCHOUT uses a star topology with the Producer computer acting as the director, controlling multiple display servers.
+### Core Service Groups
 
-### Requirements
+From the process-manager architecture:
 
-- Gigabit Ethernet minimum
+- **Director group**: Director, Operative, Loki
+- **Runner group**: Runner, Visual Renderer, Audio Renderer
+- **Asset Manager group**: Asset services for media distribution
 
-- All devices on the same subnet
+### Discovery Model
 
-- Low-latency switches recommended
+Nodes discover each other automatically over multicast.
 
-- Dedicated VLAN for WATCHOUT traffic (recommended)
+Key details:
+
+- Multicast group: `239.2.2.2`
+- Discovery port: `3012/UDP`
+- Nodes announce on startup and on service/show changes
+
+### Network Design Recommendations
+
+- Keep show-critical nodes on a stable wired network.
+- Use predictable host aliases.
+- Avoid duplicate host names unless implementing intentional fallback patterns.
+- Keep network latency and jitter low for synchronized playback.

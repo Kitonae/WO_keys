@@ -144,6 +144,10 @@
                             Customizing Your Workspace
                         </a>
                         
+                        <a class="toc-subsection " href="../the-interface/the-nodes-window.html">
+                            The Nodes Window
+                        </a>
+                        
                 </div>
             
         </div>
@@ -647,27 +651,40 @@
                 <div class="section-content" style="display: block;">
                     <div class="section-content-body"><h2>Performance Tips</h2>
 
-<h3>Optimize Your System</h3>
+<p>Performance issues are usually a combination of media complexity, output load, and node configuration.</p>
+
+<h3>Media and Rendering</h3>
 
 <ul>
-<li>Use SSD storage for media files</li>
+<li>Prefer playback-friendly codecs and resolutions appropriate for target outputs.</li>
+<li>Limit unnecessary overlapping high-resolution cues.</li>
+<li>Use blur/color-heavy effects carefully in dense sections.</li>
 
-<p><li>Close unnecessary background applications</li></p>
-
-<p><li>Disable Windows animations and effects</li></p>
-
-<p><li>Set power plan to High Performance</li></p>
-
-<p></ul> <h3>Media Optimization</h3></p>
+</ul>
+<h3>Node Health</h3>
 
 <ul>
-<li>Use HAP codec for best video performance</li>
+<li>Keep playback nodes dedicated to WATCHOUT services.</li>
+<li>Watch CPU/GPU/memory indicators in activity views.</li>
+<li>Verify disk throughput for high-bandwidth media.</li>
 
-<p><li>Match media resolution to display resolution</li></p>
+</ul>
+<h3>Timeline Practices</h3>
 
-<p><li>Avoid excessive overlapping content</li></p>
+<ul>
+<li>Group stable cue clusters to reduce editing overhead.</li>
+<li>Use stage tiers and layer organization to simplify active scenes.</li>
+<li>Avoid last-minute structural changes during live operation.</li>
 
-<p></ul></p></div><div class="section-nav">
+</ul>
+<h3>Network and Sync</h3>
+
+<ul>
+<li>Keep show traffic on reliable wired networking.</li>
+<li>Verify NTP/time sync behavior on Director/Runner systems.</li>
+<li>Resolve stale/offline node status before technical run-through.</li>
+
+</ul></div><div class="section-nav">
                 <a href="common-issues.html" class="nav-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"

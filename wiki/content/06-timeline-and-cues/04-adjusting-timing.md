@@ -4,18 +4,35 @@ title: "Adjusting Timing"
 
 ## Adjusting Timing
 
-### Moving Cues
+Precise timing is central to show quality. WATCHOUT provides direct manipulation and command-based timing edits.
 
-Drag cues left/right to change their start time. Hold Shift to constrain to horizontal movement.
+### Common Timing Edits
 
-### Trimming
+- Drag cue body to move start time
+- Drag cue edges to trim duration
+- Use trim commands for exact operations
 
-- **Trim Start** – Drag the left edge of a cue
+### Trim and Reset Actions
 
-- **Trim End** – Drag the right edge
+Available timeline actions include:
 
-- **Slip Edit** – Hold Alt while dragging edges for video content
+- **Trim Start**
+- **Trim End**
+- **Reset Duration**
+- **Reset In-Time**
+
+These are useful when cues need to be quickly normalized after rehearsal changes.
 
 ### Snapping
 
-Toggle snapping (Ctrl+N) to align cues to other cues or the play head.
+Snapping helps align edits to meaningful points:
+
+- Cue start/end points
+- Current play cursor
+- Nearby timeline structures
+
+Toggle snapping with `Ctrl+N`.
+
+### Navigation-Assisted Timing
+
+Use keyboard navigation to jump between cues on active layer, then adjust timing without losing selection context.

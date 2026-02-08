@@ -144,6 +144,10 @@
                             Customizing Your Workspace
                         </a>
                         
+                        <a class="toc-subsection " href="../the-interface/the-nodes-window.html">
+                            The Nodes Window
+                        </a>
+                        
                 </div>
             
         </div>
@@ -647,16 +651,36 @@
                 <div class="section-content" style="display: block;">
                     <div class="section-content-body"><h2>Cropping</h2>
 
-<p>Animate the visible area of content.</p>
+<p>Crop tweens animate the visible bounds of a cue and are useful for reveals, wipes, and framing.</p>
 
-<h3>Crop Controls</h3>
+<h3>Crop Types</h3>
 
 <ul>
-<li>Crop All – <code>Alt+C</code></li>
+<li>Crop Top</li>
+<li>Crop Bottom</li>
+<li>Crop Left</li>
+<li>Crop Right</li>
+<li>Crop All (all sides together)</li>
 
-<p><li>Crop individual sides for reveal effects</li></p>
+</ul>
+Shortcut for crop-all toggle: <code>Alt+C</code>.
 
-<p></ul></p></div><div class="section-nav">
+<h3>Typical Use Cases</h3>
+
+<ul>
+<li>Directional text/image reveals</li>
+<li>Safe-area adjustments without re-rendering assets</li>
+<li>Dynamic framing across multiple aspect ratios</li>
+
+</ul>
+<h3>Workflow Tips</h3>
+
+<ul>
+<li>Start with one side to define motion intent.</li>
+<li>Combine with opacity for softer reveals.</li>
+<li>Validate crop behavior on real output resolution.</li>
+
+</ul></div><div class="section-nav">
                 <a href="opacity-and-fades.html" class="nav-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"

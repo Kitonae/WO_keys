@@ -144,6 +144,10 @@
                             Customizing Your Workspace
                         </a>
                         
+                        <a class="toc-subsection " href="../the-interface/the-nodes-window.html">
+                            The Nodes Window
+                        </a>
+                        
                 </div>
             
         </div>
@@ -647,18 +651,43 @@
                 <div class="section-content" style="display: block;">
                     <div class="section-content-body"><h2>Saving Your Work</h2>
 
+<p>Saving in WATCHOUT covers both project state and operational safety. Use frequent saves, especially before network actions or major timeline edits.</p>
+
 <h3>Save Commands</h3>
 
+<table>
+<tr><th>Command</th><th>Shortcut</th><th>Use Case</th></tr>
+<tr><td><strong>Save</strong></td><td><code>Ctrl+S</code></td><td>Update the current show file</td></tr>
+<tr><td><strong>Save As...</strong></td><td><code>Ctrl+Shift+S</code></td><td>Create a new show file/path</td></tr>
+<tr><td><strong>Save Copy...</strong></td><td><em>(menu)</em></td><td>Snapshot the show without switching the active file</td></tr>
+</table>
+
+<h3>Save vs Save As vs Save Copy</h3>
+
 <ul>
-<li><strong>Save</strong> (<code>Ctrl+S</code>) – Save to current location</li>
+<li><strong>Save</strong>: Writes changes to the currently open file.</li>
+<li><strong>Save As</strong>: Writes to a new file and makes it the active show path.</li>
+<li><strong>Save Copy</strong>: Writes a duplicate for backup/versioning while keeping your current active show unchanged.</li>
 
-<p><li><strong>Save As</strong> – Save with a new name or location</li></p>
+</ul>
+<h3>Recommended Workflow</h3>
 
-<p><li><strong>Save Copy</strong> – Create a backup without changing current file</li></p>
+<ol>
+<li>Save before connecting to a Director.</li>
+<li>Save after major edits (display routing, cue timing, grouping).</li>
+<li>Save a copy before risky operations (bulk cue edits, large asset swaps).</li>
 
-<p></ul> <h3>Auto-Recovery</h3></p>
+</ol>
+<h3>Team and Versioning Tips</h3>
 
-<p>WATCHOUT automatically saves recovery data. If the application closes unexpectedly, you'll be prompted to recover your work on next launch.</p></div><div class="section-nav">
+<ul>
+<li>Use dated file names for milestones, e.g. <code>Show_v2026-02-08.watch</code>.</li>
+<li>Keep operator notes in marker/comment cues.</li>
+<li>Store show file and assets under the same project root to simplify handoff.</li>
+
+</ul>
+<div class='info-box'><p>Recent shows are tracked by Producer, so consistent naming and paths make recovery faster after restarts.
+</p></div></div><div class="section-nav">
                 <a href="opening-existing-shows.html" class="nav-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"

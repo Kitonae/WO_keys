@@ -880,6 +880,26 @@ body::before {
     box-shadow: 0 8px 16px var(--shadow-color);
 }
 
+.video-placeholder {
+    width: 200px;
+    height: 112px;
+    /* Approx 16:9 ratio of 200px width */
+    background: var(--bg-tertiary);
+    border: 1px dashed var(--text-muted);
+    border-radius: var(--border-radius);
+    margin: 0 0 16px 24px;
+    float: right;
+    clear: right;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    box-shadow: 0 4px 6px var(--shadow-color);
+    pointer-events: none;
+    user-select: none;
+}
+
 /* Video Modal Overlay */
 .video-modal {
     display: none;
@@ -953,6 +973,20 @@ body::before {
 
 .warning-box strong {
     color: #fbbf24;
+}
+
+/* Horizontal Divider / Splitter */
+.section-body hr {
+    border: none;
+    height: 1px;
+    background: linear-gradient(90deg,
+            transparent 0%,
+            var(--border-subtle) 15%,
+            var(--accent-primary) 50%,
+            var(--border-subtle) 85%,
+            transparent 100%);
+    margin: 32px 0;
+    opacity: 0.6;
 }
 
 /* h4 headings in section body */

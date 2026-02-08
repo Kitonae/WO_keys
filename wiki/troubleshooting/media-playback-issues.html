@@ -144,6 +144,10 @@
                             Customizing Your Workspace
                         </a>
                         
+                        <a class="toc-subsection " href="../the-interface/the-nodes-window.html">
+                            The Nodes Window
+                        </a>
+                        
                 </div>
             
         </div>
@@ -647,27 +651,42 @@
                 <div class="section-content" style="display: block;">
                     <div class="section-content-body"><h2>Media Playback Issues</h2>
 
-<h3>Video Doesn't Play</h3>
+<p>Playback errors usually come from media format compatibility, missing data, or timing/resource pressure.</p>
+
+<h3>Media Imports but Will Not Play Correctly</h3>
+
+<p>Check:</p>
 
 <ul>
-<li>Wait for optimization to complete (green icon)</li>
+<li>Asset exists and path/version are valid</li>
+<li>Codec/format is supported for your workflow</li>
+<li>Asset transfer to nodes completed</li>
 
-<p><li>Try re-optimizing the asset</li></p>
-
-<p><li>Check source file isn't corrupted</li></p>
-
-<p><li>Try converting to HAP format</li></p>
-
-<p></ul> <h3>Audio Issues</h3></p>
+</ul>
+<h3>Stutter or Frame Drops</h3>
 
 <ul>
-<li>Verify audio device is configured correctly</li>
+<li>Reduce simultaneous heavy cues.</li>
+<li>Verify storage bandwidth on playback nodes.</li>
+<li>Test with simpler codec/resolution versions of the same content.</li>
 
-<p><li>Check volume levels aren't muted</li></p>
+</ul>
+<h3>Color or Alpha Looks Wrong</h3>
 
-<p><li>Ensure audio file format is supported</li></p>
+<ul>
+<li>Verify color space/transfer expectations.</li>
+<li>Confirm key/fill and alpha-capable codec choices.</li>
+<li>Compare against a trusted reference clip.</li>
 
-<p></ul></p></div><div class="section-nav">
+</ul>
+<h3>NDI/Capture Irregularities</h3>
+
+<ul>
+<li>Verify source stream stability and format.</li>
+<li>Check network bandwidth headroom.</li>
+<li>Confirm capture source dimensions/range settings match source.</li>
+
+</ul></div><div class="section-nav">
                 <a href="network-issues.html" class="nav-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"

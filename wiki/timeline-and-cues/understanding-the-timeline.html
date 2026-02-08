@@ -144,6 +144,10 @@
                             Customizing Your Workspace
                         </a>
                         
+                        <a class="toc-subsection " href="../the-interface/the-nodes-window.html">
+                            The Nodes Window
+                        </a>
+                        
                 </div>
             
         </div>
@@ -647,27 +651,48 @@
                 <div class="section-content" style="display: block;">
                     <div class="section-content-body"><h2>Understanding the Timeline</h2>
 
-<h3>Timeline Components</h3>
+<p>The Timeline is where show logic is sequenced. Cues on layers define what plays, when it plays, and how it behaves.</p>
+
+<h3>Core Elements</h3>
 
 <ul>
-<li><strong>Time Ruler</strong> – Shows current position and allows navigation</li>
+<li><strong>Time ruler</strong>: visual time scale for navigation and placement</li>
+<li><strong>Play cursor</strong>: current playback/jump position</li>
+<li><strong>Layers</strong>: stacking order for visual priority</li>
+<li><strong>Cues</strong>: media or control objects with start and duration</li>
+<li><strong>Zoom and scroll</strong>: precision editing across long timelines</li>
 
-<p><li><strong>Layers</strong> – Horizontal tracks that stack content (higher = on top)</li></p>
+</ul>
+<h3>Cue Sequences</h3>
 
-<p><li><strong>Cues</strong> – Individual media items placed on layers</li></p>
-
-<p><li><strong>Play Head</strong> – Red line showing current playback time</li></p>
-
-<p></ul> <h3>Navigation</h3></p>
+<p>A timeline can represent:</p>
 
 <ul>
-<li><strong>Click</strong> in the time ruler to jump to a position</li>
+<li>A normal timeline</li>
+<li>A composition timeline</li>
 
-<p><li><strong>Scroll</strong> horizontally to move through time</li></p>
+</ul>
+Both use the same editing concepts, but compositions are often used as grouped reusable structures.
 
-<p><li><strong>Zoom</strong> with Numpad +/- or timeline zoom controls</li></p>
+<h3>Navigation Patterns</h3>
 
-<p></ul></p></div><div class="section-nav">
+<ul>
+<li>Click the ruler to move time.</li>
+<li>Use arrow-key navigation to step between cues on active layer.</li>
+<li>Use zoom controls (<code>Numpad +</code> / <code>Numpad -</code>) for fine timing edits.</li>
+
+</ul>
+<h3>Selection Context</h3>
+
+<p>The Timeline has context-sensitive behavior:</p>
+
+<ul>
+<li>Timeline context (global operations)</li>
+<li>Cue context (cue edits)</li>
+<li>Layer context (layer properties)</li>
+
+</ul>
+Shortcuts and menu actions can change behavior depending on which context is active.</div><div class="section-nav">
                 <a href="index.html" class="nav-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"

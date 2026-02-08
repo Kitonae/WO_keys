@@ -144,6 +144,10 @@
                             Customizing Your Workspace
                         </a>
                         
+                        <a class="toc-subsection " href="../the-interface/the-nodes-window.html">
+                            The Nodes Window
+                        </a>
+                        
                 </div>
             
         </div>
@@ -647,11 +651,33 @@
                 <div class="section-content" style="display: block;">
                     <div class="section-content-body"><h2>Blur Effects</h2>
 
-<p>Add blur for depth of field or transition effects.</p>
+<p>WATCHOUT provides a <strong>Gaussian Blur</strong> tween for softening and defocusing content over time.</p>
 
-<h3>Adding Blur</h3>
+<h3>Add Blur</h3>
 
-<p>Use <code>Alt+B</code> or Tween → Blur to add blur animation.</p></div><div class="section-nav">
+<ul>
+<li>Use Effect menu blur action</li>
+<li>Shortcut: <code>Alt+B</code></li>
+
+</ul>
+<h3>Creative Uses</h3>
+
+<ul>
+<li>Focus pulls between foreground/background layers</li>
+<li>Transition smoothing</li>
+<li>Stylized intro/outro looks</li>
+
+</ul>
+<h3>Performance Guidance</h3>
+
+<p>Blur is GPU-intensive in large compositions. If performance drops:</p>
+
+<ul>
+<li>Reduce overlapping blurred cues</li>
+<li>Shorten blur-heavy sections</li>
+<li>Pre-render where possible for mission-critical playback</li>
+
+</ul></div><div class="section-nav">
                 <a href="color-adjustments.html" class="nav-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"

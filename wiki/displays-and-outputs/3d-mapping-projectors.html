@@ -144,6 +144,10 @@
                             Customizing Your Workspace
                         </a>
                         
+                        <a class="toc-subsection " href="../the-interface/the-nodes-window.html">
+                            The Nodes Window
+                        </a>
+                        
                 </div>
             
         </div>
@@ -647,24 +651,51 @@
                 <div class="section-content" style="display: block;">
                     <div class="section-content-body"><h2>3D Mapping Projectors</h2>
 
-<p>For projection onto 3D surfaces, use 3D mapping projectors.</p>
+<p>Projector displays extend WATCHOUT from flat 2D layouts to spatially mapped output. Projector mode uses camera/frustum parameters and calibration tools to align content to real surfaces.</p>
 
-<h3>Adding a 3D Projector</h3>
+<h3>Adding a Projector</h3>
 
-<p>Go to <strong>Stage → Add 3D Projector</strong>.</p>
-
-<h3>Configuration</h3>
+<p>Use:</p>
 
 <ul>
-<li><strong>Position</strong> – Physical location of the projector in 3D space</li>
+<li><strong>Stage → Add 3D Projector</strong></li>
+<li>Network context actions for selected node</li>
 
-<p><li><strong>Rotation</strong> – Aim direction (pan, tilt, roll)</li></p>
+</ul>
+You can add at default placement or at a chosen stage/world position.
 
-<p><li><strong>Lens</strong> – Throw ratio and lens shift settings</li></p>
+<h3>Core Projector Parameters</h3>
 
-<p><li><strong>Resolution</strong> – Native projector resolution</li></p>
+<p>Projector displays expose parameters such as:</p>
 
-<p></ul></p></div><div class="section-nav">
+<ul>
+<li><strong>Eye</strong> (projector position)</li>
+<li><strong>Target</strong> (look-at point)</li>
+<li><strong>Roll</strong></li>
+<li><strong>Lens shift</strong> (horizontal/vertical)</li>
+<li><strong>Width/Distance ratio</strong></li>
+
+</ul>
+These define the projection frustum used for mapping.
+
+<h3>Projector Camera Mode</h3>
+
+<p>Switch Stage camera mode to <strong>Projector</strong> for alignment work. WATCHOUT supports calibration workflows with virtual/reality points and continuous/manual calibration behavior.</p>
+
+<h3>Calibration Requirements</h3>
+
+<p>For reality-point adjustment workflows, provide enough calibration points first.</p>
+
+<div class='warning-box'><p>Projector calibration in 2D reality mode requires at least six virtual points before editing reality points.
+</p></div>
+
+<h3>Operational Notes</h3>
+
+<ul>
+<li>Projector mode is not available while viewing a composition-only stage context.</li>
+<li>Keep calibration and geometry edits versioned like any other critical show state.</li>
+
+</ul></div><div class="section-nav">
                 <a href="virtual-displays.html" class="nav-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"

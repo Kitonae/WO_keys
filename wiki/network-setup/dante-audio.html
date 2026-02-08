@@ -144,6 +144,10 @@
                             Customizing Your Workspace
                         </a>
                         
+                        <a class="toc-subsection " href="../the-interface/the-nodes-window.html">
+                            The Nodes Window
+                        </a>
+                        
                 </div>
             
         </div>
@@ -647,11 +651,38 @@
                 <div class="section-content" style="display: block;">
                     <div class="section-content-body"><h2>Dante Audio</h2>
 
-<p>Dante provides professional-quality networked audio.</p>
+<p>WATCHOUT supports Dante as an audio device type for networked professional audio routing.</p>
 
-<h3>Configuration</h3>
+<h3>Dante Device Configuration</h3>
 
-<p>Configure Dante routing using Audinate's Dante Controller. WATCHOUT appears as a Dante-enabled device on the network.</p></div><div class="section-nav">
+<p>In audio device properties, choose:</p>
+
+<ul>
+<li><strong>Device Type</strong>: <code>Dante</code></li>
+<li><strong>Adapter</strong>: selected Dante interface</li>
+<li><strong>Channel count</strong>: based on design requirements</li>
+<li><strong>Sample format / latency</strong> as needed</li>
+
+</ul>
+<h3>Infrastructure Considerations</h3>
+
+<p>Dante workflows rely on stable timing and discovery services.</p>
+
+<p>In WATCHOUT deployments, related components include:</p>
+
+<ul>
+<li>PTP service (<code>ptp.exe</code>)</li>
+<li>mDNS responder (<code>mDNSResponder.exe</code>)</li>
+
+</ul>
+<h3>Recommended Practice</h3>
+
+<ul>
+<li>Keep Dante on deterministic wired networking.</li>
+<li>Validate adapter/channel mapping during preflight.</li>
+<li>Perform full audio-path checks after any node or switch change.</li>
+
+</ul></div><div class="section-nav">
                 <a href="ndi-video-sources.html" class="nav-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"

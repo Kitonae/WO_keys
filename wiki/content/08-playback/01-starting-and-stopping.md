@@ -4,16 +4,31 @@ title: "Starting and Stopping"
 
 ## Starting and Stopping
 
-### Playback Controls
+Playback is controlled per timeline (or composition timeline) using run, pause, and stop states.
 
-- **Spacebar** – Toggle play/pause
+### Primary Controls
 
-- **Numpad 0** – Start playback
+| Action | Shortcut |
+| --- | --- |
+| Toggle play/pause | `Spacebar` |
+| Run timeline | `Numpad 0` (or Numpad Insert) |
+| Pause timeline | `Escape` |
+| Jump to current/last start | `Numpad *` |
 
-- **Escape** – Pause
+### UI Controls
 
-- **Numpad *** – Jump to last start position
+Timeline windows provide explicit **Play / Pause / Stop** buttons. The active state is visually highlighted.
 
-### Timeline Navigation
+### Operational Behavior
 
-Click anywhere in the time ruler to jump to that position. Use keyboard shortcuts for precise navigation.
+- **Run** starts playback from current timeline time (or defined start behavior).
+- **Pause** freezes at current position.
+- **Stop** ends playback and resets active state.
+
+### Good Practice
+
+Before running live:
+
+1. Move play cursor to known start point.
+2. Confirm target timeline/composition is selected.
+3. Check that connected nodes/services are healthy.

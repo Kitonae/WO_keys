@@ -4,20 +4,28 @@ title: "Network Issues"
 
 ## Network Issues
 
-### Display Servers Not Found
+Most network failures fall into discovery, firewall, or host-alias consistency problems.
 
-- Verify both computers are on the same subnet
+### Nodes Not Appearing
 
-- Check firewall settings
+- Verify nodes are on reachable network interfaces.
+- Check multicast handling (`239.2.2.2:3012`).
+- Confirm firewall allows WATCHOUT services and required UDP ports.
 
-- Disable WiFi on WATCHOUT computers
+### Node Appears but Goes Stale/Offline
 
-- Try pinging between computers
+- Check switch stability and cable quality.
+- Verify host is not sleeping/power-throttled.
+- Confirm process-manager services are still running.
 
-### Slow Asset Transfer
+### Director/Runner Mismatch Warnings
 
-- Use Gigabit or faster network
+- Ensure all nodes are attached to the intended Director.
+- Clear stale show state on nodes if needed.
+- Re-run a controlled startup sequence before rehearsal.
 
-- Check for network congestion
+### NTP/Sync Instability
 
-- Consider pre-staging assets on display servers
+- Confirm Director and runners use consistent time strategy.
+- Check NTP reachability and drift.
+- Resolve time sync warnings before running synchronized playback.
