@@ -15,6 +15,7 @@ These shortcuts are central to timeline operation and cue management.
 | `Numpad *` | Jump to current or last start |
 | `Numpad +` | Zoom in timeline |
 | `Numpad -` | Zoom out timeline |
+| `Ctrl+T` | Toggle "Click Jumps to Time" |
 | `Ctrl+I` | Insert layer |
 | `Ctrl+Delete` | Delete active layer |
 | `Ctrl+P` | Add play control cue |

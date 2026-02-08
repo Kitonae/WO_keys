@@ -254,6 +254,12 @@ const tocData = [
         "description": "Configure the Asset Manager behavior through the Settings dialog."
     },
     {
+        "level": 2,
+        "title": "Import, Export, and Mapping",
+        "page": 9,
+        "description": "Beyond normal drag-and-drop ingest, the Assets window includes transfer workflows for moving asset sets between syste..."
+    },
+    {
         "level": 1,
         "title": "6. Timeline and Cues",
         "page": 1,
@@ -306,6 +312,24 @@ const tocData = [
         "title": "Grouping Cues",
         "page": 8,
         "description": "Grouping lets you treat multiple cues as a single composition unit."
+    },
+    {
+        "level": 2,
+        "title": "Variables and Variable Cues",
+        "page": 9,
+        "description": "WATCHOUT variables let you drive timeline behavior and runtime values with explicit numeric controls."
+    },
+    {
+        "level": 2,
+        "title": "Timeline Triggers and Expressions",
+        "page": 10,
+        "description": "Timelines can react automatically to expression-based trigger rules for play, pause, and stop."
+    },
+    {
+        "level": 2,
+        "title": "ArtNet Fixture Cues",
+        "page": 11,
+        "description": "WATCHOUT includes an ArtNet fixture workflow spanning Assets and Cue Properties."
     },
     {
         "level": 1,
@@ -444,6 +468,12 @@ const tocData = [
         "title": "Dante Audio",
         "page": 6,
         "description": "WATCHOUT supports Dante as an audio device type for networked professional audio routing."
+    },
+    {
+        "level": 2,
+        "title": "Node Management and Maintenance",
+        "page": 7,
+        "description": "Node maintenance actions are available in host/device properties under Network Actions."
     },
     {
         "level": 1,

@@ -16,13 +16,39 @@ Typical parameters:
 - **Display Resolution**
 - **Horizontal / Vertical spacing**
 - **Start position** (left/bottom anchor)
-- **Create as virtual** (optional)
 
 ### Arrange Existing Displays as Grid
 
 Use **Arrange as Grid** when displays already exist but need structured alignment.
 
 This is useful after importing or manual creation where displays are slightly misaligned.
+
+The arrange tools support different ordering strategies:
+
+- **Closest first**
+- **Row order**
+- **Column order**
+
+### Arrange Selected Cues as Grid
+
+The Stage also provides **Arrange as Grid** for selected cues. This is useful when you want rapid layout structure without changing display geometry.
+
+Typical use:
+
+1. Multi-select cues in Stage.
+2. Open **Arrange as Grid**.
+3. Set rows/columns, spacing, and strategy.
+4. Apply and fine-tune manually if needed.
+
+### Pack Cues Inside a Display
+
+Use **Pack Inside Display** to fit selected cues inside a target display rectangle.
+
+This is useful when:
+
+- You need quick normalization after freehand cue placement.
+- You want selected cues constrained to a specific output region.
+- You are preparing cue clusters for handoff to another operator.
 
 ### Recommended Workflow
 
