@@ -14,8 +14,56 @@ document.addEventListener('DOMContentLoaded', () => {
     setupSidebarToggle();
     setupSidebarAccordion();
     setupVideoModals();
+
     renderTocPreview();
+    setupDiagramTheme();
 });
+
+// Update diagram based on theme
+function setupDiagramTheme() {
+    const updateDiagram = () => {
+        const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+        const diagram = document.querySelector('img[src$="system_architecture_diagram.svg"], img[src$="system_architecture_diagram_dark.svg"]');
+
+        if (diagram) {
+            const isDark = ['dark', 'midnight', 'rust'].includes(currentTheme);
+            const src = diagram.getAttribute('src');
+            // Determine base path (e.g., "../media/")
+            const basePath = src.substring(0, src.lastIndexOf('/') + 1);
+
+            if (isDark) {
+                if (!src.endsWith('_dark.svg')) {
+                    diagram.setAttribute('src', basePath + 'system_architecture_diagram_dark.svg');
+                }
+            } else {
+                if (src.endsWith('_dark.svg')) {
+                    diagram.setAttribute('src', basePath + 'system_architecture_diagram.svg');
+                }
+            }
+        }
+    };
+
+    // Run initially
+    updateDiagram();
+
+    // Hook into theme toggle
+    // Since setupThemeToggle attaches an event listener that just changes the attribute,
+    // we can observe the attribute change or just piggyback on the toggle button if accessible.
+    // Better: use MutationObserver on html element to detect theme changes anywhere.
+
+    const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+            if (mutation.type === 'attributes' && mutation.attributeName === 'data-theme') {
+                updateDiagram();
+            }
+        });
+    });
+
+    observer.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ['data-theme']
+    });
+}
 
 // Video Modal Functionality
 function setupVideoModals() {
