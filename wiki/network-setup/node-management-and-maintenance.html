@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="WATCHOUT User Guide - Rotation Effects">
-    <title>Rotation Effects - WATCHOUT 7 User Guide</title>
+    <meta name="description" content="WATCHOUT User Guide - Node Management and Maintenance">
+    <title>Node Management and Maintenance - WATCHOUT 7 User Guide</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -344,8 +344,8 @@
             
         </div>
         
-        <div class="toc-chapter expanded " data-index="6">
-            <a href="../effects-and-tweens/index.html" class="toc-chapter-header  expanded" style="text-decoration: none; color: inherit; display: flex;">
+        <div class="toc-chapter  " data-index="6">
+            <a href="../effects-and-tweens/index.html" class="toc-chapter-header  " style="text-decoration: none; color: inherit; display: flex;">
                 <span class="toc-chapter-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="21" x2="4" y2="14"></line><line x1="4" y1="10" x2="4" y2="3"></line><line x1="12" y1="21" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="3"></line><line x1="20" y1="21" x2="20" y2="16"></line><line x1="20" y1="12" x2="20" y2="3"></line><line x1="1" y1="14" x2="7" y2="14"></line><line x1="9" y1="8" x2="15" y2="8"></line><line x1="17" y1="16" x2="23" y2="16"></line></svg></span>
                 <span class="toc-chapter-title">7. Effects and Tweens</span>
                 
@@ -355,7 +355,7 @@
                 
             </a>
             
-                <div class="toc-subsections expanded">
+                <div class="toc-subsections ">
                     
                         <a class="toc-subsection " href="../effects-and-tweens/understanding-tweens.html">
                             Understanding Tweens
@@ -369,7 +369,7 @@
                             Scale and Size
                         </a>
                         
-                        <a class="toc-subsection active" href="../effects-and-tweens/rotation-effects.html">
+                        <a class="toc-subsection " href="../effects-and-tweens/rotation-effects.html">
                             Rotation Effects
                         </a>
                         
@@ -434,8 +434,8 @@
             
         </div>
         
-        <div class="toc-chapter  " data-index="8">
-            <a href="../network-setup/index.html" class="toc-chapter-header  " style="text-decoration: none; color: inherit; display: flex;">
+        <div class="toc-chapter expanded " data-index="8">
+            <a href="../network-setup/index.html" class="toc-chapter-header  expanded" style="text-decoration: none; color: inherit; display: flex;">
                 <span class="toc-chapter-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg></span>
                 <span class="toc-chapter-title">9. Network Setup</span>
                 
@@ -445,7 +445,7 @@
                 
             </a>
             
-                <div class="toc-subsections ">
+                <div class="toc-subsections expanded">
                     
                         <a class="toc-subsection " href="../network-setup/network-overview.html">
                             Network Overview
@@ -471,7 +471,7 @@
                             Dante Audio
                         </a>
                         
-                        <a class="toc-subsection " href="../network-setup/node-management-and-maintenance.html">
+                        <a class="toc-subsection active" href="../network-setup/node-management-and-maintenance.html">
                             Node Management and Maintenance
                         </a>
                         
@@ -660,52 +660,93 @@
                     
             <a href="../index.html" class="breadcrumb-item">Home</a>
             <span class="breadcrumb-separator">›</span>
-            <a href="index.html" class="breadcrumb-item">7. Effects and Tweens</a>
+            <a href="index.html" class="breadcrumb-item">9. Network Setup</a>
             <span class="breadcrumb-separator">›</span>
-            <span class="breadcrumb-item current">Rotation Effects</span>
+            <span class="breadcrumb-item current">Node Management and Maintenance</span>
         
                 </div>
             </header>
 
             <article class="content-body" id="content-body">
                 <div class="section-content" style="display: block;">
-                    <div class="section-content-body"><h2>Rotation Effects</h2>
+                    <div class="section-content-body"><h2>Node Management and Maintenance</h2>
 
-<p>Rotation tweens control orientation in 2D and 3D contexts.</p>
+<p>Node maintenance actions are available in host/device properties under <strong>Network Actions</strong>.</p>
 
-<h3>Rotation Axes</h3>
+<h3>Accessing Node Actions</h3>
 
-<p>WATCHOUT provides:</p>
+<ol>
+<li>Open <strong>Window → Devices</strong>.</li>
+<li>Select a host in the Network pane.</li>
+<li>Open <strong>Properties</strong>.</li>
+<li>Use the <strong>Actions</strong> section.</li>
+
+</ol>
+Some actions are restricted to single-node selection.
+
+<h3>Service and Startup Actions</h3>
+
+<p>Available workflows include:</p>
 
 <ul>
-<li><strong>Rotation Z</strong> (<code>roll</code>) for classic 2D spin</li>
-<li><strong>Rotation Y</strong> (<code>yaw</code>) for horizontal 3D turn</li>
-<li><strong>Rotation X</strong> (<code>pitch</code>) for vertical 3D tilt</li>
+<li><strong>Restart Services</strong> (resets WATCHOUT services and returns to splash-ready state)</li>
+<li><strong>Startup Action</strong> configuration</li>
+<li>Upload/remove local startup show entries</li>
 
 </ul>
-Shortcuts:
+Startup action modes:
+
+<table>
+<tr><th>Mode</th><th>Behavior</th></tr>
+<tr><td><strong>No Show</strong></td><td>Node starts without loading a local show</td></tr>
+<tr><td><strong>Last Show</strong></td><td>Node starts with the most recently active local show</td></tr>
+<tr><td><strong>Specific Show</strong></td><td>Node starts with a selected uploaded show</td></tr>
+</table>
+
+<h3>Asset Cache Maintenance</h3>
+
+<p>Use <strong>Local Asset Cache</strong> to:</p>
 
 <ul>
-<li><code>Alt+Z</code> for Rotation Z</li>
-<li><code>Alt+Y</code> for Rotation Y</li>
+<li>Inspect cached local asset copies on a node</li>
+<li>Remove assets not used by the current show (<strong>Remove Unused Local Assets</strong>)</li>
 
 </ul>
-<h3>Practical Uses</h3>
+Use cleanup carefully in multi-show environments to avoid breaking other productions sharing the same node.
+
+<h3>Sync and Software Operations</h3>
+
+<p>Node actions also include:</p>
 
 <ul>
-<li>Badge or logo spins</li>
-<li>Card-flip style transitions</li>
-<li>Perspective movement enhancements</li>
+<li><strong>Sync Settings</strong> (WATCHOUT-managed vs user-managed sync mode)</li>
+<li><strong>Update Software</strong> to match Producer version</li>
+<li><strong>Restart</strong> / <strong>Shutdown</strong></li>
+<li><strong>Switch to WATCHOUT 6</strong> (where supported)</li>
 
 </ul>
-<h3>Control Tips</h3>
+<h3>Identity and Storage Actions</h3>
+
+<p>Maintenance tools include:</p>
 
 <ul>
-<li>Keep pivot/anchor placement in mind before animating.</li>
-<li>Large 3D rotations often need complementary position/scale adjustment.</li>
+<li><strong>Rename</strong> node alias</li>
+<li><strong>Change Working Directory</strong></li>
 
-</ul></div><div class="section-nav">
-                <a href="scale-and-size.html" class="nav-btn">
+</ul>
+Changing working directory can invalidate local asset availability until assets are redistributed.
+
+<h3>Recommended Maintenance Sequence</h3>
+
+<ol>
+<li>Confirm node identity and version.</li>
+<li>Apply startup action and sync policy.</li>
+<li>Clean cache only when safe for all shows on the node.</li>
+<li>Perform updates/restarts during controlled downtime.</li>
+<li>Re-check node status and show assignment after reboot.</li>
+
+</ol></div><div class="section-nav">
+                <a href="dante-audio.html" class="nav-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                         stroke-linejoin="round">
@@ -713,7 +754,7 @@ Shortcuts:
                     </svg>
                     Previous
                 </a>
-                <a href="opacity-and-fades.html" class="nav-btn">
+                <a href="../keyboard-shortcuts/index.html" class="nav-btn">
                     Next
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"

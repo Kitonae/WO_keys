@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="WATCHOUT User Guide - Rotation Effects">
-    <title>Rotation Effects - WATCHOUT 7 User Guide</title>
+    <meta name="description" content="WATCHOUT User Guide - Import, Export, and Mapping">
+    <title>Import, Export, and Mapping - WATCHOUT 7 User Guide</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -230,8 +230,8 @@
             
         </div>
         
-        <div class="toc-chapter  " data-index="4">
-            <a href="../assets-asset-manager/index.html" class="toc-chapter-header  " style="text-decoration: none; color: inherit; display: flex;">
+        <div class="toc-chapter expanded " data-index="4">
+            <a href="../assets-asset-manager/index.html" class="toc-chapter-header  expanded" style="text-decoration: none; color: inherit; display: flex;">
                 <span class="toc-chapter-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect><line x1="7" y1="2" x2="7" y2="22"></line><line x1="17" y1="2" x2="17" y2="22"></line><line x1="2" y1="12" x2="22" y2="12"></line><line x1="2" y1="7" x2="7" y2="7"></line><line x1="2" y1="17" x2="7" y2="17"></line><line x1="17" y1="17" x2="22" y2="17"></line><line x1="17" y1="7" x2="22" y2="7"></line></svg></span>
                 <span class="toc-chapter-title">5. Assets & Asset Manager</span>
                 
@@ -241,7 +241,7 @@
                 
             </a>
             
-                <div class="toc-subsections ">
+                <div class="toc-subsections expanded">
                     
                         <a class="toc-subsection " href="../assets-asset-manager/asset-manager.html">
                             Asset Manager
@@ -275,7 +275,7 @@
                             Asset Manager Settings
                         </a>
                         
-                        <a class="toc-subsection " href="../assets-asset-manager/import-export-and-mapping.html">
+                        <a class="toc-subsection active" href="../assets-asset-manager/import-export-and-mapping.html">
                             Import, Export, and Mapping
                         </a>
                         
@@ -344,8 +344,8 @@
             
         </div>
         
-        <div class="toc-chapter expanded " data-index="6">
-            <a href="../effects-and-tweens/index.html" class="toc-chapter-header  expanded" style="text-decoration: none; color: inherit; display: flex;">
+        <div class="toc-chapter  " data-index="6">
+            <a href="../effects-and-tweens/index.html" class="toc-chapter-header  " style="text-decoration: none; color: inherit; display: flex;">
                 <span class="toc-chapter-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="21" x2="4" y2="14"></line><line x1="4" y1="10" x2="4" y2="3"></line><line x1="12" y1="21" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="3"></line><line x1="20" y1="21" x2="20" y2="16"></line><line x1="20" y1="12" x2="20" y2="3"></line><line x1="1" y1="14" x2="7" y2="14"></line><line x1="9" y1="8" x2="15" y2="8"></line><line x1="17" y1="16" x2="23" y2="16"></line></svg></span>
                 <span class="toc-chapter-title">7. Effects and Tweens</span>
                 
@@ -355,7 +355,7 @@
                 
             </a>
             
-                <div class="toc-subsections expanded">
+                <div class="toc-subsections ">
                     
                         <a class="toc-subsection " href="../effects-and-tweens/understanding-tweens.html">
                             Understanding Tweens
@@ -369,7 +369,7 @@
                             Scale and Size
                         </a>
                         
-                        <a class="toc-subsection active" href="../effects-and-tweens/rotation-effects.html">
+                        <a class="toc-subsection " href="../effects-and-tweens/rotation-effects.html">
                             Rotation Effects
                         </a>
                         
@@ -660,52 +660,81 @@
                     
             <a href="../index.html" class="breadcrumb-item">Home</a>
             <span class="breadcrumb-separator">›</span>
-            <a href="index.html" class="breadcrumb-item">7. Effects and Tweens</a>
+            <a href="index.html" class="breadcrumb-item">5. Assets & Asset Manager</a>
             <span class="breadcrumb-separator">›</span>
-            <span class="breadcrumb-item current">Rotation Effects</span>
+            <span class="breadcrumb-item current">Import, Export, and Mapping</span>
         
                 </div>
             </header>
 
             <article class="content-body" id="content-body">
                 <div class="section-content" style="display: block;">
-                    <div class="section-content-body"><h2>Rotation Effects</h2>
+                    <div class="section-content-body"><h2>Import, Export, and Mapping</h2>
 
-<p>Rotation tweens control orientation in 2D and 3D contexts.</p>
+<p>Beyond normal drag-and-drop ingest, the Assets window includes transfer workflows for moving asset sets between systems and controlling optimization behavior.</p>
 
-<h3>Rotation Axes</h3>
+<h3>Export Workflows</h3>
 
-<p>WATCHOUT provides:</p>
+<p>From the Assets context menu, use:</p>
 
 <ul>
-<li><strong>Rotation Z</strong> (<code>roll</code>) for classic 2D spin</li>
-<li><strong>Rotation Y</strong> (<code>yaw</code>) for horizontal 3D turn</li>
-<li><strong>Rotation X</strong> (<code>pitch</code>) for vertical 3D tilt</li>
+<li><strong>Export All Assets...</strong></li>
+<li><strong>Export Selected Assets...</strong></li>
 
 </ul>
-Shortcuts:
+Both open a destination dialog and validate the target path before export.
+
+<p>Use export when you need to:</p>
 
 <ul>
-<li><code>Alt+Z</code> for Rotation Z</li>
-<li><code>Alt+Y</code> for Rotation Y</li>
+<li>Hand over media to another system</li>
+<li>Archive a show media package</li>
+<li>Prepare a controlled import on another production machine</li>
 
 </ul>
-<h3>Practical Uses</h3>
+<h3>Import Workflows</h3>
+
+<p>Use <strong>Import Assets...</strong> to import an exported asset package.</p>
+
+<p>Key options:</p>
 
 <ul>
-<li>Badge or logo spins</li>
-<li>Card-flip style transitions</li>
-<li>Perspective movement enhancements</li>
+<li><strong>Import path</strong> on the current Asset Manager host</li>
+<li><strong>Merge Assets</strong> toggle</li>
 
 </ul>
-<h3>Control Tips</h3>
+<code>Merge Assets</code> can be much faster than copy-based import, but it is intended for specific cases:
 
 <ul>
-<li>Keep pivot/anchor placement in mind before animating.</li>
-<li>Large 3D rotations often need complementary position/scale adjustment.</li>
+<li>Source and target must be on the same disk/volume</li>
+<li>The export package should be treated as a one-time merge source</li>
 
-</ul></div><div class="section-nav">
-                <a href="scale-and-size.html" class="nav-btn">
+</ul>
+<h3>Optimizer Mapping</h3>
+
+<p>Use <strong>Mapping...</strong> from the Assets context menu to manage optimizer mapping.</p>
+
+<p>This workflow lets you map source format groups ("in") to optimization targets ("out"), then save the mapping for future optimization jobs.</p>
+
+<p>Supported operations in the mapping dialog:</p>
+
+<ul>
+<li>Override individual mappings</li>
+<li>Restore a row to default</li>
+<li>Reset all non-default mappings</li>
+<li>Store the updated mapping</li>
+
+</ul>
+<h3>Practical Workflow</h3>
+
+<ol>
+<li>Export before major cleanup or migration.</li>
+<li>Import on the target system and verify optimization status.</li>
+<li>Apply mapping changes only when there is a clear format/performance goal.</li>
+<li>Use <strong>Find Cues</strong> on critical assets before delete/replace operations.</li>
+
+</ol></div><div class="section-nav">
+                <a href="asset-manager-settings.html" class="nav-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                         stroke-linejoin="round">
@@ -713,7 +742,7 @@ Shortcuts:
                     </svg>
                     Previous
                 </a>
-                <a href="opacity-and-fades.html" class="nav-btn">
+                <a href="../timeline-and-cues/index.html" class="nav-btn">
                     Next
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"

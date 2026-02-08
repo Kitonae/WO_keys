@@ -131,25 +131,25 @@ const tocData = [
         "level": 2,
         "title": "Creating a New Show",
         "page": 1,
-        "description": "Creating a new show sets up the timeline, stage, and routing model for your project. In WATCHOUT 7, a show can be loc..."
+        "description": "Every WATCHOUT project begins with creating a show. A show is the container for all your displays, timelines, cues, a..."
     },
     {
         "level": 2,
         "title": "Opening Existing Shows",
         "page": 2,
-        "description": "WATCHOUT supports opening shows from disk and attaching to shows currently managed by a Director."
+        "description": "Most of your time in WATCHOUT will be spent working on shows that already exist—whether you created them yourself in ..."
     },
     {
         "level": 2,
         "title": "Saving Your Work",
         "page": 3,
-        "description": "Saving in WATCHOUT covers both project state and operational safety. Use frequent saves, especially before network ac..."
+        "description": "Regular saving is fundamental to any production workflow. WATCHOUT provides several save options to accommodate diffe..."
     },
     {
         "level": 2,
         "title": "Show Properties",
         "page": 4,
-        "description": "Show Properties define global behavior for your project. Configure them early, then revisit before technical rehearsals."
+        "description": "Every show carries a set of properties that define how it behaves globally—settings that affect all timelines, all di..."
     },
     {
         "level": 1,

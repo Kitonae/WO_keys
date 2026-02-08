@@ -275,6 +275,10 @@
                             Asset Manager Settings
                         </a>
                         
+                        <a class="toc-subsection " href="../assets-asset-manager/import-export-and-mapping.html">
+                            Import, Export, and Mapping
+                        </a>
+                        
                 </div>
             
         </div>
@@ -322,6 +326,18 @@
                         
                         <a class="toc-subsection " href="../timeline-and-cues/grouping-cues.html">
                             Grouping Cues
+                        </a>
+                        
+                        <a class="toc-subsection " href="../timeline-and-cues/variables-and-variable-cues.html">
+                            Variables and Variable Cues
+                        </a>
+                        
+                        <a class="toc-subsection " href="../timeline-and-cues/timeline-triggers-and-expressions.html">
+                            Timeline Triggers and Expressions
+                        </a>
+                        
+                        <a class="toc-subsection " href="../timeline-and-cues/artnet-fixture-cues.html">
+                            ArtNet Fixture Cues
                         </a>
                         
                 </div>
@@ -453,6 +469,10 @@
                         
                         <a class="toc-subsection " href="../network-setup/dante-audio.html">
                             Dante Audio
+                        </a>
+                        
+                        <a class="toc-subsection " href="../network-setup/node-management-and-maintenance.html">
+                            Node Management and Maintenance
                         </a>
                         
                 </div>
@@ -651,43 +671,31 @@
                 <div class="section-content" style="display: block;">
                     <div class="section-content-body"><h2>Saving Your Work</h2>
 
-<p>Saving in WATCHOUT covers both project state and operational safety. Use frequent saves, especially before network actions or major timeline edits.</p>
+<p>Regular saving is fundamental to any production workflow. WATCHOUT provides several save options to accommodate different scenarios—from quick incremental saves during programming to deliberate version snapshots before major changes.</p>
 
-<h3>Save Commands</h3>
+<h3>The Save Command</h3>
 
-<table>
-<tr><th>Command</th><th>Shortcut</th><th>Use Case</th></tr>
-<tr><td><strong>Save</strong></td><td><code>Ctrl+S</code></td><td>Update the current show file</td></tr>
-<tr><td><strong>Save As...</strong></td><td><code>Ctrl+Shift+S</code></td><td>Create a new show file/path</td></tr>
-<tr><td><strong>Save Copy...</strong></td><td><em>(menu)</em></td><td>Snapshot the show without switching the active file</td></tr>
-</table>
+<p>The primary save command, accessible via <strong>File → Save</strong> or <code>Ctrl+S</code>, writes your current changes to the show file you're working in. If you're editing a show that's never been saved, this command prompts you to choose a location and filename.</p>
 
-<h3>Save vs Save As vs Save Copy</h3>
+<p>Use this frequently throughout your programming session. Timeline edits, display configurations, property adjustments—all of these modifications live only in memory until you save. A power interruption or application crash would lose unsaved work, so developing a habit of regular saves protects your progress.</p>
 
-<ul>
-<li><strong>Save</strong>: Writes changes to the currently open file.</li>
-<li><strong>Save As</strong>: Writes to a new file and makes it the active show path.</li>
-<li><strong>Save Copy</strong>: Writes a duplicate for backup/versioning while keeping your current active show unchanged.</li>
+<h3>Save As</h3>
 
-</ul>
-<h3>Recommended Workflow</h3>
+<p><strong>File → Save As</strong> (or <code>Ctrl+Shift+S</code>) lets you write the current show to a new file with a different name or location. After saving, your working context switches to this new file—subsequent saves will update the new location rather than the original.</p>
 
-<ol>
-<li>Save before connecting to a Director.</li>
-<li>Save after major edits (display routing, cue timing, grouping).</li>
-<li>Save a copy before risky operations (bulk cue edits, large asset swaps).</li>
+<p>This command is useful when you want to branch your work. Perhaps you're about to make experimental changes and want to preserve a known-good version first. By saving as a new file, you create a checkpoint you can return to if the experiment doesn't work out.</p>
 
-</ol>
-<h3>Team and Versioning Tips</h3>
+<h3>Save Copy</h3>
 
-<ul>
-<li>Use dated file names for milestones, e.g. <code>Show_v2026-02-08.watch</code>.</li>
-<li>Keep operator notes in marker/comment cues.</li>
-<li>Store show file and assets under the same project root to simplify handoff.</li>
+<p><strong>File → Save Copy</strong> creates a duplicate of your show without changing which file you're actively working in. The copy is written to a location you specify, but your current show file remains the active target for future saves.</p>
 
-</ul>
-<div class='info-box'><p>Recent shows are tracked by Producer, so consistent naming and paths make recovery faster after restarts.
-</p></div></div><div class="section-nav">
+<p>Think of this as creating a snapshot for archival purposes. You might save a copy before a major rehearsal to preserve that day's version, then continue editing without interruption. The copy serves as a recoverable milestone while your workflow continues unbroken.</p>
+
+<h3>Understanding the Differences</h3>
+
+<p>The distinction between these three commands matters in practice. <strong>Save</strong> updates your current file. <strong>Save As</strong> creates a new file and switches your context to it. <strong>Save Copy</strong> creates a new file but leaves your context unchanged.</p>
+
+<p>Knowing which to use prevents confusion about which file contains your latest work. When collaborating with others or managing multiple versions of a production, clear understanding of your save behavior keeps everyone synchronized.</p></div><div class="section-nav">
                 <a href="opening-existing-shows.html" class="nav-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"

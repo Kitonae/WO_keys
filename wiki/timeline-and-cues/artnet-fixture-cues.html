@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="WATCHOUT User Guide - Rotation Effects">
-    <title>Rotation Effects - WATCHOUT 7 User Guide</title>
+    <meta name="description" content="WATCHOUT User Guide - ArtNet Fixture Cues">
+    <title>ArtNet Fixture Cues - WATCHOUT 7 User Guide</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -283,8 +283,8 @@
             
         </div>
         
-        <div class="toc-chapter  " data-index="5">
-            <a href="../timeline-and-cues/index.html" class="toc-chapter-header  " style="text-decoration: none; color: inherit; display: flex;">
+        <div class="toc-chapter expanded " data-index="5">
+            <a href="../timeline-and-cues/index.html" class="toc-chapter-header  expanded" style="text-decoration: none; color: inherit; display: flex;">
                 <span class="toc-chapter-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg></span>
                 <span class="toc-chapter-title">6. Timeline and Cues</span>
                 
@@ -294,7 +294,7 @@
                 
             </a>
             
-                <div class="toc-subsections ">
+                <div class="toc-subsections expanded">
                     
                         <a class="toc-subsection " href="../timeline-and-cues/understanding-the-timeline.html">
                             Understanding the Timeline
@@ -336,7 +336,7 @@
                             Timeline Triggers and Expressions
                         </a>
                         
-                        <a class="toc-subsection " href="../timeline-and-cues/artnet-fixture-cues.html">
+                        <a class="toc-subsection active" href="../timeline-and-cues/artnet-fixture-cues.html">
                             ArtNet Fixture Cues
                         </a>
                         
@@ -344,8 +344,8 @@
             
         </div>
         
-        <div class="toc-chapter expanded " data-index="6">
-            <a href="../effects-and-tweens/index.html" class="toc-chapter-header  expanded" style="text-decoration: none; color: inherit; display: flex;">
+        <div class="toc-chapter  " data-index="6">
+            <a href="../effects-and-tweens/index.html" class="toc-chapter-header  " style="text-decoration: none; color: inherit; display: flex;">
                 <span class="toc-chapter-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="21" x2="4" y2="14"></line><line x1="4" y1="10" x2="4" y2="3"></line><line x1="12" y1="21" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="3"></line><line x1="20" y1="21" x2="20" y2="16"></line><line x1="20" y1="12" x2="20" y2="3"></line><line x1="1" y1="14" x2="7" y2="14"></line><line x1="9" y1="8" x2="15" y2="8"></line><line x1="17" y1="16" x2="23" y2="16"></line></svg></span>
                 <span class="toc-chapter-title">7. Effects and Tweens</span>
                 
@@ -355,7 +355,7 @@
                 
             </a>
             
-                <div class="toc-subsections expanded">
+                <div class="toc-subsections ">
                     
                         <a class="toc-subsection " href="../effects-and-tweens/understanding-tweens.html">
                             Understanding Tweens
@@ -369,7 +369,7 @@
                             Scale and Size
                         </a>
                         
-                        <a class="toc-subsection active" href="../effects-and-tweens/rotation-effects.html">
+                        <a class="toc-subsection " href="../effects-and-tweens/rotation-effects.html">
                             Rotation Effects
                         </a>
                         
@@ -660,52 +660,65 @@
                     
             <a href="../index.html" class="breadcrumb-item">Home</a>
             <span class="breadcrumb-separator">›</span>
-            <a href="index.html" class="breadcrumb-item">7. Effects and Tweens</a>
+            <a href="index.html" class="breadcrumb-item">6. Timeline and Cues</a>
             <span class="breadcrumb-separator">›</span>
-            <span class="breadcrumb-item current">Rotation Effects</span>
+            <span class="breadcrumb-item current">ArtNet Fixture Cues</span>
         
                 </div>
             </header>
 
             <article class="content-body" id="content-body">
                 <div class="section-content" style="display: block;">
-                    <div class="section-content-body"><h2>Rotation Effects</h2>
+                    <div class="section-content-body"><h2>ArtNet Fixture Cues</h2>
 
-<p>Rotation tweens control orientation in 2D and 3D contexts.</p>
+<p>WATCHOUT includes an ArtNet fixture workflow spanning Assets and Cue Properties.</p>
 
-<h3>Rotation Axes</h3>
+<h3>Create Fixture Assets</h3>
 
-<p>WATCHOUT provides:</p>
+<p>In the <strong>Assets</strong> window context menu, use <strong>Add ArtNet Fixture...</strong> and choose a preset.</p>
+
+<p>This creates fixture-oriented assets that can be used in timeline cues.</p>
+
+<h3>Add Fixture Cues to a Timeline</h3>
+
+<p>Add the fixture asset to a timeline as a media cue, then open <strong>Cue Properties</strong>.</p>
+
+<p>When a cue is ArtNet-based, a <strong>Fixture</strong> section is available for addressing and mode selection.</p>
+
+<h3>Fixture Address and Mode</h3>
+
+<p>Fixture properties include:</p>
 
 <ul>
-<li><strong>Rotation Z</strong> (<code>roll</code>) for classic 2D spin</li>
-<li><strong>Rotation Y</strong> (<code>yaw</code>) for horizontal 3D turn</li>
-<li><strong>Rotation X</strong> (<code>pitch</code>) for vertical 3D tilt</li>
+<li>Universe addressing fields (net/sub-net/universe and absolute universe)</li>
+<li>Start channel</li>
+<li>Fixture mode selection (from available fixture modes)</li>
 
 </ul>
-Shortcuts:
+Use consistent addressing conventions across your control/network team to avoid collisions.
+
+<h3>Recording Source and Channel Mapping</h3>
+
+<p>If a fixture cue uses ArtNet recording data, cue properties include mapping tools to route recorded channels to fixture output channels.</p>
+
+<p>Typical operations:</p>
 
 <ul>
-<li><code>Alt+Z</code> for Rotation Z</li>
-<li><code>Alt+Y</code> for Rotation Y</li>
+<li>Choose fixture and recording asset versions</li>
+<li>Map recorded channels to fixture channels</li>
+<li>Clear mappings where needed</li>
+<li>Discard recording linkage when reworking the cue</li>
 
 </ul>
-<h3>Practical Uses</h3>
+<h3>Operational Tips</h3>
 
-<ul>
-<li>Badge or logo spins</li>
-<li>Card-flip style transitions</li>
-<li>Perspective movement enhancements</li>
+<ol>
+<li>Lock addressing decisions early in rehearsal.</li>
+<li>Version fixture assets deliberately; avoid last-minute mode swaps.</li>
+<li>Validate channel mapping on the real output network before show operation.</li>
 
-</ul>
-<h3>Control Tips</h3>
-
-<ul>
-<li>Keep pivot/anchor placement in mind before animating.</li>
-<li>Large 3D rotations often need complementary position/scale adjustment.</li>
-
-</ul></div><div class="section-nav">
-                <a href="scale-and-size.html" class="nav-btn">
+</ol></div><div class="section-nav">
+                <a href="timeline-triggers-and-expressions.html" class="nav-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                         stroke-linejoin="round">
@@ -713,7 +726,7 @@ Shortcuts:
                     </svg>
                     Previous
                 </a>
-                <a href="opacity-and-fades.html" class="nav-btn">
+                <a href="../effects-and-tweens/index.html" class="nav-btn">
                     Next
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"

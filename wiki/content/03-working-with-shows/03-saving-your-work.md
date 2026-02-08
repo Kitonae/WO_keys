@@ -4,34 +4,29 @@ title: "Saving Your Work"
 
 ## Saving Your Work
 
-Saving in WATCHOUT covers both project state and operational safety. Use frequent saves, especially before network actions or major timeline edits.
+Regular saving is fundamental to any production workflow. WATCHOUT provides several save options to accommodate different scenarios—from quick incremental saves during programming to deliberate version snapshots before major changes.
 
-### Save Commands
+### The Save Command
 
-| Command | Shortcut | Use Case |
-| --- | --- | --- |
-| **Save** | `Ctrl+S` | Update the current show file |
-| **Save As...** | `Ctrl+Shift+S` | Create a new show file/path |
-| **Save Copy...** | *(menu)* | Snapshot the show without switching the active file |
+The primary save command, accessible via **File → Save** or `Ctrl+S`, writes your current changes to the show file you're working in. If you're editing a show that's never been saved, this command prompts you to choose a location and filename.
 
-### Save vs Save As vs Save Copy
+Use this frequently throughout your programming session. Timeline edits, display configurations, property adjustments—all of these modifications live only in memory until you save. A power interruption or application crash would lose unsaved work, so developing a habit of regular saves protects your progress.
 
-- **Save**: Writes changes to the currently open file.
-- **Save As**: Writes to a new file and makes it the active show path.
-- **Save Copy**: Writes a duplicate for backup/versioning while keeping your current active show unchanged.
+### Save As
 
-### Recommended Workflow
+**File → Save As** (or `Ctrl+Shift+S`) lets you write the current show to a new file with a different name or location. After saving, your working context switches to this new file—subsequent saves will update the new location rather than the original.
 
-1. Save before connecting to a Director.
-2. Save after major edits (display routing, cue timing, grouping).
-3. Save a copy before risky operations (bulk cue edits, large asset swaps).
+This command is useful when you want to branch your work. Perhaps you're about to make experimental changes and want to preserve a known-good version first. By saving as a new file, you create a checkpoint you can return to if the experiment doesn't work out.
 
-### Team and Versioning Tips
+### Save Copy
 
-- Use dated file names for milestones, e.g. `Show_v2026-02-08.watch`.
-- Keep operator notes in marker/comment cues.
-- Store show file and assets under the same project root to simplify handoff.
+**File → Save Copy** creates a duplicate of your show without changing which file you're actively working in. The copy is written to a location you specify, but your current show file remains the active target for future saves.
 
-:::info
-Recent shows are tracked by Producer, so consistent naming and paths make recovery faster after restarts.
-:::
+Think of this as creating a snapshot for archival purposes. You might save a copy before a major rehearsal to preserve that day's version, then continue editing without interruption. The copy serves as a recoverable milestone while your workflow continues unbroken.
+
+### Understanding the Differences
+
+The distinction between these three commands matters in practice. **Save** updates your current file. **Save As** creates a new file and switches your context to it. **Save Copy** creates a new file but leaves your context unchanged.
+
+Knowing which to use prevents confusion about which file contains your latest work. When collaborating with others or managing multiple versions of a production, clear understanding of your save behavior keeps everyone synchronized.
+

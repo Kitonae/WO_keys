@@ -275,6 +275,10 @@
                             Asset Manager Settings
                         </a>
                         
+                        <a class="toc-subsection " href="../assets-asset-manager/import-export-and-mapping.html">
+                            Import, Export, and Mapping
+                        </a>
+                        
                 </div>
             
         </div>
@@ -322,6 +326,18 @@
                         
                         <a class="toc-subsection " href="../timeline-and-cues/grouping-cues.html">
                             Grouping Cues
+                        </a>
+                        
+                        <a class="toc-subsection " href="../timeline-and-cues/variables-and-variable-cues.html">
+                            Variables and Variable Cues
+                        </a>
+                        
+                        <a class="toc-subsection " href="../timeline-and-cues/timeline-triggers-and-expressions.html">
+                            Timeline Triggers and Expressions
+                        </a>
+                        
+                        <a class="toc-subsection " href="../timeline-and-cues/artnet-fixture-cues.html">
+                            ArtNet Fixture Cues
                         </a>
                         
                 </div>
@@ -453,6 +469,10 @@
                         
                         <a class="toc-subsection " href="../network-setup/dante-audio.html">
                             Dante Audio
+                        </a>
+                        
+                        <a class="toc-subsection " href="../network-setup/node-management-and-maintenance.html">
+                            Node Management and Maintenance
                         </a>
                         
                 </div>
@@ -651,57 +671,33 @@
                 <div class="section-content" style="display: block;">
                     <div class="section-content-body"><h2>Opening Existing Shows</h2>
 
-<p>WATCHOUT supports opening shows from disk and attaching to shows currently managed by a Director.</p>
+<p>Most of your time in WATCHOUT will be spent working on shows that already exist—whether you created them yourself in an earlier session or received them from a colleague. The application provides several ways to return to previous work, each suited to different situations.</p>
 
-<h3>Open from Disk</h3>
+<h3>Opening from Disk</h3>
 
-<p>Use:</p>
+<p>The most common method is opening a show file directly from your computer's storage. Choose <strong>File → Open</strong> or press <code>Ctrl+O</code> to browse for a show file. WATCHOUT's file dialog filters for its native show format, making it easy to locate the correct file among other project assets.</p>
 
-<ul>
-<li><strong>File → Open...</strong></li>
-<li><code>Ctrl+O</code></li>
-<li><strong>File → Open Recent</strong></li>
+<p>For shows you've worked on recently, <strong>File → Open Recent</strong> provides quick access without navigating through folders. Producer remembers your recent show history, so returning to yesterday's work typically requires just two clicks.</p>
 
-</ul>
-The open dialog filters for WATCHOUT show files (for example <code>*.watch</code>).
+<h3>Opening from a Director</h3>
 
-<h3>Open from Director</h3>
+<p>Sometimes the show you want to work on isn't stored locally—it's already running on a Director node elsewhere on the network. In these situations, use <strong>File → Open Show from Director</strong> to connect directly to the running production.</p>
 
-<p>Use <strong>File → Open Show from Director</strong> (or the Welcome screen connect action) when the show is already running on a network Director node.</p>
+<p>This approach proves valuable when you need to take over programming responsibilities on an existing system. Rather than transferring files and risking version mismatches, you connect straight to the live show data. The same method works well when verifying show state before a performance or when handing off between operators during a multi-day event.</p>
 
-<p>This is useful for:</p>
+<p>The Welcome Screen also offers connection options for Director-hosted shows, letting you choose between starting fresh locally or joining an existing network session.</p>
 
-<ul>
-<li>Taking over programming on an existing production system</li>
-<li>Verifying a show state before live playback</li>
-<li>Fast handoff between operators</li>
+<h3>Protecting Unsaved Work</h3>
 
-</ul>
-<h3>Unsaved Changes Protection</h3>
+<p>WATCHOUT guards against accidental data loss when switching between shows. If your current show contains unsaved changes and you attempt to open a different one, the application pauses to ask what you'd like to do. You can save your current work, proceed without saving (abandoning recent edits), or cancel the operation entirely and remain in your current show.</p>
 
-<p>If your current show has unsaved changes, WATCHOUT displays a prompt before opening another show. You can:</p>
+<p>This protection applies regardless of how you're opening the new show—whether from disk, from a Director, or via the recent files list.</p>
 
-<ul>
-<li>Save current changes</li>
-<li>Continue without saving</li>
-<li>Cancel and stay on the current show</li>
-
-</ul>
 <h3>Director Override Warnings</h3>
 
-<p>If the selected Director is already running a different show, WATCHOUT warns you before replacing it. Treat this as a high-risk action in live environments.</p>
+<p>When opening a show from a Director that's already running a different production, WATCHOUT displays a prominent warning. Proceeding with the operation will replace the currently running show with the one you're opening, which could interrupt playback or affect displays that are actively showing content.</p>
 
-<div class='warning-box'><p><strong>Live systems:</strong> Confirm with your team before overriding a Director during rehearsal or show time.
-</p></div>
-
-<h3>Best Practices</h3>
-
-<ul>
-<li>Prefer <strong>Open Recent</strong> for fast recovery when restarting Producer.</li>
-<li>Verify <strong>Director</strong> and <strong>Asset Manager</strong> connection status after loading.</li>
-<li>Check timeline duration, display routing, and missing assets before going online.</li>
-
-</ul></div><div class="section-nav">
+<p>In rehearsal environments this is typically acceptable, but during live performances such an override could be disruptive. The warning ensures you always make this choice deliberately rather than accidentally.</p></div><div class="section-nav">
                 <a href="creating-a-new-show.html" class="nav-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"

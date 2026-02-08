@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="WATCHOUT User Guide - Rotation Effects">
-    <title>Rotation Effects - WATCHOUT 7 User Guide</title>
+    <meta name="description" content="WATCHOUT User Guide - Timeline Triggers and Expressions">
+    <title>Timeline Triggers and Expressions - WATCHOUT 7 User Guide</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -283,8 +283,8 @@
             
         </div>
         
-        <div class="toc-chapter  " data-index="5">
-            <a href="../timeline-and-cues/index.html" class="toc-chapter-header  " style="text-decoration: none; color: inherit; display: flex;">
+        <div class="toc-chapter expanded " data-index="5">
+            <a href="../timeline-and-cues/index.html" class="toc-chapter-header  expanded" style="text-decoration: none; color: inherit; display: flex;">
                 <span class="toc-chapter-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg></span>
                 <span class="toc-chapter-title">6. Timeline and Cues</span>
                 
@@ -294,7 +294,7 @@
                 
             </a>
             
-                <div class="toc-subsections ">
+                <div class="toc-subsections expanded">
                     
                         <a class="toc-subsection " href="../timeline-and-cues/understanding-the-timeline.html">
                             Understanding the Timeline
@@ -332,7 +332,7 @@
                             Variables and Variable Cues
                         </a>
                         
-                        <a class="toc-subsection " href="../timeline-and-cues/timeline-triggers-and-expressions.html">
+                        <a class="toc-subsection active" href="../timeline-and-cues/timeline-triggers-and-expressions.html">
                             Timeline Triggers and Expressions
                         </a>
                         
@@ -344,8 +344,8 @@
             
         </div>
         
-        <div class="toc-chapter expanded " data-index="6">
-            <a href="../effects-and-tweens/index.html" class="toc-chapter-header  expanded" style="text-decoration: none; color: inherit; display: flex;">
+        <div class="toc-chapter  " data-index="6">
+            <a href="../effects-and-tweens/index.html" class="toc-chapter-header  " style="text-decoration: none; color: inherit; display: flex;">
                 <span class="toc-chapter-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="21" x2="4" y2="14"></line><line x1="4" y1="10" x2="4" y2="3"></line><line x1="12" y1="21" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="3"></line><line x1="20" y1="21" x2="20" y2="16"></line><line x1="20" y1="12" x2="20" y2="3"></line><line x1="1" y1="14" x2="7" y2="14"></line><line x1="9" y1="8" x2="15" y2="8"></line><line x1="17" y1="16" x2="23" y2="16"></line></svg></span>
                 <span class="toc-chapter-title">7. Effects and Tweens</span>
                 
@@ -355,7 +355,7 @@
                 
             </a>
             
-                <div class="toc-subsections expanded">
+                <div class="toc-subsections ">
                     
                         <a class="toc-subsection " href="../effects-and-tweens/understanding-tweens.html">
                             Understanding Tweens
@@ -369,7 +369,7 @@
                             Scale and Size
                         </a>
                         
-                        <a class="toc-subsection active" href="../effects-and-tweens/rotation-effects.html">
+                        <a class="toc-subsection " href="../effects-and-tweens/rotation-effects.html">
                             Rotation Effects
                         </a>
                         
@@ -660,52 +660,57 @@
                     
             <a href="../index.html" class="breadcrumb-item">Home</a>
             <span class="breadcrumb-separator">›</span>
-            <a href="index.html" class="breadcrumb-item">7. Effects and Tweens</a>
+            <a href="index.html" class="breadcrumb-item">6. Timeline and Cues</a>
             <span class="breadcrumb-separator">›</span>
-            <span class="breadcrumb-item current">Rotation Effects</span>
+            <span class="breadcrumb-item current">Timeline Triggers and Expressions</span>
         
                 </div>
             </header>
 
             <article class="content-body" id="content-body">
                 <div class="section-content" style="display: block;">
-                    <div class="section-content-body"><h2>Rotation Effects</h2>
+                    <div class="section-content-body"><h2>Timeline Triggers and Expressions</h2>
 
-<p>Rotation tweens control orientation in 2D and 3D contexts.</p>
+<p>Timelines can react automatically to expression-based trigger rules for play, pause, and stop.</p>
 
-<h3>Rotation Axes</h3>
+<h3>Where to Configure Triggers</h3>
 
-<p>WATCHOUT provides:</p>
-
+<ol>
+<li>Open the <strong>Timelines</strong> window.</li>
+<li>Select a timeline (or folder context where applicable).</li>
+<li>Open <strong>Properties</strong>.</li>
+<li>Go to the <strong>Triggers</strong> section.</li>
+<li>Edit:</li>
+</ol>
 <ul>
-<li><strong>Rotation Z</strong> (<code>roll</code>) for classic 2D spin</li>
-<li><strong>Rotation Y</strong> (<code>yaw</code>) for horizontal 3D turn</li>
-<li><strong>Rotation X</strong> (<code>pitch</code>) for vertical 3D tilt</li>
+<li><strong>Play Expression</strong></li>
+<li><strong>Pause Expression</strong></li>
+<li><strong>Stop Expression</strong></li>
 
 </ul>
-Shortcuts:
+<h3>Validation and Hints</h3>
+
+<p>Trigger fields are validated while editing.</p>
+
+<p>The editor also provides expression hints/autocomplete support based on the current token, helping you reference available inputs correctly.</p>
+
+<p>If an expression references unknown inputs, validation will fail until corrected.</p>
+
+<h3>How to Use This in Practice</h3>
 
 <ul>
-<li><code>Alt+Z</code> for Rotation Z</li>
-<li><code>Alt+Y</code> for Rotation Y</li>
+<li>Use trigger expressions for predictable state transitions.</li>
+<li>Keep expressions simple and testable.</li>
+<li>Prefer explicit variable names over implicit assumptions.</li>
+<li>Verify trigger behavior in rehearsal with controlled input changes.</li>
 
 </ul>
-<h3>Practical Uses</h3>
+<h3>Scope Notes</h3>
 
-<ul>
-<li>Badge or logo spins</li>
-<li>Card-flip style transitions</li>
-<li>Perspective movement enhancements</li>
+<p>Trigger editing is intended for timeline control contexts and is not shown for composition-only contexts.</p>
 
-</ul>
-<h3>Control Tips</h3>
-
-<ul>
-<li>Keep pivot/anchor placement in mind before animating.</li>
-<li>Large 3D rotations often need complementary position/scale adjustment.</li>
-
-</ul></div><div class="section-nav">
-                <a href="scale-and-size.html" class="nav-btn">
+<p>Treat trigger rules as show logic: version them, review them, and regression-test them after major timeline edits.</p></div><div class="section-nav">
+                <a href="variables-and-variable-cues.html" class="nav-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                         stroke-linejoin="round">
@@ -713,7 +718,7 @@ Shortcuts:
                     </svg>
                     Previous
                 </a>
-                <a href="opacity-and-fades.html" class="nav-btn">
+                <a href="artnet-fixture-cues.html" class="nav-btn">
                     Next
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
