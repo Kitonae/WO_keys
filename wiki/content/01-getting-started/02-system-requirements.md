@@ -147,7 +147,7 @@ WATCHOUT can manage EDID (Extended Display Identification Data) directly when us
 
 For multi-projector installations requiring **perfect frame synchronization**:
 
-- **NVIDIA Sync II boards** enable hardware-level genlock between multiple GPUs and external sync sources
+- **NVIDIA RTX PRO Sync boards** enable hardware-level genlock between multiple GPUs and external sync sources
 - **Framelock** ensures all outputs across multiple cards/systems swap buffers simultaneously
 - Critical for edge-blended panoramas and LED wall installations where frame tearing between panels is visible
 
