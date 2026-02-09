@@ -703,7 +703,7 @@
 <tr><td>Operating System</td><td>Windows 10 21H2 (64-bit)</td><td>Windows 11 23H2 or newer (64-bit)</td></tr>
 <tr><td>Processor</td><td>Intel Core i3/i5, AMD Ryzen 3/5, or equivalent Xeon/EPYC</td><td>Intel Core i7/i9, AMD Ryzen 7/9, or equivalent Xeon/EPYC</td></tr>
 <tr><td>RAM</td><td>16 GB DDR4</td><td>32 GB DDR5 or more</td></tr>
-<tr><td>Graphics</td><td>NVIDIA GeForce RTX</td><td><strong>NVIDIA RTX PRO (Quadro/RTX Ada)</strong></td></tr>
+<tr><td>Graphics</td><td>NVIDIA GeForce RTX</td><td><strong>NVIDIA RTX PRO</strong></td></tr>
 <tr><td>Storage</td><td>SATA SSD (500+ MB/s sustained read)</td><td>NVMe SSD (Gen4, 3500+ MB/s sustained read)</td></tr>
 <tr><td>Network</td><td>Gigabit Ethernet</td><td>2.5 Gigabit Ethernet</td></tr>
 </table>
@@ -739,17 +739,14 @@
 <li><strong>Pre-configured</strong> – WATCHPAX units arrive ready for WATCHOUT with optimal settings applied</li>
 
 </ul>
-<div class='warning-box'><p><strong>Important:</strong> Windows IoT Enterprise LTSC is licensed exclusively for fixed-purpose devices. For WATCHOUT, only Dataton (through WATCHPAX) and authorized OEM partners can legally provide systems with this operating system pre-installed. Building your own PC with LTSC for use with WATCHOUT is not permitted under Microsoft's licensing terms.
-</p></div>
-
-<p><strong>Managing updates on consumer Windows:</strong></p>
+<strong>Managing updates on consumer Windows:</strong>
 
 <p>If using Windows 11 Home or Pro, plan for regular maintenance windows:</p>
 
 <ul>
 <li>Schedule Windows updates during non-show periods</li>
 <li>Test updates in a staging environment before production systems</li>
-<li>Consider using Windows Pro's Group Policy to control update timing</li>
+<li>Use the "Pause updates" feature in Windows Settings to defer updates during critical show periods</li>
 <li>Maintain no more than 24 months behind current Windows versions to remain in Microsoft's support window</li>
 
 </ul>
@@ -760,18 +757,6 @@
 
 <p>Keeping Windows up to date is <strong>critical for optimal WATCHOUT performance</strong>. Newer Windows updates deliver significant improvements to rendering stability and visual output quality:</p>
 
-<h4>WDDM (Windows Display Driver Model) Improvements</h4>
-
-<p>Modern Windows versions include updated WDDM drivers that fundamentally improve how the operating system communicates with graphics hardware:</p>
-
-<ul>
-<li><strong>WDDM 3.0+ (Windows 11)</strong> – Reduced latency for frame presentation, better VSync handling, and improved multi-monitor synchronization</li>
-
-<p><li><strong>Hardware-accelerated GPU scheduling</strong> – Enables the GPU to directly manage its own video memory scheduling, reducing CPU overhead and eliminating stutter during complex compositions</li></p>
-
-<p><li><strong>Optimized flip model</strong> – Modern swap chain presentation reduces tearing and improves frame pacing for smoother playback</li></p>
-
-</ul>
 <h4>DirectX 12 Ultimate Enhancements</h4>
 
 <p>Windows updates continuously improve DirectX 12 capabilities:</p>
@@ -819,13 +804,10 @@
 
 <table>
 <tr><th>Feature</th><th>NVIDIA RTX PRO</th><th>GeForce RTX</th></tr>
-<tr><td>ECC Memory</td><td>✓ Error-correcting VRAM</td><td>✗ Not available</td></tr>
 <tr><td>TCC Mode</td><td>✓ Compute-optimized mode</td><td>✗ Windows display only</td></tr>
 <tr><td>EDID Management</td><td>✓ Controllable via WATCHOUT</td><td>✗ Not supported</td></tr>
 <tr><td>Sync Connector</td><td>✓ Hardware genlock/framelock</td><td>✗ Software sync only</td></tr>
-<tr><td>Displays Supported</td><td>Up to 4-8 native outputs</td><td>Typically 4 outputs</td></tr>
-<tr><td>10-bit Color</td><td>✓ Full support in all apps</td><td>Limited application support</td></tr>
-<tr><td>Driver Certification</td><td>✓ ISV certified, extended testing</td><td>Game-focused optimization</td></tr>
+<tr><td>Driver Certification</td><td>✓ Extended testing cycles</td><td>Game-focused optimization</td></tr>
 <tr><td>Long-term Support</td><td>✓ Enterprise driver branches</td><td>Consumer update cycle</td></tr>
 </table>
 
@@ -841,20 +823,6 @@
 </ul>
 <div class='info-box'><p><strong>Note:</strong> EDID management through WATCHOUT is only supported on NVIDIA professional GPUs. Users with AMD or other graphics cards will need to manage EDID settings outside of WATCHOUT using third-party tools or hardware EDID emulators.
 </p></div>
-
-<h4>ECC Memory – Preventing Visual Artifacts</h4>
-
-<p>RTX PRO cards feature <strong>Error-Correcting Code (ECC) memory</strong> that automatically detects and corrects single-bit memory errors. This prevents:</p>
-
-<ul>
-<li>Random pixel corruption and visual artifacts during playback</li>
-
-<p><li>Frame buffer corruption during extended operation</li></p>
-
-<p><li>Unexplained crashes in mission-critical installations</li></p>
-
-</ul>
-For 24/7 installations like museums, permanent exhibits, or broadcast applications, ECC memory is essential for guaranteed visual integrity.
 
 <h4>NVIDIA Sync Board: Framelock and Genlock</h4>
 
@@ -876,8 +844,6 @@ For 24/7 installations like museums, permanent exhibits, or broadcast applicatio
 <ul>
 <li><strong>Optimal Drivers for Enterprise (ODE)</strong> – Stability-focused drivers with extended testing cycles</li>
 
-<p><li><strong>ISV certifications</strong> – Guaranteed compatibility with professional applications</li></p>
-
 <p><li><strong>Longer support lifecycle</strong> – Enterprise customers receive driver updates for extended periods</li></p>
 
 <p><li><strong>Better regression testing</strong> – Less risk of updates breaking existing functionality</li></p>
@@ -887,14 +853,13 @@ For 24/7 installations like museums, permanent exhibits, or broadcast applicatio
 
 <table>
 <tr><th>Model</th><th>VRAM</th><th>Outputs</th><th>Best For</th></tr>
-<tr><td>RTX 4000 Ada</td><td>20 GB</td><td>4× DP 1.4a</td><td>Production installations</td></tr>
-<tr><td>RTX 5000 Ada</td><td>32 GB</td><td>4× DP 1.4a</td><td>Premium performance, future-proof</td></tr>
-<tr><td>RTX A4000</td><td>16 GB</td><td>4× DP 1.4</td><td>Mid-range installations, 4K playback</td></tr>
-<tr><td>RTX A5000</td><td>24 GB</td><td>4× DP 1.4</td><td>High-res content, multiple 4K outputs</td></tr>
-<tr><td>RTX A6000</td><td>48 GB</td><td>4× DP 1.4</td><td>8K content, demanding installations</td></tr>
+<tr><td>RTX PRO 4000 Blackwell</td><td>24 GB</td><td>4× DP</td><td>Standard installations, 4K playback</td></tr>
+<tr><td>RTX PRO 4500 Blackwell</td><td>32 GB</td><td>4× DP</td><td>Multiple 4K outputs, demanding content</td></tr>
+<tr><td>RTX PRO 5000 Blackwell</td><td>48 GB</td><td>4× DP</td><td>High-res content, large installations</td></tr>
+<tr><td>RTX PRO 6000 Blackwell</td><td>96 GB</td><td>4× DP</td><td>8K content, most demanding installations</td></tr>
 </table>
 
-<div class='info-box'><p><strong>Tip:</strong> For installations requiring more than 4 outputs per machine, consider using multiple RTX PRO cards with an NVIDIA Sync board, or NVIDIA's NVLink bridge technology for unified memory access across GPUs.
+<div class='info-box'><p><strong>Tip:</strong> For installations requiring more than 4 outputs per machine, consider using multiple RTX PRO cards with an NVIDIA Sync board.
 </p></div>
 
 <h3>Video Capture Requirements</h3>
@@ -962,16 +927,16 @@ For 24/7 installations like museums, permanent exhibits, or broadcast applicatio
 
 <h4>NDI Stream Bandwidth Requirements</h4>
 
-<p>NDI (Network Device Interface) is commonly used for video input in WATCHOUT. Here are the typical bandwidth requirements for NDI|HX streams:</p>
+<p>NDI (Network Device Interface) is commonly used for video input in WATCHOUT. Here are the typical bandwidth requirements for standard NDI streams:</p>
 
 <table>
 <tr><th>Resolution</th><th>Frame Rate</th><th>Bandwidth (approx.)</th><th>Fits on 1 Gbps</th></tr>
-<tr><td>1920×1080</td><td>60 fps</td><td>80-150 Mbps</td><td>✓ Yes</td></tr>
-<tr><td>3840×2160 (4K)</td><td>60 fps</td><td>200-400 Mbps</td><td>✓ Yes</td></tr>
-<tr><td>7680×4320 (8K)</td><td>60 fps</td><td>600-900 Mbps</td><td>✓ Yes (single stream)</td></tr>
+<tr><td>1920×1080</td><td>60 fps</td><td>~125 Mbps</td><td>✓ Yes</td></tr>
+<tr><td>3840×2160 (4K)</td><td>60 fps</td><td>~250 Mbps</td><td>✓ Yes</td></tr>
+<tr><td>7680×4320 (8K)</td><td>60 fps</td><td>~500 Mbps</td><td>✓ Yes</td></tr>
 </table>
 
-<div class='info-box'><p><strong>Note:</strong> Full-bandwidth NDI (not NDI|HX) uses significantly more bandwidth—approximately 3 Gbps for 1080p60. The table above reflects NDI|HX compressed streams, which are more common for production use with WATCHOUT. Multiple simultaneous NDI streams or full-bandwidth NDI may require 2.5 Gbps or faster networking.
+<div class='info-box'><p><strong>Note:</strong> The bandwidth values above are for standard NDI streams. NDI|HX uses lower bandwidth due to additional compression. Multiple simultaneous NDI streams may require 2.5 Gbps or faster networking depending on total throughput.
 </p></div>
 
 <h4>File Transfer Time Comparison</h4>
