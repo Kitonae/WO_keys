@@ -5,8 +5,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // Core Inputs
     const widthInput = document.getElementById('pattern-width');
     const heightInput = document.getElementById('pattern-height');
-    const typeSelect = document.getElementById('pattern-type');
-    const colorInput = document.getElementById('pattern-color'); // General Primary Color
     const showInfoCheckbox = document.getElementById('show-info');
 
     // Grid Inputs
@@ -15,82 +13,101 @@ document.addEventListener('DOMContentLoaded', () => {
     const gridMajorColorInput = document.getElementById('grid-major-color');
     const gridMinorColorInput = document.getElementById('grid-minor-color');
 
+    // Display Setup Inputs
+    const displayColsInput = document.getElementById('display-cols');
+    const displayRowsInput = document.getElementById('display-rows');
+    const overlapHInput = document.getElementById('display-overlap-h');
+    const overlapVInput = document.getElementById('display-overlap-v');
+    const showBordersCheckbox = document.getElementById('show-borders');
+    const showRulerCheckbox = document.getElementById('show-ruler');
+
     // UI Groups
-    const colorControlGroup = document.getElementById('color-control-group');
     const gridControlsGroup = document.getElementById('grid-controls');
 
     const generateBtn = document.getElementById('generate-pattern-btn');
     const downloadBtn = document.getElementById('download-pattern-btn');
 
-    // UI Logic
-    function updateUI() {
-        const type = typeSelect.value;
+    // Tab Switching Logic
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const tabContents = document.querySelectorAll('.tab-content');
 
-        if (type === 'grid') {
-            gridControlsGroup.style.display = 'flex';
-            colorControlGroup.style.display = 'none'; // Grid has its own colors
-        } else if (type === 'gradient' || type === 'checkerboard') {
-            gridControlsGroup.style.display = 'none';
-            colorControlGroup.style.display = 'flex';
-        } else {
-            gridControlsGroup.style.display = 'none';
-            colorControlGroup.style.display = 'none';
-        }
-    }
+    tabBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const tabId = btn.getAttribute('data-tab');
 
-    typeSelect.addEventListener('change', updateUI);
-    updateUI(); // Init
+            tabBtns.forEach(b => b.classList.remove('active'));
+            tabContents.forEach(c => c.classList.remove('active'));
+
+            btn.classList.add('active');
+            document.getElementById(`${tabId}-tab`).classList.add('active');
+        });
+    });
 
     // Drawing Functions
     function drawPattern() {
-        const width = parseInt(widthInput.value) || 1920;
-        const height = parseInt(heightInput.value) || 1080;
-        const type = typeSelect.value;
+        const dWidth = parseInt(widthInput.value) || 1920;
+        const dHeight = parseInt(heightInput.value) || 1080;
+        const cols = parseInt(displayColsInput.value) || 1;
+        const rows = parseInt(displayRowsInput.value) || 1;
+        const overlapH = parseInt(overlapHInput.value) || 0;
+        const overlapV = parseInt(overlapVInput.value) || 0;
+
+        const totalWidth = (dWidth * cols) - (overlapH * (cols - 1));
+        const totalHeight = (dHeight * rows) - (overlapV * (rows - 1));
+
         const showInfo = showInfoCheckbox.checked;
+        const showBorders = showBordersCheckbox.checked;
+        const showRuler = showRulerCheckbox.checked;
 
         // Resize canvas
-        canvas.width = width;
-        canvas.height = height;
+        canvas.width = totalWidth;
+        canvas.height = totalHeight;
 
         // Clear
         ctx.fillStyle = '#000000';
-        ctx.fillRect(0, 0, width, height);
+        ctx.fillRect(0, 0, totalWidth, totalHeight);
 
-        // Draw Pattern
-        switch (type) {
-            case 'grid':
-                const majorSize = parseInt(gridMajorSizeInput.value) || 100;
-                const subdivs = parseInt(gridSubdivisionsInput.value) || 4;
-                const majorColor = gridMajorColorInput.value;
-                const minorColor = gridMinorColorInput.value;
-                drawGrid(width, height, majorSize, subdivs, majorColor, minorColor);
-                break;
-            case 'color-bars':
-                drawColorBars(width, height);
-                break;
-            case 'gradient':
-                drawGradient(width, height, colorInput.value);
-                break;
-            case 'checkerboard':
-                drawCheckerboard(width, height, colorInput.value);
-                break;
-            case 'contrast':
-                drawContrastSteps(width, height);
-                break;
-            case 'cmyk':
-                drawCMYK(width, height);
-                break;
+        // Draw Pattern (Grid Only)
+        const majorSize = parseInt(gridMajorSizeInput.value) || 100;
+        const subdivs = parseInt(gridSubdivisionsInput.value) || 4;
+        const majorColor = gridMajorColorInput.value;
+        const minorColor = gridMinorColorInput.value;
+
+        // Repeat grid/circle for each display
+        for (let r = 0; r < rows; r++) {
+            for (let c = 0; c < cols; c++) {
+                const x = c * (dWidth - overlapH);
+                const y = r * (dHeight - overlapV);
+                ctx.save();
+                ctx.translate(x, y);
+                // Clip to display area
+                ctx.beginPath();
+                ctx.rect(0, 0, dWidth, dHeight);
+                ctx.clip();
+                drawGrid(dWidth, dHeight, majorSize, subdivs, majorColor, minorColor);
+                ctx.restore();
+            }
+        }
+
+        // Draw Display Borders & Overlaps
+        if (showBorders && (cols > 1 || rows > 1)) {
+            drawDisplayBorders(dWidth, dHeight, cols, rows, overlapH, overlapV);
+        }
+
+        // Draw Rulers
+        if (showRuler) {
+            drawRulers(totalWidth, totalHeight);
         }
 
         // Draw Info Overlay
         if (showInfo) {
-            drawInfoOverlay(width, height, type);
+            drawInfoOverlay(totalWidth, totalHeight, 'GRID', cols, rows, dWidth, dHeight);
         }
 
         // Draw Custom Label
         const customLabel = document.getElementById('custom-label').value;
         if (customLabel) {
-            drawCustomLabel(width, height, customLabel);
+            drawCustomLabel(totalWidth, totalHeight, customLabel);
         }
     }
 
@@ -111,6 +128,131 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Reset
         ctx.lineWidth = 1;
+    }
+
+    function drawDisplayBorders(dW, dH, cols, rows, ovH, ovV) {
+        ctx.save();
+
+        // 1. Draw individual display borders (dashed Cyan)
+        ctx.setLineDash([10, 10]);
+        ctx.strokeStyle = 'rgba(0, 255, 255, 0.8)';
+        ctx.lineWidth = 2;
+
+        for (let r = 0; r < rows; r++) {
+            for (let c = 0; c < cols; c++) {
+                const x = c * (dW - ovH);
+                const y = r * (dH - ovV);
+                ctx.strokeRect(x + 1, y + 1, dW - 2, dH - 2);
+
+                // Display Index
+                ctx.fillStyle = 'rgba(0, 255, 255, 0.8)';
+                ctx.font = 'bold 24px Inter, sans-serif';
+                ctx.textAlign = 'left';
+                ctx.textBaseline = 'top';
+                ctx.fillText(`Display ${r * cols + c + 1}`, x + 20, y + 20);
+            }
+        }
+
+        // 2. Highlight Overlap areas (semi-transparent Yellow)
+        ctx.setLineDash([]);
+        ctx.fillStyle = 'rgba(255, 255, 0, 0.15)';
+
+        // Horizontal Overlaps
+        if (ovH > 0 && cols > 1) {
+            for (let c = 1; c < cols; c++) {
+                const x = c * (dW - ovH);
+                ctx.fillRect(x, 0, ovH, canvas.height);
+
+                // Overlap lines
+                ctx.strokeStyle = 'rgba(255, 255, 0, 0.5)';
+                ctx.beginPath();
+                ctx.moveTo(x, 0); ctx.lineTo(x, canvas.height);
+                ctx.moveTo(x + ovH, 0); ctx.lineTo(x + ovH, canvas.height);
+                ctx.stroke();
+            }
+        }
+
+        // Vertical Overlaps
+        if (ovV > 0 && rows > 1) {
+            for (let r = 1; r < rows; r++) {
+                const y = r * (dH - ovV);
+                ctx.fillRect(0, y, canvas.width, ovV);
+
+                // Overlap lines
+                ctx.strokeStyle = 'rgba(255, 255, 0, 0.5)';
+                ctx.beginPath();
+                ctx.moveTo(0, y); ctx.lineTo(canvas.width, y);
+                ctx.moveTo(0, y + ovV); ctx.lineTo(canvas.width, y + ovV);
+                ctx.stroke();
+            }
+        }
+
+        ctx.restore();
+    }
+
+    function drawRulers(w, h) {
+        ctx.save();
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.6)';
+        ctx.lineWidth = 1;
+        ctx.font = '10px Inter, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'top';
+
+        const majorStep = 100;
+        const mediumStep = 50;
+        const minorStep = 10;
+        const tickLengthMajor = 15;
+        const tickLengthMedium = 10;
+        const tickLengthMinor = 5;
+
+        // Top Ruler (X-Axis)
+        // Background for readability
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
+        ctx.fillRect(0, 0, w, 20);
+
+        ctx.beginPath();
+        for (let x = 0; x <= w; x += minorStep) {
+            let len = tickLengthMinor;
+            if (x % majorStep === 0) len = tickLengthMajor;
+            else if (x % mediumStep === 0) len = tickLengthMedium;
+
+            ctx.moveTo(x + 0.5, 0);
+            ctx.lineTo(x + 0.5, len);
+
+            if (x % majorStep === 0 && x > 0) {
+                ctx.fillStyle = '#FFFFFF';
+                ctx.fillText(x, x, tickLengthMajor + 2);
+            }
+        }
+        ctx.stroke();
+
+        // Left Ruler (Y-Axis)
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
+        ctx.fillRect(0, 0, 25, h); // slightly wider for text
+        ctx.beginPath();
+
+        ctx.textAlign = 'left';
+        ctx.textBaseline = 'middle';
+
+        for (let y = 0; y <= h; y += minorStep) {
+            let len = tickLengthMinor;
+            if (y % majorStep === 0) len = tickLengthMajor;
+            else if (y % mediumStep === 0) len = tickLengthMedium;
+
+            ctx.moveTo(0, y + 0.5);
+            ctx.lineTo(len, y + 0.5);
+
+            if (y % majorStep === 0 && y > 0) {
+                ctx.fillStyle = '#FFFFFF';
+                // Rotate text for vertical ruler or keeps it standard? Standard is better readability usually
+                // but let's rotate -90deg if we want to save space? No, simple horizontal text is safer.
+                ctx.fillText(y, tickLengthMajor + 2, y);
+            }
+        }
+        ctx.stroke();
+
+        ctx.restore();
     }
 
     function drawGrid(w, h, majorSize, subdivs, majorColor, minorColor) {
@@ -175,12 +317,10 @@ document.addEventListener('DOMContentLoaded', () => {
         ctx.lineTo(centerX, centerY + crossSize);
         ctx.stroke();
 
-        // Circle (based on height)
-        const circleRadius = Math.min(w, h) / 3; // 1/3 of screen height/width
+        // Circle (fill the display)
+        const circleRadius = Math.min(w, h) / 2;
         ctx.beginPath();
         ctx.arc(centerX, centerY, circleRadius, 0, Math.PI * 2);
-        ctx.strokeStyle = majorColor; // Use major color for circle or keep custom? 
-        // Let's keep it Red/Visible or maybe just same as Major but Red/contrast is better for center finding
         ctx.strokeStyle = '#ff0000';
         ctx.stroke();
 
@@ -265,15 +405,16 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    function drawInfoOverlay(w, h, type) {
+    function drawInfoOverlay(w, h, type, cols, rows, dW, dH) {
         const padding = 20;
-        const fontSize = Math.max(16, Math.floor(h / 30));
+        const fontSize = Math.max(16, Math.floor(h / 40));
 
         ctx.font = `${fontSize}px "Inter", sans-serif`;
         ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
 
         // Measure text
-        const text = `${w} x ${h} | ${type.replace('-', ' ').toUpperCase()} | ${new Date().toLocaleTimeString()}`;
+        const displayInfo = cols > 1 || rows > 1 ? ` | ${cols}x${rows} Displays (${dW}x${dH})` : '';
+        const text = `${w} x ${h}${displayInfo} | ${type.replace('-', ' ').toUpperCase()} | ${new Date().toLocaleTimeString()}`;
         const textMetrics = ctx.measureText(text);
         const textWidth = textMetrics.width;
 
@@ -292,11 +433,209 @@ document.addEventListener('DOMContentLoaded', () => {
 
     downloadBtn.addEventListener('click', () => {
         const link = document.createElement('a');
-        link.download = `test-pattern-${typeSelect.value}-${widthInput.value}x${heightInput.value}.png`;
+        link.download = `test-pattern-grid-${canvas.width}x${canvas.height}.png`;
         link.href = canvas.toDataURL('image/png');
         link.click();
     });
 
-    // Initial draw
-    document.fonts.ready.then(drawPattern);
+
+    function getPatternSettings() {
+        return {
+            width: widthInput.value,
+            height: heightInput.value,
+            cols: displayColsInput.value,
+            rows: displayRowsInput.value,
+            overlapH: overlapHInput.value,
+            overlapV: overlapVInput.value,
+            borders: showBordersCheckbox.checked,
+            ruler: showRulerCheckbox.checked,
+            majorSize: gridMajorSizeInput.value,
+            subdivisions: gridSubdivisionsInput.value,
+            majorColor: gridMajorColorInput.value,
+            minorColor: gridMinorColorInput.value,
+            showInfo: showInfoCheckbox.checked,
+            customLabel: document.getElementById('custom-label').value
+        };
+    }
+
+    function setPatternSettings(s) {
+        widthInput.value = s.width;
+        heightInput.value = s.height;
+        displayColsInput.value = s.cols;
+        displayRowsInput.value = s.rows;
+        overlapHInput.value = s.overlapH;
+        overlapVInput.value = s.overlapV;
+        showBordersCheckbox.checked = s.borders;
+        showRulerCheckbox.checked = s.ruler;
+        gridMajorSizeInput.value = s.majorSize;
+        gridSubdivisionsInput.value = s.subdivisions;
+        gridMajorColorInput.value = s.majorColor;
+        gridMinorColorInput.value = s.minorColor;
+        showInfoCheckbox.checked = s.showInfo;
+        document.getElementById('custom-label').value = s.customLabel;
+        drawPattern();
+    }
+
+    // LED Pattern Logic
+    const ledCanvas = document.getElementById('led-canvas');
+    const ledCtx = ledCanvas.getContext('2d');
+    const generateLedBtn = document.getElementById('generate-led-btn');
+
+    function getLedSettings() {
+        return {
+            wallW: document.getElementById('led-wall-width').value,
+            wallH: document.getElementById('led-wall-height').value,
+            tileW: document.getElementById('led-tile-width').value,
+            tileH: document.getElementById('led-tile-height').value,
+            rainbow: document.getElementById('led-rainbow').checked,
+            background: document.getElementById('led-background').checked,
+            numbering: document.getElementById('led-numbering').value,
+            coords: document.getElementById('led-coords').value,
+            color: document.getElementById('led-color').value
+        };
+    }
+
+    function setLedSettings(s) {
+        document.getElementById('led-wall-width').value = s.wallW;
+        document.getElementById('led-wall-height').value = s.wallH;
+        document.getElementById('led-tile-width').value = s.tileW;
+        document.getElementById('led-tile-height').value = s.tileH;
+        document.getElementById('led-rainbow').checked = s.rainbow;
+        document.getElementById('led-background').checked = s.background;
+        document.getElementById('led-numbering').value = s.numbering || 'row-col';
+        document.getElementById('led-coords').value = s.coords || 'center';
+        document.getElementById('led-color').value = s.color;
+        drawLedPattern();
+    }
+
+    function toLetters(num) {
+        let s = '';
+        while (num > 0) {
+            let rem = (num - 1) % 26;
+            s = String.fromCharCode(65 + rem) + s;
+            num = Math.floor((num - 1) / 26);
+        }
+        return s;
+    }
+
+    function drawLedPattern() {
+        const w = parseInt(document.getElementById('led-wall-width').value) || 1920;
+        const h = parseInt(document.getElementById('led-wall-height').value) || 1080;
+        const tW = parseInt(document.getElementById('led-tile-width').value) || 128;
+        const tH = parseInt(document.getElementById('led-tile-height').value) || 128;
+        const useRainbow = document.getElementById('led-rainbow').checked;
+        const useBackground = document.getElementById('led-background').checked;
+        const baseColor = document.getElementById('led-color').value;
+
+        ledCanvas.width = w;
+        ledCanvas.height = h;
+
+        ledCtx.fillStyle = '#000000';
+        ledCtx.fillRect(0, 0, w, h);
+
+        const cols = Math.ceil(w / tW);
+        const rows = Math.ceil(h / tH);
+
+        for (let r = 0; r < rows; r++) {
+            for (let c = 0; c < cols; c++) {
+                const x = c * tW;
+                const y = r * tH;
+
+                let color = baseColor;
+                if (useRainbow) {
+                    // Two-axis rainbow (diagonal)
+                    const hue = ((x / w) + (y / h)) * 180;
+                    color = `hsl(${hue}, 100%, 50%)`;
+                }
+
+                if (useBackground) {
+                    // Fill Background
+                    ledCtx.fillStyle = color;
+                    ledCtx.fillRect(x, y, tW, tH);
+
+                    // Border (Black for separation)
+                    ledCtx.strokeStyle = '#000000';
+                    ledCtx.lineWidth = 1;
+                    ledCtx.strokeRect(x + 0.5, y + 0.5, tW, tH);
+
+                    // Text (White with black outline for visibility)
+                    ledCtx.fillStyle = '#FFFFFF';
+                    ledCtx.strokeStyle = '#000000';
+                    ledCtx.lineWidth = 3;
+                } else {
+                    // Outline Only
+                    ledCtx.strokeStyle = color;
+                    ledCtx.lineWidth = 1;
+                    ledCtx.strokeRect(x + 0.5, y + 0.5, tW, tH);
+
+                    ledCtx.fillStyle = color;
+                    // No text stroke needed
+                    ledCtx.strokeStyle = 'rgba(0,0,0,0)';
+                }
+
+                // Determine Text Content
+                let mainText = '';
+                const numbering = document.getElementById('led-numbering').value;
+                if (numbering === 'row-col') mainText = `${r + 1}-${c + 1}`;
+                else if (numbering === 'a-1') mainText = `${toLetters(r + 1)}-${c + 1}`;
+                else if (numbering === '1-a') mainText = `${r + 1}-${toLetters(c + 1)}`;
+                else if (numbering === 'a-a') mainText = `${toLetters(r + 1)}-${toLetters(c + 1)}`;
+                else if (numbering === 'global-h') mainText = `${r * cols + c + 1}`;
+                else if (numbering === 'global-v') mainText = `${c * rows + r + 1}`;
+
+                // Draw Main Text (Always Center)
+                const cx = x + tW / 2;
+                const cy = y + tH / 2;
+
+                if (mainText) {
+                    ledCtx.font = `${Math.min(tW, tH) / 4}px Inter, sans-serif`;
+                    ledCtx.textAlign = 'center';
+                    ledCtx.textBaseline = 'middle';
+
+                    if (useBackground) ledCtx.strokeText(mainText, cx, cy);
+                    ledCtx.fillText(mainText, cx, cy);
+                }
+
+                // Draw Coordinates
+                const coordsMode = document.getElementById('led-coords').value;
+                if (coordsMode !== 'none') {
+                    let displayX = x;
+                    let displayY = y;
+
+                    if (coordsMode === 'bl') {
+                        // Bottom-Left origin (Y grows Up)
+                        // Canvas Y is from top, so h - (y + tH) gives bottom-left corner Y in BL system
+                        displayY = h - (y + tH);
+                    } else if (coordsMode === 'center') {
+                        // Center origin (0,0 at center, Y grows Up)
+                        displayX = x - w / 2;
+                        displayY = h / 2 - (y + tH); // Y from center, inverted for Y-up
+                    }
+
+                    const coordText = `X:${Math.round(displayX)} Y:${Math.round(displayY)}`;
+                    ledCtx.font = `${Math.min(tW, tH) / 8}px Inter, sans-serif`;
+                    ledCtx.textAlign = 'center';
+                    ledCtx.textBaseline = 'middle';
+
+                    const textY = mainText ? cy + tH / 4 : cy; // Push down if main text exists
+
+                    if (useBackground) ledCtx.strokeText(coordText, cx, textY);
+                    ledCtx.fillText(coordText, cx, textY);
+                }
+            }
+        }
+    }
+
+    generateLedBtn.addEventListener('click', drawLedPattern);
+    document.getElementById('led-rainbow').addEventListener('change', drawLedPattern);
+    document.getElementById('led-background').addEventListener('change', drawLedPattern);
+    document.getElementById('led-numbering').addEventListener('change', drawLedPattern);
+    document.getElementById('led-coords').addEventListener('change', drawLedPattern);
+    document.getElementById('led-color').addEventListener('input', drawLedPattern);
+
+    // Initial draws
+    document.fonts.ready.then(() => {
+        drawPattern();
+        drawLedPattern();
+    });
 });

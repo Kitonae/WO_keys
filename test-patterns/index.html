@@ -16,73 +16,164 @@
     <div class="app">
         <header class="header">
             <div class="logo">
-                <h1>WATCHOUT TEST PATTERNS</h1>
+                <h1>WATCHOUT TOOLS</h1>
+            </div>
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="projector">Projector Grid</button>
+                <button class="tab-btn" data-tab="led">LED Tile Check</button>
             </div>
         </header>
 
         <main class="main">
-            <div class="pattern-container">
-                <div class="pattern-controls">
-                    <div class="control-group">
-                        <label>Resolution</label>
-                        <div class="input-row">
-                            <input type="number" id="pattern-width" value="1920" placeholder="Width">
-                            <span>x</span>
-                            <input type="number" id="pattern-height" value="1080" placeholder="Height">
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        <label>Pattern Type</label>
-                        <select id="pattern-type">
-                            <option value="grid">Grid</option>
-                            <option value="color-bars">Color Bars</option>
-                            <option value="gradient">Gradient</option>
-                            <option value="checkerboard">Checkerboard</option>
-                            <option value="contrast">Contrast Steps</option>
-                            <option value="cmyk">CMYK</option>
-                        </select>
-                    </div>
-                    <div class="control-group" id="color-control-group">
-                        <label>Primary Color</label>
-                        <input type="color" id="pattern-color" value="#ffffff">
-                    </div>
-                    <div class="control-group" id="grid-controls" style="display: none;">
-                        <div class="input-grid-settings">
-                            <div class="setting-item">
-                                <label>Major Size (px)</label>
-                                <input type="number" id="grid-major-size" value="100" step="10">
-                            </div>
-                            <div class="setting-item">
-                                <label>Subdivisions</label>
-                                <input type="number" id="grid-subdivisions" value="4" min="1" max="20">
-                            </div>
-                            <div class="setting-item">
-                                <label>Major Color</label>
-                                <input type="color" id="grid-major-color" value="#ffffff">
-                            </div>
-                            <div class="setting-item">
-                                <label>Minor Color</label>
-                                <input type="color" id="grid-minor-color" value="#333333">
+            <div id="projector-tab" class="tab-content active">
+                <div class="pattern-container">
+                    <div class="pattern-controls">
+                        <div class="control-group">
+                            <label>Display Setup</label>
+                            <div class="input-grid-settings">
+                                <div class="setting-item">
+                                    <label>Cols</label>
+                                    <input type="number" id="display-cols" value="1" min="1">
+                                </div>
+                                <div class="setting-item">
+                                    <label>Rows</label>
+                                    <input type="number" id="display-rows" value="1" min="1">
+                                </div>
+                                <div class="setting-item">
+                                    <label>H-Overlap</label>
+                                    <input type="number" id="display-overlap-h" value="0" min="0">
+                                </div>
+                                <div class="setting-item">
+                                    <label>V-Overlap</label>
+                                    <input type="number" id="display-overlap-v" value="0" min="0">
+                                </div>
+                                <div class="setting-item">
+                                    <label>Borders</label>
+                                    <div class="input-row" style="margin-top: 4px;">
+                                        <input type="checkbox" id="show-borders" checked>
+                                    </div>
+                                </div>
+                                <div class="setting-item">
+                                    <label>Ruler</label>
+                                    <div class="input-row" style="margin-top: 4px;">
+                                        <input type="checkbox" id="show-ruler">
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="control-group">
-                        <label>Info Text</label>
-                        <div class="input-row">
-                            <input type="checkbox" id="show-info" checked>
-                            <span style="font-size: 0.9rem; color: var(--text-secondary);">Show Resolution/Time</span>
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        <label>Custom Label</label>
-                        <input type="text" id="custom-label" placeholder="Enter text label...">
-                    </div>
 
-                    <button id="generate-pattern-btn" class="action-btn">Generate</button>
-                    <button id="download-pattern-btn" class="action-btn secondary">Download PNG</button>
+                        <div class="control-group">
+                            <label>Resolution (per Display)</label>
+                            <div class="input-row">
+                                <input type="number" id="pattern-width" value="1920" placeholder="Width">
+                                <span>x</span>
+                                <input type="number" id="pattern-height" value="1080" placeholder="Height">
+                            </div>
+                        </div>
+
+                        <div class="control-group" id="grid-controls">
+                            <label>Grid Settings</label>
+                            <div class="input-grid-settings">
+                                <div class="setting-item">
+                                    <label>Major (px)</label>
+                                    <input type="number" id="grid-major-size" value="100" step="10">
+                                </div>
+                                <div class="setting-item">
+                                    <label>Subdivs</label>
+                                    <input type="number" id="grid-subdivisions" value="4" min="1" max="20">
+                                </div>
+                                <div class="setting-item">
+                                    <label>Major Color</label>
+                                    <input type="color" id="grid-major-color" value="#828282">
+                                </div>
+                                <div class="setting-item">
+                                    <label>Minor Color</label>
+                                    <input type="color" id="grid-minor-color" value="#333333">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label>Info Text</label>
+                            <div class="input-row">
+                                <input type="checkbox" id="show-info" checked>
+                                <span style="font-size: 0.9rem; color: var(--text-secondary);">Show
+                                    Resolution/Time</span>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label>Custom Label</label>
+                            <input type="text" id="custom-label" placeholder="Enter text label...">
+                        </div>
+
+                        <button id="generate-pattern-btn" class="action-btn">Generate</button>
+                        <button id="download-pattern-btn" class="action-btn secondary">Download PNG</button>
+                    </div>
+                    <div class="pattern-display">
+                        <canvas id="pattern-canvas"></canvas>
+                    </div>
                 </div>
-                <div class="pattern-display">
-                    <canvas id="pattern-canvas"></canvas>
+            </div>
+
+            <div id="led-tab" class="tab-content">
+                <div class="pattern-container">
+                    <div class="pattern-controls">
+                        <div class="control-group">
+                            <label>Wall Resolution</label>
+                            <div class="input-row">
+                                <input type="number" id="led-wall-width" value="1920" placeholder="Width">
+                                <span>x</span>
+                                <input type="number" id="led-wall-height" value="1080" placeholder="Height">
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label>Tile Size (px)</label>
+                            <div class="input-row">
+                                <input type="number" id="led-tile-width" value="128" placeholder="W">
+                                <span>x</span>
+                                <input type="number" id="led-tile-height" value="128" placeholder="H">
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label>Tile Numbering</label>
+                            <select id="led-numbering">
+                                <option value="row-col">1-1 (Row-Col)</option>
+                                <option value="a-1">A-1 (Row-Col)</option>
+                                <option value="1-a">1-A (Row-Col)</option>
+                                <option value="a-a">A-A (Row-Col)</option>
+                                <option value="global-h">Global Index (H-Scan)</option>
+                                <option value="global-v">Global Index (V-Scan)</option>
+                                <option value="none">None</option>
+                            </select>
+                        </div>
+                        <div class="control-group">
+                            <label>Coordinate Origin</label>
+                            <select id="led-coords">
+                                <option value="tl">Top-Left (Default)</option>
+                                <option value="bl">Bottom-Left (Y-Up)</option>
+                                <option value="center">Center (0,0 at Center)</option>
+                                <option value="none">None</option>
+                            </select>
+                        </div>
+                        <div class="control-group">
+                            <label>Options</label>
+                            <div class="input-row">
+                                <label
+                                    style="display: flex; align-items: center; gap: 8px; font-size: 0.9rem; color: var(--text-secondary);">
+                                    <input type="checkbox" id="led-rainbow"> Rainbow
+                                </label>
+                                <label
+                                    style="display: flex; align-items: center; gap: 8px; font-size: 0.9rem; color: var(--text-secondary);">
+                                    <input type="checkbox" id="led-background"> Background
+                                </label>
+                                <input type="color" id="led-color" value="#00ff00">
+                            </div>
+                        </div>
+                        <button id="generate-led-btn" class="action-btn">Generate LED</button>
+                    </div>
+                    <div class="pattern-display">
+                        <canvas id="led-canvas"></canvas>
+                    </div>
                 </div>
             </div>
         </main>
