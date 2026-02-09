@@ -20,51 +20,68 @@ WATCHOUT uses a **client-server architecture** that separates show creation from
 | Component | Minimum | Recommended |
 | --- | --- | --- |
 | Operating System | Windows 10 21H2 (64-bit) | Windows 11 23H2 or newer (64-bit) |
-| Processor | Intel Core i5 (8th Gen+) or AMD Ryzen 5 | Intel Core i7/i9 (12th Gen+) or AMD Ryzen 7/9 |
+| Processor | Intel Core i3/i5 or AMD Ryzen 3/5 | Intel Core i7/i9 or AMD Ryzen 7/9 |
 | RAM | 16 GB DDR4 | 32 GB DDR5 or more |
-| Graphics | DirectX 12 compatible GPU with 4 GB VRAM | NVIDIA RTX 4000 series or AMD Radeon Pro |
+| Graphics | DirectX 12 compatible GPU with 4 GB VRAM | NVIDIA RTX PRO |
 | Storage | SSD with 100 GB free | NVMe SSD (Gen4) with 1 TB+ free |
-| Network | Gigabit Ethernet | 10 Gigabit Ethernet |
+| Network | Gigabit Ethernet | 2.5 Gigabit Ethernet |
 
 ### Display Computer (Playback)
 
 | Component | Minimum | Recommended |
 | --- | --- | --- |
 | Operating System | Windows 10 21H2 (64-bit) | Windows 11 23H2 or newer (64-bit) |
-| Processor | Intel Core i5 (8th Gen+) or AMD Ryzen 5 | Intel Core i7/i9 or AMD Ryzen 7/9 |
+| Processor | Intel Core i3/i5, AMD Ryzen 3/5, or equivalent Xeon/EPYC | Intel Core i7/i9, AMD Ryzen 7/9, or equivalent Xeon/EPYC |
 | RAM | 16 GB DDR4 | 32 GB DDR5 or more |
-| Graphics | NVIDIA GeForce RTX or AMD equivalent | **NVIDIA Quadro RTX / RTX Ada Generation** |
-| Storage | SATA SSD (500+ MB/s read) | NVMe SSD (Gen4, 3500+ MB/s read) |
-| Network | Gigabit Ethernet | 10 Gigabit Ethernet |
+| Graphics | NVIDIA GeForce RTX | **NVIDIA RTX PRO (Quadro/RTX Ada)** |
+| Storage | SATA SSD (500+ MB/s sustained read) | NVMe SSD (Gen4, 3500+ MB/s sustained read) |
+| Network | Gigabit Ethernet | 2.5 Gigabit Ethernet |
 
-#### Windows LTSC vs. Standard Editions
-
-For display computers in permanent installations, consider using **Windows 10/11 IoT Enterprise LTSC** (Long-Term Servicing Channel) instead of standard Windows editions:
-
-| Feature | Standard Windows | Windows LTSC |
-| --- | --- | --- |
-| Feature updates | Every 6-12 months | None (security only) |
-| Support lifecycle | 18-24 months | 5-10 years |
-| Bloatware/Store apps | Included | Removed |
-| Cortana/Edge/Xbox | Included | Removed |
-| Forced restarts | Can occur | Fully controllable |
-| Update scheduling | Limited control | Complete control |
-
-**Practical benefits of LTSC for display servers:**
-
-- **No surprise updates** – Feature updates won't change system behavior or require reboots during shows
-- **Minimal background processes** – No Cortana, Xbox Game Bar, or Store apps consuming resources
-- **Predictable environment** – The OS stays exactly as you configured it for years
-- **Extended support** – Security patches available for 5+ years without upgrading
-- **Reduced attack surface** – Fewer pre-installed applications means fewer potential vulnerabilities
+:::info
+**Note on CPU:** The processor is not a critical factor for most WATCHOUT installations. Workstation-class processors like Intel Xeon and AMD EPYC work well, and even an Intel Core i3 provides sufficient performance for basic playback scenarios.
+:::
 
 :::warning
-**Licensing Note:** Windows IoT Enterprise LTSC requires volume licensing through Microsoft partners and is priced differently than retail Windows. It's designed for embedded and fixed-function devices like kiosks, digital signage, and display servers—making it ideal for WATCHOUT installations.
+**Note on AMD Graphics:** While AMD GPUs may work, NVIDIA is recommended for full WATCHOUT feature support. AMD graphics cards require additional testing before deployment in production environments.
 :::
+
+### Windows Editions: Consumer vs. WATCHPAX
+
+When building your own display computer, you'll use standard consumer Windows editions. **Windows 11 Home** or **Windows 11 Pro** are the recommended options for user-built systems.
+
+| Feature | Windows 11 Home/Pro | WATCHPAX |
+| --- | --- | --- |
+| Operating System | Standard Windows | Windows IoT Enterprise LTSC |
+| Feature updates | Every 6-12 months | None (security only) |
+| Support lifecycle | 24 months | 5-10 years |
+| Bloatware/Store apps | Included | Removed |
+| WPX Manager Support | No | Yes |
+| Update control | Limited | Complete control |
+| Pre-configured | No | Yes, optimized for WATCHOUT |
+
+**Why choose WATCHPAX over a custom-built PC?**
+
+- **No surprise updates** – The LTSC operating system receives security patches only; no feature updates that could change system behavior or require reboots during shows
+- **Minimal background processes** – No Cortana, Xbox Game Bar, or Store apps consuming resources
+- **Predictable environment** – The OS stays exactly as configured for years
+- **Extended support** – Security patches available for 5+ years without major OS upgrades
+- **Pre-configured** – WATCHPAX units arrive ready for WATCHOUT with optimal settings applied
+
+:::warning
+**Important:** Windows IoT Enterprise LTSC is licensed exclusively for fixed-purpose devices. For WATCHOUT, only Dataton (through WATCHPAX) and authorized OEM partners can legally provide systems with this operating system pre-installed. Building your own PC with LTSC for use with WATCHOUT is not permitted under Microsoft's licensing terms.
+:::
+
+**Managing updates on consumer Windows:**
+
+If using Windows 11 Home or Pro, plan for regular maintenance windows:
+
+- Schedule Windows updates during non-show periods
+- Test updates in a staging environment before production systems
+- Consider using Windows Pro's Group Policy to control update timing
+- Maintain no more than 24 months behind current Windows versions to remain in Microsoft's support window
 
 :::info
 **Note:** Display computers should be dedicated to WATCHOUT playback. Avoid running other applications during live shows to ensure consistent performance.
-
 :::
 
 ### Windows Updates and Rendering Performance
@@ -115,25 +132,38 @@ For display servers driving multiple outputs, Windows updates are essential:
 **Recommendation:** Always use the latest stable Windows version and cumulative updates. Test updates in a staging environment before deploying to production show computers.
 :::
 
-### NVIDIA Quadro RTX / RTX Ada Professional Graphics
+### NVIDIA RTX PRO Professional Graphics
 
-While consumer GeForce cards can run WATCHOUT, **NVIDIA Quadro RTX and RTX Ada generation professional GPUs** are strongly recommended for display computers in production environments. Here's why:
+While consumer GeForce cards can run WATCHOUT, **NVIDIA RTX PRO (Quadro and RTX Ada) professional GPUs** are strongly recommended for display computers in production environments. Here's why:
 
-#### Key Benefits of Quadro RTX
+#### Key Benefits of NVIDIA RTX PRO
 
-| Feature | Quadro RTX / RTX Pro | GeForce RTX |
+| Feature | NVIDIA RTX PRO | GeForce RTX |
 | --- | --- | --- |
 | ECC Memory | ✓ Error-correcting VRAM | ✗ Not available |
 | TCC Mode | ✓ Compute-optimized mode | ✗ Windows display only |
+| EDID Management | ✓ Controllable via WATCHOUT | ✗ Not supported |
 | Sync Connector | ✓ Hardware genlock/framelock | ✗ Software sync only |
 | Displays Supported | Up to 4-8 native outputs | Typically 4 outputs |
 | 10-bit Color | ✓ Full support in all apps | Limited application support |
 | Driver Certification | ✓ ISV certified, extended testing | Game-focused optimization |
 | Long-term Support | ✓ Enterprise driver branches | Consumer update cycle |
 
+#### EDID Management
+
+WATCHOUT can manage EDID (Extended Display Identification Data) directly when using **NVIDIA RTX PRO or Quadro** graphics cards. This allows you to:
+
+- Set custom resolutions and refresh rates per output
+- Emulate display EDIDs for consistent behavior without physical displays connected
+- Configure outputs before connecting actual projectors or screens
+
+:::info
+**Note:** EDID management through WATCHOUT is only supported on NVIDIA professional GPUs. Users with AMD or other graphics cards will need to manage EDID settings outside of WATCHOUT using third-party tools or hardware EDID emulators.
+:::
+
 #### ECC Memory – Preventing Visual Artifacts
 
-Quadro RTX cards feature **Error-Correcting Code (ECC) memory** that automatically detects and corrects single-bit memory errors. This prevents:
+RTX PRO cards feature **Error-Correcting Code (ECC) memory** that automatically detects and corrects single-bit memory errors. This prevents:
 
 - Random pixel corruption and visual artifacts during playback
 
@@ -143,19 +173,21 @@ Quadro RTX cards feature **Error-Correcting Code (ECC) memory** that automatical
 
 For 24/7 installations like museums, permanent exhibits, or broadcast applications, ECC memory is essential for guaranteed visual integrity.
 
-#### Quadro Sync and Framelock
+#### NVIDIA Sync Board: Framelock and Genlock
 
-For multi-projector installations requiring perfect synchronization:
+For multi-projector installations requiring **perfect frame synchronization**:
 
-- **Quadro Sync II cards** enable hardware-level genlock between multiple GPUs and external sync sources
-
+- **NVIDIA Sync II boards** enable hardware-level genlock between multiple GPUs and external sync sources
 - **Framelock** ensures all outputs across multiple cards/systems swap buffers simultaneously
-
 - Critical for edge-blended panoramas and LED wall installations where frame tearing between panels is visible
+
+:::warning
+**Hardware Required:** Framelocking multiple display computers or syncing to an external genlock signal requires an NVIDIA Sync board installed in each display computer. This is a separate hardware add-on for RTX PRO / Quadro cards—it is not possible with consumer GeForce GPUs.
+:::
 
 #### Professional Driver Certification
 
-Quadro drivers undergo extensive testing and certification:
+RTX PRO drivers undergo extensive testing and certification:
 
 - **Optimal Drivers for Enterprise (ODE)** – Stability-focused drivers with extended testing cycles
 
@@ -165,59 +197,113 @@ Quadro drivers undergo extensive testing and certification:
 
 - **Better regression testing** – Less risk of updates breaking existing functionality
 
-#### Recommended Quadro RTX Models
+#### Recommended NVIDIA RTX PRO Models
 
 | Model | VRAM | Outputs | Best For |
 | --- | --- | --- | --- |
+| RTX 4000 Ada | 20 GB | 4× DP 1.4a | Production installations |
+| RTX 5000 Ada | 32 GB | 4× DP 1.4a | Premium performance, future-proof |
 | RTX A4000 | 16 GB | 4× DP 1.4 | Mid-range installations, 4K playback |
 | RTX A5000 | 24 GB | 4× DP 1.4 | High-res content, multiple 4K outputs |
 | RTX A6000 | 48 GB | 4× DP 1.4 | 8K content, demanding installations |
-| RTX 4000 Ada | 20 GB | 4× DP 1.4a | Latest generation, AV1 decode |
-| RTX 5000 Ada | 32 GB | 4× DP 1.4a | Premium performance, future-proof |
 
 :::info
-**Tip:** For installations requiring more than 4 outputs per machine, consider using multiple Quadro cards with Quadro Sync, or NVIDIA's NVLink bridge technology for unified memory access across GPUs.
+**Tip:** For installations requiring more than 4 outputs per machine, consider using multiple RTX PRO cards with an NVIDIA Sync board, or NVIDIA's NVLink bridge technology for unified memory access across GPUs.
+:::
+
+### Video Capture Requirements
+
+When using video capture devices with WATCHOUT, ensure your hardware meets these requirements:
+
+| Requirement | Description |
+| --- | --- |
+| **Windows Media Foundation** | Capture device must have Windows Media Foundation (WMF) compatible drivers |
+| **Deltacast Cards** | Require GPUDirect support for optimal performance |
+
+:::info
+**GPUDirect:** For Deltacast capture cards, GPUDirect enables direct memory transfer between the capture card and GPU, bypassing system memory for lower latency and reduced CPU overhead.
 :::
 
 ### Storage Recommendations
 
-Video playback performance depends heavily on storage speed:
+Video playback performance depends heavily on storage speed. **Sustained read rates** are more important than peak specifications—this is the read speed your SSD can maintain continuously during 24/7 operation without thermal throttling.
 
-| Content Type | Minimum Read Speed | Recommended Storage |
+:::warning
+**Sustained vs. Peak Performance:** SSD manufacturers often advertise peak read speeds, but thermal throttling can reduce actual performance during continuous operation. Ensure your system has adequate cooling for the SSD, and look for drives with good sustained performance ratings. The read rate an SSD can maintain indefinitely may be significantly lower than its maximum specification, depending on the drive model and thermal conditions.
+:::
+
+#### Video Codec Storage Requirements
+
+| Content Type | Minimum Sustained Read | Recommended Storage |
 | --- | --- | --- |
 | Single 4K HAP video | 400 MB/s | SATA SSD |
 | Multiple 4K videos | 1500 MB/s | NVMe Gen3 SSD |
 | 8K content | 3000+ MB/s | NVMe Gen4 SSD |
 | Image sequences | 5000+ MB/s | NVMe Gen4 or RAID array |
 
+#### Asset Disk Space Guidelines
+
+Plan storage capacity based on your content library. Below are typical file sizes for common media formats:
+
+| Content | Duration/Count | Approximate Size |
+| --- | --- | --- |
+| HAP 1080p60 video | 1 minute | ~6 GB |
+| HAP 4K60 video | 1 minute | ~24 GB |
+| HAP 8K60 video | 1 minute | ~96 GB |
+| ProRes 4K60 video | 1 minute | ~8 GB |
+| 4K image (PNG) | 1 image | ~30 MB |
+| 8K image (PNG) | 1 image | ~120 MB |
+
+:::info
+**Tip:** For shows with large media libraries, calculate total storage needs including headroom for revisions and additional content. A 1 TB NVMe SSD is suitable for most productions; consider 2 TB or more for 4K/8K heavy projects.
+:::
+
 ### Network Requirements
 
 | Component | Minimum | Recommended |
 | --- | --- | --- |
-| Speed | 1 Gbps | 10 Gbps |
+| Speed | 1 Gbps | 2.5 Gbps |
 | Switch | Managed Gigabit switch | Enterprise-grade with IGMP snooping |
 | Cabling | Cat6 | Cat6a or fiber optic |
 | Topology | Star (all on same subnet) | Dedicated VLAN for WATCHOUT |
 
 :::info
+**Why 2.5 Gbps?** Most modern motherboards include 2.5 Gigabit Ethernet as standard, providing a significant improvement over 1 Gbps without the cost and complexity of 10 Gbps infrastructure. This is the same networking standard used in WATCHPAX display servers.
+:::
+
+:::info
 **What is IGMP Snooping?** Internet Group Management Protocol (IGMP) snooping is a switch feature that optimizes multicast traffic. Without it, multicast packets (used by WATCHOUT for synchronization and NDI video) flood all switch ports, wasting bandwidth. With IGMP snooping enabled, the switch intelligently forwards multicast traffic only to devices that need it—reducing network congestion and improving overall performance, especially in systems with multiple display servers or NDI sources.
+:::
+
+#### NDI Stream Bandwidth Requirements
+
+NDI (Network Device Interface) is commonly used for video input in WATCHOUT. Here are the typical bandwidth requirements for NDI|HX streams:
+
+| Resolution | Frame Rate | Bandwidth (approx.) | Fits on 1 Gbps |
+| --- | --- | --- | --- |
+| 1920×1080 | 60 fps | 80-150 Mbps | ✓ Yes |
+| 3840×2160 (4K) | 60 fps | 200-400 Mbps | ✓ Yes |
+| 7680×4320 (8K) | 60 fps | 600-900 Mbps | ✓ Yes (single stream) |
+
+:::info
+**Note:** Full-bandwidth NDI (not NDI|HX) uses significantly more bandwidth—approximately 3 Gbps for 1080p60. The table above reflects NDI|HX compressed streams, which are more common for production use with WATCHOUT. Multiple simultaneous NDI streams or full-bandwidth NDI may require 2.5 Gbps or faster networking.
 :::
 
 #### File Transfer Time Comparison
 
 Network speed dramatically affects how quickly you can deploy media to display servers. The table below shows approximate transfer times for common file sizes:
 
-| File Size | 1 Gbps (~110 MB/s) | 10 Gbps (~1.1 GB/s) | Time Saved |
+| File Size | 1 Gbps (~110 MB/s) | 2.5 Gbps (~280 MB/s) | 10 Gbps (~1.1 GB/s) |
 | --- | --- | --- | --- |
-| 1 GB | ~9 seconds | ~1 second | 8 seconds |
-| 100 GB | ~15 minutes | ~90 seconds | 13.5 minutes |
-| 1 TB | ~2.5 hours | ~15 minutes | 2+ hours |
+| 1 GB | ~9 seconds | ~4 seconds | ~1 second |
+| 100 GB | ~15 minutes | ~6 minutes | ~90 seconds |
+| 1 TB | ~2.5 hours | ~60 minutes | ~15 minutes |
 
 :::info
 **Note:** Actual transfer speeds depend on disk I/O, network congestion, and switch quality. The values above assume modern SSDs and a well-configured network with minimal overhead.
 :::
 
-For productions with large media libraries or frequent content updates, 10 Gbps networking pays for itself quickly in reduced setup and rehearsal time. Consider 10 GbE especially for:
+For productions with large media libraries or frequent content updates, faster networking pays for itself quickly in reduced setup and rehearsal time. Consider higher-speed networking especially for:
 
 - **4K/8K video content** – Single uncompressed 4K frames can exceed 30 MB
 - **Image sequences** – Thousands of files that benefit from sustained throughput

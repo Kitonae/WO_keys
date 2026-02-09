@@ -7,8 +7,15 @@
         {
             "type": "chrome",
             "request": "launch",
-            "name": "Launch Chrome against localhost",
+            "name": "Launch Chrome (Windows)",
             "url": "C:\\src\\WO_keys\\wiki\\index.html",
+            "webRoot": "${workspaceFolder}"
+        },
+        {
+            "type": "chrome",
+            "request": "launch",
+            "name": "Launch Wiki (Mac)",
+            "file": "${workspaceFolder}/wiki/index.html",
             "webRoot": "${workspaceFolder}"
         }
     ]
