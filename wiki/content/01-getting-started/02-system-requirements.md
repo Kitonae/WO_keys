@@ -84,16 +84,6 @@ If using Windows 11 Home or Pro, plan for regular maintenance windows:
 
 Keeping Windows up to date is **critical for optimal WATCHOUT performance**. Newer Windows updates deliver significant improvements to rendering stability and visual output quality:
 
-#### Modern Driver and Display Features
-
-Current Windows versions include important display and driver improvements:
-
-- **DCH Drivers** – Modern driver architecture required by Windows, includes built-in GPU monitoring through Task Manager and improved driver reliability
-
-- **HDR Support** – High Dynamic Range output for compatible displays, providing wider color gamut and improved contrast
-
-- **Fullscreen Optimizations (FSO)** – Lower latency presentation mode for fullscreen applications, reducing input lag and improving frame pacing
-
 #### DirectX 12 Ultimate Enhancements
 
 Windows updates continuously improve DirectX 12 capabilities:
@@ -136,13 +126,10 @@ While consumer GeForce cards can run WATCHOUT, **NVIDIA RTX PRO (Quadro and RTX 
 
 | Feature | NVIDIA RTX PRO | GeForce RTX |
 | --- | --- | --- |
-| ECC Memory | ✓ Error-correcting VRAM | ✗ Not available |
 | TCC Mode | ✓ Compute-optimized mode | ✗ Windows display only |
 | EDID Management | ✓ Controllable via WATCHOUT | ✗ Not supported |
 | Sync Connector | ✓ Hardware genlock/framelock | ✗ Software sync only |
-| Displays Supported | Up to 4-8 native outputs | Typically 4 outputs |
-| 10-bit Color | ✓ Full support in all apps | Limited application support |
-| Driver Certification | ✓ ISV certified, extended testing | Game-focused optimization |
+| Driver Certification | ✓ Extended testing cycles | Game-focused optimization |
 | Long-term Support | ✓ Enterprise driver branches | Consumer update cycle |
 
 #### EDID Management
@@ -156,18 +143,6 @@ WATCHOUT can manage EDID (Extended Display Identification Data) directly when us
 :::info
 **Note:** EDID management through WATCHOUT is only supported on NVIDIA professional GPUs. Users with AMD or other graphics cards will need to manage EDID settings outside of WATCHOUT using third-party tools or hardware EDID emulators.
 :::
-
-#### ECC Memory – Preventing Visual Artifacts
-
-RTX PRO cards feature **Error-Correcting Code (ECC) memory** that automatically detects and corrects single-bit memory errors. This prevents:
-
-- Random pixel corruption and visual artifacts during playback
-
-- Frame buffer corruption during extended operation
-
-- Unexplained crashes in mission-critical installations
-
-For 24/7 installations like museums, permanent exhibits, or broadcast applications, ECC memory is essential for guaranteed visual integrity.
 
 #### NVIDIA Sync Board: Framelock and Genlock
 
@@ -187,8 +162,6 @@ RTX PRO drivers undergo extensive testing and certification:
 
 - **Optimal Drivers for Enterprise (ODE)** – Stability-focused drivers with extended testing cycles
 
-- **ISV certifications** – Guaranteed compatibility with professional applications
-
 - **Longer support lifecycle** – Enterprise customers receive driver updates for extended periods
 
 - **Better regression testing** – Less risk of updates breaking existing functionality
@@ -197,14 +170,13 @@ RTX PRO drivers undergo extensive testing and certification:
 
 | Model | VRAM | Outputs | Best For |
 | --- | --- | --- | --- |
-| RTX 4000 Ada | 20 GB | 4× DP 1.4a | Production installations |
-| RTX 5000 Ada | 32 GB | 4× DP 1.4a | Premium performance, future-proof |
-| RTX A4000 | 16 GB | 4× DP 1.4 | Mid-range installations, 4K playback |
-| RTX A5000 | 24 GB | 4× DP 1.4 | High-res content, multiple 4K outputs |
-| RTX A6000 | 48 GB | 4× DP 1.4 | 8K content, demanding installations |
+| RTX PRO 4000 Blackwell | 24 GB | 4× DP | Standard installations, 4K playback |
+| RTX PRO 4500 Blackwell | 32 GB | 4× DP | Multiple 4K outputs, demanding content |
+| RTX PRO 5000 Blackwell | 48 GB | 4× DP | High-res content, large installations |
+| RTX PRO 6000 Blackwell | 96 GB | 4× DP | 8K content, most demanding installations |
 
 :::info
-**Tip:** For installations requiring more than 4 outputs per machine, consider using multiple RTX PRO cards with an NVIDIA Sync board, or NVIDIA's NVLink bridge technology for unified memory access across GPUs.
+**Tip:** For installations requiring more than 4 outputs per machine, consider using multiple RTX PRO cards with an NVIDIA Sync board.
 :::
 
 ### Video Capture Requirements
