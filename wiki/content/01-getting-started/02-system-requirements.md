@@ -192,6 +192,7 @@ Video playback performance depends heavily on storage speed. **Sustained read ra
 | --- | --- | --- |
 | HAP 1080p60 | ~59 MiB/s | SATA SSD |
 | HAP 4K60 | ~237 MiB/s | SATA SSD or NVMe |
+| Notch LC 4K60 | ~380 MiB/s | SATA SSD or NVMe |
 | HAP 8K60 | ~949 MiB/s | NVMe Gen3 SSD |
 | 4K image sequence (60 fps) | ~1,899 MiB/s | NVMe Gen4 SSD |
 | 8K image sequence (60 fps) | ~7,594 MiB/s | NVMe Gen4 RAID array |
@@ -204,8 +205,8 @@ Plan storage capacity based on your content library. Below are typical file size
 | --- | --- | --- |
 | HAP 1080p60 video | 1 minute | ~3.5 GiB |
 | HAP 4K60 video | 1 minute | ~14 GiB |
+| Notch LC 4K60 video | 1 minute | ~22 GiB |
 | HAP 8K60 video | 1 minute | ~56 GiB |
-| Notch LC 4K60 video | 1 minute | ~8 GiB |
 | 4K image sequence (60 fps) | 1 minute | ~111 GiB |
 | 8K image sequence (60 fps) | 1 minute | ~446 GiB |
 
