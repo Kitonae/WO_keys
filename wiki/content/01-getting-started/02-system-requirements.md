@@ -33,7 +33,7 @@ WATCHOUT uses a **client-server architecture** that separates show creation from
 | Operating System | Windows 10 21H2 (64-bit) | Windows 11 23H2 or newer (64-bit) |
 | Processor | Intel Core i3/i5, AMD Ryzen 3/5, or equivalent Xeon/EPYC | Intel Core i7/i9, AMD Ryzen 7/9, or equivalent Xeon/EPYC |
 | RAM | 16 GB DDR4 | 32 GB DDR5 or more |
-| Graphics | NVIDIA GeForce RTX | **NVIDIA RTX PRO (Quadro/RTX Ada)** |
+| Graphics | NVIDIA GeForce RTX | **NVIDIA RTX PRO** |
 | Storage | SATA SSD (500+ MB/s sustained read) | NVMe SSD (Gen4, 3500+ MB/s sustained read) |
 | Network | Gigabit Ethernet | 2.5 Gigabit Ethernet |
 
@@ -66,10 +66,6 @@ When building your own display computer, you'll use standard consumer Windows ed
 - **Predictable environment** – The OS stays exactly as configured for years
 - **Extended support** – Security patches available for 5+ years without major OS upgrades
 - **Pre-configured** – WATCHPAX units arrive ready for WATCHOUT with optimal settings applied
-
-:::warning
-**Important:** Windows IoT Enterprise LTSC is licensed exclusively for fixed-purpose devices. For WATCHOUT, only Dataton (through WATCHPAX) and authorized OEM partners can legally provide systems with this operating system pre-installed. Building your own PC with LTSC for use with WATCHOUT is not permitted under Microsoft's licensing terms.
-:::
 
 **Managing updates on consumer Windows:**
 
