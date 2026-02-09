@@ -1,6 +1,10 @@
 ---
 title: "Main Window Overview"
+author: Karol
+editor: Jacquie
+quality-check: JME
 ---
+
 
 ## Main Window Overview
 

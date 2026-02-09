@@ -1,6 +1,10 @@
 ---
 title: "Opacity and Fades"
+author: Karol
+editor: Jacquie
+quality-check: JME
 ---
+
 
 ## Opacity and Fades
 

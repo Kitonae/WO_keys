@@ -1,6 +1,10 @@
 ---
 title: "Position and Movement"
+author: Karol
+editor: Jacquie
+quality-check: JME
 ---
+
 
 ## Position and Movement
 

@@ -1,6 +1,10 @@
 ---
 title: "Comment Cues"
+author: Karol
+editor: Jacquie
+quality-check: JME
 ---
+
 
 ## Comment Cues
 

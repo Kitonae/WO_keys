@@ -1,6 +1,10 @@
 ---
 title: "Asset Properties"
+author: Karol
+editor: Jacquie
+quality-check: JME
 ---
+
 
 ## Asset Properties
 

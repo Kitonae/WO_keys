@@ -1,3 +1,12 @@
+---
+title: Welcome To Watchout 7
+status: content finished - ready to check
+author: Karol
+editor: Jacquie
+quality-check: JME
+---
+
+
 ## Welcome to WATCHOUT 7
 
 **WATCHOUT 7** is the latest evolution of Dataton's award-winning multi-display production and playback system. Designed for show creators, live event professionals, and system integrators, WATCHOUT empowers you to orchestrate massive-scale visuals across unlimited displays, projectors, and LED walls—all from a single timeline.

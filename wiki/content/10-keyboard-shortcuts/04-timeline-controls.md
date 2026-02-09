@@ -1,6 +1,10 @@
 ---
 title: "Timeline Controls"
+author: Karol
+editor: Jacquie
+quality-check: JME
 ---
+
 
 ## Timeline Controls
 

@@ -1,6 +1,10 @@
 ---
 title: "The Stage Window"
+author: Karol
+editor: Jacquie
+quality-check: JME
 ---
+
 
 ## The Stage Window
 

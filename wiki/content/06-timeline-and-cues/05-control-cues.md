@@ -1,6 +1,10 @@
 ---
 title: "Control Cues"
+author: Karol
+editor: Jacquie
+quality-check: JME
 ---
+
 
 ## Control Cues
 

@@ -1,6 +1,10 @@
 ---
 title: "Dante Audio"
+author: Karol
+editor: Jacquie
+quality-check: JME
 ---
+
 
 ## Dante Audio
 

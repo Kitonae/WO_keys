@@ -1,6 +1,10 @@
 ---
 title: "The Timeline Window"
+author: Karol
+editor: Jacquie
+quality-check: JME
 ---
+
 
 ## The Timeline Window
 

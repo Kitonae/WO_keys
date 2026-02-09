@@ -1,6 +1,10 @@
 ---
 title: "Network Issues"
+author: Karol
+editor: Jacquie
+quality-check: JME
 ---
+
 
 ## Network Issues
 

@@ -1,6 +1,10 @@
 ---
 title: "The Properties Panel"
+author: Karol
+editor: Jacquie
+quality-check: JME
 ---
+
 
 ## The Properties Panel
 

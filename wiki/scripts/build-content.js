@@ -364,7 +364,39 @@ function buildContent() {
 
             const sectionTitle = metadata.title || filenameToTitle(sectionFile);
             const sectionDescription = metadata.description || extractDescription(content);
-            const sectionHtml = markdownToHtml(content);
+
+            const sectionStatus = metadata.status || 'draft';
+            let statusClass = sectionStatus.toLowerCase().replace(/[^\w\s-]/g, '').replace(/\s+/g, '-');
+
+            // Normalize status class to predefined styles
+            if (statusClass.includes('content-verified')) statusClass = 'content-verified';
+            else if (statusClass.includes('content-finished')) statusClass = 'content-finished';
+            else if (statusClass.includes('edit-finished')) statusClass = 'edit-finished';
+            else if (statusClass.includes('final')) statusClass = 'final';
+            else if (statusClass.includes('draft')) statusClass = 'draft';
+            let metadataHtml = `<div class="article-metadata">`;
+            metadataHtml += `<span class="article-status status-${statusClass}">Status: ${sectionStatus}</span>`;
+
+            if (metadata.author) {
+                metadataHtml += `<span class="article-author-badge">Author: ${metadata.author}</span>`;
+            }
+
+            if (metadata.editor) {
+                metadataHtml += `<span class="article-editor-badge">Editor: ${metadata.editor}</span>`;
+            }
+
+            if (metadata['quality-check']) {
+                metadataHtml += `<span class="article-qc-badge">Quality Check: ${metadata['quality-check']}</span>`;
+            }
+
+            const stats = fs.statSync(sectionPath);
+            const lastEdit = metadata['last-edit'] || stats.mtime.toISOString().split('T')[0];
+            metadataHtml += `<span class="article-date-badge">Last Edit: ${lastEdit}</span>`;
+            metadataHtml += `<a href="[[RELATIVE_PATH]]content/${chapterDir}/${sectionFile}" class="article-source-badge" download>Source MD</a>`;
+
+            metadataHtml += `</div>`;
+
+            const sectionHtml = metadataHtml + markdownToHtml(content);
 
             sections[sectionTitle] = sectionHtml;
             tocSections.push({

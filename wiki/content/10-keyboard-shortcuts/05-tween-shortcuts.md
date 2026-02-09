@@ -1,6 +1,10 @@
 ---
 title: "Tween Shortcuts"
+author: Karol
+editor: Jacquie
+quality-check: JME
 ---
+
 
 ## Tween Shortcuts
 

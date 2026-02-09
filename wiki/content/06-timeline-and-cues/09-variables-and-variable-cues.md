@@ -1,6 +1,10 @@
 ---
 title: "Variables and Variable Cues"
+author: Karol
+editor: Jacquie
+quality-check: JME
 ---
+
 
 ## Variables and Variable Cues
 

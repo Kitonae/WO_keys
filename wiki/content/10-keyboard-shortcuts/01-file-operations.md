@@ -1,6 +1,10 @@
 ---
 title: "File Operations"
+author: Karol
+editor: Jacquie
+quality-check: JME
 ---
+
 
 ## File Operations
 

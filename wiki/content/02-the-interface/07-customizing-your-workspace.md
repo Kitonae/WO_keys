@@ -1,6 +1,10 @@
 ---
 title: "Customizing Your Workspace"
+author: Karol
+editor: Jacquie
+quality-check: JME
 ---
+
 
 ## Customizing Your Workspace
 

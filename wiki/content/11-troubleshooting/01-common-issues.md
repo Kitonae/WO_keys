@@ -1,6 +1,10 @@
 ---
 title: "Common Issues"
+author: Karol
+editor: Jacquie
+quality-check: JME
 ---
+
 
 ## Common Issues
 

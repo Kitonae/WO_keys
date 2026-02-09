@@ -1,6 +1,10 @@
 ---
 title: "Media Playback Issues"
+author: Karol
+editor: Jacquie
+quality-check: JME
 ---
+
 
 ## Media Playback Issues
 

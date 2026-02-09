@@ -1,6 +1,10 @@
 ---
 title: "Display Grid Setup"
+author: Karol
+editor: Jacquie
+quality-check: JME
 ---
+
 
 ## Display Grid Setup
 

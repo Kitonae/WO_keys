@@ -1,6 +1,10 @@
 ---
 title: "Edit Commands"
+author: Karol
+editor: Jacquie
+quality-check: JME
 ---
+
 
 ## Edit Commands
 

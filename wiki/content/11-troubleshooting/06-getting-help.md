@@ -1,6 +1,10 @@
 ---
 title: "Getting Help"
+author: Karol
+editor: Jacquie
+quality-check: JME
 ---
+
 
 ## Getting Help
 

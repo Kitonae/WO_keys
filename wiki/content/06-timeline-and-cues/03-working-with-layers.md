@@ -1,6 +1,10 @@
 ---
 title: "Working with Layers"
+author: Karol
+editor: Jacquie
+quality-check: JME
 ---
+
 
 ## Working with Layers
 

@@ -1,6 +1,10 @@
 ---
 title: "Color Adjustments"
+author: Karol
+editor: Jacquie
+quality-check: JME
 ---
+
 
 ## Color Adjustments
 

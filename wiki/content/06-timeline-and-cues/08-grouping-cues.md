@@ -1,6 +1,10 @@
 ---
 title: "Grouping Cues"
+author: Karol
+editor: Jacquie
+quality-check: JME
 ---
+
 
 ## Grouping Cues
 

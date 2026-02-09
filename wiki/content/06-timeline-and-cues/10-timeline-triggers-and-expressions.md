@@ -1,6 +1,10 @@
 ---
 title: "Timeline Triggers and Expressions"
+author: Karol
+editor: Jacquie
+quality-check: JME
 ---
+
 
 ## Timeline Triggers and Expressions
 

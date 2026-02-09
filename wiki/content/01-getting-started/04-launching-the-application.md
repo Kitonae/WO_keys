@@ -1,3 +1,9 @@
+---
+author: Karol
+editor: Jacquie
+quality-check: Morgan
+---
+
 ## Launching the Application
 
 Once WATCHOUT is installed, you are ready to launch the software. How you launch it depends on whether you are working on the Production Computer (designing) or a Display Computer (playback).

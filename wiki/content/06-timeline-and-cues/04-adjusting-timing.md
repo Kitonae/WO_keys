@@ -1,6 +1,10 @@
 ---
 title: "Adjusting Timing"
+author: Karol
+editor: Jacquie
+quality-check: JME
 ---
+
 
 ## Adjusting Timing
 

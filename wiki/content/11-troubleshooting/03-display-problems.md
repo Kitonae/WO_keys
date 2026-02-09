@@ -1,6 +1,10 @@
 ---
 title: "Display Problems"
+author: Karol
+editor: Jacquie
+quality-check: JME
 ---
+
 
 ## Display Problems
 

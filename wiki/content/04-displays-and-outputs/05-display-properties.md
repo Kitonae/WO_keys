@@ -1,6 +1,10 @@
 ---
 title: "Display Properties"
+author: Karol
+editor: Jacquie
+quality-check: JME
 ---
+
 
 ## Display Properties
 

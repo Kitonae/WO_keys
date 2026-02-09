@@ -1,6 +1,10 @@
 ---
 title: "Stage Navigation"
+author: Karol
+editor: Jacquie
+quality-check: JME
 ---
+
 
 ## Stage Navigation
 

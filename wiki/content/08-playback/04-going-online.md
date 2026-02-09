@@ -1,6 +1,10 @@
 ---
 title: "Going Online"
+author: Karol
+editor: Jacquie
+quality-check: JME
 ---
+
 
 ## Going Online
 

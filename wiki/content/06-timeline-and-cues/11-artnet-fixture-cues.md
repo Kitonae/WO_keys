@@ -1,6 +1,10 @@
 ---
 title: "ArtNet Fixture Cues"
+author: Karol
+editor: Jacquie
+quality-check: JME
 ---
+
 
 ## ArtNet Fixture Cues
 

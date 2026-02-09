@@ -1,6 +1,10 @@
 ---
 title: "Formats & Codecs"
+author: Karol
+editor: Jacquie
+quality-check: JME
 ---
+
 
 ## Formats & Codecs
 

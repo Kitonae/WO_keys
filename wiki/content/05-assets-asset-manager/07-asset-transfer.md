@@ -1,6 +1,10 @@
 ---
 title: "Asset Transfer"
+author: Karol
+editor: Jacquie
+quality-check: JME
 ---
+
 
 ## Asset Transfer
 

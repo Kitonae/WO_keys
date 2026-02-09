@@ -1,6 +1,10 @@
 ---
 title: "Blur Effects"
+author: Karol
+editor: Jacquie
+quality-check: JME
 ---
+
 
 ## Blur Effects
 

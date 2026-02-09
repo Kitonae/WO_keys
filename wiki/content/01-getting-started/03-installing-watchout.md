@@ -1,3 +1,9 @@
+---
+author: Karol
+editor: Jacquie
+quality-check: Anton
+---
+
 ## Installing WATCHOUT
 
 Setting up WATCHOUT represents the first step toward creating your show. The installation process is straightforward, but ensuring your system is prepared correctly is key to a stable performance environment.

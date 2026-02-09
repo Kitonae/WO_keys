@@ -1,6 +1,10 @@
 ---
 title: "Audio Volume"
+author: Karol
+editor: Jacquie
+quality-check: JME
 ---
+
 
 ## Audio Volume
 

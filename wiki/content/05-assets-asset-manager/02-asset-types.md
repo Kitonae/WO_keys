@@ -1,6 +1,10 @@
 ---
 title: "Asset Types"
+author: Karol
+editor: Jacquie
+quality-check: JME
 ---
+
 
 ## Asset Types
 

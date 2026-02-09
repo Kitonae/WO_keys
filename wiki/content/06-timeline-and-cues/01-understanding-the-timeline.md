@@ -1,6 +1,10 @@
 ---
 title: "Understanding the Timeline"
+author: Karol
+editor: Jacquie
+quality-check: JME
 ---
+
 
 ## Understanding the Timeline
 

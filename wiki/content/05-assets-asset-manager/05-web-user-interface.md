@@ -1,6 +1,10 @@
 ---
 title: "Web User Interface"
+author: Karol
+editor: Jacquie
+quality-check: JME
 ---
+
 
 ## Web User Interface
 

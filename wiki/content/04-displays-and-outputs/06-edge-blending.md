@@ -1,6 +1,10 @@
 ---
 title: "Edge Blending"
+author: Karol
+editor: Jacquie
+quality-check: JME
 ---
+
 
 ## Edge Blending
 

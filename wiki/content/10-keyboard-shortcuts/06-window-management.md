@@ -1,6 +1,10 @@
 ---
 title: "Window Management"
+author: Karol
+editor: Jacquie
+quality-check: JME
 ---
+
 
 ## Window Management
 

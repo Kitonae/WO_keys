@@ -1,6 +1,10 @@
 ---
 title: "Asset Watcher"
+author: Karol
+editor: Jacquie
+quality-check: JME
 ---
+
 
 ## Asset Watcher
 

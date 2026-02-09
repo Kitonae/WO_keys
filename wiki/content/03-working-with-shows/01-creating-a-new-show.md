@@ -1,6 +1,10 @@
 ---
 title: "Creating a New Show"
+author: Karol
+editor: Jacquie
+quality-check: JME
 ---
+
 
 ## Creating a New Show
 

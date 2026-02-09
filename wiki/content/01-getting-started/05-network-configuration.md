@@ -1,3 +1,9 @@
+---
+author: Karol
+editor: Jacquie
+quality-check: Miro
+---
+
 ## Network Configuration
 
 Establishing a robust and properly configured network is critical for WATCHOUT 7. The system relies on the network not just for file transfer, but for frame-accurate synchronization (UDP) and system control (TCP).

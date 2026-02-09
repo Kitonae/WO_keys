@@ -1,6 +1,10 @@
 ---
 title: "Import, Export, and Mapping"
+author: Karol
+editor: Jacquie
+quality-check: JME
 ---
+
 
 ## Import, Export, and Mapping
 

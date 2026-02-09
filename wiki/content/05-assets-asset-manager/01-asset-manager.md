@@ -1,6 +1,10 @@
 ---
 title: "Asset Manager"
+author: Karol
+editor: Jacquie
+quality-check: JME
 ---
+
 
 ## Asset Manager
 

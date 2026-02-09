@@ -1,6 +1,10 @@
 ---
 title: "Performance Tips"
+author: Karol
+editor: Jacquie
+quality-check: JME
 ---
+
 
 ## Performance Tips
 

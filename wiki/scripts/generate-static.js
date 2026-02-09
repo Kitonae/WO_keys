@@ -96,7 +96,7 @@ const chapters = processHierarchy(tocData);
 function generatePageHtml(title, content, sidebarHtml, depth, breadcrumbs) {
     const relPath = getRelativePath(depth);
 
-    return `<!DOCTYPE html>
+    const htmlTemplate = `<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -166,7 +166,7 @@ function generatePageHtml(title, content, sidebarHtml, depth, breadcrumbs) {
                 <div class="tools-section">
                     <span class="tools-label">Tools</span>
                     <div class="tools-buttons">
-                        <a href="${relPath}../shortcuts/index.html" class="tools-btn" title="Keyboard Shortcuts">
+                        <a href="[[RELATIVE_PATH]]../shortcuts/index.html" class="tools-btn" title="Keyboard Shortcuts">
                             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                 stroke-linejoin="round">
@@ -181,7 +181,7 @@ function generatePageHtml(title, content, sidebarHtml, depth, breadcrumbs) {
                                 <path d="M7 16h10"></path>
                             </svg>
                         </a>
-                        <a href="${relPath}../planner/index.html" class="tools-btn" title="Infrastructure Planner">
+                        <a href="[[RELATIVE_PATH]]../planner/index.html" class="tools-btn" title="Infrastructure Planner">
                             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                 stroke-linejoin="round">
@@ -192,7 +192,7 @@ function generatePageHtml(title, content, sidebarHtml, depth, breadcrumbs) {
                                 <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
                             </svg>
                         </a>
-                        <a href="${relPath}../test-patterns/index.html" class="tools-btn" title="Test Pattern Generator">
+                        <a href="[[RELATIVE_PATH]]../test-patterns/index.html" class="tools-btn" title="Test Pattern Generator">
                             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                 stroke-linejoin="round">
@@ -275,12 +275,14 @@ function generatePageHtml(title, content, sidebarHtml, depth, breadcrumbs) {
     <!-- Mobile overlay -->
     <div class="sidebar-overlay" id="sidebar-overlay"></div>
 
-    <script src="${relPath}config.js"></script>
-    <script src="${relPath}toc-data.js"></script>
-    <script src="${relPath}content-data.js"></script>
-    <script src="${relPath}app.js"></script>
+    <script src="[[RELATIVE_PATH]]config.js"></script>
+    <script src="[[RELATIVE_PATH]]toc-data.js"></script>
+    <script src="[[RELATIVE_PATH]]content-data.js"></script>
+    <script src="[[RELATIVE_PATH]]app.js"></script>
 </body>
 </html>`;
+
+    return htmlTemplate.replace(/\[\[RELATIVE_PATH\]\]/g, relPath);
 }
 
 // --- Generate Sidebar HTML ---

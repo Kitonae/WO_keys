@@ -1,6 +1,10 @@
 ---
 title: "Output Cues"
+author: Karol
+editor: Jacquie
+quality-check: JME
 ---
+
 
 ## Output Cues
 

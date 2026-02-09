@@ -1,6 +1,10 @@
 ---
 title: "Geometry Correction"
+author: Karol
+editor: Jacquie
+quality-check: JME
 ---
+
 
 ## Geometry Correction
 

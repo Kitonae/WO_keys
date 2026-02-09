@@ -1,6 +1,10 @@
 ---
 title: "The Network Window"
+author: Karol
+editor: Jacquie
+quality-check: JME
 ---
+
 
 ## The Network Window
 
