@@ -20,9 +20,9 @@ WATCHOUT uses a **client-server architecture** that separates show creation from
 | --- | --- | --- |
 | Operating System | Windows 10 21H2 (64-bit) | Windows 11 23H2 or newer (64-bit) |
 | Processor | Intel Core i3/i5 or AMD Ryzen 3/5 | Intel Core i7/i9 or AMD Ryzen 7/9 |
-| RAM | 16 GB DDR4 | 32 GB DDR5 or more |
-| Graphics | DirectX 12 compatible GPU with 4 GB VRAM | NVIDIA RTX PRO |
-| Storage | SSD with 100 GB free | NVMe SSD (Gen4) with 1 TB+ free |
+| RAM | 16 GiB DDR4 | 32 GiB DDR5 or more |
+| Graphics | DirectX 12 compatible GPU with 4 GiB VRAM | NVIDIA RTX PRO |
+| Storage | SSD with 100 GiB free | NVMe SSD (Gen4) with 1 TiB+ free |
 | Network | Gigabit Ethernet | 2.5 Gigabit Ethernet |
 
 ### Display Computer (Playback)
@@ -31,9 +31,9 @@ WATCHOUT uses a **client-server architecture** that separates show creation from
 | --- | --- | --- |
 | Operating System | Windows 10 21H2 (64-bit) | Windows 11 23H2 or newer (64-bit) |
 | Processor | Intel Core i3/i5, AMD Ryzen 3/5, or equivalent Xeon/EPYC | Intel Core i7/i9, AMD Ryzen 7/9, or equivalent Xeon/EPYC |
-| RAM | 16 GB DDR4 | 32 GB DDR5 or more |
+| RAM | 16 GiB DDR4 | 32 GiB DDR5 or more |
 | Graphics | NVIDIA GeForce RTX | NVIDIA RTX PRO |
-| Storage | SATA SSD (500+ MB/s sustained read) | NVMe SSD (Gen4, 3500+ MB/s sustained read) |
+| Storage | SATA SSD (500+ MiB/s sustained read) | NVMe SSD (Gen4, 3500+ MiB/s sustained read) |
 | Network | Gigabit Ethernet | 2.5 Gigabit Ethernet |
 
 :::info
@@ -188,12 +188,13 @@ Video playback performance depends heavily on storage speed. **Sustained read ra
 
 #### Video Codec Storage Requirements
 
-| Content Type | Minimum Sustained Read | Recommended Storage |
+| Content Type | Sustained Read Required | Recommended Storage |
 | --- | --- | --- |
-| Single 4K HAP video | 400 MB/s | SATA SSD |
-| Multiple 4K videos | 1500 MB/s | NVMe Gen3 SSD |
-| 8K content | 3000+ MB/s | NVMe Gen4 SSD |
-| Image sequences | 5000+ MB/s | NVMe Gen4 or RAID array |
+| HAP 1080p60 | ~59 MiB/s | SATA SSD |
+| HAP 4K60 | ~237 MiB/s | SATA SSD or NVMe |
+| HAP 8K60 | ~949 MiB/s | NVMe Gen3 SSD |
+| 4K image sequence (60 fps) | ~1,899 MiB/s | NVMe Gen4 SSD |
+| 8K image sequence (60 fps) | ~7,594 MiB/s | NVMe Gen4 RAID array |
 
 #### Asset Disk Space Guidelines
 
@@ -201,12 +202,12 @@ Plan storage capacity based on your content library. Below are typical file size
 
 | Content | Duration/Count | Approximate Size |
 | --- | --- | --- |
-| HAP 1080p60 video | 1 minute | ~6 GB |
-| HAP 4K60 video | 1 minute | ~24 GB |
-| HAP 8K60 video | 1 minute | ~96 GB |
-| Notch LC 4K60 video | 1 minute | ~8 GB |
-| 4K image sequence (60 fps) | 1 minute | ~119 GB |
-| 8K image sequence (60 fps) | 1 minute | ~475 GB |
+| HAP 1080p60 video | 1 minute | ~3.5 GiB |
+| HAP 4K60 video | 1 minute | ~14 GiB |
+| HAP 8K60 video | 1 minute | ~56 GiB |
+| Notch LC 4K60 video | 1 minute | ~8 GiB |
+| 4K image sequence (60 fps) | 1 minute | ~111 GiB |
+| 8K image sequence (60 fps) | 1 minute | ~446 GiB |
 
 :::info
 **Note:** Images are stored as RAW/uncompressed for optimal playback performance. ProRes and other compressed video formats are automatically optimized to Notch LC by default.
@@ -250,11 +251,11 @@ NDI (Network Device Interface) is commonly used for video input in WATCHOUT. Her
 
 Network speed dramatically affects how quickly you can deploy media to display servers. The table below shows approximate transfer times for common file sizes:
 
-| File Size | 1 Gbps (~110 MB/s) | 2.5 Gbps (~280 MB/s) | 10 Gbps (~1.1 GB/s) |
+| File Size | 1 Gbps (~119 MiB/s) | 2.5 Gbps (~298 MiB/s) | 10 Gbps (~1.2 GiB/s) |
 | --- | --- | --- | --- |
-| 1 GB | ~9 seconds | ~4 seconds | ~1 second |
-| 100 GB | ~15 minutes | ~6 minutes | ~90 seconds |
-| 1 TB | ~2.5 hours | ~60 minutes | ~15 minutes |
+| 1 GiB | ~9 seconds | ~4 seconds | ~1 second |
+| 100 GiB | ~15 minutes | ~6 minutes | ~90 seconds |
+| 1 TiB | ~2.5 hours | ~60 minutes | ~15 minutes |
 
 :::info
 **Note:** Actual transfer speeds depend on disk I/O, network congestion, and switch quality. The values above assume modern SSDs and a well-configured network with minimal overhead.

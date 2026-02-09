@@ -690,9 +690,9 @@
 <tr><th>Component</th><th>Minimum</th><th>Recommended</th></tr>
 <tr><td>Operating System</td><td>Windows 10 21H2 (64-bit)</td><td>Windows 11 23H2 or newer (64-bit)</td></tr>
 <tr><td>Processor</td><td>Intel Core i3/i5 or AMD Ryzen 3/5</td><td>Intel Core i7/i9 or AMD Ryzen 7/9</td></tr>
-<tr><td>RAM</td><td>16 GB DDR4</td><td>32 GB DDR5 or more</td></tr>
-<tr><td>Graphics</td><td>DirectX 12 compatible GPU with 4 GB VRAM</td><td>NVIDIA RTX PRO</td></tr>
-<tr><td>Storage</td><td>SSD with 100 GB free</td><td>NVMe SSD (Gen4) with 1 TB+ free</td></tr>
+<tr><td>RAM</td><td>16 GiB DDR4</td><td>32 GiB DDR5 or more</td></tr>
+<tr><td>Graphics</td><td>DirectX 12 compatible GPU with 4 GiB VRAM</td><td>NVIDIA RTX PRO</td></tr>
+<tr><td>Storage</td><td>SSD with 100 GiB free</td><td>NVMe SSD (Gen4) with 1 TiB+ free</td></tr>
 <tr><td>Network</td><td>Gigabit Ethernet</td><td>2.5 Gigabit Ethernet</td></tr>
 </table>
 
@@ -702,9 +702,9 @@
 <tr><th>Component</th><th>Minimum</th><th>Recommended</th></tr>
 <tr><td>Operating System</td><td>Windows 10 21H2 (64-bit)</td><td>Windows 11 23H2 or newer (64-bit)</td></tr>
 <tr><td>Processor</td><td>Intel Core i3/i5, AMD Ryzen 3/5, or equivalent Xeon/EPYC</td><td>Intel Core i7/i9, AMD Ryzen 7/9, or equivalent Xeon/EPYC</td></tr>
-<tr><td>RAM</td><td>16 GB DDR4</td><td>32 GB DDR5 or more</td></tr>
+<tr><td>RAM</td><td>16 GiB DDR4</td><td>32 GiB DDR5 or more</td></tr>
 <tr><td>Graphics</td><td>NVIDIA GeForce RTX</td><td>NVIDIA RTX PRO</td></tr>
-<tr><td>Storage</td><td>SATA SSD (500+ MB/s sustained read)</td><td>NVMe SSD (Gen4, 3500+ MB/s sustained read)</td></tr>
+<tr><td>Storage</td><td>SATA SSD (500+ MiB/s sustained read)</td><td>NVMe SSD (Gen4, 3500+ MiB/s sustained read)</td></tr>
 <tr><td>Network</td><td>Gigabit Ethernet</td><td>2.5 Gigabit Ethernet</td></tr>
 </table>
 
@@ -872,11 +872,12 @@
 <h4>Video Codec Storage Requirements</h4>
 
 <table>
-<tr><th>Content Type</th><th>Minimum Sustained Read</th><th>Recommended Storage</th></tr>
-<tr><td>Single 4K HAP video</td><td>400 MB/s</td><td>SATA SSD</td></tr>
-<tr><td>Multiple 4K videos</td><td>1500 MB/s</td><td>NVMe Gen3 SSD</td></tr>
-<tr><td>8K content</td><td>3000+ MB/s</td><td>NVMe Gen4 SSD</td></tr>
-<tr><td>Image sequences</td><td>5000+ MB/s</td><td>NVMe Gen4 or RAID array</td></tr>
+<tr><th>Content Type</th><th>Sustained Read Required</th><th>Recommended Storage</th></tr>
+<tr><td>HAP 1080p60</td><td>~59 MiB/s</td><td>SATA SSD</td></tr>
+<tr><td>HAP 4K60</td><td>~237 MiB/s</td><td>SATA SSD or NVMe</td></tr>
+<tr><td>HAP 8K60</td><td>~949 MiB/s</td><td>NVMe Gen3 SSD</td></tr>
+<tr><td>4K image sequence (60 fps)</td><td>~1,899 MiB/s</td><td>NVMe Gen4 SSD</td></tr>
+<tr><td>8K image sequence (60 fps)</td><td>~7,594 MiB/s</td><td>NVMe Gen4 RAID array</td></tr>
 </table>
 
 <h4>Asset Disk Space Guidelines</h4>
@@ -885,12 +886,12 @@
 
 <table>
 <tr><th>Content</th><th>Duration/Count</th><th>Approximate Size</th></tr>
-<tr><td>HAP 1080p60 video</td><td>1 minute</td><td>~6 GB</td></tr>
-<tr><td>HAP 4K60 video</td><td>1 minute</td><td>~24 GB</td></tr>
-<tr><td>HAP 8K60 video</td><td>1 minute</td><td>~96 GB</td></tr>
-<tr><td>Notch LC 4K60 video</td><td>1 minute</td><td>~8 GB</td></tr>
-<tr><td>4K image sequence (60 fps)</td><td>1 minute</td><td>~119 GB</td></tr>
-<tr><td>8K image sequence (60 fps)</td><td>1 minute</td><td>~475 GB</td></tr>
+<tr><td>HAP 1080p60 video</td><td>1 minute</td><td>~3.5 GiB</td></tr>
+<tr><td>HAP 4K60 video</td><td>1 minute</td><td>~14 GiB</td></tr>
+<tr><td>HAP 8K60 video</td><td>1 minute</td><td>~56 GiB</td></tr>
+<tr><td>Notch LC 4K60 video</td><td>1 minute</td><td>~8 GiB</td></tr>
+<tr><td>4K image sequence (60 fps)</td><td>1 minute</td><td>~111 GiB</td></tr>
+<tr><td>8K image sequence (60 fps)</td><td>1 minute</td><td>~446 GiB</td></tr>
 </table>
 
 <div class='info-box'><p><strong>Note:</strong> Images are stored as RAW/uncompressed for optimal playback performance. ProRes and other compressed video formats are automatically optimized to Notch LC by default.
@@ -935,10 +936,10 @@
 <p>Network speed dramatically affects how quickly you can deploy media to display servers. The table below shows approximate transfer times for common file sizes:</p>
 
 <table>
-<tr><th>File Size</th><th>1 Gbps (~110 MB/s)</th><th>2.5 Gbps (~280 MB/s)</th><th>10 Gbps (~1.1 GB/s)</th></tr>
-<tr><td>1 GB</td><td>~9 seconds</td><td>~4 seconds</td><td>~1 second</td></tr>
-<tr><td>100 GB</td><td>~15 minutes</td><td>~6 minutes</td><td>~90 seconds</td></tr>
-<tr><td>1 TB</td><td>~2.5 hours</td><td>~60 minutes</td><td>~15 minutes</td></tr>
+<tr><th>File Size</th><th>1 Gbps (~119 MiB/s)</th><th>2.5 Gbps (~298 MiB/s)</th><th>10 Gbps (~1.2 GiB/s)</th></tr>
+<tr><td>1 GiB</td><td>~9 seconds</td><td>~4 seconds</td><td>~1 second</td></tr>
+<tr><td>100 GiB</td><td>~15 minutes</td><td>~6 minutes</td><td>~90 seconds</td></tr>
+<tr><td>1 TiB</td><td>~2.5 hours</td><td>~60 minutes</td><td>~15 minutes</td></tr>
 </table>
 
 <div class='info-box'><p><strong>Note:</strong> Actual transfer speeds depend on disk I/O, network congestion, and switch quality. The values above assume modern SSDs and a well-configured network with minimal overhead.
