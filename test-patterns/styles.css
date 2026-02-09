@@ -27,6 +27,38 @@
     --font-family: 'Futura Now Headline', 'Futura', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
+@keyframes pageReveal {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+        filter: blur(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+        filter: blur(0);
+    }
+}
+
+@keyframes pageExit {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+        filter: blur(0);
+    }
+
+    to {
+        opacity: 0;
+        transform: translateY(-10px);
+        filter: blur(10px);
+    }
+}
+
+.animating-section {
+    animation: pageReveal 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
 *,
 *::before,
 *::after {
@@ -73,11 +105,26 @@ body::before {
 
 .tabs {
     display: flex;
-    gap: 12px;
-    background: var(--bg-tertiary);
-    padding: 6px;
+    gap: 8px;
+    background: var(--bg-glass);
+    backdrop-filter: blur(12px);
+    padding: 4px;
     border-radius: 50px;
     border: 1px solid rgba(255, 255, 255, 0.08);
+    position: relative;
+}
+
+.tab-slider {
+    position: absolute;
+    top: 4px;
+    bottom: 4px;
+    left: 4px;
+    width: 50%;
+    background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+    border-radius: 40px;
+    z-index: 1;
+    transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
 }
 
 .tab-btn {
@@ -89,7 +136,9 @@ body::before {
     font-weight: 500;
     cursor: pointer;
     border-radius: 50px;
-    transition: all var(--transition-normal);
+    transition: color 0.3s ease;
+    position: relative;
+    z-index: 2;
 }
 
 .tab-btn:hover {
@@ -97,9 +146,7 @@ body::before {
 }
 
 .tab-btn.active {
-    background: var(--accent-primary);
     color: white;
-    box-shadow: 0 4px 12px rgba(107, 37, 221, 0.3);
 }
 
 .tab-content {
@@ -152,7 +199,7 @@ body::before {
     gap: 24px;
     padding-bottom: 24px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    align-items: flex-end;
+    align-items: stretch;
 }
 
 .control-group {
@@ -165,6 +212,85 @@ body::before {
     font-size: 0.85rem;
     color: var(--text-secondary);
     font-weight: 500;
+}
+
+.control-section {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: var(--border-radius);
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    flex: 1;
+}
+
+.control-section .control-group:first-of-type {
+    align-self: center;
+}
+
+.section-header {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+    margin: 0 0 4px 0;
+}
+
+.control-row {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.control-row .control-group {
+    flex: 1;
+    min-width: 140px;
+}
+
+.options-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: color var(--transition-fast);
+}
+
+.checkbox-label:hover {
+    color: var(--text-primary);
+}
+
+.checkbox-label input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    accent-color: var(--accent-primary);
+}
+
+.unit {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-left: -4px;
+}
+
+.actions-section {
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 12px;
+    padding: 16px 20px;
+    background: transparent;
+    border: none;
+    flex: 0;
 }
 
 .input-row {
@@ -192,6 +318,24 @@ input[type="text"]:focus,
 select:focus {
     border-color: var(--accent-primary);
     box-shadow: 0 0 0 2px rgba(107, 37, 221, 0.2);
+}
+
+.input-compact input[type="number"] {
+    width: 70px;
+    padding: 8px 10px;
+    font-size: 0.85rem;
+    text-align: center;
+}
+
+.input-compact span {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+.input-compact input[type="color"] {
+    width: 32px;
+    height: 32px;
+    margin-left: 4px;
 }
 
 input[type="color"] {
@@ -240,6 +384,59 @@ input[type="color"]::-webkit-color-swatch {
 .action-btn.secondary:hover {
     background: rgba(255, 255, 255, 0.05);
     border-color: var(--text-primary);
+}
+
+/* Split Button */
+.split-button {
+    display: flex;
+    border-radius: 50px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    transition: all var(--transition-normal);
+}
+
+.split-button:hover {
+    border-color: var(--accent-primary);
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+}
+
+.split-btn-main {
+    padding: 12px 28px;
+    border: none;
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+    font-family: inherit;
+    font-weight: 500;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all var(--transition-normal);
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.split-btn-main:hover {
+    background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+    color: white;
+}
+
+.split-btn-action {
+    padding: 12px 16px;
+    border: none;
+    background: var(--bg-tertiary);
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all var(--transition-normal);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.split-btn-action:hover {
+    background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+    color: white;
+}
+
+.split-btn-action svg {
+    display: block;
 }
 
 .pattern-display {
@@ -298,4 +495,53 @@ canvas {
     padding: 20px;
     color: var(--text-muted);
     font-size: 0.85rem;
+}
+
+/* Toggle Button */
+.toggle-container {
+    display: flex;
+    background: var(--bg-glass);
+    backdrop-filter: blur(12px);
+    border-radius: 50px;
+    padding: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    width: fit-content;
+    position: relative;
+    isolation: isolate;
+}
+
+.toggle-slider {
+    position: absolute;
+    top: 4px;
+    bottom: 4px;
+    left: 4px;
+    width: 50%;
+    background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+    border-radius: 40px;
+    z-index: 1;
+    transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+}
+
+.toggle-btn {
+    padding: 8px 20px;
+    border: none;
+    background: transparent;
+    color: var(--text-secondary);
+    font-family: inherit;
+    font-size: 0.8rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    border-radius: 50px;
+    transition: color 0.3s ease;
+    position: relative;
+    z-index: 2;
+    min-width: 140px;
+}
+
+.toggle-btn.active {
+    color: white;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }

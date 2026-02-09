@@ -31,18 +31,45 @@ document.addEventListener('DOMContentLoaded', () => {
     // Tab Switching Logic
     const tabBtns = document.querySelectorAll('.tab-btn');
     const tabContents = document.querySelectorAll('.tab-content');
+    const tabSlider = document.querySelector('.tab-slider');
+
+    function updateTabSlider() {
+        const activeBtn = document.querySelector('.tab-btn.active');
+        if (activeBtn && tabSlider) {
+            tabSlider.style.width = `${activeBtn.offsetWidth}px`;
+            tabSlider.style.left = `${activeBtn.offsetLeft}px`;
+        }
+    }
 
     tabBtns.forEach(btn => {
         btn.addEventListener('click', () => {
             const tabId = btn.getAttribute('data-tab');
 
             tabBtns.forEach(b => b.classList.remove('active'));
-            tabContents.forEach(c => c.classList.remove('active'));
+            tabContents.forEach(c => {
+                c.classList.remove('active');
+                c.classList.remove('animating-section');
+            });
 
             btn.classList.add('active');
-            document.getElementById(`${tabId}-tab`).classList.add('active');
+            const newTab = document.getElementById(`${tabId}-tab`);
+            newTab.classList.add('active');
+
+            // Trigger page reveal animation
+            void newTab.offsetWidth; // Force reflow to restart animation
+            newTab.classList.add('animating-section');
+
+            updateTabSlider();
+
+            if (tabId === 'led') {
+                requestAnimationFrame(() => updateToggleSlider());
+            }
         });
     });
+
+    // Initial tab slider position
+    setTimeout(updateTabSlider, 50);
+    window.addEventListener('resize', updateTabSlider);
 
     // Drawing Functions
     function drawPattern() {
@@ -88,7 +115,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 ctx.clip();
 
                 if (showStamps) {
-                    drawStamps(dWidth, dHeight);
+                    drawStamps(dWidth, dHeight, x, y);
                 }
 
                 drawGrid(dWidth, dHeight, majorSize, subdivs, majorColor, minorColor);
@@ -334,7 +361,7 @@ document.addEventListener('DOMContentLoaded', () => {
         ctx.lineWidth = 1; // Reset
     }
 
-    function drawStamps(w, h) {
+    function drawStamps(w, h, globalOffsetX, globalOffsetY) {
         ctx.save();
         const fontSize = 120;
         ctx.font = `bold ${fontSize}px "Futura Now Headline", sans-serif`;
@@ -345,14 +372,31 @@ document.addEventListener('DOMContentLoaded', () => {
         const spacingX = 1000;
         const spacingY = 350;
 
-        for (let y = -spacingY; y < h + spacingY; y += spacingY) {
-            for (let x = -spacingX; x < w + spacingX; x += spacingX) {
-                ctx.save();
-                // Stagger every other row
-                const offsetX = (Math.floor(y / spacingY) % 2 === 0) ? 0 : spacingX / 2;
+        // Calculate global grid start points
+        const margin = 300; // Extra buffer to ensure coverage
 
-                ctx.translate(x + offsetX, y);
-                // No rotation
+        const startRow = Math.floor((globalOffsetY - margin) / spacingY);
+        const endRow = Math.ceil((globalOffsetY + h + margin) / spacingY);
+
+        const startCol = Math.floor((globalOffsetX - margin) / spacingX);
+        const endCol = Math.ceil((globalOffsetX + w + margin) / spacingX);
+
+        for (let r = startRow; r < endRow; r++) {
+            for (let c = startCol; c < endCol; c++) {
+                const gy = r * spacingY;
+                let gx = c * spacingX;
+
+                // Stagger every other row based on global row index
+                if (Math.abs(r) % 2 === 1) {
+                    gx += spacingX / 2;
+                }
+
+                // Convert to local context coordinates
+                const lx = gx - globalOffsetX;
+                const ly = gy - globalOffsetY;
+
+                ctx.save();
+                ctx.translate(lx, ly);
                 ctx.fillText("WATCHOUT", 0, 0);
                 ctx.restore();
             }
@@ -517,6 +561,51 @@ document.addEventListener('DOMContentLoaded', () => {
     const generateLedBtn = document.getElementById('generate-led-btn');
     const downloadLedBtn = document.getElementById('download-led-btn');
 
+    // Inputs
+    const ledWallWInput = document.getElementById('led-wall-width');
+    const ledWallHInput = document.getElementById('led-wall-height');
+    const ledTileWInput = document.getElementById('led-tile-width');
+    const ledTileHInput = document.getElementById('led-tile-height');
+    const ledColsInput = document.getElementById('led-cols');
+    const ledRowsInput = document.getElementById('led-rows');
+    const ledModeToggle = document.getElementById('led-mode-toggle');
+    const ledModeBtns = ledModeToggle.querySelectorAll('.toggle-btn');
+    const groupWallRes = document.getElementById('group-wall-res');
+    const groupTileCount = document.getElementById('group-tile-count');
+
+    function syncLedInputs() {
+        // Find active mode
+        const activeBtn = ledModeToggle.querySelector('.toggle-btn.active');
+        const mode = activeBtn ? activeBtn.getAttribute('data-mode') : 'res';
+
+        const tW = parseInt(ledTileWInput.value) || 128;
+        const tH = parseInt(ledTileHInput.value) || 128;
+
+        if (mode === 'res') {
+            // Calculator: Update Cols/Rows based on W/H
+            const w = parseInt(ledWallWInput.value) || 1920;
+            const h = parseInt(ledWallHInput.value) || 1080;
+            ledColsInput.value = (w / tW).toFixed(2).replace(/\.00$/, '');
+            ledRowsInput.value = (h / tH).toFixed(2).replace(/\.00$/, '');
+
+            groupWallRes.style.opacity = '1';
+            groupWallRes.style.pointerEvents = 'auto';
+            groupTileCount.style.opacity = '0.5';
+            groupTileCount.style.pointerEvents = 'none';
+        } else {
+            // Calculator: Update W/H based on Cols/Rows
+            const cols = parseFloat(ledColsInput.value) || 1;
+            const rows = parseFloat(ledRowsInput.value) || 1;
+            ledWallWInput.value = Math.round(cols * tW);
+            ledWallHInput.value = Math.round(rows * tH);
+
+            groupWallRes.style.opacity = '0.5';
+            groupWallRes.style.pointerEvents = 'none';
+            groupTileCount.style.opacity = '1';
+            groupTileCount.style.pointerEvents = 'auto';
+        }
+    }
+
     downloadLedBtn.addEventListener('click', () => {
         const link = document.createElement('a');
         link.download = `led-pattern-grid-${ledCanvas.width}x${ledCanvas.height}.png`;
@@ -526,10 +615,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function getLedSettings() {
         return {
-            wallW: document.getElementById('led-wall-width').value,
-            wallH: document.getElementById('led-wall-height').value,
-            tileW: document.getElementById('led-tile-width').value,
-            tileH: document.getElementById('led-tile-height').value,
+            mode: ledModeToggle.querySelector('.toggle-btn.active').getAttribute('data-mode'),
+            wallW: ledWallWInput.value,
+            wallH: ledWallHInput.value,
+            cols: ledColsInput.value,
+            rows: ledRowsInput.value,
+            tileW: ledTileWInput.value,
+            tileH: ledTileHInput.value,
             rainbow: document.getElementById('led-rainbow').checked,
             background: document.getElementById('led-background').checked,
             borders: document.getElementById('led-borders').checked,
@@ -540,10 +632,20 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function setLedSettings(s) {
-        document.getElementById('led-wall-width').value = s.wallW;
-        document.getElementById('led-wall-height').value = s.wallH;
-        document.getElementById('led-tile-width').value = s.tileW;
-        document.getElementById('led-tile-height').value = s.tileH;
+        if (s.mode) {
+            ledModeBtns.forEach(b => {
+                if (b.getAttribute('data-mode') === s.mode) b.classList.add('active');
+                else b.classList.remove('active');
+            });
+            updateToggleSlider();
+        }
+        ledWallWInput.value = s.wallW;
+        ledWallHInput.value = s.wallH;
+        if (s.cols) ledColsInput.value = s.cols;
+        if (s.rows) ledRowsInput.value = s.rows;
+
+        ledTileWInput.value = s.tileW;
+        ledTileHInput.value = s.tileH;
         document.getElementById('led-rainbow').checked = s.rainbow;
         document.getElementById('led-background').checked = s.background;
         document.getElementById('led-borders').checked = s.borders;
@@ -564,10 +666,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function drawLedPattern() {
-        const w = parseInt(document.getElementById('led-wall-width').value) || 1920;
-        const h = parseInt(document.getElementById('led-wall-height').value) || 1080;
-        const tW = parseInt(document.getElementById('led-tile-width').value) || 128;
-        const tH = parseInt(document.getElementById('led-tile-height').value) || 128;
+        syncLedInputs(); // Ensure values are consistent before drawing based on mode
+
+        const w = parseInt(ledWallWInput.value) || 1920;
+        const h = parseInt(ledWallHInput.value) || 1080;
+        const tW = parseInt(ledTileWInput.value) || 128;
+        const tH = parseInt(ledTileHInput.value) || 128;
         const useRainbow = document.getElementById('led-rainbow').checked;
         const useBackground = document.getElementById('led-background').checked;
         const useBorders = document.getElementById('led-borders').checked;
@@ -732,8 +836,64 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('led-coords').addEventListener('change', drawLedPattern);
     document.getElementById('led-color').addEventListener('input', drawLedPattern);
 
+    function updateToggleSlider() {
+        const activeBtn = ledModeToggle.querySelector('.toggle-btn.active');
+        const slider = ledModeToggle.querySelector('.toggle-slider');
+
+        if (activeBtn && slider) {
+            slider.style.width = `${activeBtn.offsetWidth}px`;
+            slider.style.left = `${activeBtn.offsetLeft}px`;
+        }
+    }
+
+    // Mode switching listeners
+    ledModeBtns.forEach(btn => btn.addEventListener('click', () => {
+        ledModeBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        updateToggleSlider();
+        syncLedInputs();
+        drawLedPattern();
+    }));
+
+    window.addEventListener('resize', updateToggleSlider);
+
+    // Initial slider position with small delay to ensure layout is ready
+    setTimeout(updateToggleSlider, 50);
+
+    // Input listeners that trigger sync
+    [ledWallWInput, ledWallHInput].forEach(i => i.addEventListener('input', () => {
+        const mode = ledModeToggle.querySelector('.toggle-btn.active').getAttribute('data-mode');
+        if (mode === 'res') {
+            syncLedInputs(); // Updates disabled cols/rows for display
+            // Debounce draw? For now direct draw is fine
+            // But simpler: drawLedPattern calls syncLedInputs first.
+            // So we define listener to just call drawLedPattern?
+            // No, drawLedPattern reads from inputs.
+            // If I type in Wall W, syncLedInputs updates Cols.
+        }
+        drawLedPattern();
+    }));
+
+    [ledColsInput, ledRowsInput].forEach(i => i.addEventListener('input', () => {
+        const mode = ledModeToggle.querySelector('.toggle-btn.active').getAttribute('data-mode');
+        if (mode === 'count') {
+            // syncLedInputs logic is called inside drawLedPattern anyway? 
+            // Yes, but we need it to update the Wall W/H input values visually immediately.
+            // syncLedInputs() does that.
+            // Actually syncLedInputs relies on mode.
+            syncLedInputs();
+        }
+        drawLedPattern();
+    }));
+
+    [ledTileWInput, ledTileHInput].forEach(i => i.addEventListener('input', drawLedPattern));
+
+    // Initial sync
+    syncLedInputs();
+
     // Initial draws
     document.fonts.ready.then(() => {
+        updateToggleSlider();
         drawPattern();
         drawLedPattern();
     });
