@@ -21,28 +21,95 @@
                 <h1>WATCHOUT PLANNER</h1>
             </div>
             <div class="toolbar">
-                <button id="add-production" class="tool-btn" title="Add Production Computer">
-                    <i class="fa-solid fa-desktop"></i> Production
-                </button>
-                <button id="add-display" class="tool-btn" title="Add Display Server">
-                    <i class="fa-solid fa-server"></i> Display Server
-                </button>
-                <button id="add-projector" class="tool-btn" title="Add Projector">
-                    <i class="fa-solid fa-video"></i> Projector
-                </button>
-                <button id="add-led" class="tool-btn" title="Add LED Wall">
-                    <i class="fa-solid fa-border-all"></i> LED Wall
-                </button>
-                <button id="add-switch" class="tool-btn" title="Add Network Switch">
-                    <i class="fa-solid fa-network-wired"></i> Switch
-                </button>
+                <!-- WATCHOUT Systems -->
+                <div class="dropdown">
+                    <button class="tool-btn dropdown-toggle" title="WATCHOUT Systems">
+                        <i class="fa-solid fa-cube"></i> WATCHOUT <i class="fa-solid fa-caret-down"></i>
+                    </button>
+                    <div class="dropdown-menu">
+                        <button id="add-production" class="dropdown-item">
+                            <i class="fa-solid fa-desktop"></i> Production Computer
+                        </button>
+                        <button id="add-display" class="dropdown-item">
+                            <i class="fa-solid fa-server"></i> Display Server
+                        </button>
+                        <button id="add-watchpax" class="dropdown-item">
+                            <i class="fa-solid fa-cube"></i> WATCHPAX
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Displays -->
+                <div class="dropdown">
+                    <button class="tool-btn dropdown-toggle" title="Display Devices">
+                        <i class="fa-solid fa-display"></i> Displays <i class="fa-solid fa-caret-down"></i>
+                    </button>
+                    <div class="dropdown-menu">
+                        <button id="add-projector" class="dropdown-item">
+                            <i class="fa-solid fa-video"></i> Projector
+                        </button>
+                        <button id="add-led" class="dropdown-item">
+                            <i class="fa-solid fa-border-all"></i> LED Processor
+                        </button>
+                        <button id="add-matrix" class="dropdown-item">
+                            <i class="fa-solid fa-arrows-turn-to-dots"></i> Matrix Switcher
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Protocols / Sources -->
+                <div class="dropdown">
+                    <button class="tool-btn dropdown-toggle" title="Protocols & Sources">
+                        <i class="fa-solid fa-plug"></i> Sources <i class="fa-solid fa-caret-down"></i>
+                    </button>
+                    <div class="dropdown-menu">
+                        <button id="add-ndi" class="dropdown-item">
+                            <i class="fa-solid fa-podcast"></i> NDI Source
+                        </button>
+                        <button id="add-capture" class="dropdown-item">
+                            <i class="fa-solid fa-sd-card"></i> Capture Card
+                        </button>
+                        <button id="add-mediaserver" class="dropdown-item">
+                            <i class="fa-solid fa-film"></i> Media Server
+                        </button>
+                        <button id="add-dmx" class="dropdown-item">
+                            <i class="fa-solid fa-lightbulb"></i> DMX / Art-Net
+                        </button>
+                        <button id="add-audio" class="dropdown-item">
+                            <i class="fa-solid fa-volume-high"></i> Audio Device
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Infrastructure -->
+                <div class="dropdown">
+                    <button class="tool-btn dropdown-toggle" title="Infrastructure">
+                        <i class="fa-solid fa-network-wired"></i> Infra <i class="fa-solid fa-caret-down"></i>
+                    </button>
+                    <div class="dropdown-menu">
+                        <button id="add-switch" class="dropdown-item">
+                            <i class="fa-solid fa-network-wired"></i> Network Switch
+                        </button>
+                        <button id="add-control" class="dropdown-item">
+                            <i class="fa-solid fa-gamepad"></i> Control System
+                        </button>
+                    </div>
+                </div>
+
                 <div class="separator"></div>
                 <button id="clear-canvas" class="tool-btn danger">
                     <i class="fa-solid fa-trash"></i> Clear
                 </button>
-                <button id="save-plan" class="tool-btn secondary">
-                    <i class="fa-solid fa-save"></i> Save JSON
-                </button>
+                <div class="separator"></div>
+                <div class="btn-group">
+                    <button id="save-plan" class="tool-btn secondary" title="Download JSON">
+                        <i class="fa-solid fa-download"></i> Save
+                    </button>
+                    <button id="load-plan" class="tool-btn secondary" title="Import JSON">
+                        <i class="fa-solid fa-upload"></i> Load
+                    </button>
+                </div>
+                <input type="file" id="load-file" accept=".json" style="display: none;">
             </div>
         </header>
 

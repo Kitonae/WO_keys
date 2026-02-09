@@ -118,6 +118,95 @@ body {
     margin: 0 10px;
 }
 
+.port-connected-label {
+    font-size: 0.75rem;
+    color: var(--port-network);
+    margin-left: 8px;
+    opacity: 0.8;
+    font-weight: 400;
+}
+
+.btn-group {
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.btn-group .tool-btn {
+    border: none;
+    background: transparent;
+    border-radius: 0;
+    border-right: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.btn-group .tool-btn:last-child {
+    border-right: none;
+}
+
+.btn-group .tool-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Dropdown Menus */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-toggle {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    margin-top: 4px;
+    background: var(--bg-panel);
+    border: 1px solid var(--border-node);
+    border-radius: 6px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    min-width: 180px;
+    z-index: 200;
+    overflow: hidden;
+}
+
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+.dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 10px 14px;
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.15s ease;
+}
+
+.dropdown-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+}
+
+.dropdown-item i {
+    width: 18px;
+    text-align: center;
+    color: var(--accent-secondary);
+}
+
 /* Main Editor Area */
 .main-editor {
     flex: 1;
@@ -130,7 +219,7 @@ body {
     flex: 1;
     background-color: var(--bg-grid);
     background-image:
-        radial-gradient(circle, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+        radial-gradient(circle, rgba(255, 255, 255, 0.15) 1px, transparent 1px);
     background-size: var(--grid-size) var(--grid-size);
     position: relative;
     overflow: hidden;
@@ -215,6 +304,7 @@ body {
     align-items: center;
     gap: 8px;
     font-size: 0.9rem;
+    transition: background-color 0.2s ease;
 }
 
 .node-icon {
@@ -288,6 +378,22 @@ body {
     border-color: var(--port-network);
     border-radius: 3px;
     /* Square for network? */
+}
+
+/* Connected State - Filled */
+.port.input .port-socket.connected {
+    background: var(--port-input);
+    box-shadow: 0 0 4px var(--port-input);
+}
+
+.port.output .port-socket.connected {
+    background: var(--port-output);
+    box-shadow: 0 0 4px var(--port-output);
+}
+
+.port.network .port-socket.connected {
+    background: var(--port-network);
+    box-shadow: 0 0 4px var(--port-network);
 }
 
 /* Properties Panel */
@@ -397,9 +503,4 @@ body {
 }
 
 /* Color Stripe */
-.node-color-stripe {
-    height: 4px;
-    width: 100%;
-    background: transparent;
-    transition: background 0.3s ease;
-}
+/* Color Stripe Removed */
