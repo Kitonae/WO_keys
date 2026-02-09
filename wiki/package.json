@@ -4,7 +4,8 @@
     "description": "WATCHOUT 7 User Guide - Documentation Wiki",
     "scripts": {
         "build": "node scripts/build-content.js",
-        "extract": "node scripts/extract-to-markdown.js"
+        "extract": "node scripts/extract-to-markdown.js",
+        "pdf": "node scripts/generate-pdf.js"
     },
     "keywords": [
         "watchout",
