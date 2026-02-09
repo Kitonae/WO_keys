@@ -73,7 +73,7 @@ If using Windows 11 Home or Pro, plan for regular maintenance windows:
 
 - Schedule Windows updates during non-show periods
 - Test updates in a staging environment before production systems
-- Consider using Windows Pro's Group Policy to control update timing
+- Use the "Pause updates" feature in Windows Settings to defer updates during critical show periods
 - Maintain no more than 24 months behind current Windows versions to remain in Microsoft's support window
 
 :::info
