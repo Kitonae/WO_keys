@@ -273,16 +273,16 @@ Plan storage capacity based on your content library. Below are typical file size
 
 #### NDI Stream Bandwidth Requirements
 
-NDI (Network Device Interface) is commonly used for video input in WATCHOUT. Here are the typical bandwidth requirements for NDI|HX streams:
+NDI (Network Device Interface) is commonly used for video input in WATCHOUT. Here are the typical bandwidth requirements for standard NDI streams:
 
 | Resolution | Frame Rate | Bandwidth (approx.) | Fits on 1 Gbps |
 | --- | --- | --- | --- |
-| 1920×1080 | 60 fps | 80-150 Mbps | ✓ Yes |
-| 3840×2160 (4K) | 60 fps | 200-400 Mbps | ✓ Yes |
-| 7680×4320 (8K) | 60 fps | 600-900 Mbps | ✓ Yes (single stream) |
+| 1920×1080 | 60 fps | ~125 Mbps | ✓ Yes |
+| 3840×2160 (4K) | 60 fps | ~250 Mbps | ✓ Yes |
+| 7680×4320 (8K) | 60 fps | ~500 Mbps | ✓ Yes |
 
 :::info
-**Note:** Full-bandwidth NDI (not NDI|HX) uses significantly more bandwidth—approximately 3 Gbps for 1080p60. The table above reflects NDI|HX compressed streams, which are more common for production use with WATCHOUT. Multiple simultaneous NDI streams or full-bandwidth NDI may require 2.5 Gbps or faster networking.
+**Note:** The bandwidth values above are for standard NDI streams. NDI|HX uses lower bandwidth due to additional compression. Multiple simultaneous NDI streams may require 2.5 Gbps or faster networking depending on total throughput.
 :::
 
 #### File Transfer Time Comparison
