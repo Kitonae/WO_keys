@@ -84,15 +84,15 @@ If using Windows 11 Home or Pro, plan for regular maintenance windows:
 
 Keeping Windows up to date is **critical for optimal WATCHOUT performance**. Newer Windows updates deliver significant improvements to rendering stability and visual output quality:
 
-#### WDDM (Windows Display Driver Model) Improvements
+#### Modern Driver and Display Features
 
-Modern Windows versions include updated WDDM drivers that fundamentally improve how the operating system communicates with graphics hardware:
+Current Windows versions include important display and driver improvements:
 
-- **WDDM 3.0+ (Windows 11)** – Reduced latency for frame presentation, better VSync handling, and improved multi-monitor synchronization
+- **DCH Drivers** – Modern driver architecture required by Windows, includes built-in GPU monitoring through Task Manager and improved driver reliability
 
-- **Hardware-accelerated GPU scheduling** – Enables the GPU to directly manage its own video memory scheduling, reducing CPU overhead and eliminating stutter during complex compositions
+- **HDR Support** – High Dynamic Range output for compatible displays, providing wider color gamut and improved contrast
 
-- **Optimized flip model** – Modern swap chain presentation reduces tearing and improves frame pacing for smoother playback
+- **Fullscreen Optimizations (FSO)** – Lower latency presentation mode for fullscreen applications, reducing input lag and improving frame pacing
 
 #### DirectX 12 Ultimate Enhancements
 
