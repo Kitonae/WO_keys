@@ -204,9 +204,13 @@ Plan storage capacity based on your content library. Below are typical file size
 | HAP 1080p60 video | 1 minute | ~6 GB |
 | HAP 4K60 video | 1 minute | ~24 GB |
 | HAP 8K60 video | 1 minute | ~96 GB |
-| ProRes 4K60 video | 1 minute | ~8 GB |
-| 4K image (PNG) | 1 image | ~30 MB |
-| 8K image (PNG) | 1 image | ~120 MB |
+| Notch LC 4K60 video | 1 minute | ~8 GB |
+| 4K image sequence (60 fps) | 1 minute | ~119 GB |
+| 8K image sequence (60 fps) | 1 minute | ~475 GB |
+
+:::info
+**Note:** Images are stored as RAW/uncompressed for optimal playback performance. ProRes and other compressed video formats are automatically optimized to Notch LC by default.
+:::
 
 :::info
 **Tip:** For shows with large media libraries, calculate total storage needs including headroom for revisions and additional content. A 1 TB NVMe SSD is suitable for most productions; consider 2 TB or more for 4K/8K heavy projects.
@@ -230,16 +234,16 @@ Plan storage capacity based on your content library. Below are typical file size
 
 #### NDI Stream Bandwidth Requirements
 
-NDI (Network Device Interface) is commonly used for video input in WATCHOUT. Here are the typical bandwidth requirements for standard NDI streams:
+NDI (Network Device Interface) is commonly used for video input in WATCHOUT. Here are the typical bandwidth requirements:
 
-| Resolution | Frame Rate | Bandwidth (approx.) | Fits on 1 Gbps |
-| --- | --- | --- | --- |
-| 1920×1080 | 60 fps | ~125 Mbps | ✓ Yes |
-| 3840×2160 (4K) | 60 fps | ~250 Mbps | ✓ Yes |
-| 7680×4320 (8K) | 60 fps | ~500 Mbps | ✓ Yes |
+| Resolution | Frame Rate | Bandwidth (approx.) |
+| --- | --- | --- |
+| 1920×1080 | 60 fps | ~125 Mbps |
+| 3840×2160 (4K) | 60 fps | ~250 Mbps |
+| 7680×4320 (8K) | 60 fps | ~500 Mbps |
 
 :::info
-**Note:** The bandwidth values above are for standard NDI streams. NDI|HX uses lower bandwidth due to additional compression. Multiple simultaneous NDI streams may require 2.5 Gbps or faster networking depending on total throughput.
+**Note:** Multiple simultaneous NDI streams may require 2.5 Gbps or faster networking depending on total throughput.
 :::
 
 #### File Transfer Time Comparison

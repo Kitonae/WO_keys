@@ -888,10 +888,15 @@
 <tr><td>HAP 1080p60 video</td><td>1 minute</td><td>~6 GB</td></tr>
 <tr><td>HAP 4K60 video</td><td>1 minute</td><td>~24 GB</td></tr>
 <tr><td>HAP 8K60 video</td><td>1 minute</td><td>~96 GB</td></tr>
-<tr><td>ProRes 4K60 video</td><td>1 minute</td><td>~8 GB</td></tr>
-<tr><td>4K image (PNG)</td><td>1 image</td><td>~30 MB</td></tr>
-<tr><td>8K image (PNG)</td><td>1 image</td><td>~120 MB</td></tr>
+<tr><td>Notch LC 4K60 video</td><td>1 minute</td><td>~8 GB</td></tr>
+<tr><td>4K image sequence (60 fps)</td><td>1 minute</td><td>~119 GB</td></tr>
+<tr><td>8K image sequence (60 fps)</td><td>1 minute</td><td>~475 GB</td></tr>
+<tr><td>4K image</td><td>1 image</td><td>~33 MB</td></tr>
+<tr><td>8K image</td><td>1 image</td><td>~132 MB</td></tr>
 </table>
+
+<div class='info-box'><p><strong>Note:</strong> Images are stored as RAW/uncompressed for optimal playback performance. ProRes and other compressed video formats are automatically optimized to Notch LC by default.
+</p></div>
 
 <div class='info-box'><p><strong>Tip:</strong> For shows with large media libraries, calculate total storage needs including headroom for revisions and additional content. A 1 TB NVMe SSD is suitable for most productions; consider 2 TB or more for 4K/8K heavy projects.
 </p></div>
@@ -915,16 +920,16 @@
 
 <h4>NDI Stream Bandwidth Requirements</h4>
 
-<p>NDI (Network Device Interface) is commonly used for video input in WATCHOUT. Here are the typical bandwidth requirements for standard NDI streams:</p>
+<p>NDI (Network Device Interface) is commonly used for video input in WATCHOUT. Here are the typical bandwidth requirements:</p>
 
 <table>
-<tr><th>Resolution</th><th>Frame Rate</th><th>Bandwidth (approx.)</th><th>Fits on 1 Gbps</th></tr>
-<tr><td>1920×1080</td><td>60 fps</td><td>~125 Mbps</td><td>✓ Yes</td></tr>
-<tr><td>3840×2160 (4K)</td><td>60 fps</td><td>~250 Mbps</td><td>✓ Yes</td></tr>
-<tr><td>7680×4320 (8K)</td><td>60 fps</td><td>~500 Mbps</td><td>✓ Yes</td></tr>
+<tr><th>Resolution</th><th>Frame Rate</th><th>Bandwidth (approx.)</th></tr>
+<tr><td>1920×1080</td><td>60 fps</td><td>~125 Mbps</td></tr>
+<tr><td>3840×2160 (4K)</td><td>60 fps</td><td>~250 Mbps</td></tr>
+<tr><td>7680×4320 (8K)</td><td>60 fps</td><td>~500 Mbps</td></tr>
 </table>
 
-<div class='info-box'><p><strong>Note:</strong> The bandwidth values above are for standard NDI streams. NDI|HX uses lower bandwidth due to additional compression. Multiple simultaneous NDI streams may require 2.5 Gbps or faster networking depending on total throughput.
+<div class='info-box'><p><strong>Note:</strong> Multiple simultaneous NDI streams may require 2.5 Gbps or faster networking depending on total throughput.
 </p></div>
 
 <h4>File Transfer Time Comparison</h4>
