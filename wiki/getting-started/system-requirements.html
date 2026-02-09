@@ -703,7 +703,7 @@
 <tr><td>Operating System</td><td>Windows 10 21H2 (64-bit)</td><td>Windows 11 23H2 or newer (64-bit)</td></tr>
 <tr><td>Processor</td><td>Intel Core i3/i5, AMD Ryzen 3/5, or equivalent Xeon/EPYC</td><td>Intel Core i7/i9, AMD Ryzen 7/9, or equivalent Xeon/EPYC</td></tr>
 <tr><td>RAM</td><td>16 GB DDR4</td><td>32 GB DDR5 or more</td></tr>
-<tr><td>Graphics</td><td>NVIDIA GeForce RTX</td><td><strong>NVIDIA RTX PRO</strong></td></tr>
+<tr><td>Graphics</td><td>NVIDIA GeForce RTX</td><td>NVIDIA RTX PRO</td></tr>
 <tr><td>Storage</td><td>SATA SSD (500+ MB/s sustained read)</td><td>NVMe SSD (Gen4, 3500+ MB/s sustained read)</td></tr>
 <tr><td>Network</td><td>Gigabit Ethernet</td><td>2.5 Gigabit Ethernet</td></tr>
 </table>
@@ -849,19 +849,6 @@
 <p><li><strong>Better regression testing</strong> – Less risk of updates breaking existing functionality</li></p>
 
 </ul>
-<h4>Recommended NVIDIA RTX PRO Models</h4>
-
-<table>
-<tr><th>Model</th><th>VRAM</th><th>Outputs</th><th>Best For</th></tr>
-<tr><td>RTX PRO 4000 Blackwell</td><td>24 GB</td><td>4× DP</td><td>Standard installations, 4K playback</td></tr>
-<tr><td>RTX PRO 4500 Blackwell</td><td>32 GB</td><td>4× DP</td><td>Multiple 4K outputs, demanding content</td></tr>
-<tr><td>RTX PRO 5000 Blackwell</td><td>48 GB</td><td>4× DP</td><td>High-res content, large installations</td></tr>
-<tr><td>RTX PRO 6000 Blackwell</td><td>96 GB</td><td>4× DP</td><td>8K content, most demanding installations</td></tr>
-</table>
-
-<div class='info-box'><p><strong>Tip:</strong> For installations requiring more than 4 outputs per machine, consider using multiple RTX PRO cards with an NVIDIA Sync board.
-</p></div>
-
 <h3>Video Capture Requirements</h3>
 
 <p>When using video capture devices with WATCHOUT, ensure your hardware meets these requirements:</p>
@@ -914,9 +901,10 @@
 <table>
 <tr><th>Component</th><th>Minimum</th><th>Recommended</th></tr>
 <tr><td>Speed</td><td>1 Gbps</td><td>2.5 Gbps</td></tr>
-<tr><td>Switch</td><td>Managed Gigabit switch</td><td>Enterprise-grade with IGMP snooping</td></tr>
-<tr><td>Cabling</td><td>Cat6</td><td>Cat6a or fiber optic</td></tr>
-<tr><td>Topology</td><td>Star (all on same subnet)</td><td>Dedicated VLAN for WATCHOUT</td></tr>
+</table>
+| Switch | Managed Gigabit switch | Enterprise-grade with IGMP snooping |ßß
+<table>
+<tr><th>Topology</th><th>Star (all on same subnet)</th><th>Dedicated VLAN for WATCHOUT</th></tr>
 </table>
 
 <div class='info-box'><p><strong>Why 2.5 Gbps?</strong> Most modern motherboards include 2.5 Gigabit Ethernet as standard, providing a significant improvement over 1 Gbps without the cost and complexity of 10 Gbps infrastructure. This is the same networking standard used in WATCHPAX display servers.
