@@ -16,7 +16,6 @@ WATCHOUT uses a **client-server architecture** that separates show creation from
 
 ### Producer Computer (Editing)
 
-
 | Component | Minimum | Recommended |
 | --- | --- | --- |
 | Operating System | Windows 10 21H2 (64-bit) | Windows 11 23H2 or newer (64-bit) |
@@ -33,7 +32,7 @@ WATCHOUT uses a **client-server architecture** that separates show creation from
 | Operating System | Windows 10 21H2 (64-bit) | Windows 11 23H2 or newer (64-bit) |
 | Processor | Intel Core i3/i5, AMD Ryzen 3/5, or equivalent Xeon/EPYC | Intel Core i7/i9, AMD Ryzen 7/9, or equivalent Xeon/EPYC |
 | RAM | 16 GB DDR4 | 32 GB DDR5 or more |
-| Graphics | NVIDIA GeForce RTX | **NVIDIA RTX PRO** |
+| Graphics | NVIDIA GeForce RTX | NVIDIA RTX PRO |
 | Storage | SATA SSD (500+ MB/s sustained read) | NVMe SSD (Gen4, 3500+ MB/s sustained read) |
 | Network | Gigabit Ethernet | 2.5 Gigabit Ethernet |
 
@@ -166,19 +165,6 @@ RTX PRO drivers undergo extensive testing and certification:
 
 - **Better regression testing** – Less risk of updates breaking existing functionality
 
-#### Recommended NVIDIA RTX PRO Models
-
-| Model | VRAM | Outputs | Best For |
-| --- | --- | --- | --- |
-| RTX PRO 4000 Blackwell | 24 GB | 4× DP | Standard installations, 4K playback |
-| RTX PRO 4500 Blackwell | 32 GB | 4× DP | Multiple 4K outputs, demanding content |
-| RTX PRO 5000 Blackwell | 48 GB | 4× DP | High-res content, large installations |
-| RTX PRO 6000 Blackwell | 96 GB | 4× DP | 8K content, most demanding installations |
-
-:::info
-**Tip:** For installations requiring more than 4 outputs per machine, consider using multiple RTX PRO cards with an NVIDIA Sync board.
-:::
-
 ### Video Capture Requirements
 
 When using video capture devices with WATCHOUT, ensure your hardware meets these requirements:
@@ -231,8 +217,7 @@ Plan storage capacity based on your content library. Below are typical file size
 | Component | Minimum | Recommended |
 | --- | --- | --- |
 | Speed | 1 Gbps | 2.5 Gbps |
-| Switch | Managed Gigabit switch | Enterprise-grade with IGMP snooping |
-| Cabling | Cat6 | Cat6a or fiber optic |
+| Switch | Managed Gigabit switch | Enterprise-grade with IGMP snooping |ßß
 | Topology | Star (all on same subnet) | Dedicated VLAN for WATCHOUT |
 
 :::info
