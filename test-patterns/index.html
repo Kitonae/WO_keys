@@ -90,6 +90,12 @@
                                     <label>Minor Color</label>
                                     <input type="color" id="grid-minor-color" value="#333333">
                                 </div>
+                                <div class="setting-item">
+                                    <label>Stamps</label>
+                                    <div class="input-row" style="margin-top: 4px;">
+                                        <input type="checkbox" id="show-stamps">
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
@@ -166,10 +172,15 @@
                                     style="display: flex; align-items: center; gap: 8px; font-size: 0.9rem; color: var(--text-secondary);">
                                     <input type="checkbox" id="led-background"> Background
                                 </label>
-                                <input type="color" id="led-color" value="#00ff00">
+                                <label
+                                    style="display: flex; align-items: center; gap: 8px; font-size: 0.9rem; color: var(--text-secondary);">
+                                    <input type="checkbox" id="led-borders" checked> Borders
+                                </label>
+                                <input type="color" id="led-color" value="#8b5cf6">
                             </div>
                         </div>
                         <button id="generate-led-btn" class="action-btn">Generate LED</button>
+                        <button id="download-led-btn" class="action-btn secondary">Download PNG</button>
                     </div>
                     <div class="pattern-display">
                         <canvas id="led-canvas"></canvas>

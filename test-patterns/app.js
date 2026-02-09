@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const gridSubdivisionsInput = document.getElementById('grid-subdivisions');
     const gridMajorColorInput = document.getElementById('grid-major-color');
     const gridMinorColorInput = document.getElementById('grid-minor-color');
+    const showStampsCheckbox = document.getElementById('show-stamps');
 
     // Display Setup Inputs
     const displayColsInput = document.getElementById('display-cols');
@@ -58,6 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const showInfo = showInfoCheckbox.checked;
         const showBorders = showBordersCheckbox.checked;
         const showRuler = showRulerCheckbox.checked;
+        const showStamps = showStampsCheckbox.checked;
 
         // Resize canvas
         canvas.width = totalWidth;
@@ -84,6 +86,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 ctx.beginPath();
                 ctx.rect(0, 0, dWidth, dHeight);
                 ctx.clip();
+
+                if (showStamps) {
+                    drawStamps(dWidth, dHeight);
+                }
+
                 drawGrid(dWidth, dHeight, majorSize, subdivs, majorColor, minorColor);
                 ctx.restore();
             }
@@ -327,6 +334,32 @@ document.addEventListener('DOMContentLoaded', () => {
         ctx.lineWidth = 1; // Reset
     }
 
+    function drawStamps(w, h) {
+        ctx.save();
+        const fontSize = 120;
+        ctx.font = `bold ${fontSize}px "Futura Now Headline", sans-serif`;
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.1)';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+
+        const spacingX = 1000;
+        const spacingY = 350;
+
+        for (let y = -spacingY; y < h + spacingY; y += spacingY) {
+            for (let x = -spacingX; x < w + spacingX; x += spacingX) {
+                ctx.save();
+                // Stagger every other row
+                const offsetX = (Math.floor(y / spacingY) % 2 === 0) ? 0 : spacingX / 2;
+
+                ctx.translate(x + offsetX, y);
+                // No rotation
+                ctx.fillText("WATCHOUT", 0, 0);
+                ctx.restore();
+            }
+        }
+        ctx.restore();
+    }
+
     function drawColorBars(w, h) {
         const colors = [
             '#FFFFFF', // White
@@ -453,6 +486,7 @@ document.addEventListener('DOMContentLoaded', () => {
             subdivisions: gridSubdivisionsInput.value,
             majorColor: gridMajorColorInput.value,
             minorColor: gridMinorColorInput.value,
+            showStamps: showStampsCheckbox.checked,
             showInfo: showInfoCheckbox.checked,
             customLabel: document.getElementById('custom-label').value
         };
@@ -471,6 +505,7 @@ document.addEventListener('DOMContentLoaded', () => {
         gridSubdivisionsInput.value = s.subdivisions;
         gridMajorColorInput.value = s.majorColor;
         gridMinorColorInput.value = s.minorColor;
+        showStampsCheckbox.checked = s.showStamps;
         showInfoCheckbox.checked = s.showInfo;
         document.getElementById('custom-label').value = s.customLabel;
         drawPattern();
@@ -480,6 +515,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const ledCanvas = document.getElementById('led-canvas');
     const ledCtx = ledCanvas.getContext('2d');
     const generateLedBtn = document.getElementById('generate-led-btn');
+    const downloadLedBtn = document.getElementById('download-led-btn');
+
+    downloadLedBtn.addEventListener('click', () => {
+        const link = document.createElement('a');
+        link.download = `led-pattern-grid-${ledCanvas.width}x${ledCanvas.height}.png`;
+        link.href = ledCanvas.toDataURL('image/png');
+        link.click();
+    });
 
     function getLedSettings() {
         return {
@@ -489,6 +532,7 @@ document.addEventListener('DOMContentLoaded', () => {
             tileH: document.getElementById('led-tile-height').value,
             rainbow: document.getElementById('led-rainbow').checked,
             background: document.getElementById('led-background').checked,
+            borders: document.getElementById('led-borders').checked,
             numbering: document.getElementById('led-numbering').value,
             coords: document.getElementById('led-coords').value,
             color: document.getElementById('led-color').value
@@ -502,6 +546,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('led-tile-height').value = s.tileH;
         document.getElementById('led-rainbow').checked = s.rainbow;
         document.getElementById('led-background').checked = s.background;
+        document.getElementById('led-borders').checked = s.borders;
         document.getElementById('led-numbering').value = s.numbering || 'row-col';
         document.getElementById('led-coords').value = s.coords || 'center';
         document.getElementById('led-color').value = s.color;
@@ -525,6 +570,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const tH = parseInt(document.getElementById('led-tile-height').value) || 128;
         const useRainbow = document.getElementById('led-rainbow').checked;
         const useBackground = document.getElementById('led-background').checked;
+        const useBorders = document.getElementById('led-borders').checked;
         const baseColor = document.getElementById('led-color').value;
 
         ledCanvas.width = w;
@@ -533,8 +579,8 @@ document.addEventListener('DOMContentLoaded', () => {
         ledCtx.fillStyle = '#000000';
         ledCtx.fillRect(0, 0, w, h);
 
-        const cols = Math.ceil(w / tW);
-        const rows = Math.ceil(h / tH);
+        const cols = Math.floor(w / tW);
+        const rows = Math.floor(h / tH);
 
         for (let r = 0; r < rows; r++) {
             for (let c = 0; c < cols; c++) {
@@ -554,9 +600,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     ledCtx.fillRect(x, y, tW, tH);
 
                     // Border (Black for separation)
-                    ledCtx.strokeStyle = '#000000';
-                    ledCtx.lineWidth = 1;
-                    ledCtx.strokeRect(x + 0.5, y + 0.5, tW, tH);
+                    if (useBorders) {
+                        ledCtx.strokeStyle = '#000000';
+                        ledCtx.lineWidth = 1;
+                        ledCtx.strokeRect(x + 0.5, y + 0.5, tW - 1, tH - 1);
+                    }
 
                     // Text (White with black outline for visibility)
                     ledCtx.fillStyle = '#FFFFFF';
@@ -564,9 +612,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     ledCtx.lineWidth = 3;
                 } else {
                     // Outline Only
-                    ledCtx.strokeStyle = color;
-                    ledCtx.lineWidth = 1;
-                    ledCtx.strokeRect(x + 0.5, y + 0.5, tW, tH);
+                    if (useBorders) {
+                        ledCtx.strokeStyle = color;
+                        ledCtx.lineWidth = 1;
+                        ledCtx.strokeRect(x + 0.5, y + 0.5, tW - 1, tH - 1);
+                    }
 
                     ledCtx.fillStyle = color;
                     // No text stroke needed
@@ -624,11 +674,60 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
         }
+
+        // Draw hatched remainder
+        // Offset slightly to avoid overlapping the border of the last full tile?
+        // If we draw rectangles at x,y with size tW,tH, they consume [x, x+tW).
+        // The hatched area starts at fullW.
+        // However, strokeRect with x+0.5 is centered on pixel boundary? No, strokeRect is centered on path.
+        // If lineWidth is 1, it draws from -0.5 to +0.5 around the path.
+        // Our tiles end at fullW. The last tile's right edge is at fullW.
+        // If we draw hatched area from fullW, it should be fine.
+        // But maybe let's add gap? Or just ensure z-order?
+        // We draw tiles first. Then hatched area.
+        // So hatched area will draw over any border spill?
+        // Let's create a 1px gap between tiles and hatched area to be safe.
+
+        const fullW = cols * tW;
+        const fullH = rows * tH;
+
+        // Shift start position by 1 pixel to avoid overdrawing the last tile's border
+        if (fullW < w) drawHatchedArea(fullW, 0, w - fullW, h);
+        if (fullH < h) drawHatchedArea(0, fullH, fullW, h - fullH);
+    }
+
+    function drawHatchedArea(x, y, w, h) {
+        if (w <= 0 || h <= 0) return;
+        ledCtx.save();
+        ledCtx.beginPath();
+        ledCtx.rect(x, y, w, h);
+        ledCtx.clip();
+
+        // Background
+        ledCtx.fillStyle = '#111111';
+        ledCtx.fillRect(x, y, w, h);
+
+        // Diagonal Lines
+        ledCtx.strokeStyle = '#444444';
+        ledCtx.lineWidth = 1;
+        ledCtx.beginPath();
+
+        const spacing = 15;
+        const startX = x - h;
+        const endX = x + w;
+
+        for (let i = startX; i < endX; i += spacing) {
+            ledCtx.moveTo(i, y);
+            ledCtx.lineTo(i + h, y + h);
+        }
+        ledCtx.stroke();
+        ledCtx.restore();
     }
 
     generateLedBtn.addEventListener('click', drawLedPattern);
     document.getElementById('led-rainbow').addEventListener('change', drawLedPattern);
     document.getElementById('led-background').addEventListener('change', drawLedPattern);
+    document.getElementById('led-borders').addEventListener('change', drawLedPattern);
     document.getElementById('led-numbering').addEventListener('change', drawLedPattern);
     document.getElementById('led-coords').addEventListener('change', drawLedPattern);
     document.getElementById('led-color').addEventListener('input', drawLedPattern);
