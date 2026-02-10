@@ -13,6 +13,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const gridMajorColorInput = document.getElementById('grid-major-color');
     const gridMinorColorInput = document.getElementById('grid-minor-color');
     const showStampsCheckbox = document.getElementById('show-stamps');
+    const showCircleCheckbox = document.getElementById('show-circle');
+    const showCrosshairCheckbox = document.getElementById('show-crosshair');
 
     // Display Setup Inputs
     const displayColsInput = document.getElementById('display-cols');
@@ -80,13 +82,15 @@ document.addEventListener('DOMContentLoaded', () => {
         const overlapH = parseInt(overlapHInput.value) || 0;
         const overlapV = parseInt(overlapVInput.value) || 0;
 
-        const totalWidth = (dWidth * cols) - (overlapH * (cols - 1));
-        const totalHeight = (dHeight * rows) - (overlapV * (rows - 1));
+        const totalWidth = (dWidth * cols) + (overlapH * (cols - 1));
+        const totalHeight = (dHeight * rows) + (overlapV * (rows - 1));
 
         const showInfo = showInfoCheckbox.checked;
         const showBorders = showBordersCheckbox.checked;
         const showRuler = showRulerCheckbox.checked;
         const showStamps = showStampsCheckbox.checked;
+        const showCircle = showCircleCheckbox.checked;
+        const showCrosshair = showCrosshairCheckbox.checked;
 
         // Resize canvas
         canvas.width = totalWidth;
@@ -105,8 +109,8 @@ document.addEventListener('DOMContentLoaded', () => {
         // Repeat grid/circle for each display
         for (let r = 0; r < rows; r++) {
             for (let c = 0; c < cols; c++) {
-                const x = c * (dWidth - overlapH);
-                const y = r * (dHeight - overlapV);
+                const x = c * (dWidth + overlapH);
+                const y = r * (dHeight + overlapV);
                 ctx.save();
                 ctx.translate(x, y);
                 // Clip to display area
@@ -118,7 +122,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     drawStamps(dWidth, dHeight, x, y);
                 }
 
-                drawGrid(dWidth, dHeight, majorSize, subdivs, majorColor, minorColor);
+                drawGrid(dWidth, dHeight, majorSize, subdivs, majorColor, minorColor, showCircle, showCrosshair);
                 ctx.restore();
             }
         }
@@ -130,7 +134,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Draw Rulers
         if (showRuler) {
-            drawRulers(totalWidth, totalHeight);
+            drawRulers(totalWidth, totalHeight, dWidth, dHeight, cols, rows, overlapH, overlapV);
         }
 
         // Draw Info Overlay
@@ -174,8 +178,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         for (let r = 0; r < rows; r++) {
             for (let c = 0; c < cols; c++) {
-                const x = c * (dW - ovH);
-                const y = r * (dH - ovV);
+                const x = c * (dW + ovH);
+                const y = r * (dH + ovV);
                 ctx.strokeRect(x + 1, y + 1, dW - 2, dH - 2);
 
                 // Display Index
@@ -192,31 +196,31 @@ document.addEventListener('DOMContentLoaded', () => {
         ctx.fillStyle = 'rgba(255, 255, 0, 0.15)';
 
         // Horizontal Overlaps
-        if (ovH > 0 && cols > 1) {
+        if (ovH < 0 && cols > 1) {
             for (let c = 1; c < cols; c++) {
-                const x = c * (dW - ovH);
-                ctx.fillRect(x, 0, ovH, canvas.height);
+                const x = c * (dW + ovH);
+                ctx.fillRect(x, 0, -ovH, canvas.height);
 
                 // Overlap lines
                 ctx.strokeStyle = 'rgba(255, 255, 0, 0.5)';
                 ctx.beginPath();
                 ctx.moveTo(x, 0); ctx.lineTo(x, canvas.height);
-                ctx.moveTo(x + ovH, 0); ctx.lineTo(x + ovH, canvas.height);
+                ctx.moveTo(x - ovH, 0); ctx.lineTo(x - ovH, canvas.height);
                 ctx.stroke();
             }
         }
 
         // Vertical Overlaps
-        if (ovV > 0 && rows > 1) {
+        if (ovV < 0 && rows > 1) {
             for (let r = 1; r < rows; r++) {
-                const y = r * (dH - ovV);
-                ctx.fillRect(0, y, canvas.width, ovV);
+                const y = r * (dH + ovV);
+                ctx.fillRect(0, y, canvas.width, -ovV);
 
                 // Overlap lines
                 ctx.strokeStyle = 'rgba(255, 255, 0, 0.5)';
                 ctx.beginPath();
                 ctx.moveTo(0, y); ctx.lineTo(canvas.width, y);
-                ctx.moveTo(0, y + ovV); ctx.lineTo(canvas.width, y + ovV);
+                ctx.moveTo(0, y - ovV); ctx.lineTo(canvas.width, y - ovV);
                 ctx.stroke();
             }
         }
@@ -224,11 +228,8 @@ document.addEventListener('DOMContentLoaded', () => {
         ctx.restore();
     }
 
-    function drawRulers(w, h) {
+    function drawRulers(totalW, totalH, dW, dH, cols, rows, ovH, ovV) {
         ctx.save();
-        ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
-        ctx.strokeStyle = 'rgba(255, 255, 255, 0.6)';
-        ctx.lineWidth = 1;
         ctx.font = '10px Inter, sans-serif';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'top';
@@ -240,13 +241,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const tickLengthMedium = 10;
         const tickLengthMinor = 5;
 
-        // Top Ruler (X-Axis)
-        // Background for readability
-        ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
-        ctx.fillRect(0, 0, w, 20);
+        // --- Top Ruler (Global X) ---
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
+        ctx.fillRect(0, 0, totalW, 20);
 
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.6)';
+        ctx.fillStyle = '#FFFFFF';
         ctx.beginPath();
-        for (let x = 0; x <= w; x += minorStep) {
+        for (let x = 0; x <= totalW; x += minorStep) {
             let len = tickLengthMinor;
             if (x % majorStep === 0) len = tickLengthMajor;
             else if (x % mediumStep === 0) len = tickLengthMedium;
@@ -255,21 +257,20 @@ document.addEventListener('DOMContentLoaded', () => {
             ctx.lineTo(x + 0.5, len);
 
             if (x % majorStep === 0 && x > 0) {
-                ctx.fillStyle = '#FFFFFF';
                 ctx.fillText(x, x, tickLengthMajor + 2);
             }
         }
         ctx.stroke();
 
-        // Left Ruler (Y-Axis)
-        ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
-        ctx.fillRect(0, 0, 25, h); // slightly wider for text
-        ctx.beginPath();
+        // --- Left Ruler (Global Y) ---
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
+        ctx.fillRect(0, 0, 25, totalH);
 
         ctx.textAlign = 'left';
         ctx.textBaseline = 'middle';
+        ctx.beginPath();
 
-        for (let y = 0; y <= h; y += minorStep) {
+        for (let y = 0; y <= totalH; y += minorStep) {
             let len = tickLengthMinor;
             if (y % majorStep === 0) len = tickLengthMajor;
             else if (y % mediumStep === 0) len = tickLengthMedium;
@@ -278,18 +279,77 @@ document.addEventListener('DOMContentLoaded', () => {
             ctx.lineTo(len, y + 0.5);
 
             if (y % majorStep === 0 && y > 0) {
-                ctx.fillStyle = '#FFFFFF';
-                // Rotate text for vertical ruler or keeps it standard? Standard is better readability usually
-                // but let's rotate -90deg if we want to save space? No, simple horizontal text is safer.
                 ctx.fillText(y, tickLengthMajor + 2, y);
             }
         }
         ctx.stroke();
 
+        // --- Bottom Ruler (Individual X) ---
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
+        ctx.fillRect(0, totalH - 20, totalW, 20);
+
+        ctx.strokeStyle = 'rgba(0, 255, 255, 0.6)'; // Cyan for Local
+        ctx.fillStyle = '#00FFFF';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'bottom';
+
+        for (let c = 0; c < cols; c++) {
+            const startX = c * (dW + ovH);
+
+            ctx.save();
+            ctx.translate(startX, 0);
+            ctx.beginPath();
+
+            for (let lx = 0; lx <= dW; lx += minorStep) {
+                let len = tickLengthMinor;
+                if (lx % majorStep === 0) len = tickLengthMajor;
+                else if (lx % mediumStep === 0) len = tickLengthMedium;
+
+                ctx.moveTo(lx + 0.5, totalH);
+                ctx.lineTo(lx + 0.5, totalH - len);
+
+                if (lx % majorStep === 0) {
+                    ctx.fillText(lx, lx, totalH - tickLengthMajor - 2);
+                }
+            }
+            ctx.stroke();
+            ctx.restore();
+        }
+
+        // --- Right Ruler (Individual Y) ---
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
+        ctx.fillRect(totalW - 25, 0, 25, totalH);
+
+        ctx.textAlign = 'right';
+        ctx.textBaseline = 'middle';
+
+        for (let r = 0; r < rows; r++) {
+            const startY = r * (dH + ovV);
+
+            ctx.save();
+            ctx.translate(0, startY);
+            ctx.beginPath();
+
+            for (let ly = 0; ly <= dH; ly += minorStep) {
+                let len = tickLengthMinor;
+                if (ly % majorStep === 0) len = tickLengthMajor;
+                else if (ly % mediumStep === 0) len = tickLengthMedium;
+
+                ctx.moveTo(totalW, ly + 0.5);
+                ctx.lineTo(totalW - len, ly + 0.5);
+
+                if (ly % majorStep === 0) {
+                    ctx.fillText(ly, totalW - tickLengthMajor - 2, ly);
+                }
+            }
+            ctx.stroke();
+            ctx.restore();
+        }
+
         ctx.restore();
     }
 
-    function drawGrid(w, h, majorSize, subdivs, majorColor, minorColor) {
+    function drawGrid(w, h, majorSize, subdivs, majorColor, minorColor, showCircle, showCrosshair) {
         const minorSize = majorSize / subdivs;
 
         // 1. Draw Minor Lines
@@ -336,27 +396,34 @@ document.addEventListener('DOMContentLoaded', () => {
         ctx.stroke();
 
         // 3. Center Crosshair (Always Red to stand out)
-        ctx.beginPath();
-        ctx.strokeStyle = '#ff0000';
-        ctx.lineWidth = 3;
+        if (showCrosshair) {
+            ctx.beginPath();
+            ctx.strokeStyle = '#ff0000';
+            ctx.lineWidth = 3;
+
+            const centerX = w / 2;
+            const centerY = h / 2;
+            const crossSize = 50;
+
+            // Cross
+            ctx.moveTo(centerX - crossSize, centerY);
+            ctx.lineTo(centerX + crossSize, centerY);
+            ctx.moveTo(centerX, centerY - crossSize);
+            ctx.lineTo(centerX, centerY + crossSize);
+            ctx.stroke();
+        }
 
         const centerX = w / 2;
         const centerY = h / 2;
-        const crossSize = 50;
-
-        // Cross
-        ctx.moveTo(centerX - crossSize, centerY);
-        ctx.lineTo(centerX + crossSize, centerY);
-        ctx.moveTo(centerX, centerY - crossSize);
-        ctx.lineTo(centerX, centerY + crossSize);
-        ctx.stroke();
 
         // Circle (fill the display)
-        const circleRadius = Math.min(w, h) / 2;
-        ctx.beginPath();
-        ctx.arc(centerX, centerY, circleRadius, 0, Math.PI * 2);
-        ctx.strokeStyle = '#ff0000';
-        ctx.stroke();
+        if (showCircle) {
+            const circleRadius = Math.min(w, h) / 2;
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, circleRadius, 0, Math.PI * 2);
+            ctx.strokeStyle = '#ff0000';
+            ctx.stroke();
+        }
 
         ctx.lineWidth = 1; // Reset
     }
@@ -529,8 +596,11 @@ document.addEventListener('DOMContentLoaded', () => {
             majorSize: gridMajorSizeInput.value,
             subdivisions: gridSubdivisionsInput.value,
             majorColor: gridMajorColorInput.value,
+            majorColor: gridMajorColorInput.value,
             minorColor: gridMinorColorInput.value,
             showStamps: showStampsCheckbox.checked,
+            showCircle: showCircleCheckbox.checked,
+            showCrosshair: showCrosshairCheckbox.checked,
             showInfo: showInfoCheckbox.checked,
             customLabel: document.getElementById('custom-label').value
         };
@@ -550,6 +620,8 @@ document.addEventListener('DOMContentLoaded', () => {
         gridMajorColorInput.value = s.majorColor;
         gridMinorColorInput.value = s.minorColor;
         showStampsCheckbox.checked = s.showStamps;
+        showCircleCheckbox.checked = s.showCircle;
+        showCrosshairCheckbox.checked = s.showCrosshair;
         showInfoCheckbox.checked = s.showInfo;
         document.getElementById('custom-label').value = s.customLabel;
         drawPattern();
