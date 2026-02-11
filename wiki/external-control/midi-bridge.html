@@ -845,21 +845,80 @@
                 <div class="section-content" style="display: block;">
                     <div class="section-content-body"><h2>MIDI Bridge</h2>
 
-<p><!-- STUB: This article should cover the MIDI Bridge service, which translates MIDI controller input into WATCHOUT variable values. --></p>
+<p>The MIDI Bridge is a standalone service that receives MIDI messages from a connected MIDI device and forwards them as variable updates to the WATCHOUT Director. It provides a straightforward way to use physical MIDI controllers — faders, knobs, buttons, and pitch wheels — for real-time control of show parameters.</p>
 
-<h3>Content to include</h3>
+<h3>Enabling the MIDI Bridge</h3>
+
+<p>The MIDI Bridge is managed as a service from the <strong>Network</strong> window in Producer. It can be started and stopped on any node that has MIDI input hardware (or a virtual MIDI driver) available.</p>
+
+<p>When the MIDI Bridge starts, it opens a configuration window where you can select the MIDI device, configure the Director target, and adjust settings.</p>
+
+<h3>Configuration</h3>
+
+<p>The MIDI Bridge configuration window provides the following settings:</p>
 
 <ul>
-<li><strong>What the MIDI Bridge is</strong> — a standalone service that receives MIDI Control Change messages from connected MIDI devices and forwards them as variable updates to the Director.</li>
-<li><strong>Enabling the MIDI Bridge</strong> — how to enable/disable the MIDI Bridge service on a node from the Network window.</li>
-<li><strong>Configuration dialog</strong> — the MIDI Bridge dialog accessible from the network panel:</li>
-<li><strong>Director target</strong> — which Director the MIDI Bridge sends values to.</li>
-<li><strong>Normalize values</strong> — toggle for normalizing MIDI CC values (0–127) to a 0.0–1.0 range.</li>
-<li><strong>MIDI mapping</strong> — how MIDI CC numbers map to WATCHOUT variable external keys, and how to configure this mapping.</li>
-<li><strong>Supported messages</strong> — which MIDI message types are handled (Control Change). Note which types are not supported.</li>
-<li><strong>Interpolation</strong> — MIDI inputs receive the default 50ms interpolation from the Director fallback.</li>
-<li><strong>Use cases</strong> — fader-based manual control of opacity/position, button-triggered scene changes, DJ controller integration.</li>
-<li><strong>Hardware requirements</strong> — the node running the MIDI Bridge must have MIDI input hardware or a virtual MIDI driver.</li>
+<li><strong>MIDI Device</strong> — A dropdown listing all available MIDI input ports on the machine. Select the device you want to receive messages from. The selected device is saved in the bridge's settings file and restored automatically on restart.</li>
+<li><strong>Director IP</strong> — The IP address of the Director to send variable updates to. Defaults to <code>127.0.0.1</code> (localhost) for single-machine setups. Change this when the Director runs on a different machine.</li>
+<li><strong>Normalize</strong> — When enabled, MIDI values are normalized to a 0.0–1.0 range. When disabled, raw MIDI values are forwarded (e.g., 0–127 for Control Change, 0–16383 for Pitch Wheel). Normalization is convenient when your variables use a 0–1 range.</li>
+<li><strong>MSC Device ID</strong> — The MIDI Show Control Device ID used to filter incoming MSC messages. Only messages matching this Device ID (or the all-call ID <code>127</code>) are processed. See the MIDI Show Control article for details.</li>
+
+</ul>
+<h3>Supported Message Types</h3>
+
+<p>The MIDI Bridge handles the following MIDI message types:</p>
+
+<p><strong>Control Change (CC)</strong> — The most common type for faders and knobs. Each CC message generates a variable key in the format:</p>
+
+<p><code>midi.ch({channel}).cc({control_number})</code></p>
+
+<p>For example, moving CC #7 on MIDI channel 0 produces the key <code>midi.ch(0).cc(7)</code>.</p>
+
+<p><strong>Note On</strong> — Key presses on a MIDI keyboard or button pad. The velocity value is used as the variable value. Key format:</p>
+
+<p><code>midi.ch({channel}).note({note_number})</code></p>
+
+<p><strong>Note Off</strong> — Key releases. These produce a value of <code>0</code> for the same key as the corresponding Note On.</p>
+
+<p><strong>Pitch Wheel</strong> — The pitch bend wheel. A 14-bit value (0–16383) is generated with the key:</p>
+
+<p><code>midi.ch({channel}).pitch</code></p>
+
+<p><strong>MIDI Show Control (MSC)</strong> — SysEx messages conforming to the MSC specification are parsed and forwarded as show control commands (GO, STOP, GO OFF, RESET) rather than variable values. See the MIDI Show Control article for details.</p>
+
+<div class='note-box'><p>Other MIDI message types (Program Change, Aftertouch, System Exclusive other than MSC) are not processed by the MIDI Bridge.
+</p></div>
+
+<h3>How It Works</h3>
+
+<p>The MIDI Bridge operates independently from the Operative. When a MIDI message is received:</p>
+
+<ol>
+<li>The message is parsed and converted into the appropriate key/value format.</li>
+<li>For <strong>Control Change, Note, and Pitch Wheel</strong> messages: The bridge posts the values directly to the Director's <code>/v0/inputs</code> endpoint as JSON. The Director applies the default 50ms interpolation for smooth transitions.</li>
+<li>For <strong>MSC messages</strong>: The bridge posts the parsed MSC command to the Operative's <code>/v0/msc</code> endpoint, which handles timeline control.</li>
+
+</ol>
+Messages are batched and sent at a maximum rate of approximately 100 updates per second (10ms interval) to avoid overwhelming the Director with rapid MIDI changes.
+
+<h3>Hardware Requirements</h3>
+
+<p>The machine running the MIDI Bridge must have:</p>
+
+<ul>
+<li>A <strong>MIDI input device</strong> connected (USB MIDI interface, MIDI controller, or MIDI keyboard).</li>
+<li>Alternatively, a <strong>virtual MIDI driver</strong> (such as loopMIDI or IAC Driver) for receiving MIDI from software applications.</li>
+
+</ul>
+The MIDI Bridge lists all available MIDI input ports on the system. If no ports appear, check that your MIDI device drivers are correctly installed.
+
+<h3>Use Cases</h3>
+
+<ul>
+<li><strong>Fader-based control</strong> — Map physical faders on a MIDI controller to opacity, volume, or position variables for hands-on show control.</li>
+<li><strong>Button-triggered scenes</strong> — Use MIDI note buttons to switch between variable presets or trigger timeline actions.</li>
+<li><strong>DJ controller integration</strong> — Repurpose DJ MIDI controllers with their knobs, faders, and jog wheels to control visual parameters in real time.</li>
+<li><strong>Show control via MSC</strong> — Receive GO/STOP/RESET commands from a theatrical show control system that outputs MSC.</li>
 
 </ul></div><div class="section-nav">
                 <a href="osc-protocol.html" class="nav-btn">

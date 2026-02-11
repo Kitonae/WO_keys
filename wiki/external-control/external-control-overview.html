@@ -845,25 +845,85 @@
                 <div class="section-content" style="display: block;">
                     <div class="section-content-body"><h2>External Control Overview</h2>
 
-<p><!-- STUB: This article should provide a high-level overview of WATCHOUT's external control architecture and how the different protocols relate to each other. --></p>
+<p>WATCHOUT can be controlled by a wide range of external devices and systems — lighting consoles, show controllers, tracking systems, MIDI devices, timecode generators, and custom software. This chapter covers the external control architecture, the protocols WATCHOUT supports, and how they all connect to the show through a unified variable system.</p>
 
-<h3>Content to include</h3>
+<h3>Control Architecture</h3>
+
+<p>External control in WATCHOUT follows a layered architecture where signals from the outside world are received, converted into variable updates, and then distributed to all rendering nodes for real-time effect.</p>
+
+<p>The <strong>Operative</strong> is the central receiving point for most external protocols. It runs on the same machine as the Director and listens for incoming ArtNet, OSC, PosiStageNet, HTTP, and WATCHOUT 6 protocol messages. When a message arrives, the Operative converts it into a standardized internal format and forwards it to the Director.</p>
+
+<p>The <strong>Director</strong> is the authoritative coordinator. It receives variable updates from the Operative (and in some cases directly from bridge services like MIDI and LTC), validates values against variable definitions in the show, and broadcasts the updated state to all connected Runners via Server-Sent Events (SSE). Runners then apply the new values atomically to their rendering pipeline.</p>
+
+<p>Some protocols bypass the Operative and communicate directly with the Director. The <strong>MIDI Bridge</strong> and <strong>LTC Bridge</strong> are standalone services that each have their own connection to the Director — MIDI for variable input and show control, and LTC for timeline synchronization.</p>
+
+<h3>Variables as the Bridge</h3>
+
+<p>All external control ultimately maps to <strong>WATCHOUT variables</strong>. Variables are defined in the show file with properties like name, external key, value range, and interpolation mode. When an external signal arrives — whether it's a DMX channel value from ArtNet, an OSC float, or a position coordinate from a tracking system — it is matched to a variable by its <strong>external key</strong>, clamped to the variable's min/max range, and then made available for use throughout the show.</p>
+
+<p>Variables feed into <strong>tween expressions</strong> (allowing external values to drive visual properties like position, opacity, and rotation), <strong>conditional cues</strong> (enabling or disabling cues based on variable values), and <strong>timeline triggers</strong> (starting or stopping timelines in response to variable changes).</p>
+
+<p>This design means you don't need to learn different APIs for different protocols — every protocol writes to the same pool of variables, and you choose which protocol to use based on your production environment.</p>
+
+<h3>Supported Protocols</h3>
+
+<p>WATCHOUT supports the following external control protocols:</p>
 
 <ul>
-<li><strong>Control architecture</strong> — explain the overall input flow: external signals arrive at the Operative (or directly at the Director for some protocols), are converted into variable/input updates, and are then forwarded to the Director which distributes values to Runners for rendering.</li>
-<li><strong>Variables as the bridge</strong> — explain that all external control ultimately maps to WATCHOUT variables (defined in the show). Variables feed into tween expressions, conditional cues, and timeline triggers.</li>
-<li><strong>Supported protocols</strong> — list all supported protocols with a brief description of each:</li>
-<li><strong>ArtNet</strong> — DMX-over-IP for lighting console integration.</li>
-<li><strong>OSC</strong> — Open Sound Control for flexible show control.</li>
-<li><strong>HTTP REST API</strong> — programmatic control via HTTP requests.</li>
-<li><strong>MIDI</strong> — musical instrument / controller integration via the MIDI Bridge.</li>
-<li><strong>LTC</strong> — Linear Time Code for external timecode synchronization via the LTC Bridge.</li>
-<li><strong>PosiStageNet (PSN)</strong> — position tracking protocol.</li>
-<li><strong>MIDI Show Control (MSC)</strong> — industry-standard show control messaging.</li>
-<li><strong>WATCHOUT 6 Protocol</strong> — backward-compatible TCP control protocol.</li>
-<li><strong>Protocol enable/disable</strong> — how to enable or disable individual protocols from the Network window (ArtNet, OSC, PSN, Web UI, WO7/WO6 protocol toggles).</li>
-<li><strong>Input interpolation</strong> — briefly explain the 50ms default interpolation that smooths all external input values for glitch-free rendering, and that the HTTP v1 API allows custom interpolation durations.</li>
-<li><strong>Choosing a protocol</strong> — guidance on which protocol to use for different scenarios (lighting desk → ArtNet, show controller → OSC or HTTP, timecode → LTC, tracking → PSN).</li>
+<li><strong>ArtNet</strong> — DMX-over-IP protocol for lighting console integration. Map DMX channel values from any ArtNet universe to WATCHOUT variables.</li>
+<li><strong>OSC (Open Sound Control)</strong> — A flexible, address-based protocol commonly used in media servers and show controllers. Supports both variable input and timeline playback control.</li>
+<li><strong>HTTP REST API</strong> — Programmatic control via standard HTTP requests. Includes endpoints for playback control, variable input, show management, hit testing, and real-time event streams (SSE).</li>
+<li><strong>MIDI Bridge</strong> — A standalone service that receives MIDI Control Change, Note, and Pitch Wheel messages and forwards them as variable updates. Also handles MIDI Show Control (MSC) messages.</li>
+<li><strong>LTC Bridge</strong> — A standalone service that decodes Linear Time Code from an audio input and synchronizes WATCHOUT timeline playback to the external timecode.</li>
+<li><strong>PosiStageNet (PSN)</strong> — A position tracking protocol that receives 3D spatial data (position, speed, orientation, acceleration) from tracking systems and maps it to variables.</li>
+<li><strong>MIDI Show Control (MSC)</strong> — An industry-standard protocol for show equipment control, supporting GO, STOP, GO OFF, and RESET commands for timeline management.</li>
+<li><strong>WATCHOUT 6 Protocol</strong> — A backward-compatible TCP control interface that accepts commands in the WATCHOUT 6 format, allowing existing integrations to work without modification.</li>
+
+</ul>
+<h3>Enabling and Disabling Protocols</h3>
+
+<p>Individual protocols can be enabled or disabled from the <strong>Network</strong> window in Producer. The available toggles include:</p>
+
+<ul>
+<li><strong>ArtNet</strong> — Enables/disables the ArtNet listener on the Operative.</li>
+<li><strong>OSC</strong> — Enables/disables the OSC listener (both UDP and TCP).</li>
+<li><strong>PosiStageNet</strong> — Enables/disables the PSN forwarder.</li>
+<li><strong>Web UI</strong> — Enables/disables the HTTP REST API and its built-in documentation interface.</li>
+<li><strong>WATCHOUT 7 Protocol</strong> — Enables/disables the native HTTP API endpoints.</li>
+<li><strong>WATCHOUT 6 Protocol</strong> — Enables/disables the backward-compatible TCP protocol.</li>
+
+</ul>
+The MIDI Bridge and LTC Bridge are managed separately as individual services — they can be started or stopped from the Network window's node management.
+
+<div class='info-box'><p>Disable protocols you are not using to reduce network traffic and minimize the system's attack surface on public or shared networks.
+</p></div>
+
+<h3>Input Interpolation</h3>
+
+<p>To prevent visual glitches from sudden value changes, all external inputs pass through a <strong>50-millisecond interpolation window</strong> by default. This means that when a new value arrives, renderers smoothly transition from the old value to the new value over 50ms rather than jumping instantly.</p>
+
+<p>This interpolation happens transparently for all protocols:</p>
+
+<ul>
+<li><strong>ArtNet and OSC</strong> add the interpolation timestamp at the Operative before forwarding to the Director.</li>
+<li><strong>MIDI and other bridge services</strong> rely on the Director to apply the default 50ms interpolation.</li>
+<li><strong>HTTP REST API</strong> supports an optional <code>duration</code> parameter that lets you specify a custom interpolation time — from instant (0ms) to multi-second fades.</li>
+
+</ul>
+The 50ms default provides smooth transitions without noticeable latency, striking a good balance for real-time control scenarios like fader movements and tracking data.
+
+<h3>Choosing a Protocol</h3>
+
+<p>The best protocol depends on your production environment:</p>
+
+<ul>
+<li><strong>Lighting desk integration</strong> → <strong>ArtNet</strong>. Lighting consoles natively speak DMX/ArtNet, making this the most natural choice for controlling WATCHOUT from a lighting desk.</li>
+<li><strong>Show controller or media server</strong> → <strong>OSC</strong> or <strong>HTTP REST API</strong>. OSC is ideal for systems like QLab, TouchOSC, or other show controllers. HTTP is better for custom software, web-based control panels, and scripted automation.</li>
+<li><strong>External timecode synchronization</strong> → <strong>LTC Bridge</strong>. When WATCHOUT playback must lock to an external SMPTE timecode source (audio/video playback, broadcast, multi-system sync), the LTC Bridge provides frame-accurate timeline synchronization.</li>
+<li><strong>Position tracking</strong> → <strong>PosiStageNet</strong>. For content that follows performers or objects on stage, PSN receives real-time position data from tracking systems like BlackTrax.</li>
+<li><strong>Existing WATCHOUT 6 integration</strong> → <strong>WATCHOUT 6 Protocol</strong>. If you have an existing Crestron, AMX, or other control system programmed for WATCHOUT 6, the backward-compatible TCP protocol lets it work with WATCHOUT 7 without changes.</li>
+<li><strong>Manual fader control</strong> → <strong>MIDI Bridge</strong>. Physical MIDI controllers with faders and knobs provide tactile, hands-on control of WATCHOUT variables.</li>
+<li><strong>Theatrical cue triggering</strong> → <strong>MIDI Show Control</strong>. MSC is the industry standard for triggering cues across multiple show control devices in theater and live event environments.</li>
 
 </ul></div><div class="section-nav">
                 <a href="index.html" class="nav-btn">

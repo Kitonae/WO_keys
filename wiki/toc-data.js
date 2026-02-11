@@ -653,61 +653,61 @@ const tocData = [
         "level": 2,
         "title": "External Control Overview",
         "page": 1,
-        "description": "- Control architecture — explain the overall input flow: external signals arrive at the Operative (or directly at the..."
+        "description": "WATCHOUT can be controlled by a wide range of external devices and systems — lighting consoles, show controllers, tra..."
     },
     {
         "level": 2,
         "title": "Variables and Inputs",
         "page": 2,
-        "description": "- Variables window — how to manage show variables: adding, removing, editing live values with sliders, and saving cur..."
+        "description": "Variables are the central mechanism through which all external control reaches WATCHOUT's rendering engine. Every ext..."
     },
     {
         "level": 2,
         "title": "OSC Protocol",
         "page": 3,
-        "description": "- What OSC is — brief explanation of Open Sound Control as a flexible, message-based protocol commonly used in media ..."
+        "description": "Open Sound Control (OSC) is a flexible, message-based protocol widely used in media servers, show controllers, and cr..."
     },
     {
         "level": 2,
         "title": "MIDI Bridge",
         "page": 4,
-        "description": "- What the MIDI Bridge is — a standalone service that receives MIDI Control Change messages from connected MIDI devic..."
+        "description": "The MIDI Bridge is a standalone service that receives MIDI messages from a connected MIDI device and forwards them as..."
     },
     {
         "level": 2,
         "title": "LTC Bridge",
         "page": 5,
-        "description": "- What the LTC Bridge is — a standalone service that decodes Linear Time Code from an audio input and makes it availa..."
+        "description": "The LTC Bridge is a standalone service that decodes Linear Time Code (LTC) from an audio input and uses it to synchro..."
     },
     {
         "level": 2,
         "title": "HTTP REST API",
         "page": 6,
-        "description": "- API overview — WATCHOUT exposes HTTP endpoints on the Operative for external control. Describe the base URL structu..."
+        "description": "WATCHOUT exposes a comprehensive HTTP REST API for programmatic control from external systems. The API provides endpo..."
     },
     {
         "level": 2,
         "title": "ArtNet Input",
         "page": 7,
-        "description": "- What ArtNet input is — explain that WATCHOUT can receive ArtNet DMX data and map DMX channel values to show variabl..."
+        "description": "WATCHOUT can receive ArtNet DMX data over the network and map incoming DMX channel values to show variables. This all..."
     },
     {
         "level": 2,
         "title": "PosiStageNet",
         "page": 8,
-        "description": "- What PosiStageNet is — a protocol for transmitting 3D position data from tracking systems (BlackTrax, Mo-Sys, etc.)..."
+        "description": "PosiStageNet (PSN) is an open protocol for transmitting real-time 3D position data from tracking systems over a netwo..."
     },
     {
         "level": 2,
         "title": "MIDI Show Control",
         "page": 9,
-        "description": "- What MSC is — MIDI Show Control is a standard (part of the MIDI specification) for controlling show equipment using..."
+        "description": "MIDI Show Control (MSC) is an industry-standard protocol for controlling show equipment using a defined set of comman..."
     },
     {
         "level": 2,
         "title": "WATCHOUT 6 Protocol",
         "page": 10,
-        "description": "- What the WO6 protocol is — WATCHOUT 7 includes a backward-compatible TCP control interface that accepts commands in..."
+        "description": "WATCHOUT 7 includes a backward-compatible TCP control interface that accepts commands in the WATCHOUT 6 protocol form..."
     },
     {
         "level": 1,

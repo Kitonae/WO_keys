@@ -845,17 +845,104 @@
                 <div class="section-content" style="display: block;">
                     <div class="section-content-body"><h2>WATCHOUT 6 Protocol</h2>
 
-<p><!-- STUB: This article should cover the WATCHOUT 6 backward-compatible TCP control protocol supported by WATCHOUT 7. --></p>
+<p>WATCHOUT 7 includes a backward-compatible TCP control interface that accepts commands in the WATCHOUT 6 protocol format. This allows existing integrations — Crestron modules, AMX programs, Extron scripts, and other control system code written for WATCHOUT 6 — to work with WATCHOUT 7 without modification.</p>
 
-<h3>Content to include</h3>
+<h3>Enabling the WO6 Protocol</h3>
+
+<p>The WATCHOUT 6 protocol is enabled or disabled from the <strong>Network</strong> window in Producer using the <strong>WATCHOUT 6 Protocol</strong> toggle. This toggle is independent of the <strong>WATCHOUT 7 Protocol</strong> toggle — you can run both simultaneously, only one, or neither.</p>
+
+<p>When enabled, the Operative starts a TCP server that accepts connections in the WATCHOUT 6 text-based command format.</p>
+
+<h3>Connection Details</h3>
+
+<p>The WO6 compatibility layer listens on:</p>
 
 <ul>
-<li><strong>What the WO6 protocol is</strong> — WATCHOUT 7 includes a backward-compatible TCP control interface that accepts commands in the WATCHOUT 6 protocol format. This enables existing integrations and control systems written for WATCHOUT 6 to work with WATCHOUT 7 without modification.</li>
-<li><strong>Enabling WO6 protocol</strong> — how to enable/disable the WATCHOUT 6 protocol from the Network window toggle (labeled "WATCHOUT 6 protocol").</li>
-<li><strong>Supported commands</strong> — describe which WATCHOUT 6 commands are supported in the compatibility layer (timeline control, input setting, etc.) and any commands that are not supported or behave differently.</li>
-<li><strong>Connection details</strong> — the TCP port and connection model (persistent TCP connection, text-based command/response).</li>
-<li><strong>Migration path</strong> — guidance for users transitioning from WATCHOUT 6: when the WO6 protocol is sufficient vs. when to migrate to the native WATCHOUT 7 HTTP API or OSC for better feature coverage.</li>
-<li><strong>Use cases</strong> — maintaining compatibility with existing Crestron/AMX/Extron control system programming, legacy show control integrations.</li>
+<li><strong>TCP port 3040</strong> — The production control port (equivalent to the WATCHOUT 6 "watchmaker" port).</li>
+<li><strong>TCP port 3039</strong> — The display computer port (equivalent to the WATCHOUT 6 "watchpoint" port).</li>
+
+</ul>
+Connections use the same text-based, newline-delimited command/response protocol as WATCHOUT 6. Commands are sent as ASCII text terminated by a newline, and responses follow the same format.
+
+<h3>The Main Timeline</h3>
+
+<p>Several WO6 commands operate on the "main timeline" by default. In WATCHOUT 7, this requires a timeline named <strong>"Main Timeline"</strong> to exist in the show. Commands that reference no specific timeline (like <code>run</code>, <code>halt</code>, and <code>getStatus</code>) will target this timeline.</p>
+
+<div class='note-box'><p>If your show does not have a timeline named "Main Timeline", commands that default to the main timeline will fail. Either create a timeline with this name or use commands that explicitly specify a timeline name.
+</p></div>
+
+<h3>Supported Commands</h3>
+
+<p>The following WATCHOUT 6 commands are supported in the compatibility layer:</p>
+
+<p><strong>Authentication and status:</strong> <ul> <li><strong>authenticate</strong> — Authenticates the connection. WATCHOUT 7 always accepts authentication (license check is not enforced at this level).</li> <li><strong>ping</strong> — Returns the system's ready status and version string.</li> <li><strong>getStatus</strong> — Returns the current show status (loaded show name, busy state, timeline information).</li></p>
+
+</ul>
+<strong>Timeline playback:</strong>
+<ul>
+<li><strong>run</strong> — Starts playback of the main timeline or a named auxiliary timeline.</li>
+<li><strong>halt</strong> — Pauses the main timeline or a named auxiliary timeline.</li>
+<li><strong>kill</strong> — Stops a named timeline (resets to beginning).</li>
+<li><strong>gotoTime</strong> — Jumps to a specific time position on the main timeline or a named timeline. Maintains the current play/pause state.</li>
+<li><strong>gotoControlCue</strong> — Jumps to a named control cue, searching forward from the current position (or backward if not found ahead). Maintains the current play/pause state.</li>
+<li><strong>reset</strong> — Stops all auxiliary timelines and resets the main timeline to the beginning in a paused state.</li>
+
+</ul>
+<strong>Timeline information:</strong>
+<ul>
+<li><strong>getAuxTimelines</strong> / <strong>getAuxTimelinesTree</strong> — Returns a list of all auxiliary timelines with names and durations.</li>
+<li><strong>getTimelineStatus</strong> — Returns the current playback status for a named timeline.</li>
+<li><strong>subscribeStatus</strong> / <strong>unsubscribeStatus</strong> — Subscribe to or unsubscribe from real-time status updates for the show.</li>
+<li><strong>subscribeTimelineStatus</strong> / <strong>unsubscribeTimelineStatus</strong> — Subscribe to or unsubscribe from real-time status updates for a specific timeline.</li>
+<li><strong>getControlCues</strong> — Returns a list of control cues for a timeline.</li>
+
+</ul>
+<strong>Variable/input control:</strong>
+<ul>
+<li><strong>getInputs</strong> — Returns the current value of one or all input variables.</li>
+<li><strong>setInput</strong> — Sets a single input variable to a value, optionally with a transition rate for smooth fading.</li>
+<li><strong>setInputs</strong> — Sets multiple input variables simultaneously with a shared transition rate. When a transition rate is specified, values are smoothly interpolated at the show's frame rate.</li>
+
+</ul>
+<strong>Show management:</strong>
+<ul>
+<li><strong>loadShow</strong> — Loads a show file by path. Relative paths are resolved against the configured show directory.</li>
+<li><strong>online</strong> — Accepted but has no effect (WATCHOUT 7 is always "online").</li>
+
+</ul>
+<strong>Not supported:</strong>
+<ul>
+<li><strong>hitTest</strong> — Returns an "unimplemented" error. Use the HTTP REST API's <code>/v0/hittest</code> endpoint instead for hit testing.</li>
+
+</ul>
+<h3>Differences from WATCHOUT 6</h3>
+
+<p>While the compatibility layer aims to be transparent, there are some behavioral differences:</p>
+
+<ul>
+<li>WATCHOUT 7 is always online — the <code>online</code> command is accepted but ignored.</li>
+<li>Timeline identification uses names rather than numeric indices. Ensure timeline names match what your control system expects.</li>
+<li>The main timeline must be explicitly named "Main Timeline".</li>
+<li>Input variable fading (via <code>setInput</code> with a transition rate) is implemented by streaming interpolated values at the show's frame rate, which closely mimics WO6 behavior.</li>
+
+</ul>
+<h3>Migration Guidance</h3>
+
+<p>The WO6 protocol is ideal for maintaining compatibility with existing control system integrations during a transition to WATCHOUT 7. However, for new integrations, consider using:</p>
+
+<ul>
+<li><strong>HTTP REST API</strong> — For the most complete feature set, including cue set management, hit testing, show upload, and real-time event streams.</li>
+<li><strong>OSC</strong> — For show controllers and creative applications that natively support OSC.</li>
+
+</ul>
+The WO6 protocol does not expose WATCHOUT 7-specific features like cue sets, SSE event streams, or the extended input API with custom interpolation durations.
+
+<h3>Use Cases</h3>
+
+<ul>
+<li><strong>Crestron / AMX / Extron integration</strong> — Existing control system programs written for WATCHOUT 6 continue to work without reprogramming.</li>
+<li><strong>Legacy show control</strong> — Third-party show control systems that have WATCHOUT 6 drivers or modules can control WATCHOUT 7 without updates.</li>
+<li><strong>Gradual migration</strong> — Run the WO6 and WO7 protocols simultaneously while transitioning control systems to the newer HTTP API.</li>
 
 </ul></div><div class="section-nav">
                 <a href="midi-show-control.html" class="nav-btn">

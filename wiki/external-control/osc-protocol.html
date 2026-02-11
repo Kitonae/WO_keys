@@ -845,20 +845,107 @@
                 <div class="section-content" style="display: block;">
                     <div class="section-content-body"><h2>OSC Protocol</h2>
 
-<p><!-- STUB: This article should cover OSC (Open Sound Control) input integration with WATCHOUT. --></p>
+<p>Open Sound Control (OSC) is a flexible, message-based protocol widely used in media servers, show controllers, and creative applications. WATCHOUT's OSC integration allows you to send variable values and timeline playback commands from any OSC-capable device or software.</p>
 
-<h3>Content to include</h3>
+<h3>Enabling OSC</h3>
+
+<p>OSC support is enabled or disabled from the <strong>Network</strong> window in Producer using the <strong>OSC</strong> toggle. When enabled, the Operative listens for incoming OSC messages on both UDP and TCP.</p>
+
+<h3>Connection Details</h3>
+
+<p>WATCHOUT listens for OSC on two ports simultaneously:</p>
 
 <ul>
-<li><strong>What OSC is</strong> — brief explanation of Open Sound Control as a flexible, message-based protocol commonly used in media servers, show controllers, and creative applications.</li>
-<li><strong>Enabling OSC</strong> — how to enable/disable the OSC protocol from the Network window toggle.</li>
-<li><strong>OSC input mapping</strong> — how OSC addresses map to WATCHOUT variable external keys. Explain the address-to-key mapping convention.</li>
-<li><strong>Supported value types</strong> — which OSC argument types are accepted (float, int, etc.) and how they are converted to WATCHOUT's numeric variable values.</li>
-<li><strong>Playback control via OSC</strong> — OSC messages that can control timeline play state (play, pause, stop) in addition to variable values.</li>
-<li><strong>Port configuration</strong> — the default OSC listening port and how to determine which port the Operative listens on.</li>
-<li><strong>Interpolation</strong> — OSC inputs use the default 50ms interpolation window for smooth value transitions.</li>
-<li><strong>Testing OSC</strong> — recommended tools for sending test OSC messages during development.</li>
-<li><strong>Use cases</strong> — integration with QLab, TouchOSC, show control systems, and custom OSC senders.</li>
+<li><strong>UDP port 8000</strong> — Standard OSC over UDP. Most OSC controllers use this transport by default.</li>
+<li><strong>TCP port 8001</strong> — OSC over TCP with length-prefixed framing. Useful for reliable delivery over congested or lossy networks.</li>
+
+</ul>
+Both ports bind to all network interfaces (<code>0.0.0.0</code>), so the Operative accepts OSC messages from any reachable device on the network.
+
+<h3>Variable Input via OSC</h3>
+
+<p>Any OSC message that does not match a playback control pattern (described below) is treated as a variable input. The OSC address and argument index are combined to form the external key that maps to a WATCHOUT variable.</p>
+
+<p>The key format is:</p>
+
+<p><code>osc.addr({address}/{argument_index})</code></p>
+
+<p>For example, sending an OSC message to address <code>/stage/brightness</code> with a single float argument produces the key:</p>
+
+<p><code>osc.addr(/stage/brightness/0)</code></p>
+
+<p>If the message carries multiple arguments, each argument gets its own key with an incrementing index:</p>
+
+<ul>
+<li>Argument 0: <code>osc.addr(/stage/color/0)</code></li>
+<li>Argument 1: <code>osc.addr(/stage/color/1)</code></li>
+<li>Argument 2: <code>osc.addr(/stage/color/2)</code></li>
+
+</ul>
+<h3>Supported Value Types</h3>
+
+<p>WATCHOUT accepts the following OSC argument types:</p>
+
+<ul>
+<li><strong>Float</strong> (<code>f</code>) — Used directly as the variable value.</li>
+<li><strong>Int</strong> (<code>i</code>) — Converted to a floating-point value.</li>
+
+</ul>
+Other OSC types (string, blob, etc.) are not supported and will produce an error if received.
+
+<h3>Playback Control via OSC</h3>
+
+<p>In addition to variable input, WATCHOUT supports timeline playback control through OSC messages with the <code>/wo/</code> address prefix. The supported patterns are:</p>
+
+<ul>
+<li><code>/wo/play/{timeline_id}</code> — Start playback of the specified timeline.</li>
+<li><code>/wo/run/{timeline_id}</code> — Same as play.</li>
+<li><code>/wo/pause/{timeline_id}</code> — Pause the specified timeline.</li>
+<li><code>/wo/stop/{timeline_id}</code> — Stop the specified timeline and reset to the beginning.</li>
+
+</ul>
+The <code>timeline_id</code> is a numeric identifier (e.g., <code>1</code>, <code>2</code>).
+
+<p><strong>Jumping to a cue:</strong> Add a cue ID as an additional path segment:</p>
+
+<p><code>/wo/play/{timeline_id}/{cue_id}</code></p>
+
+<p>This starts playback from the specified cue's position.</p>
+
+<p><strong>Jumping to a time:</strong> Instead of a cue ID, you can include a time position as an OSC argument:</p>
+
+<ul>
+<li><strong>Float argument</strong> — Interpreted as seconds (e.g., <code>10.5</code> = 10 seconds 500 milliseconds).</li>
+<li><strong>Int argument</strong> — Interpreted as milliseconds (e.g., <code>10500</code> = 10 seconds 500 milliseconds).</li>
+
+</ul>
+For example, sending <code>/wo/play/1</code> with a float argument of <code>5.0</code> starts timeline 1 at the 5-second mark.
+
+<div class='note-box'><p>OSC Bundles are not currently supported. Each message must be sent as an individual OSC message.
+</p></div>
+
+<h3>Interpolation</h3>
+
+<p>All OSC variable inputs are interpolated with the default <strong>50ms interpolation window</strong>. The Operative timestamps each incoming OSC message and includes a 50ms interpolation deadline when forwarding it to the Director. This ensures smooth, glitch-free transitions even when OSC messages arrive at irregular intervals.</p>
+
+<h3>Testing OSC</h3>
+
+<p>During development, you can test WATCHOUT's OSC input using tools such as:</p>
+
+<ul>
+<li><strong>TouchOSC</strong> — A mobile app for building custom OSC control surfaces.</li>
+<li><strong>Protokol</strong> — A monitoring tool that can also send OSC messages.</li>
+<li><strong>oscsend</strong> (command line) — A simple command-line utility for sending test messages.</li>
+<li>Any programming language with an OSC library (Python's <code>python-osc</code>, Node.js's <code>osc-js</code>, etc.).</li>
+
+</ul>
+<h3>Use Cases</h3>
+
+<ul>
+<li><strong>QLab integration</strong> — Send OSC cues from QLab to control WATCHOUT variables and trigger timeline playback.</li>
+<li><strong>TouchOSC / Lemur</strong> — Build custom tablet-based control interfaces with faders, buttons, and XY pads mapped to WATCHOUT variables.</li>
+<li><strong>Show control systems</strong> — Integrate with Medialon, Pharos, or other automation systems that output OSC.</li>
+<li><strong>Custom software</strong> — Control WATCHOUT from any application using standard OSC libraries.</li>
 
 </ul></div><div class="section-nav">
                 <a href="variables-and-inputs.html" class="nav-btn">

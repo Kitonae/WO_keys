@@ -845,17 +845,99 @@
                 <div class="section-content" style="display: block;">
                     <div class="section-content-body"><h2>PosiStageNet</h2>
 
-<p><!-- STUB: This article should cover PosiStageNet (PSN) integration for receiving position tracking data in WATCHOUT. --></p>
+<p>PosiStageNet (PSN) is an open protocol for transmitting real-time 3D position data from tracking systems over a network. WATCHOUT receives PSN data and maps tracker coordinates to show variables, enabling content that dynamically follows performers, objects, or other tracked elements on stage.</p>
 
-<h3>Content to include</h3>
+<h3>Enabling PSN</h3>
+
+<p>PSN support is enabled or disabled from the <strong>Network</strong> window in Producer using the <strong>PosiStageNet</strong> toggle. When enabled, the Operative starts a PSN forwarder that listens for incoming tracking data.</p>
+
+<h3>Network Details</h3>
+
+<p>PSN uses <strong>UDP multicast</strong> for data transmission. The WATCHOUT PSN forwarder listens on:</p>
 
 <ul>
-<li><strong>What PosiStageNet is</strong> — a protocol for transmitting 3D position data from tracking systems (BlackTrax, Mo-Sys, etc.) over a network. WATCHOUT can receive PSN data and use it to drive content positioning.</li>
-<li><strong>Enabling PSN</strong> — how to enable/disable the PosiStageNet protocol from the Network window toggle.</li>
-<li><strong>PSN data mapping</strong> — how PSN tracker positions map to WATCHOUT variables. Explain the coordinate mapping (X, Y, Z position values becoming variable inputs).</li>
-<li><strong>Forwarding architecture</strong> — the PosiStage forwarder component and how it relays data to the Director.</li>
-<li><strong>Use cases</strong> — content that follows performers on stage, interactive projection mapping, position-reactive show elements.</li>
-<li><strong>Requirements</strong> — a compatible tracking system sending PSN data, network connectivity between the tracking system and the WATCHOUT Operative.</li>
+<li><strong>Multicast group:</strong> <code>236.10.10.10</code></li>
+<li><strong>Port:</strong> <code>56565</code></li>
+
+</ul>
+The forwarder joins the multicast group on all available network interfaces. Ensure your tracking system is sending PSN data to this standard multicast address and that multicast routing is properly configured on your network.
+
+<h3>Data Mapping</h3>
+
+<p>Each PSN tracker exposes multiple data fields as WATCHOUT variables. The external key format is:</p>
+
+<p><code>psn.{tracker_id}.{field}</code></p>
+
+<p>Where <code>{tracker_id}</code> is the numeric ID assigned to the tracker by the tracking system, and <code>{field}</code> is one of the following:</p>
+
+<p><strong>Position:</strong> <ul> <li><code>psn.{id}.pos.x</code> — X position</li> <li><code>psn.{id}.pos.y</code> — Y position</li> <li><code>psn.{id}.pos.z</code> — Z position</li></p>
+
+</ul>
+<strong>Speed:</strong>
+<ul>
+<li><code>psn.{id}.speed.x</code> — X velocity</li>
+<li><code>psn.{id}.speed.y</code> — Y velocity</li>
+<li><code>psn.{id}.speed.z</code> — Z velocity</li>
+
+</ul>
+<strong>Orientation:</strong>
+<ul>
+<li><code>psn.{id}.ori.x</code> — X rotation</li>
+<li><code>psn.{id}.ori.y</code> — Y rotation</li>
+<li><code>psn.{id}.ori.z</code> — Z rotation</li>
+
+</ul>
+<strong>Acceleration:</strong>
+<ul>
+<li><code>psn.{id}.accel.x</code> — X acceleration</li>
+<li><code>psn.{id}.accel.y</code> — Y acceleration</li>
+<li><code>psn.{id}.accel.z</code> — Z acceleration</li>
+
+</ul>
+<strong>Target position:</strong>
+<ul>
+<li><code>psn.{id}.trgtpos.x</code> — Target X position</li>
+<li><code>psn.{id}.trgtpos.y</code> — Target Y position</li>
+<li><code>psn.{id}.trgtpos.z</code> — Target Z position</li>
+
+</ul>
+<strong>Status and timestamp:</strong>
+<ul>
+<li><code>psn.{id}.status</code> — Tracker status value</li>
+<li><code>psn.{id}.timestamp</code> — Frame timestamp</li>
+
+</ul>
+Not all fields are present in every PSN frame — the forwarder only forwards fields that the tracking system actually sends.
+
+<h3>How It Works</h3>
+
+<p>The PSN forwarder operates as follows:</p>
+
+<ol>
+<li><strong>Packet reception</strong> — UDP packets are received on the multicast address. PSN supports packet fragmentation for large frames; the forwarder automatically reassembles fragmented packets.</li>
+<li><strong>Frame parsing</strong> — DATA packets are parsed to extract tracker positions and other fields. INFO packets (containing system and tracker names) are received but not forwarded.</li>
+<li><strong>Change detection</strong> — The forwarder compares each tracker's current values against the previous frame. Only values that have actually changed are queued for transmission, reducing unnecessary network traffic to the Director.</li>
+<li><strong>Batched forwarding</strong> — Changed values are batched and sent to the Director's input endpoint with a <strong>25ms interpolation window</strong>. This shorter interpolation (compared to the 50ms default for other protocols) reflects the high update rate typical of tracking systems.</li>
+
+</ol>
+<div class='info-box'><p>Coordinate systems vary between tracking systems. You may need to use WATCHOUT's variable min/max range and tween expressions to remap PSN coordinates to your stage coordinate system.
+</p></div>
+
+<h3>Requirements</h3>
+
+<ul>
+<li>A <strong>tracking system</strong> that outputs PosiStageNet data (e.g., BlackTrax, Mo-Sys, Augmenta, or custom PSN senders).</li>
+<li><strong>Network multicast support</strong> between the tracking system and the WATCHOUT Operative. Both must be on the same network segment or have multicast routing configured.</li>
+<li>Variables defined in the show with external keys matching the PSN key format for the trackers you want to use.</li>
+
+</ul>
+<h3>Use Cases</h3>
+
+<ul>
+<li><strong>Performer tracking</strong> — Content (spotlights, graphics, text) that follows performers as they move across the stage.</li>
+<li><strong>Interactive projection mapping</strong> — Projected visuals that react to the position of physical objects.</li>
+<li><strong>Position-reactive show elements</strong> — Trigger content changes or transitions based on where tracked elements are in the performance space.</li>
+<li><strong>Multi-axis control</strong> — Use tracker orientation and speed data to drive rotation, scale, or animation speed of visual elements.</li>
 
 </ul></div><div class="section-nav">
                 <a href="artnet-input.html" class="nav-btn">

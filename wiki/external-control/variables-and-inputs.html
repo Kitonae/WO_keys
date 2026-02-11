@@ -845,21 +845,94 @@
                 <div class="section-content" style="display: block;">
                     <div class="section-content-body"><h2>Variables and Inputs</h2>
 
-<p><!-- STUB: This article should provide a detailed reference for the WATCHOUT variable/input system from the external control perspective, covering how external values map to show variables. --></p>
+<p>Variables are the central mechanism through which all external control reaches WATCHOUT's rendering engine. Every external protocol — whether ArtNet, OSC, MIDI, HTTP, or any other — ultimately writes values to the same pool of show variables. These variables then drive tween expressions, conditional cues, and timeline triggers, making them the bridge between the outside world and what appears on screen.</p>
 
-<h3>Content to include</h3>
+<h3>The Variables Window</h3>
+
+<p>The <strong>Variables</strong> window in Producer is where you manage all show variables. From here you can:</p>
 
 <ul>
-<li><strong>Variables window</strong> — how to manage show variables: adding, removing, editing live values with sliders, and saving current values as defaults.</li>
-<li><strong>Variable properties</strong> — name, external key, min/max/default value, and interpolation mode (None, Linear, Circular).</li>
-<li><strong>External keys</strong> — the mapping between protocol-specific identifiers and WATCHOUT variable names. Explain the "Learn" mode for capturing external key assignments.</li>
-<li><strong>Input flow</strong> — how an incoming external signal (e.g., an OSC message) is matched to a variable by its external key, the value is clamped to min/max, interpolated, and then made available to expressions and tween bindings.</li>
-<li><strong>Interpolation modes</strong> — explain the three interpolation types:</li>
-<li><strong>None</strong> — value jumps immediately.</li>
-<li><strong>Linear</strong> — value transitions linearly over the interpolation period.</li>
-<li><strong>Circular</strong> — value wraps around for cyclic parameters (e.g., hue, angle).</li>
-<li><strong>Default values</strong> — saving current values as defaults, and when default values are applied (show load, variable reset).</li>
-<li><strong>Cross-reference</strong> — link to the Variable Cues article (Chapter 06) for timeline-based variable automation, and to individual protocol articles for protocol-specific key mapping.</li>
+<li><strong>Add</strong> new variables to the show.</li>
+<li><strong>Remove</strong> variables that are no longer needed.</li>
+<li><strong>Edit live values</strong> using sliders or direct numeric entry, allowing real-time preview of how a variable affects the show.</li>
+<li><strong>Save current values as defaults</strong> so that when the show is loaded or variables are reset, they return to a known state.</li>
+
+</ul>
+Each variable in the list displays its current value, external key assignment, and configured range.
+
+<h3>Variable Properties</h3>
+
+<p>Each variable has the following properties:</p>
+
+<ul>
+<li><strong>Name</strong> — The display name of the variable as it appears in the Variables window and in expression references. This is also the name used internally when matching render inputs.</li>
+<li><strong>External Key</strong> — The identifier that external protocols use to address this variable. For example, an OSC message sent to <code>/brightness/0</code> would match a variable whose external key is <code>osc.addr(/brightness/0)</code>. Each protocol has its own key format (described in the individual protocol articles).</li>
+<li><strong>Minimum Value</strong> — The lower bound of the variable's range. Incoming values below this are clamped.</li>
+<li><strong>Maximum Value</strong> — The upper bound of the variable's range. Incoming values above this are clamped.</li>
+<li><strong>Default Value</strong> — The value the variable takes when the show is first loaded or when variables are reset.</li>
+<li><strong>Interpolation Mode</strong> — How the variable transitions between values (see below).</li>
+
+</ul>
+<h3>External Keys and Learn Mode</h3>
+
+<p>The <strong>external key</strong> is what connects an incoming protocol message to a specific WATCHOUT variable. Different protocols generate keys in different formats:</p>
+
+<ul>
+<li><strong>OSC:</strong> <code>osc.addr(/your/address/0)</code> — derived from the OSC address pattern and argument index.</li>
+<li><strong>ArtNet:</strong> <code>artnet.net(0).subnet(0).uv(1).ch(10)</code> — specifies the DMX universe and channel.</li>
+<li><strong>MIDI:</strong> <code>midi.ch(0).cc(7)</code> — specifies the MIDI channel and control change number.</li>
+<li><strong>PosiStageNet:</strong> <code>psn.1.pos.x</code> — specifies the tracker ID and data field.</li>
+
+</ul>
+Rather than manually typing these key strings, WATCHOUT provides a <strong>Learn</strong> mode. When Learn mode is active, you select a variable in the Variables window and then send a signal from your external device (move a fader, send an OSC message, etc.). WATCHOUT captures the incoming key and automatically assigns it to the selected variable. This eliminates guesswork about key format and ensures the mapping is correct.
+
+<h3>Input Flow</h3>
+
+<p>When an external signal arrives at WATCHOUT, it goes through the following processing chain:</p>
+
+<ol>
+<li><strong>Reception</strong> — The protocol handler (in the Operative or a bridge service) receives the raw message.</li>
+<li><strong>Key extraction</strong> — The handler converts the protocol-specific address into an external key string.</li>
+<li><strong>Matching</strong> — The Director matches the external key against all variables defined in the current show.</li>
+<li><strong>Clamping</strong> — The incoming value is clamped to the variable's configured min/max range.</li>
+<li><strong>Interpolation</strong> — The value is interpolated over the configured interpolation window (typically 50ms) to produce a smooth transition.</li>
+<li><strong>Distribution</strong> — The interpolated value is broadcast to all Runners, where it becomes available to tween expressions, conditional cue evaluations, and other variable consumers.</li>
+
+</ol>
+This entire chain happens in real time with minimal latency, allowing responsive control of live visual content.
+
+<h3>Interpolation Modes</h3>
+
+<p>The interpolation mode determines how a variable transitions from its current value to a new incoming value:</p>
+
+<p><strong>None</strong> — The value jumps instantly to the new value with no transition. Use this for discrete state changes (e.g., switching between scenes, toggling visibility).</p>
+
+<p><strong>Linear</strong> — The value transitions linearly from the old value to the new value over the interpolation period. This is the most common mode and is suitable for most continuous parameters like opacity, position, and volume. A fader moving from 0 to 100 will produce a smooth, even ramp.</p>
+
+<p><strong>Circular</strong> — The value wraps around the min/max range, always taking the shortest path. This is designed for cyclic parameters like hue (0–360°) or rotation angles. For example, if a circular variable with range 0–360 transitions from 350 to 10, it will go forward through 360/0 (a 20-degree change) rather than backward through 180 (a 340-degree change).</p>
+
+<div class='info-box'><p>For most use cases, <strong>Linear</strong> interpolation is the best default. Use <strong>None</strong> only when you need instantaneous changes, and <strong>Circular</strong> specifically for angular or cyclic values.
+</p></div>
+
+<h3>Default Values</h3>
+
+<p>Each variable has a configurable default value. Defaults are applied in two situations:</p>
+
+<ul>
+<li><strong>Show load</strong> — When a show file is opened, all variables start at their default values.</li>
+<li><strong>Variable reset</strong> — When variables are explicitly reset (e.g., through a control command).</li>
+
+</ul>
+You can update defaults at any time by adjusting variables to the desired values in the Variables window and then saving the current values as the new defaults. This is useful for establishing a known starting state for a show — for example, setting all opacity variables to 100% and all position offsets to 0.
+
+<h3>Using Variables in the Show</h3>
+
+<p>Once a variable receives a value from an external source, that value can be referenced throughout the show:</p>
+
+<ul>
+<li><strong>Tween expressions</strong> — Bind a cue's position, opacity, scale, rotation, or any other tweenable property to a variable. The property value updates in real time as the variable changes.</li>
+<li><strong>Conditional cues</strong> — Set a cue's visibility condition to depend on a variable value (e.g., show a cue only when <code>brightness > 50</code>).</li>
+<li><strong>Variable cues</strong> — Timeline-based automation that sets variable values at specific points during playback. See the Variable Cues section in Chapter 6 for details on driving variables from the timeline rather than from external input.</li>
 
 </ul></div><div class="section-nav">
                 <a href="external-control-overview.html" class="nav-btn">

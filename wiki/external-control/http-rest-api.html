@@ -845,26 +845,161 @@
                 <div class="section-content" style="display: block;">
                     <div class="section-content-body"><h2>HTTP REST API</h2>
 
-<p><!-- STUB: This article should cover the HTTP REST API endpoints for programmatic control of WATCHOUT from external systems. --></p>
+<p>WATCHOUT exposes a comprehensive HTTP REST API for programmatic control from external systems. The API provides endpoints for timeline playback control, variable input, show management, hit testing, cue set state management, and real-time event streams. It is the most feature-complete external control interface available in WATCHOUT.</p>
 
-<h3>Content to include</h3>
+<h3>Base URL and Port</h3>
+
+<p>The API is served by the Operative on <strong>port 3019</strong>. The base URL is:</p>
+
+<p><code>http://{host}:3019</code></p>
+
+<p>Replace <code>{host}</code> with the IP address or hostname of the machine running the Operative. For local access, use <code>localhost</code> or <code>127.0.0.1</code>.</p>
+
+<p>The API is enabled or disabled from the <strong>Network</strong> window using the <strong>WATCHOUT 7 Protocol</strong> and <strong>Web UI</strong> toggles.</p>
+
+<h3>Interactive API Documentation</h3>
+
+<p>WATCHOUT includes built-in interactive API documentation powered by RapiDoc. Access it at:</p>
+
+<p><code>http://{host}:3019/test</code></p>
+
+<p>This page provides a browsable interface for all endpoints, including request/response schemas, example payloads, and the ability to send test requests directly from the browser. The underlying OpenAPI specification is available at <code>/api-docs/openapi.json</code>.</p>
+
+<h3>Playback Control</h3>
+
+<p><strong>Play a timeline:</strong> <code>POST /v0/play/{timeline_id}</code></p>
+
+<p><strong>Pause a timeline:</strong> <code>POST /v0/pause/{timeline_id}</code></p>
+
+<p><strong>Stop a timeline</strong> (resets to beginning): <code>POST /v0/stop/{timeline_id}</code></p>
+
+<p><strong>Jump to a specific time:</strong> <code>POST /v0/jump-to-time/{timeline_id}?time={ms}&state={play|pause}</code></p>
+
+<p>The <code>time</code> parameter is in milliseconds. The optional <code>state</code> parameter controls whether the timeline plays or pauses after jumping (default: <code>pause</code>).</p>
+
+<p><strong>Jump to a specific cue:</strong> <code>POST /v0/jump-to-cue/{timeline_id}/{cue_id}?state={play|pause}</code></p>
+
+<p>Jumps to the start time of the specified cue. The optional <code>state</code> parameter works the same as jump-to-time.</p>
+
+<p><strong>Get playback state:</strong> <code>GET /v0/state</code></p>
+
+<p>Returns the current playback state for all timelines, including positions and play/pause status.</p>
+
+<h3>Variable Input</h3>
+
+<p><strong>Set multiple variables (batch):</strong> <code>POST /v0/inputs</code></p>
+
+<p>Request body is a JSON array of input objects:</p>
+
+<p>``<code>json path=null start=null [   {"key": "brightness", "value": 100.0, "duration": 2000},   {"key": "volume", "value": 0.5} ] <pre><code class="language-text">Each object has:
+- `key` (string, required) — The external key matching a WATCHOUT variable.
+- `value` (number, required) — The numeric value to set.
+- `duration` (number, optional) — Interpolation duration in milliseconds. If omitted, the default 50ms interpolation is used.
+
+**Set a single variable:**
+`POST /v0/input/{key}?value={number}&amp;duration={ms}`
+
+A simpler endpoint for setting one variable at a time via URL parameters.
+
+**Get all variables:**
+`GET /v0/inputs`
+
+Returns a map of all input variable specifications including their external keys, value ranges, and defaults.
+
+### Show Management
+
+**Get current show:**
+`GET /v0/show`
+
+Returns the complete show data including timelines, cues, inputs, and revision information.
+
+**Upload show (JSON):**
+`POST /v0/show`
+
+Upload a new show in JSON format. Replaces the currently loaded show.
+
+**Upload show (binary):**
+`POST /v0/showfile`
+
+Upload a complete show file in WATCHOUT binary format.
+
+**Get timelines:**
+`GET /v0/timelines`
+
+Returns all timelines with their names and IDs.
+
+**Get cues for a timeline:**
+`GET /v0/cues/{timeline_id}`
+
+Returns all cues for a specific timeline including names and IDs.
+
+### Cue Set State Management
+
+Cue sets (also called cue groups) can be switched via the API:
+
+**By ID:**
+- `POST /v0/cue-group-state/by-id/{group_id}/{variant_id}` — Set a single group.
+- `POST /v0/cue-group-state/by-id` — Set multiple groups (JSON body mapping group IDs to variant IDs).
+- `GET /v0/cue-group-state/by-id` — Get current states.
+
+**By name:**
+- `POST /v0/cue-group-state/by-name/{group_name}/{variant_name}` — Set a single group.
+- `POST /v0/cue-group-state/by-name` — Set multiple groups (JSON body mapping group names to variant names).
+- `GET /v0/cue-group-state/by-name` — Get current states.
+
+### Hit Testing
+
+`POST /v0/hittest`
+
+Tests whether a coordinate point hits any of the specified cues. This is useful for interactive installations where user input (touch, pointer, etc.) needs to determine which visual element was selected.
+
+Request body:</code></pre>json path=null start=null {   "cues": ["1/42", "1/43"],   "x": 960.0,   "y": 540.0 } </code>`<code></p>
+
+<p>The response lists which cues contain the point. Hit testing evaluates all tweens (position, scale, rotation, corner pinning) at the current playback time for accurate results with animated content.</p>
+
+<div class='note-box'><p>Hit testing only supports visual media cues on timelines. Audio, control, output, variable, and comment cues are not supported. Cues with conditional rendering are also rejected.
+</p></div>
+
+<h3>Real-Time Event Streams</h3>
+
+<p>WATCHOUT provides Server-Sent Events (SSE) and Newline-Delimited JSON (NDJSON) streams for receiving real-time updates:</p>
+
+<p><strong>SSE endpoints:</strong> <ul> <li></code>/v0/sse<code> — Legacy event stream.</li> <li></code>/v1/sse<code> — Includes initial state on connect, excludes countdown and diff events.</li> <li></code>/v2/sse<code> — Optimized stream with diff-based playback updates and interpolated variable values.</li></p>
+
+</ul>
+<strong>NDJSON endpoints:</strong>
+<ul>
+<li></code>/v0/ndjson<code>, </code>/v1/ndjson<code>, </code>/v2/ndjson<code> — Same event data as their SSE counterparts, delivered as newline-delimited JSON.</li>
+
+</ul>
+The event streams emit the following event types:
+<ul>
+<li><strong>PlaybackState</strong> — Current playback state for all timelines.</li>
+<li><strong>Inputs</strong> — Variable value changes.</li>
+<li><strong>ShowRevision</strong> — Notifications when the show is updated.</li>
+<li><strong>TimelineCountdowns</strong> — Countdown information for upcoming cues.</li>
+<li><strong>CueVisibility</strong> — Cue enter/exit events.</li>
+
+</ul>
+The v1 and v2 streams include the initial show state when a client connects, making them suitable for dashboards and monitoring applications.
+
+<h3>System Information</h3>
+
+<p></code>GET /info<code></p>
+
+<p>Returns build information about the WATCHOUT system.</p>
+
+<h3>Authentication</h3>
+
+<p>The HTTP API does not require authentication by default. All endpoints are accessible to any client that can reach the Operative's port. If the API is exposed on an untrusted network, consider using firewall rules to restrict access.</p>
+
+<h3>Use Cases</h3>
 
 <ul>
-<li><strong>API overview</strong> — WATCHOUT exposes HTTP endpoints on the Operative for external control. Describe the base URL structure and port.</li>
-<li><strong>v0 Inputs endpoint</strong> — the legacy <code>POST /v0/inputs</code> endpoint:</li>
-<li>Request format: JSON array of <code>{"key": "...", "value": ...}</code> objects.</li>
-<li>No interpolation duration (uses the default 50ms fallback).</li>
-<li>Example curl command.</li>
-<li><strong>v1 Inputs endpoint</strong> — the newer <code>POST /v1/inputs</code> endpoint:</li>
-<li>Request format: JSON array of <code>{"key": "...", "value": ..., "duration": ...}</code> objects.</li>
-<li>Optional <code>duration</code> field (in milliseconds) for custom interpolation time.</li>
-<li>Falls back to 50ms if duration is omitted.</li>
-<li>Example curl commands for both custom and default duration.</li>
-<li><strong>Hit test endpoint</strong> — the endpoint for querying which cues are at a given position (for interactive applications).</li>
-<li><strong>Countdown and events endpoints</strong> — SSE (Server-Sent Events) streams for receiving real-time show state, cue visibility changes, and countdown information.</li>
-<li><strong>API documentation</strong> — mention the built-in RapiDoc documentation page for exploring the API interactively.</li>
-<li><strong>Authentication</strong> — whether the API requires authentication (it does not by default).</li>
-<li><strong>Use cases</strong> — integration with web-based control panels, custom automation scripts, interactive installations, and third-party show control systems.</li>
+<li><strong>Web-based control panels</strong> — Build browser-based dashboards that monitor and control WATCHOUT playback using the REST API and SSE streams.</li>
+<li><strong>Custom automation scripts</strong> — Use </code>curl<code>, Python </code>requests`, or any HTTP client to script show control sequences.</li>
+<li><strong>Interactive installations</strong> — Combine hit testing with variable input to create touch-reactive or pointer-reactive experiences.</li>
+<li><strong>Third-party integration</strong> — Connect show control systems, building management systems, or IoT platforms that speak HTTP/JSON.</li>
 
 </ul></div><div class="section-nav">
                 <a href="ltc-bridge.html" class="nav-btn">
