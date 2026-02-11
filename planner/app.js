@@ -72,7 +72,8 @@ document.addEventListener('DOMContentLoaded', () => {
         control: document.getElementById('add-control'),
         clear: document.getElementById('clear-canvas'),
         save: document.getElementById('save-plan'),
-        load: document.getElementById('load-plan')
+        load: document.getElementById('load-plan'),
+        export: document.getElementById('export-image')
     };
 
     // --- Node Definitions ---
@@ -82,8 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
             icon: 'fa-desktop',
             width: 220,
             ports: [
-                { id: 'net', label: 'Network', type: 'network' },
-                { id: 'out-1', label: 'Output 1', type: 'output' }
+                { id: 'net', label: 'Network', type: 'network' }
             ],
             data: { name: 'Prod-1', ip: '192.168.1.100' }
         },
@@ -93,13 +93,19 @@ document.addEventListener('DOMContentLoaded', () => {
             width: 220,
             ports: [
                 { id: 'net', label: 'Network', type: 'network' },
-                { id: 'in', label: 'Input', type: 'input' },
                 { id: 'out-1', label: 'Output 1', type: 'output' },
                 { id: 'out-2', label: 'Output 2', type: 'output' },
                 { id: 'out-3', label: 'Output 3', type: 'output' },
                 { id: 'out-4', label: 'Output 4', type: 'output' }
             ],
-            data: { name: 'Disp-1', ip: '192.168.1.101', outputs: 4 }
+            ports: [
+                { id: 'net', label: 'Network', type: 'network' },
+                { id: 'out-1', label: 'Output 1', type: 'output' },
+                { id: 'out-2', label: 'Output 2', type: 'output' },
+                { id: 'out-3', label: 'Output 3', type: 'output' },
+                { id: 'out-4', label: 'Output 4', type: 'output' }
+            ],
+            data: { name: 'Disp-1', ip: '192.168.1.101', outputs: 4, inputs: 1, inputTypes: ['Generic'] }
         },
         watchpax: {
             title: 'WATCHPAX',
@@ -248,6 +254,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Name auto-increment logic could go here
         node.data.name = `${def.data.name.split('-')[0]}-${node.id}`;
+
+        if (type === 'display' && node.data.inputs > 0) {
+            if (!node.data.inputTypes) node.data.inputTypes = [];
+            for (let i = 1; i <= node.data.inputs; i++) {
+                const typeLabel = node.data.inputTypes[i - 1] || 'Generic';
+                node.ports.push({ id: `in-${i}`, label: `${typeLabel} ${i}`, type: 'input' });
+                if (!node.data.inputTypes[i - 1]) node.data.inputTypes[i - 1] = 'Generic';
+            }
+        }
 
         state.nodes.push(node);
         renderNode(node);
@@ -430,7 +445,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Other Data Fields
         Object.keys(node.data).forEach(key => {
-            if (key !== 'name' && key !== 'color') {
+            if (key !== 'name' && key !== 'color' && key !== 'inputTypes') {
                 html += `
                     <div class="prop-row">
                         <label>${key.charAt(0).toUpperCase() + key.slice(1)}</label>
@@ -439,6 +454,31 @@ document.addEventListener('DOMContentLoaded', () => {
                 `;
             }
         });
+
+        // Input Types Configuration (For Display Nodes)
+        if (node.type === 'display' && node.data.inputs > 0) {
+            html += `<div style="margin-top: 10px; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 10px;">
+                <label style="font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 6px; display: block;">Input Types</label>`;
+
+            for (let i = 1; i <= node.data.inputs; i++) {
+                const currentType = (node.data.inputTypes && node.data.inputTypes[i - 1]) ? node.data.inputTypes[i - 1] : 'Generic';
+                html += `
+                    <div class="prop-row" style="margin-bottom: 4px;">
+                         <div style="display: flex; align-items: center; gap: 8px;">
+                            <span style="font-size: 0.8rem; width: 20px;">${i}:</span>
+                            <select class="prop-input-type" data-index="${i - 1}" style="flex: 1;">
+                                <option value="Generic" ${currentType === 'Generic' ? 'selected' : ''}>Generic</option>
+                                <option value="SDI" ${currentType === 'SDI' ? 'selected' : ''}>SDI</option>
+                                <option value="HDMI" ${currentType === 'HDMI' ? 'selected' : ''}>HDMI</option>
+                                <option value="DP" ${currentType === 'DP' ? 'selected' : ''}>DisplayPort</option>
+                                <option value="DVI" ${currentType === 'DVI' ? 'selected' : ''}>DVI</option>
+                            </select>
+                         </div>
+                    </div>
+                `;
+            }
+            html += `</div>`;
+        }
 
         // Delete Button
         html += `
@@ -474,10 +514,79 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const dynamicInputs = document.querySelectorAll('.prop-dynamic');
         dynamicInputs.forEach(input => {
-            input.addEventListener('input', (e) => {
+            input.addEventListener('change', (e) => { // Change event for final value
                 const key = input.dataset.key;
-                node.data[key] = e.target.value;
-                refreshNodeVisuals(node);
+                const value = e.target.value;
+
+                if (key === 'inputs' && node.type === 'display') {
+                    const count = parseInt(value) || 0;
+                    node.data.inputs = count;
+
+                    // Update Ports
+                    // Remove existing input ports
+                    node.ports = node.ports.filter(p => !p.id.startsWith('in-'));
+
+                    // Sync inputTypes array
+                    if (!node.data.inputTypes) node.data.inputTypes = [];
+                    // Truncate or extend
+                    if (node.data.inputTypes.length > count) {
+                        node.data.inputTypes = node.data.inputTypes.slice(0, count);
+                    } else {
+                        while (node.data.inputTypes.length < count) {
+                            node.data.inputTypes.push('Generic');
+                        }
+                    }
+
+                    // Add new input ports
+                    for (let i = 1; i <= count; i++) {
+                        const typeLabel = node.data.inputTypes[i - 1];
+                        node.ports.push({ id: `in-${i}`, label: `${typeLabel} ${i}`, type: 'input' });
+                    }
+
+                    // Remove connections to removed ports
+                    state.connections = state.connections.filter(c => {
+                        if (c.target === node.id && c.targetPort.startsWith('in-')) {
+                            const portNum = parseInt(c.targetPort.split('-')[1]);
+                            return portNum <= count;
+                        }
+                        return true;
+                    });
+                    // Force full re-render of node DOM to show new ports
+                    const el = document.getElementById(`node-${node.id}`);
+                    if (el) el.remove();
+                    renderNode(node);
+                    selectNode(node.id); // Re-select to keep props open
+                    updateConnections();
+                } else {
+                    node.data[key] = value;
+                    refreshNodeVisuals(node);
+                }
+                saveState();
+            });
+        });
+
+        const inputTypeSelects = document.querySelectorAll('.prop-input-type');
+        inputTypeSelects.forEach(select => {
+            select.addEventListener('change', (e) => {
+                const index = parseInt(select.dataset.index);
+                const newType = e.target.value;
+
+                if (!node.data.inputTypes) node.data.inputTypes = [];
+                node.data.inputTypes[index] = newType;
+
+                // Update port label
+                // Find port with id `in-${index+1}`
+                const portIndex = node.ports.findIndex(p => p.id === `in-${index + 1}`);
+                if (portIndex !== -1) {
+                    node.ports[portIndex].label = `${newType} ${index + 1}`;
+                }
+
+                // Force Re-render to show updated label
+                const el = document.getElementById(`node-${node.id}`);
+                if (el) el.remove();
+                renderNode(node);
+                selectNode(node.id); // Stay on selection
+                updateConnections();
                 saveState();
             });
         });
@@ -873,6 +982,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 a.click();
             } else if (key === 'load') {
                 document.getElementById('load-file').click();
+            } else if (key === 'export') {
+                if (typeof html2canvas === 'undefined') {
+                    alert('Image export library not loaded.');
+                    return;
+                }
+                const element = document.getElementById('editor-container');
+                html2canvas(element).then(canvas => {
+                    const link = document.createElement('a');
+                    link.download = 'infrastructure-plan.png';
+                    link.href = canvas.toDataURL();
+                    link.click();
+                }).catch(err => {
+                    console.error('Export failed:', err);
+                    alert('Failed to export image.');
+                });
             } else {
                 createNode(key, cx - 100, cy - 50); // Offset to be centeredish
             }
@@ -921,6 +1045,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Add initial node for demo
     // Load state or add initial node
+    // Keyboard Shortcuts
+    document.addEventListener('keydown', (e) => {
+        if ((e.key === 'Delete' || e.key === 'Backspace') && state.selection) {
+            // Check if focus is on an input or textarea
+            if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA') {
+                return;
+            }
+            deleteNode(state.selection);
+        }
+    });
+
     if (loadState()) {
         state.nodes.forEach(node => renderNode(node));
         updateConnections();

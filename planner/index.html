@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="styles.css">
     <!-- Using FontAwesome for icons if available, otherwise fallback to text/svg -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
 
 <body>
@@ -107,6 +108,9 @@
                     </button>
                     <button id="load-plan" class="tool-btn secondary" title="Import JSON">
                         <i class="fa-solid fa-upload"></i> Load
+                    </button>
+                    <button id="export-image" class="tool-btn secondary" title="Export Image">
+                        <i class="fa-solid fa-camera"></i> Export
                     </button>
                 </div>
                 <input type="file" id="load-file" accept=".json" style="display: none;">
