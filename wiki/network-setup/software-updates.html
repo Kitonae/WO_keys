@@ -845,17 +845,65 @@
                 <div class="section-content" style="display: block;">
                     <div class="section-content-body"><h2>Software Updates</h2>
 
-<p><!-- STUB: This article should cover the remote software update mechanism for pushing WATCHOUT updates to nodes from Producer. --></p>
+<p>WATCHOUT provides a built-in mechanism for pushing software updates from Producer to remote nodes over the network. This ensures all nodes in a production run the same software version, which is essential for protocol compatibility and consistent behavior across the system.</p>
 
-<h3>Content to include</h3>
+<h3>Why Version Alignment Matters</h3>
+
+<p>All WATCHOUT nodes (Runners, Director, Operative, Asset Manager) communicate using internal protocols that evolve with each software release. When nodes run different versions, protocol mismatches can cause communication failures, missing features, or unexpected behavior. Keeping all nodes at the same version eliminates these risks.</p>
+
+<h3>Version Mismatch Indicators</h3>
+
+<p>WATCHOUT displays a visual warning indicator on any node in the <strong>Nodes</strong> window that is running a different software version than your Producer. The tooltip reads: "Warning: Not the same software version as your Producer." This makes it easy to identify nodes that need updating at a glance.</p>
+
+<p>Each node's current version is reported in its <strong>Node Properties</strong> panel under the <strong>Info</strong> section.</p>
+
+<h3>Initiating an Update</h3>
+
+<p>To push an update to one or more nodes:</p>
+
+<ol>
+<li>Open the <strong>Nodes</strong> window.</li>
+<li>Select the target node(s) you want to update.</li>
+<li>Click <strong>Update Software</strong> in the Node Properties panel (or use the corresponding action in the node context menu).</li>
+<li>A confirmation dialog appears asking: "Would you like to update the WATCHOUT version of the selected nodes?"</li>
+<li>Confirm to begin the update.</li>
+
+</ol>
+<div class='warning-box'><p>The node will <strong>restart</strong> after a successful installation. During the restart, the node is temporarily inaccessible and any active playback on that node will be interrupted. Additionally, manual actions may be required to start WATCHOUT Manager on the node after the update.
+</p></div>
+
+<h3>Update Process</h3>
+
+<p>When you confirm the update, the following occurs:</p>
+
+<ol>
+<li><strong>File transfer</strong> — Producer transfers the update package to the target node over the network.</li>
+<li><strong>Installation</strong> — the update is installed on the target node, replacing the existing WATCHOUT software.</li>
+<li><strong>Automatic restart</strong> — the node restarts its services (or the entire machine, depending on the update).</li>
+<li><strong>Reconnection</strong> — after the restart, the node reappears in the Nodes window. Verify that it now reports the same version as your Producer.</li>
+
+</ol>
+<h3>Switching to WATCHOUT 6</h3>
+
+<p>For installations that need to revert to WATCHOUT 6 operation, WATCHOUT provides a <strong>Switch to WATCHOUT 6</strong> option:</p>
+
+<ol>
+<li>Select the target node(s) in the Nodes window.</li>
+<li>Click <strong>Switch to WATCHOUT 6</strong> in the Node Properties actions.</li>
+<li>Confirm the dialog: "Do you want to switch the selected nodes to use WATCHOUT 6? This will restart the machine(s)."</li>
+<li>The node will reconfigure its NTP settings and perform a <strong>full machine restart</strong> to activate WATCHOUT 6.</li>
+
+</ol>
+<div class='note-box'><p>Switching to WATCHOUT 6 is a machine-level operation that triggers a full reboot, not just a service restart. The machine must have WATCHOUT 6 software already installed.
+</p></div>
+
+<h3>Best Practices</h3>
 
 <ul>
-<li><strong>Update mechanism</strong> — explain that Producer can push its own software version to remote nodes, ensuring all nodes in the production run the same version.</li>
-<li><strong>Initiating an update</strong> — how to select target nodes and trigger the update from node properties or the network window. The confirmation dialog and warnings about node restart.</li>
-<li><strong>Update process</strong> — what happens during the update: file transfer, installation, automatic restart, and manual steps that may be required to start WATCHOUT Manager afterward.</li>
-<li><strong>Version mismatch warnings</strong> — the visual indicator on nodes running a different version than Producer, and why version alignment matters for protocol compatibility.</li>
-<li><strong>Switching to WATCHOUT 6</strong> — the option to switch a node back to WATCHOUT 6 operation, triggering a machine restart.</li>
-<li><strong>Best practices</strong> — update during controlled downtime, verify all nodes report the same version after update, and keep a backup of the previous version's installer.</li>
+<li><strong>Update during controlled downtime</strong> — never update nodes during a live show. Schedule updates for maintenance windows when playback interruption is acceptable.</li>
+<li><strong>Update all nodes at once</strong> — select all nodes that need updating and push the update simultaneously to minimize the window of version mismatch.</li>
+<li><strong>Verify after update</strong> — after all nodes restart, check the Nodes window to confirm every node reports the same version and no version mismatch warnings remain.</li>
+<li><strong>Keep a backup installer</strong> — retain a copy of the previous version's installer in case you need to roll back.</li>
 
 </ul></div><div class="section-nav">
                 <a href="working-directory-management.html" class="nav-btn">

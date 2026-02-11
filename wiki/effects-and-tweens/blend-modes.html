@@ -845,24 +845,57 @@
                 <div class="section-content" style="display: block;">
                     <div class="section-content-body"><h2>Blend Modes</h2>
 
-<p><!-- STUB: This article should cover the per-cue blend mode setting, which controls how a cue's pixels combine with the content beneath it. --></p>
+<p>Every media cue in WATCHOUT has a <strong>Blend Mode</strong> property that determines how its rendered pixels are composited with the content beneath it. By default, cues use standard alpha compositing (Normal mode), but you can switch to alternative modes to create a variety of visual effects — from additive light simulations to darkening overlays.</p>
 
-<h3>Content to include</h3>
+<p>Blend modes operate on a per-pixel basis during compositing. The GPU evaluates each pixel of the cue against the corresponding pixel of the content already rendered below it, producing a final combined result according to the selected blending formula.</p>
+
+<h3>Available Blend Modes</h3>
+
+<p>WATCHOUT provides seven blend modes:</p>
 
 <ul>
-<li><strong>What blend modes are</strong> — explain that each media cue has a blend mode property that determines how its rendered pixels are composited with underlying layers and content.</li>
-<li><strong>Available blend modes</strong> — describe each mode and its visual behavior:</li>
-<li><strong>Normal</strong> — standard alpha compositing (default).</li>
-<li><strong>Add</strong> (Additive) — pixel values are summed, creating a brightening effect. Useful for light effects, particles, and glow.</li>
-<li><strong>Multiply</strong> — pixel values are multiplied, darkening the result. Useful for shadows and texture overlays.</li>
-<li><strong>Screen</strong> — inverse of multiply; lightens the result. Good for glow and light leak effects.</li>
-<li><strong>Lighten</strong> — takes the brighter value from each pixel comparison.</li>
-<li><strong>Darken</strong> — takes the darker value from each pixel comparison.</li>
-<li><strong>Linear Burn</strong> — adds pixel values and subtracts white, producing a darker result than Multiply.</li>
-<li><strong>Setting the blend mode</strong> — where to find the blend mode property in cue properties (under the Presentation page).</li>
-<li><strong>Interaction with stacking</strong> — how blend modes are affected by layer order and timeline stacking.</li>
-<li><strong>Performance considerations</strong> — whether certain blend modes have different GPU costs.</li>
-<li><strong>Common creative techniques</strong> — practical examples of using blend modes for projection mapping, overlay graphics, and atmospheric effects.</li>
+<li><strong>Normal</strong> — standard alpha compositing. The cue's pixels replace or blend over underlying content based on their alpha (transparency) values. This is the default mode for all cues.</li>
+<li><strong>Add</strong> (Additive) — the RGB values of the cue are added to the underlying content. This always brightens the result (black pixels have no effect). Useful for light effects, particles, fire, glow, and lens flares.</li>
+<li><strong>Multiply</strong> — the RGB values of both layers are multiplied together, always producing a darker result (white pixels have no effect). Useful for shadows, texture overlays, and blending images with dark backgrounds.</li>
+<li><strong>Screen</strong> — the mathematical inverse of Multiply. The values are inverted, multiplied, then inverted again, always producing a lighter result (black pixels have no effect). Useful for glow effects, light leaks, and brightening composites.</li>
+<li><strong>Lighten</strong> — for each color channel, the brighter of the two pixel values is kept. Only areas brighter than the underlying content show through. Useful for combining multiple light sources.</li>
+<li><strong>Darken</strong> — for each color channel, the darker of the two pixel values is kept. Only areas darker than the underlying content show through. Useful for combining shadow elements.</li>
+<li><strong>Linear Burn</strong> — adds the pixel values of both layers and subtracts white (1.0), producing a result darker than Multiply. Creates high-contrast darkening effects and deep shadow blends.</li>
+
+</ul>
+<h3>Setting the Blend Mode</h3>
+
+<p>To change a cue's blend mode:</p>
+
+<ol>
+<li>Select the cue in the Timeline or on the Stage.</li>
+<li>Open the <strong>Properties</strong> panel.</li>
+<li>In the <strong>Presentation</strong> page, locate the <strong>Blend Mode</strong> dropdown.</li>
+<li>Select the desired mode from the list.</li>
+
+</ol>
+The change takes effect immediately in the Stage preview.
+
+<div class='info-box'><p>You can set the blend mode on multiple cues simultaneously by selecting them all before changing the property.
+</p></div>
+
+<h3>Interaction with Stacking and Layer Order</h3>
+
+<p>Blend modes are applied during compositing, so they are directly affected by the <strong>rendering order</strong> of cues:</p>
+
+<ul>
+<li>Within a timeline, cues are composited according to their <strong>layer order</strong> (bottom layer renders first, top layer renders last). A cue's blend mode determines how it composites onto everything already rendered below it.</li>
+<li>Across timelines, the <strong>timeline stacking order</strong> (Timeline Order or Always on Top) determines which timeline's content is rendered on top. Blend modes apply within this stacking hierarchy.</li>
+<li>A cue's <strong>per-cue stacking</strong> setting (By Z or By Layer) further influences the order in which overlapping cues are composited, which in turn affects how blend modes interact.</li>
+
+</ul>
+<h3>Common Creative Techniques</h3>
+
+<ul>
+<li><strong>Projection mapping luminance overlays</strong> — use Add mode to layer light effects, moving patterns, or particle systems on top of base content. Black areas in the additive layer are completely transparent.</li>
+<li><strong>Texture and shadow overlays</strong> — use Multiply mode to darken base content with shadow maps, grunge textures, or vignettes without affecting bright areas.</li>
+<li><strong>Atmospheric effects</strong> — use Screen mode to composite fog, haze, or light ray overlays that naturally brighten the scene without obscuring dark areas.</li>
+<li><strong>Selective compositing</strong> — use Lighten or Darken modes to selectively combine the brightest or darkest elements from multiple content sources.</li>
 
 </ul></div><div class="section-nav">
                 <a href="linear-wipe.html" class="nav-btn">

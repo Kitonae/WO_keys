@@ -845,21 +845,75 @@
                 <div class="section-content" style="display: block;">
                     <div class="section-content-body"><h2>Media Snapshots</h2>
 
-<p><!-- STUB: This article should cover the Media Snapshot feature, which allows saving and recalling specific states of cues for quick configuration changes. --></p>
+<p>Media Snapshots allow you to save the current property state of selected cues as a named preset, and later recall that state to quickly restore or switch between cue configurations. Think of them as "bookmarks" for how your cues are set up at a particular moment — you can save multiple snapshots and toggle between them to compare different looks or instantly recall a known-good configuration.</p>
 
-<h3>Content to include</h3>
+<h3>What Media Snapshots Are</h3>
+
+<p>A media snapshot captures the current property values of one or more selected cues and stores them under a name. When you apply a snapshot, the stored property values are restored to those cues, overriding their current settings. This is different from cue sets (which swap media sources) — media snapshots save and restore the <strong>property state</strong> of cues, including position, effects, timing parameters, and other configured values.</p>
+
+<p>Snapshots are stored as part of the show and persist across save/load cycles.</p>
+
+<h3>Creating a Snapshot</h3>
+
+<p>To create a new media snapshot:</p>
+
+<ol>
+<li>Select one or more cues on the timeline</li>
+<li>Open the <strong>Media Snapshot</strong> menu (accessible from the toolbar or context menu)</li>
+<li>Select <strong>New...</strong> and enter a name for the snapshot</li>
+
+</ol>
+The snapshot captures the current property values of all selected cues. You must have at least one cue selected to create a snapshot.
+
+<h3>Applying a Snapshot</h3>
+
+<p>To apply a saved snapshot, select it from the <strong>Media Snapshot</strong> menu. The cues that were included in the snapshot will have their properties restored to the values captured when the snapshot was created.</p>
+
+<p>If a snapshot references cues that are no longer present in the show, those entries are skipped.</p>
+
+<h3>Updating a Snapshot</h3>
+
+<p>To update an existing snapshot with the current state of the selected cues:</p>
+
+<ol>
+<li>Select the cues you want to update</li>
+<li>Open the <strong>Media Snapshot</strong> menu</li>
+<li>Select <strong>Update...</strong> and choose the snapshot to overwrite</li>
+
+</ol>
+The selected snapshot is replaced with the current property values of the selected cues.
+
+<h3>Deleting Snapshots</h3>
+
+<p>From the <strong>Media Snapshot</strong> menu:</p>
 
 <ul>
-<li><strong>What media snapshots are</strong> — a system for saving the current property state of selected cues as a named preset, and later applying that state to restore or switch cue configurations.</li>
-<li><strong>Creating a snapshot</strong> — select one or more cues and use the Media Snapshot menu to create a new snapshot. The snapshot captures the current property values of the selected cues.</li>
-<li><strong>Applying a snapshot</strong> — how to apply a saved snapshot to restore cue properties. Explain which properties are captured and restored.</li>
-<li><strong>Updating a snapshot</strong> — modifying an existing snapshot to reflect current cue states.</li>
-<li><strong>Deleting snapshots</strong> — removing individual snapshots or clearing all snapshots.</li>
-<li><strong>Visual indicators</strong> — the chip/badge indicators on cues and in the top bar showing which snapshots are currently applied, including handling of multiple overlapping snapshots.</li>
-<li><strong>The "All" toggle</strong> — the toggle for applying/removing all snapshots at once.</li>
-<li><strong>Use cases</strong> — preset looks for different show segments, quick reset to known-good states, A/B comparison of visual configurations.</li>
+<li><strong>Delete</strong> — removes a specific snapshot</li>
+<li><strong>Delete All</strong> — removes all snapshots from the show</li>
 
-</ul></div><div class="section-nav">
+</ul>
+<h3>Visual Indicators</h3>
+
+<p>When a media snapshot is applied to a cue, the cue displays a chip or badge indicator showing the snapshot name. If multiple snapshots overlap on the same cue, the indicator reflects all applied snapshots.</p>
+
+<p>The top bar of the interface also shows chip indicators for each currently applied snapshot, providing a global overview of which snapshots are active.</p>
+
+<div class='note-box'><p>If a cue has multiple media snapshots applied, a tooltip on the indicator lists all applied snapshot names.
+</p></div>
+
+<h3>The "All" Toggle</h3>
+
+<p>The <strong>All</strong> toggle in the Media Snapshot menu allows you to apply or remove all snapshots at once. This is useful for quickly returning to a clean state or activating a complete set of saved configurations simultaneously.</p>
+
+<h3>Use Cases</h3>
+
+<p><strong>Preset looks for different show segments:</strong> Save a snapshot for the "opening" look and another for the "finale" look. Switch between them during rehearsal to compare configurations.</p>
+
+<p><strong>Quick reset to a known-good state:</strong> Before experimenting with cue properties, save a snapshot. If the experiment doesn't work out, apply the snapshot to instantly restore the original settings.</p>
+
+<p><strong>A/B comparison:</strong> Save two snapshots with different visual configurations (e.g. different color corrections, positions, or crop settings) and toggle between them to compare the results side by side.</p>
+
+<p><strong>Show calling reference:</strong> Save snapshots at key cue points so that operators can quickly verify or restore the intended look at specific moments during the show.</p></div><div class="section-nav">
                 <a href="cue-sets-and-variants.html" class="nav-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"

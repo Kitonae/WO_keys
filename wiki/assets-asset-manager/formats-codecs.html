@@ -845,66 +845,117 @@
                 <div class="section-content" style="display: block;">
                     <div class="section-content-body"><h2>Formats & Codecs</h2>
 
-<p>Choosing the right format and codec is crucial for optimal playback performance.</p>
+<p>Choosing the right source format and optimization codec is crucial for reliable, high-performance playback. This article covers the formats WATCHOUT supports and how the optimizer converts them.</p>
 
-<h3>Recommended Video Codecs</h3>
+<h3>Video Codecs</h3>
 
-<table>
-<tr><th>Codec</th><th>Best For</th><th>Performance</th><th>File Size</th></tr>
-<tr><td><strong>HAP</strong></td><td>Most video content</td><td>★★★★★</td><td>Large</td></tr>
-<tr><td><strong>HAP Alpha</strong></td><td>Video with transparency</td><td>★★★★★</td><td>Very Large</td></tr>
-<tr><td><strong>HAP Q</strong></td><td>Highest quality HAP</td><td>★★★★☆</td><td>Very Large</td></tr>
-<tr><td><strong>ProRes 422</strong></td><td>High quality editing</td><td>★★★☆☆</td><td>Large</td></tr>
-<tr><td><strong>ProRes 4444</strong></td><td>Quality with alpha</td><td>★★★☆☆</td><td>Very Large</td></tr>
-<tr><td><strong>H.264</strong></td><td>Small files, wide compatibility</td><td>★★☆☆☆</td><td>Small</td></tr>
-<tr><td><strong>HEVC/H.265</strong></td><td>Better compression than H.264</td><td>★★☆☆☆</td><td>Very Small</td></tr>
-<tr><td><strong>NotchLC</strong></td><td>Real-time graphics</td><td>★★★★★</td><td>Large</td></tr>
-</table>
+<p>Source video files can use any of the following codecs. During optimization, the Asset Manager transcodes them to the configured output codec.</p>
 
-<h3>Why HAP is Recommended</h3>
+<p><strong>GPU-decoded (recommended)</strong></p>
 
 <ul>
-<li><strong>GPU Decoding</strong> – Decodes directly on the graphics card</li>
-
-<p><li><strong>Minimal CPU Usage</strong> – Leaves CPU free for other tasks</li></p>
-
-<p><li><strong>Instant Scrubbing</strong> – Smooth timeline navigation</li></p>
-
-<p><li><strong>High Frame Rates</strong> – Supports 60fps and beyond</li></p>
-
-<p><li><strong>Large Resolutions</strong> – Handles 4K, 8K, and higher</li></p>
+<li><strong>HAP</strong> – GPU-decoded, excellent performance, large files. Recommended for most content.</li>
+<li><strong>HAP Alpha</strong> – HAP with an alpha channel for transparent video.</li>
+<li><strong>HAP Q</strong> – higher visual quality than standard HAP, with larger file sizes.</li>
 
 </ul>
-<h3>Container Formats</h3>
-
-<table>
-<tr><th>Container</th><th>Common Codecs</th></tr>
-<tr><td>.mov</td><td>HAP, ProRes, H.264</td></tr>
-<tr><td>.mp4</td><td>H.264, HEVC</td></tr>
-<tr><td>.avi</td><td>HAP (legacy)</td></tr>
-<tr><td>.mkv</td><td>Various</td></tr>
-</table>
-
-<h3>Audio Codecs</h3>
+<strong>CPU-decoded</strong>
 
 <ul>
-<li><strong>PCM/WAV</strong> – Uncompressed, best quality, larger files</li>
+<li><strong>ProRes 422</strong> – high-quality intermediate codec from Apple.</li>
+<li><strong>ProRes 4444</strong> – ProRes with alpha channel support.</li>
+<li><strong>DNxHR</strong> – Avid's high-resolution codec.</li>
+<li><strong>H.264</strong> – widely compatible, smaller file sizes, higher CPU load.</li>
+<li><strong>HEVC / H.265</strong> – improved compression over H.264, higher CPU load.</li>
+<li><strong>NotchLC</strong> – optimized for real-time graphics from Notch.</li>
 
-<p><li><strong>AAC</strong> – High quality compressed</li></p>
+</ul>
+<h3>Why HAP is Recommended</h3>
 
-<p><li><strong>MP3</strong> – Widely compatible compressed</li></p>
+<p>HAP is the default optimization target because it decodes entirely on the GPU:</p>
+
+<ul>
+<li><strong>Minimal CPU usage</strong> – leaves the CPU free for effects, compositing, and control tasks.</li>
+<li><strong>Instant scrubbing</strong> – every frame can be accessed independently, so timeline navigation is smooth.</li>
+<li><strong>High frame rates</strong> – easily handles 60 fps and beyond.</li>
+<li><strong>Large resolutions</strong> – supports 4K, 8K, and higher without CPU bottlenecks.</li>
+
+</ul>
+The trade-off is larger file sizes and higher storage bandwidth requirements compared to CPU-decoded codecs.
+
+<h3>Container Formats</h3>
+
+<p>WATCHOUT supports the following video container formats:</p>
+
+<ul>
+<li><strong>.mov</strong> – QuickTime; commonly used with HAP, ProRes, and H.264.</li>
+<li><strong>.mp4</strong> – MPEG-4 Part 14; commonly used with H.264 and HEVC.</li>
+<li><strong>.avi</strong> – legacy container; sometimes used with HAP.</li>
+<li><strong>.mkv</strong> – Matroska; supports a wide range of codecs.</li>
 
 </ul>
 <h3>Image Formats</h3>
 
-<table>
-<tr><th>Format</th><th>Transparency</th><th>Best For</th></tr>
-<tr><td>PNG</td><td>Yes (8-bit)</td><td>Graphics, logos, overlays</td></tr>
-<tr><td>JPEG</td><td>No</td><td>Photos, backgrounds</td></tr>
-<tr><td>TIFF</td><td>Yes</td><td>High quality images</td></tr>
-<tr><td>TGA</td><td>Yes</td><td>Legacy graphics</td></tr>
-<tr><td>EXR</td><td>Yes (32-bit)</td><td>HDR content</td></tr>
-</table></div><div class="section-nav">
+<ul>
+<li><strong>JPEG</strong> – lossy compression, no transparency. Best for photos and backgrounds.</li>
+<li><strong>PNG</strong> – lossless with 8-bit alpha. Best for graphics, logos, and overlays.</li>
+<li><strong>TIFF</strong> – lossless, supports alpha. High-quality archival images.</li>
+<li><strong>TGA</strong> – legacy format with alpha support.</li>
+<li><strong>BMP</strong> – uncompressed bitmap.</li>
+<li><strong>EXR</strong> – 32-bit floating point with HDR support. Best for high-precision and HDR content.</li>
+<li><strong>PSD</strong> – imported as a flattened image.</li>
+
+</ul>
+<h3>Audio Formats</h3>
+
+<ul>
+<li><strong>WAV</strong> – uncompressed PCM. Recommended for best quality and lowest latency.</li>
+<li><strong>AIFF</strong> – uncompressed audio, similar to WAV.</li>
+<li><strong>MP3</strong> – lossy compression, widely compatible.</li>
+<li><strong>AAC</strong> – lossy compression, higher quality than MP3 at similar bitrates.</li>
+<li><strong>FLAC</strong> – lossless compression.</li>
+<li><strong>OGG</strong> – open-source lossy compression.</li>
+
+</ul>
+<h3>The Optimization Pipeline</h3>
+
+<p>When a source file is added, the Asset Manager processes it through the optimizer:</p>
+
+<ol>
+<li><strong>Upload</strong> – the source file is copied to the Asset Manager's storage.</li>
+<li><strong>Optimize</strong> – the file is transcoded to the configured output codec and quality settings.</li>
+<li><strong>Store</strong> – both the original and the optimized version are retained.</li>
+<li><strong>Distribute</strong> – the optimized file is transferred to display servers when the show goes online.</li>
+
+</ol>
+The optimizer uses the codec mapping to decide which output codec to use for each input codec (see [Import, Export, and Mapping](../12-import-export-and-mapping)).
+
+<h3>Track Management</h3>
+
+<p>For source files that contain both video and audio tracks, the optimizer offers four track management modes:</p>
+
+<ul>
+<li><strong>Skip Audio</strong> – optimize only the video track; discard audio.</li>
+<li><strong>Skip Video</strong> – optimize only the audio track; discard video.</li>
+<li><strong>Composition</strong> – keep both tracks together as a single composition asset.</li>
+<li><strong>Individual Assets</strong> – split video and audio into separate assets.</li>
+
+</ul>
+<h3>Quality Levels</h3>
+
+<p>For codecs that support quality settings, the optimizer provides five levels:</p>
+
+<ol>
+<li><strong>Good</strong> – smallest file size, lower visual quality.</li>
+<li><strong>Very Good</strong> – balanced.</li>
+<li><strong>Excellent</strong> – higher quality, larger files.</li>
+<li><strong>Optimal</strong> – near-maximum quality.</li>
+<li><strong>Best</strong> – maximum quality, largest files.</li>
+
+</ol>
+<h3>Bandwidth Limit</h3>
+
+<p>The Asset Manager Settings dialog includes a <strong>Bandwidth Limit</strong> setting (in Mbit/s) that caps the data rate used when transferring assets to display servers. Set to <strong>0</strong> for unlimited bandwidth.</p></div><div class="section-nav">
                 <a href="asset-properties.html" class="nav-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"

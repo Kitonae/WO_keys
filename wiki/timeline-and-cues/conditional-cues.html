@@ -845,20 +845,92 @@
                 <div class="section-content" style="display: block;">
                     <div class="section-content-body"><h2>Conditional Cues</h2>
 
-<p><!-- STUB: This article should cover the conditional render and conditional trigger system, which allows cues to be shown or activated only when a specified condition is met. --></p>
+<p>Any cue in WATCHOUT can have a <strong>condition</strong> attached that controls whether it is active during playback. For media cues, this is called <strong>Conditional Render</strong> — the cue only renders when the condition is true. For control and output cues, this is called <strong>Conditional Trigger</strong> — the cue only fires when the condition is true. This system enables interactive, data-driven shows where content appears, disappears, or triggers based on external inputs and show variables.</p>
 
-<h3>Content to include</h3>
+<h3>Condition States</h3>
+
+<p>Every cue has a condition property that can be in one of three states:</p>
 
 <ul>
-<li><strong>What conditional cues are</strong> — explain that any media cue can have a condition attached that controls whether it renders (Conditional Render) and any control/output cue can have a condition controlling whether it triggers (Conditional Trigger).</li>
-<li><strong>Setting a condition</strong> — how to add a condition to a cue via the cue properties panel. The "Conditional Render" or "Conditional Trigger" section (the label adapts based on cue type, or shows "Conditional Render/Trigger" for mixed selections).</li>
-<li><strong>Condition expression</strong> — the expression field that evaluates against show variables and inputs. Explain the expression syntax and how it resolves to a boolean.</li>
-<li><strong>Condition value</strong> — the numeric threshold value that the expression is compared against.</li>
-<li><strong>Runtime behavior</strong> — how the condition is evaluated continuously during playback: a media cue whose condition is false will not render, and a control/output cue whose condition is false will not fire.</li>
-<li><strong>Interaction with variables</strong> — conditions typically reference variables controlled by external inputs (OSC, MIDI, ArtNet, HTTP API), enabling interactive shows where content appears based on external triggers.</li>
-<li><strong>Use cases</strong> — show branching based on audience interaction, hiding/showing content based on time-of-day variables, enabling emergency messaging via external control.</li>
+<li><strong>Enabled</strong> (default) — the cue always renders/triggers normally. No condition is evaluated.</li>
+<li><strong>Disabled</strong> — the cue never renders/triggers, regardless of playback position. This is a simple way to mute a cue without deleting it.</li>
+<li><strong>Expression</strong> — the cue renders/triggers only when the specified expression evaluates to true.</li>
 
-</ul></div><div class="section-nav">
+</ul>
+<h3>Setting a Condition</h3>
+
+<p>To add a condition to a cue:</p>
+
+<ol>
+<li>Select one or more cues</li>
+<li>In the <strong>Cue Properties</strong> panel, find the condition section. The label adapts based on the cue types in your selection:</li>
+</ol>
+<ul>
+<li><strong>Conditional Render</strong> — for media cues</li>
+<li><strong>Conditional Trigger</strong> — for control and output cues</li>
+<li><strong>Conditional Render/Trigger</strong> — for mixed selections containing both media and control/output cues</li>
+</ul>
+<ol>
+<li>Change the condition state from <strong>Enabled</strong> to <strong>Expression</strong> (or <strong>Disabled</strong> to simply mute the cue)</li>
+<li>If you selected Expression, enter the condition expression in the <strong>Expression</strong> field</li>
+
+</ol>
+<h3>Condition Expressions</h3>
+
+<p>A condition expression is a mathematical expression that is evaluated against the show's current <strong>variable values</strong> (inputs). The expression follows standard mathematical syntax and can reference any show variable by name.</p>
+
+<p>The expression evaluates to a boolean using a simple rule: <strong>if the result is greater than zero, the condition is true</strong>. If the result is zero or negative, or if the expression contains an error, the condition is false.</p>
+
+<p>Examples:</p>
+
+<ul>
+<li><code>MyVariable</code> — true when the variable "MyVariable" is greater than 0</li>
+<li><code>Language</code> — true when the "Language" variable is greater than 0</li>
+<li><code>Temperature > 25</code> — true when the "Temperature" variable exceeds 25</li>
+<li><code>ButtonA * ButtonB</code> — true only when both "ButtonA" and "ButtonB" are greater than 0</li>
+<li><code>Mode == 2</code> — true when "Mode" equals 2 (evaluates to 1.0 which is > 0)</li>
+
+</ul>
+<div class='note-box'><p>Variable names in expressions are <strong>case-insensitive</strong>. The expression <code>myVar</code> and <code>MYVAR</code> reference the same variable. Variables that are not defined in the show evaluate to 0.
+</p></div>
+
+<h3>Runtime Behavior</h3>
+
+<p>Conditions are evaluated <strong>continuously</strong> during playback, not just at the cue's start time. This means:</p>
+
+<ul>
+<li>A media cue with a conditional render will appear and disappear dynamically as the expression toggles between true and false during the cue's active time range</li>
+<li>A control cue with a conditional trigger will only execute its action (play, pause, stop, jump, etc.) when the condition is true at the moment the playhead reaches the cue's activation time</li>
+<li>An output cue with a conditional trigger will only send its output message (HTTP, TCP, UDP, OSC) when the condition is true at the activation time</li>
+
+</ul>
+If a media cue's condition becomes false while it is actively rendering, it stops rendering immediately. If the condition becomes true again while the playhead is still within the cue's time range, rendering resumes.
+
+<h3>Interaction with Variables</h3>
+
+<p>Condition expressions are most powerful when combined with <strong>show variables</strong> controlled by external inputs. Variables can be driven by:</p>
+
+<ul>
+<li><strong>OSC</strong> (Open Sound Control) — from lighting consoles, custom apps, or sensor systems</li>
+<li><strong>MIDI</strong> — from MIDI controllers or sequencers</li>
+<li><strong>Art-Net</strong> — from DMX/Art-Net lighting systems</li>
+<li><strong>LTC</strong> (Linear Timecode) — from timecode generators</li>
+<li><strong>HTTP API</strong> — from custom control systems, web interfaces, or automation platforms</li>
+
+</ul>
+For example, a variable called "EmergencyMode" could be set to 1 via an HTTP API call when an emergency occurs. All cues conditioned on <code>EmergencyMode</code> would immediately start rendering emergency messaging across all displays.
+
+<h3>Use Cases</h3>
+
+<p><strong>Show branching based on audience interaction:</strong> Use sensor data (via OSC or MIDI) to set a variable that controls which content path the show follows. Cues on one branch are conditioned on the variable being 1, while cues on the alternative branch are conditioned on it being 0.</p>
+
+<p><strong>Time-of-day content switching:</strong> An external system sets a "TimeOfDay" variable (e.g. 1 for morning, 2 for afternoon, 3 for evening). Media cues conditioned on <code>TimeOfDay == 1</code>, <code>TimeOfDay == 2</code>, or <code>TimeOfDay == 3</code> display appropriate content automatically.</p>
+
+<p><strong>Emergency messaging:</strong> A dedicated "Emergency" variable is normally 0. When triggered via the HTTP API, it becomes 1, causing conditioned emergency messaging cues to render on all displays instantly. Clearing the variable back to 0 removes the messaging.</p>
+
+<p><strong>Interactive installations:</strong> In museum or exhibition contexts, proximity sensors or touch interfaces can drive variables that show or hide content as visitors approach or interact with displays.</p>
+
+<p><strong>Rehearsal/performance mode:</strong> A "ShowMode" variable switches between rehearsal (showing stage directions, timing markers, and debug overlays) and performance mode (clean output only). Cues for each mode are conditioned on the appropriate variable value.</p></div><div class="section-nav">
                 <a href="insert-and-delete-time.html" class="nav-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"

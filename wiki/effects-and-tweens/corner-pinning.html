@@ -845,19 +845,73 @@
                 <div class="section-content" style="display: block;">
                     <div class="section-content-body"><h2>Corner Pinning</h2>
 
-<p><!-- STUB: This article should cover the Corners tween group, which allows distorting a cue's shape by independently moving its four corners. --></p>
+<p>Corner pinning is a per-cue distortion effect that lets you independently reposition each of the four corners of a media cue. By moving corners away from their default positions, you can create perspective distortion, trapezoid correction, and arbitrary quadrilateral deformations — all without modifying the source media.</p>
 
-<h3>Content to include</h3>
+<p>Internally, WATCHOUT computes a <strong>homography projection matrix</strong> from the four corner positions. This matrix maps every pixel from the original rectangular cue into the new quadrilateral shape in a single GPU pass, preserving smooth interpolation across the entire surface.</p>
+
+<h3>Corner Tween Channels</h3>
+
+<p>The Corners effect is controlled through <strong>eight tween channels</strong>, one for each axis of each corner:</p>
 
 <ul>
-<li><strong>What corner pinning is</strong> — explain that the Corners tween allows you to independently move each of the four corners of a media cue, creating perspective distortion, trapezoid correction, or other quadrilateral deformations.</li>
-<li><strong>Corner tween channels</strong> — list all 8 channels: Corner Top Left X/Y, Corner Top Right X/Y, Corner Bottom Left X/Y, Corner Bottom Right X/Y. Explain that values are expressed as offsets from the default corner positions.</li>
-<li><strong>Adding corner tweens</strong> — how to add corner keyframes to a cue, either from the Tween menu or by right-clicking.</li>
-<li><strong>Animating corners</strong> — using tween points to animate corner positions over time with easing curves, enabling dynamic perspective shifts.</li>
-<li><strong>Use cases</strong> — mapping content onto non-rectangular surfaces, creating perspective effects, compensating for physical misalignment, and artistic distortion effects.</li>
-<li><strong>Interaction with warp geometry</strong> — clarify that corner pinning is a per-cue effect applied before display-level warp geometry, and how the two can complement each other.</li>
+<li><strong>Corner Top Left X</strong> / <strong>Corner Top Left Y</strong></li>
+<li><strong>Corner Top Right X</strong> / <strong>Corner Top Right Y</strong></li>
+<li><strong>Corner Bottom Left X</strong> / <strong>Corner Bottom Left Y</strong></li>
+<li><strong>Corner Bottom Right X</strong> / <strong>Corner Bottom Right Y</strong></li>
 
-</ul></div><div class="section-nav">
+</ul>
+Each channel represents a <strong>normalized offset</strong> from the corner's default position. A value of <strong>100</strong> (the default) means the corner is at its natural position. A value of <strong>0</strong> moves the corner all the way to the opposite corner of the cue. Values beyond this range are permitted — the channels are unlimited — allowing you to extend corners outside the original cue boundary for exaggerated distortion.
+
+<div class='info-box'><p>Because each axis is independent, you have full control over both horizontal and vertical movement of every corner. This makes it possible to create not just simple trapezoids but complex quadrilateral shapes.
+</p></div>
+
+<h3>Adding Corner Tweens</h3>
+
+<p>To add corner tweens to a cue:</p>
+
+<ol>
+<li>Select one or more media cues in the Timeline.</li>
+<li>Open the <strong>Effect</strong> menu and click <strong>Corners</strong>. This adds all eight corner channels to the cue simultaneously.</li>
+<li>The Corners tween group appears in the tween area beneath the cue, labeled <strong>Corners</strong> in the tween group header.</li>
+
+</ol>
+Alternatively, you can add corner tweens by right-clicking a cue and accessing the effect options from the context menu.
+
+<p>Once added, each channel starts at its default value of 100 (the corner's natural position). You can then adjust individual corner coordinates by editing tween point values in the Properties panel or by adding additional keyframes.</p>
+
+<h3>Animating Corners</h3>
+
+<p>Like all tweens in WATCHOUT, corner channels support multiple <strong>tween points</strong> (keyframes) with configurable easing curves. To animate a corner:</p>
+
+<ol>
+<li>Place the time needle at the desired moment and add a tween point to the corner channel.</li>
+<li>Set the target corner position value.</li>
+<li>Choose a <strong>transition type</strong> (Linear, Quadratic, Cubic, Sinusoidal, etc.) to control the interpolation curve between points.</li>
+
+</ol>
+By placing keyframes at different times with different corner positions, you can create dynamic perspective shifts — for example, gradually skewing a cue to simulate a turning page or morphing a rectangle into a trapezoid during a transition.
+
+<h3>Convexity Constraint</h3>
+
+<p>WATCHOUT automatically enforces a <strong>convexity constraint</strong> on the resulting quadrilateral. If you move corners into a configuration that would create a concave (self-intersecting) shape, the system subtly adjusts the offending corner to maintain a valid convex quadrilateral. This ensures the homography transform always produces a reasonable, artifact-free result.</p>
+
+<div class='note-box'><p>The convexity adjustment is minimal and designed to be visually imperceptible in most cases. However, extreme corner configurations may result in slightly different positions than the values you entered.
+</p></div>
+
+<h3>Use Cases</h3>
+
+<ul>
+<li><strong>Projection mapping</strong> — fit rectangular content onto non-rectangular physical surfaces such as angled screens, building facades, or set pieces.</li>
+<li><strong>Trapezoid correction</strong> — compensate for projector keystoning or physical misalignment by pinning corners to match the actual projection surface.</li>
+<li><strong>Perspective effects</strong> — simulate depth and dimensionality by skewing content to create a vanishing-point illusion.</li>
+<li><strong>Artistic distortion</strong> — animate corners over time for creative transitions, shape morphing, or dynamic visual effects.</li>
+
+</ul>
+<h3>Interaction with Display-Level Warp</h3>
+
+<p>Corner pinning is a <strong>per-cue effect</strong> applied during the rendering of individual cues, before any display-level geometry correction. If your displays also use warp meshes or geometric correction, the two effects are applied in sequence: the cue is first distorted by its corner pinning, then the entire composited output is transformed by the display warp.</p>
+
+<p>This layered approach means you can use corner pinning for cue-specific adjustments (fitting individual content to specific surfaces) while relying on display warp for global projector alignment — and the two will complement each other without conflict.</p></div><div class="section-nav">
                 <a href="audio-volume.html" class="nav-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"

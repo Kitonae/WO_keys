@@ -845,21 +845,103 @@
                 <div class="section-content" style="display: block;">
                     <div class="section-content-body"><h2>Show Information</h2>
 
-<p><!-- STUB: This article should document the Show Information dialog, which presents a statistical overview of the current show. --></p>
+<p>The <strong>Show Information</strong> dialog provides a statistical overview of the current show, giving you a quick summary of its contents, complexity, and file details. It is a read-only view — no settings are changed here — designed for auditing, documentation, and pre-deployment verification.</p>
 
-<h3>Content to include</h3>
+<h3>Accessing Show Information</h3>
+
+<p>Open the dialog from <strong>File → Show Information</strong>. The dialog loads the current show's data and presents it in a series of expandable sections.</p>
+
+<h3>Statistics</h3>
+
+<p>The <strong>Statistics</strong> section is the primary overview, organized into expandable subsections:</p>
+
+<h4>Cue Summary</h4>
+
+<p>Shows the <strong>total number of cues</strong> across the entire show, with an expandable breakdown by cue kind:</p>
 
 <ul>
-<li><strong>Accessing Show Information</strong> — how to open the dialog from the File menu.</li>
-<li><strong>General details</strong> — show name, creation date, file path, file size, last modified timestamp.</li>
-<li><strong>Statistics overview</strong> — total number of cues, timelines, compositions, and displays.</li>
-<li><strong>Display breakdown</strong> — counts by output type: GPU displays, NDI displays, SDI displays, virtual displays.</li>
-<li><strong>Asset breakdown</strong> — counts by type: images, videos, audio, compositions, display data, models, EDID, Art-Net fixtures, Art-Net recordings, fonts, SVGs.</li>
-<li><strong>Cue breakdown</strong> — counts by kind: media cues, control cues, output cues, variable cues, marker cues.</li>
-<li><strong>Per-timeline details</strong> — duration and cue count for each timeline.</li>
-<li><strong>Use cases</strong> — verifying show complexity before deployment, auditing asset usage, diagnosing performance by checking cue/timeline counts.</li>
+<li><strong>Media Cues</strong> — cues that render visual or audio content (images, video, audio, compositions, captures)</li>
+<li><strong>Control Cues</strong> — playback control cues (go, pause, stop, jump, etc.)</li>
+<li><strong>Output Cues</strong> — cues that affect display output behavior</li>
+<li><strong>Variable Cues</strong> — cues that set or modify show variables/inputs</li>
+<li><strong>Marker Cues</strong> — comment and marker cues used for notes, show calling, and countdown references</li>
 
-</ul></div><div class="section-nav">
+</ul>
+This breakdown helps you understand the composition of your show at a glance — whether it's primarily media-driven or relies heavily on control logic.
+
+<h4>Timeline Details</h4>
+
+<p>Shows the <strong>number of timelines</strong> in the show. Expanding this section reveals each timeline individually with:</p>
+
+<ul>
+<li><strong>Timeline name</strong> — the name you assigned to the timeline</li>
+<li><strong>Duration</strong> — the total duration of the timeline, formatted as HH:MM:SS or MM:SS</li>
+<li><strong>Cue count</strong> — an expandable sub-section showing the total number of cues in that timeline, broken down by kind (media, control, output, variable, marker)</li>
+
+</ul>
+This per-timeline detail is useful for identifying which timelines are the most complex and where the bulk of your cues reside.
+
+<h4>Compositions</h4>
+
+<p>Displays the <strong>number of compositions</strong> defined in the show. Compositions are self-contained visual elements with their own internal layers and cues, used as reusable building blocks across timelines.</p>
+
+<h4>Display Summary</h4>
+
+<p>Shows the <strong>total number of displays</strong> with a breakdown by output type:</p>
+
+<ul>
+<li><strong>GPU Displays</strong> — displays using direct GPU output to connected monitors or projectors</li>
+<li><strong>NDI Displays</strong> — displays outputting via NDI network video</li>
+<li><strong>SDI Displays</strong> — displays outputting via SDI hardware (Deltacast cards)</li>
+<li><strong>Virtual Displays</strong> — software-only displays used for compositions, previsualization, or design work</li>
+
+</ul>
+This overview is helpful for verifying that your display configuration matches the expected hardware setup before deployment.
+
+<h3>Asset Summary</h3>
+
+<p>The <strong>Assets</strong> section shows the <strong>total number of used assets</strong> in the show, with a breakdown by asset type:</p>
+
+<ul>
+<li><strong>Images</strong> — still image files (PNG, JPEG, TIFF, BMP, WebP, EXR, PSD)</li>
+<li><strong>Videos</strong> — video files (MP4, MOV, AVI, MKV, HAP, ProRes, H.264, H.265)</li>
+<li><strong>Audio</strong> — audio files (WAV, MP3, AAC, FLAC, OGG)</li>
+<li><strong>Compositions</strong> — composition assets</li>
+<li><strong>Display Data</strong> — display calibration and configuration data (MPCDI, etc.)</li>
+<li><strong>Models</strong> — 3D model files used for projection mapping</li>
+<li><strong>EDID</strong> — captured EDID data from display hardware</li>
+<li><strong>Art-Net Fixtures</strong> — Art-Net fixture definition files</li>
+<li><strong>Art-Net Recordings</strong> — recorded Art-Net data files</li>
+<li><strong>Fonts</strong> — font files used by SVG or text elements</li>
+<li><strong>SVGs</strong> — scalable vector graphics</li>
+<li><strong>Unknown</strong> — assets referenced by the show that could not be found in the Asset Manager. A non-zero count here may indicate missing or deleted assets.</li>
+
+</ul>
+The asset count includes only assets that are actually referenced by the show (used in cues or display configurations), not every asset in the Asset Manager's library.
+
+<h3>Technical Details</h3>
+
+<p>The <strong>Technical Details</strong> section shows file-level information about the show:</p>
+
+<ul>
+<li><strong>Name</strong> — the show file name (without extension)</li>
+<li><strong>Created</strong> — the file creation date and time</li>
+<li><strong>File Path</strong> — the full path to the show file on disk</li>
+<li><strong>File Size</strong> — the size of the show file, formatted in human-readable units (KB, MB, GB)</li>
+<li><strong>Last Modified</strong> — the most recent modification date and time</li>
+
+</ul>
+If the show was opened from a Director (not from a local file), these fields display "n/a" since there is no local file to report on.
+
+<h3>Use Cases</h3>
+
+<p><strong>Pre-deployment verification:</strong> Before loading a show onto a production system, open Show Information to confirm the display count matches the physical setup, check that there are no unknown/missing assets, and verify the timeline count and cue complexity.</p>
+
+<p><strong>Performance diagnostics:</strong> If playback performance is lower than expected, the cue count and timeline complexity can help identify whether the show is pushing system limits. A very high cue count on a single timeline, or many simultaneously active timelines, may require optimization.</p>
+
+<p><strong>Show documentation:</strong> Use the statistics as a quick reference when handing off a show to another operator, or when documenting a production for archival purposes. The information provides a concise summary of what the show contains without needing to manually inspect every timeline and asset.</p>
+
+<p><strong>Asset auditing:</strong> The asset breakdown and unknown asset count help identify whether all required media is present and accounted for. If the unknown count is greater than zero, some assets referenced by cues may have been deleted or not yet transferred to the Asset Manager.</p></div><div class="section-nav">
                 <a href="show-consolidation.html" class="nav-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"

@@ -845,21 +845,70 @@
                 <div class="section-content" style="display: block;">
                     <div class="section-content-body"><h2>Linear Wipe</h2>
 
-<p><!-- STUB: This article should cover the Linear Wipe tween effect, which progressively reveals or hides a cue using a straight-line wipe transition. --></p>
+<p>Linear Wipe is a transition effect that progressively reveals or hides a cue's content using a straight-line boundary. By animating the wipe's parameters over time, you can create clean reveal and conceal transitions, split-screen effects, and dynamic content boundaries.</p>
 
-<h3>Content to include</h3>
+<p>The wipe works by defining an invisible edge that divides the cue into a visible region and a transparent region. The edge can be positioned, angled, and softened to produce a wide variety of transition styles.</p>
+
+<h3>Wipe Tween Channels</h3>
+
+<p>The Linear Wipe effect is controlled through four tween channels, all added together as a group:</p>
 
 <ul>
-<li><strong>What linear wipe is</strong> — a transition effect that reveals or hides content using a moving edge/boundary, defined by angle, position, and feather softness.</li>
-<li><strong>Wipe tween channels</strong> — describe the four parameters:</li>
-<li><strong>Angle</strong> — the direction of the wipe edge (0–360 degrees).</li>
-<li><strong>Location</strong> — the position of the wipe edge along the wipe axis.</li>
-<li><strong>Feather</strong> — the softness/width of the transition zone at the wipe edge.</li>
-<li><strong>Completion</strong> — the overall progress of the wipe (0 = fully hidden, 1 = fully visible).</li>
-<li><strong>Creating a linear wipe</strong> — how to add wipe tween keyframes to a cue.</li>
-<li><strong>Animating the wipe</strong> — using tween points to animate wipe parameters over time for reveal/conceal transitions.</li>
-<li><strong>Combining with other effects</strong> — using linear wipe together with opacity, position, and other tweens for complex transition sequences.</li>
-<li><strong>Use cases</strong> — scene transitions, progressive content reveals, split-screen effects, and dynamic content boundaries.</li>
+<li><strong>Angle</strong> — the direction of the wipe edge, expressed in degrees. The range is unlimited (default display range −80° to 180°), so you can rotate the wipe boundary to any orientation. At 0° the edge is vertical; changing the angle rotates it accordingly.</li>
+<li><strong>Location</strong> — the position of the wipe edge along the perpendicular axis, expressed as a percentage from 0 to 100. This determines where along the cue the dividing line sits. The default value is 100 (fully visible).</li>
+<li><strong>Feather</strong> — the softness of the transition zone at the wipe edge, expressed as a percentage. A value of 0 produces a hard, crisp edge. Higher values create a gradual fade from opaque to transparent across the boundary. The minimum is 0; there is no hard upper limit.</li>
+<li><strong>Completion</strong> — the overall progress of the wipe, from 0 (fully hidden) to 100 (fully visible). This is the primary channel you animate to drive a reveal or conceal transition. The default value is 0 (fully hidden).</li>
+
+</ul>
+<div class='info-box'><p>For a simple left-to-right reveal, set the Angle to 0° and animate Completion from 0 to 100. For a top-to-bottom reveal, set the Angle to 90°. Add Feather to soften the transition edge.
+</p></div>
+
+<h3>Creating a Linear Wipe</h3>
+
+<p>To add a Linear Wipe to a cue:</p>
+
+<ol>
+<li>Select one or more media cues in the Timeline.</li>
+<li>Open the <strong>Effect</strong> menu and click <strong>Linear Wipe</strong>. This adds all four wipe channels to the cue simultaneously.</li>
+<li>The wipe channels appear in the tween area beneath the cue, grouped under the <strong>Linear Wipe</strong> header.</li>
+
+</ol>
+Once added, the cue starts fully hidden (Completion = 0) by default. Add tween points to the Completion channel to animate the reveal.
+
+<h3>Animating the Wipe</h3>
+
+<p>Linear Wipe channels support multiple <strong>tween points</strong> with configurable easing curves, just like any other tween in WATCHOUT:</p>
+
+<ol>
+<li>Place the time needle at the start of the transition and set Completion to 0.</li>
+<li>Move the time needle to the end of the transition and add a tween point with Completion set to 100.</li>
+<li>Choose a <strong>transition type</strong> (Linear, Quadratic, Cubic, Sinusoidal, etc.) to control the speed curve.</li>
+
+</ol>
+You can also animate the Angle, Location, and Feather channels independently. For example, you might rotate the wipe edge while it sweeps across the cue, or gradually increase feather softness during the transition for a more organic feel.
+
+<h3>Effect Ordering</h3>
+
+<p>Linear Wipe is an <strong>orderable effect</strong>, meaning its position in the tween processing chain relative to other orderable effects (such as keying) matters. Effects are processed in the order they appear in the tween list. You can reorder effects to control how they interact — for example, applying a wipe after or before a color key will produce different visual results.</p>
+
+<h3>Combining with Other Effects</h3>
+
+<p>Linear Wipe works well in combination with other tweens:</p>
+
+<ul>
+<li><strong>Opacity</strong> — combine a wipe with an opacity fade for a reveal that also fades in.</li>
+<li><strong>Position</strong> — slide content into view while simultaneously wiping it on, creating a cinematic entrance.</li>
+<li><strong>Corner Pinning</strong> — distort the cue shape while wiping for perspective-aware transitions.</li>
+<li><strong>Color adjustments</strong> — desaturate or brighten content as it wipes in for dramatic reveals.</li>
+
+</ul>
+<h3>Use Cases</h3>
+
+<ul>
+<li><strong>Scene transitions</strong> — wipe between content by placing two cues back-to-back and animating their Completion values in opposite directions.</li>
+<li><strong>Progressive reveals</strong> — gradually uncover text, images, or video using an animated Completion value.</li>
+<li><strong>Split-screen effects</strong> — set static Location and Completion values (without animation) to divide the cue into visible and hidden regions, effectively cropping along an angled line.</li>
+<li><strong>Dynamic content boundaries</strong> — animate the Angle or Location over time to create moving borders within a cue.</li>
 
 </ul></div><div class="section-nav">
                 <a href="corner-pinning.html" class="nav-btn">

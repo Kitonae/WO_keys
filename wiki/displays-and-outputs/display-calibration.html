@@ -845,19 +845,151 @@
                 <div class="section-content" style="display: block;">
                     <div class="section-content-body"><h2>Display Calibration</h2>
 
-<p><!-- STUB: This article should cover the display calibration workflow, including camera-based calibration via NDI and the projector calibration system for 3D mapping. --></p>
+<p>Calibration is the process of aligning WATCHOUT's rendered output to the physical reality of the display surface. This encompasses projector alignment for 3D mapping, camera-based calibration via NDI streams, EDID management for display identification, and external calibration integration through the HTTP API.</p>
 
-<h3>Content to include</h3>
+<h3>NDI Calibration Stream</h3>
+
+<p>For camera-based calibration workflows, each GPU display can be assigned an <strong>NDI Calibration Stream</strong> in the <strong>Calibration</strong> section of Device Properties. This setting specifies the name of an NDI video stream that carries a live camera feed of the display surface.</p>
+
+<p>When configured, the Runner can receive the NDI stream and use it as a reference input for alignment. This is typically used in automated or semi-automated calibration systems where a camera observes the projected output and provides feedback for geometric correction.</p>
+
+<p>To set up an NDI calibration stream:</p>
+
+<ol>
+<li>Select the display in Device Properties.</li>
+<li>Open the <strong>Calibration</strong> section.</li>
+<li>Enter the NDI stream name in the <strong>Calibration Stream</strong> field.</li>
+
+</ol>
+The stream name should match the NDI source name exactly as it appears on the network. The calibration system uses this stream to compare the expected output pattern with the observed result on the physical surface.
+
+<h3>Projector Calibration (3D Mapping)</h3>
+
+<p>For 3D projector displays, WATCHOUT provides a dedicated calibration system that uses point correspondences to compute the projector's position, orientation, and lens parameters. This is essential for accurate projection mapping where content must align precisely to a physical 3D model.</p>
+
+<h4>Virtual Points and Reality Points</h4>
+
+<p>The calibration process works with two sets of points:</p>
 
 <ul>
-<li><strong>Display calibration mode</strong> — explain the per-display calibration mode setting and what it enables.</li>
-<li><strong>NDI calibration stream</strong> — how to configure an NDI stream as a calibration input for camera-based alignment, and the relationship between the calibration stream setting and the calibration workflow.</li>
-<li><strong>Projector calibration (3D mapping)</strong> — the calibration workflow for 3D projectors: virtual points vs. reality points, the requirement for at least six virtual points, continuous vs. manual calibration, calibration accuracy indicator, and the "Reposition" action.</li>
-<li><strong>EDID capture</strong> — how to capture and save a display's EDID data as an asset for reference or troubleshooting. Explain the requirement for the display to be enabled.</li>
-<li><strong>Calibration triggers</strong> — the external calibration trigger mechanism that can be activated via the HTTP API (the <code>displaycalibration</code> input).</li>
-<li><strong>Best practices</strong> — recommended order of operations: physical alignment → coarse warp → calibration → fine adjustment → mask → content verification.</li>
+<li><strong>Virtual points</strong> are placed on the 3D model in the Stage view. They represent known locations on the surface where you want the projected image to land. Virtual points are defined in world coordinates (X, Y, Z).</li>
+<li><strong>Reality points</strong> are the corresponding positions on the projector's 2D output where those virtual-point locations actually appear when projected. Reality points are defined in normalized screen coordinates.</li>
 
-</ul></div><div class="section-nav">
+</ul>
+The calibration algorithm uses these point pairs to solve for the projector's intrinsic parameters (focal length, lens shift) and extrinsic parameters (position, orientation) using a camera calibration model.
+
+<h4>Calibration Workflow</h4>
+
+<ol>
+<li><strong>Switch to Calibration mode</strong> — in the Stage toolbar, switch the projector view from <strong>View</strong> mode to <strong>Calibration</strong> mode. This enables the calibration point editing tools.</li>
+
+<p><li><strong>Place virtual points</strong> — using the point tools in the Stage view, add virtual points on the 3D model at clearly identifiable surface locations (corners, edges, landmarks). You can add, move, and remove points using the toolbar actions.</li></p>
+
+<p><li><strong>Place at least six points</strong> — the calibration algorithm requires a minimum of six virtual points before you can edit reality points. This minimum ensures the system has enough constraints to solve for all projector parameters.</li></p>
+
+</ol>
+<div class='warning-box'><p>You need to create at least six virtual points to edit the reality points.
+</p></div>
+
+<ol>
+<li><strong>Edit reality points</strong> — once six or more virtual points exist, switch to reality-point editing. For each virtual point, adjust the corresponding reality point to match where that location actually appears on the projector's output. The Stage view shows both sets of points for comparison.</li>
+
+<p><li><strong>Calibrate</strong> — trigger the calibration computation. The system solves for the projector parameters that best align the virtual and reality point pairs.</li></p>
+
+</ol>
+<h4>Continuous vs. Manual Calibration</h4>
+
+<p>The calibration toolbar provides two calibration behaviors:</p>
+
+<ul>
+<li><strong>Continuous calibration</strong> — the system recalculates the projector parameters automatically every time you move a point. This provides real-time feedback as you adjust reality points, making it easier to converge on an accurate alignment.</li>
+<li><strong>Manual calibration</strong> — the system only recalculates when you explicitly press the Calibrate button. Use this when you want to adjust multiple points before triggering a recalculation, or when continuous recalculation is distracting.</li>
+
+</ul>
+<h4>Calibration Accuracy</h4>
+
+<p>After calibration, WATCHOUT displays an <strong>accuracy indicator</strong> that shows how well the computed projector model aligns the virtual and reality points. A low error value (reprojection error) indicates good alignment. An error above 100 indicates a significant problem — typically caused by incorrect point placement, insufficient point count, or a physical setup that doesn't match the model.</p>
+
+<p>If the accuracy is poor, review the point placements and check for:</p>
+
+<ul>
+<li>Points that are nearly coplanar (insufficient 3D variation)</li>
+<li>Incorrectly matched virtual/reality pairs</li>
+<li>Physical obstructions or distortions not captured in the model</li>
+
+</ul>
+<h4>Reposition Action</h4>
+
+<p>The <strong>Reposition</strong> action moves all reality points to sit directly on top of their corresponding virtual points in the current projector view. This is useful as a reset or starting point before manual fine-tuning — it gives you a clean baseline where both point sets overlap, and you can then adjust individual reality points to account for real-world discrepancies.</p>
+
+<h4>Projector Parameter Locking</h4>
+
+<p>During calibration, you can lock specific projector parameters to prevent the calibration algorithm from changing them:</p>
+
+<ul>
+<li><strong>Lock Lens Shift</strong> — prevents the calibration from adjusting the horizontal and vertical lens shift values. Use this when you know the lens shift setting from the projector's specification sheet and want to preserve it.</li>
+<li><strong>Lock Width / Distance Ratio</strong> — prevents the calibration from adjusting the throw ratio. Use this when the throw ratio is precisely known from the lens data.</li>
+
+</ul>
+Locking parameters reduces the degrees of freedom in the calibration solve, which can improve accuracy when the locked values are known to be correct, but can also degrade results if the locked values are wrong.
+
+<h3>EDID Capture</h3>
+
+<p>EDID (Extended Display Identification Data) is a data block that displays transmit to describe their capabilities — supported resolutions, timing modes, color depth, and manufacturer information. WATCHOUT can capture and save a display's EDID data as an asset in the show.</p>
+
+<p>To capture EDID:</p>
+
+<ol>
+<li>Select the GPU display in Device Properties.</li>
+<li>In the <strong>Output</strong> section, locate the EDID row.</li>
+<li>Click <strong>Save EDID</strong>.</li>
+
+</ol>
+The captured EDID is stored as an asset that you can reference later for troubleshooting or for applying to other displays. You can also select a previously captured EDID asset from the dropdown to apply it to the display, or choose <strong>Current Monitor</strong> to use the live EDID from the connected display hardware, or <strong>Keep</strong> to not send any EDID override.
+
+<div class='note-box'><p>The display must be <strong>enabled</strong> to capture its EDID. If the display is disabled, the Save EDID button will be inactive.
+</p></div>
+
+<p>EDID capture is particularly useful in rental and staging environments where you need to document the exact display capabilities at each venue, or when troubleshooting resolution and timing issues where the display is not advertising the expected modes.</p>
+
+<h3>External Calibration Triggers</h3>
+
+<p>WATCHOUT supports an external calibration trigger mechanism that allows third-party calibration systems to put displays into calibration mode via the HTTP API. This is used in automated calibration workflows where an external system (such as VIOSO or other camera-based alignment tools) needs WATCHOUT to display calibration patterns while the external system captures and processes the result.</p>
+
+<p>The trigger works through the Operative's HTTP input endpoint:</p>
+
+<ul>
+<li><strong>Endpoint:</strong> <code>POST /v0/inputs</code> on the Operative's external port</li>
+<li><strong>Input key:</strong> <code>displaycalibration</code></li>
+<li><strong>Value:</strong> <code>1.0</code> to enter calibration mode, <code>0.0</code> to exit</li>
+
+</ul>
+A typical automated calibration sequence:
+
+<ol>
+<li>The external system sends <code>displaycalibration = 1.0</code> to put WATCHOUT displays into calibration mode.</li>
+<li>The external system runs its calibration process (projecting patterns, capturing camera images, computing corrections).</li>
+<li>The external system copies the resulting calibration data (e.g., MPCDI files) to the expected location.</li>
+<li>The external system sends <code>displaycalibration = 0.0</code> to return WATCHOUT to normal operation.</li>
+
+</ol>
+This integration supports hardware trigger devices (such as Elgato Stream Deck) for operator-initiated recalibration in permanent installations.
+
+<h3>Best Practices</h3>
+
+<p>For the best calibration results, follow this recommended order of operations:</p>
+
+<ol>
+<li><strong>Physical alignment</strong> — mount and aim projectors/displays as accurately as possible before any software correction. The less the software needs to compensate, the better the final image quality.</li>
+<li><strong>Coarse warp</strong> — apply initial warp geometry correction to get the output roughly aligned to the surface.</li>
+<li><strong>Calibration</strong> — run the projector calibration (for 3D mapping) or external calibration workflow to compute precise alignment parameters.</li>
+<li><strong>Fine adjustment</strong> — refine warp junction points and handles for any remaining geometric errors.</li>
+<li><strong>Mask</strong> — add masks to shape the visible output boundary, cut spill, and define blend zones.</li>
+<li><strong>Content verification</strong> — play representative show content at final brightness and verify that alignment, color, and blending are correct across all displays.</li>
+
+</ol>
+<div class='info-box'><p>Save a snapshot of the show file after successful calibration so you can revert if subsequent edits introduce problems. Treat calibration state as critical show data.
+</p></div></div><div class="section-nav">
                 <a href="test-patterns.html" class="nav-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"

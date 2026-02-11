@@ -845,19 +845,81 @@
                 <div class="section-content" style="display: block;">
                     <div class="section-content-body"><h2>Image Sequences</h2>
 
-<p><!-- STUB: This article should cover importing and using numbered image sequences as video-like assets in WATCHOUT. --></p>
+<p>An image sequence is a series of numbered image files — for example, <code>render_0001.png</code>, <code>render_0002.png</code>, <code>render_0003.png</code> — that WATCHOUT treats as a single video-like asset. Each file represents one frame.</p>
 
-<h3>Content to include</h3>
+<h3>When to Use Image Sequences</h3>
+
+<p>Image sequences are the preferred delivery format when:</p>
 
 <ul>
-<li><strong>What image sequences are</strong> — explain that a series of numbered image files (e.g., <code>frame_0001.png</code>, <code>frame_0002.png</code>, ...) can be imported as a single asset that behaves like a video clip.</li>
-<li><strong>Supported formats</strong> — JPEG, PNG, TGA, TIFF, and EXR sequences. Note the advantages of EXR for HDR/high-precision workflows.</li>
-<li><strong>Adding an image sequence</strong> — step-by-step: use "Add Image Sequence" from the Assets window, select the folder or first frame, and let the Asset Manager detect the numbering pattern.</li>
-<li><strong>Frame rate</strong> — how the show's frame rate or the asset's configured frame rate determines playback speed.</li>
-<li><strong>Optimization</strong> — how the Asset Manager processes image sequences (converting to an optimized internal format) and the implications for storage and transfer.</li>
-<li><strong>Playback behavior</strong> — looping, in-time offsets, and duration — same as video cues.</li>
-<li><strong>When to use image sequences</strong> — uncompressed quality from 3D renders, per-frame control from compositing tools, EXR HDR content, and workflows where individual frame access is needed.</li>
-<li><strong>Performance considerations</strong> — storage bandwidth requirements compared to video codecs, and when to prefer pre-encoded video instead.</li>
+<li><strong>3D rendering</strong> — most render engines (Cinema 4D, Blender, After Effects, etc.) output numbered frames. Importing them directly avoids a separate encoding step.</li>
+<li><strong>HDR workflows</strong> — EXR sequences carry 32-bit floating point data per channel, preserving the full dynamic range from your render pipeline.</li>
+<li><strong>Per-frame quality</strong> — each frame is stored independently, avoiding inter-frame compression artifacts that can appear in highly compressed video codecs.</li>
+<li><strong>Interrupted renders</strong> — if a render crashes, you keep all completed frames. With video encoding, a crash may corrupt the entire file.</li>
+
+</ul>
+<h3>Supported Frame Formats</h3>
+
+<ul>
+<li><strong>JPEG</strong> — lossy, no alpha. Good for photographic content where file size matters.</li>
+<li><strong>PNG</strong> — lossless with alpha support. Best for graphics and rendered content.</li>
+<li><strong>TGA</strong> — lossless with alpha. Legacy format, still common in some pipelines.</li>
+<li><strong>TIFF</strong> — lossless, optional alpha. High-quality archival option.</li>
+<li><strong>EXR</strong> — 32-bit float with HDR support. Recommended for HDR and high-precision color workflows.</li>
+
+</ul>
+<h3>Adding an Image Sequence</h3>
+
+<ol>
+<li>Right-click in the Assets window and choose <strong>New → Add Image Sequence</strong>.</li>
+<li>A folder browser opens. Select the <strong>folder</strong> containing the numbered image files.</li>
+<li>The Asset Manager scans the folder, detects the numbering pattern, and creates a single asset representing the entire sequence.</li>
+
+</ol>
+<!-- screenshot: Add Image Sequence folder browser dialog -->
+
+<p>The resulting asset appears in the Assets window with a video-style icon. Its duration is determined by the number of frames and the configured frame rate.</p>
+
+<p>> <strong>Tip:</strong> Ensure your image files use a consistent numbering scheme with leading zeros (e.g. <code>frame_0001.png</code> through <code>frame_2400.png</code>). The Asset Manager relies on the numbering pattern to determine frame order.</p>
+
+<h3>Frame Rate</h3>
+
+<p>The playback speed of an image sequence is determined by the asset's frame rate setting. You can set or change the frame rate when creating a version of the asset (via the <strong>Create Version</strong> dialog), or it may inherit the show's default frame rate.</p>
+
+<p>For example, a 1200-frame sequence at 30 fps produces a 40-second asset.</p>
+
+<h3>Optimization</h3>
+
+<p>When an image sequence is added, the Asset Manager processes it through the same optimization pipeline as video files:</p>
+
+<ol>
+<li>The individual frames are read in sequence order.</li>
+<li>They are encoded into the configured output codec (typically HAP).</li>
+<li>The result is a single optimized video file that display servers can play back efficiently.</li>
+
+</ol>
+This means that even though you import individual frames, the display servers receive a standard optimized video — they do not need to read thousands of individual image files during playback.
+
+<p>> <strong>Note:</strong> Image sequences receive a higher optimization priority than standalone video files to ensure they are processed promptly, since the source data (many small files) is less efficient to stream directly.</p>
+
+<h3>Playback Behavior</h3>
+
+<p>Once imported and optimized, an image sequence behaves identically to a video asset:</p>
+
+<ul>
+<li>Place it on the timeline by dragging from the Assets window.</li>
+<li>Set <strong>in/out points</strong>, <strong>loop mode</strong>, and <strong>duration</strong> in the cue properties.</li>
+<li>Apply effects, tweens, and transitions as with any video cue.</li>
+
+</ul>
+<h3>Performance Considerations</h3>
+
+<p>Image sequences can be very large — a 4K EXR sequence at 60 fps can easily produce hundreds of gigabytes of source data. Keep in mind:</p>
+
+<ul>
+<li><strong>Storage</strong> — the source images require significant disk space during import and optimization. The optimized output is typically much smaller (especially when using HAP).</li>
+<li><strong>Optimization time</strong> — encoding thousands of frames takes longer than re-encoding a single video file. Plan for longer optimization times with large sequences.</li>
+<li><strong>When to prefer video</strong> — if you don't need per-frame precision or HDR, it's more efficient to encode to ProRes or HAP in your compositing tool and import the resulting video file directly. This skips the sequence import step entirely.</li>
 
 </ul></div><div class="section-nav">
                 <a href="dynamic-assets.html" class="nav-btn">

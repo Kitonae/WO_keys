@@ -845,68 +845,72 @@
                 <div class="section-content" style="display: block;">
                     <div class="section-content-body"><h2>Asset Transfer</h2>
 
-<p>When going online, optimized assets must be transferred to display servers. WATCHOUT manages this automatically.</p>
+<p>When a show goes online, the Asset Manager distributes optimized assets to every display server (Runner) in the system. WATCHOUT handles this process automatically, but understanding how it works helps you plan for large shows and optimize transfer times.</p>
 
 <h3>Transfer Process</h3>
 
-<ul>
-<li><strong>Comparison</strong> – Producer compares local and remote asset versions</li>
+<p>Asset transfer follows these stages:</p>
 
-<p><li><strong>Queue</strong> – Changed or new assets are queued for transfer</li></p>
+<ol>
+<li><strong>Scanning</strong> – the Asset Manager scans the local asset database to determine which files each Runner needs. It compares the local optimized files against what the Runner already has cached.</li>
+<li><strong>Transferring</strong> – new or updated files are sent over the network to each Runner. A progress indicator tracks bytes copied, files copied, and estimated time remaining.</li>
+<li><strong>Success</strong> – when all files have been transferred, the job is marked as complete.</li>
 
-<p><li><strong>Transfer</strong> – Files are sent over the network to each server</li></p>
-
-<p><li><strong>Verification</strong> – Checksums confirm successful transfer</li></p>
-
-<p><li><strong>Ready</strong> – Server signals ready when all assets are loaded</li></p>
-
-</ul>
-<h3>Transfer Status</h3>
-
-<p>Monitor transfer progress in the Network window:</p>
+</ol>
+The transfer system tracks detailed metrics:
 
 <ul>
-<li><strong>Blue progress bar</strong> – Transfer in progress</li>
-
-<p><li><strong>Percentage</strong> – Completion status per server</li></p>
-
-<p><li><strong>Green check</strong> – All assets transferred successfully</li></p>
-
-<p><li><strong>Red X</strong> – Transfer error occurred</li></p>
+<li><strong>Files total / copied / skipped</strong> – total file count, how many were transferred, and how many already existed on the Runner.</li>
+<li><strong>Bytes total / copied / skipped</strong> – the same breakdown by data volume.</li>
+<li><strong>ETA</strong> – after 1 GB of data has been transferred, the system calculates an estimated completion time based on the current transfer rate.</li>
+<li><strong>Errors</strong> – transfer errors are collected and displayed. Up to 100 unique error messages are retained per job.</li>
 
 </ul>
+A transfer can be <strong>cancelled</strong> at any time. Cancelled transfers can be restarted.
+
+<h3>Transfer States</h3>
+
+<p>Each transfer job moves through the following states:</p>
+
+<ul>
+<li><strong>Pending</strong> – the job is queued but has not started.</li>
+<li><strong>Scanning</strong> – the Asset Manager is comparing local and remote assets.</li>
+<li><strong>Transferring</strong> – files are being sent.</li>
+<li><strong>Waiting</strong> – the transfer is paused (e.g. waiting for the Runner to become available).</li>
+<li><strong>Success</strong> – all files transferred successfully.</li>
+<li><strong>Cancelled</strong> – the transfer was stopped by the user.</li>
+
+</ul>
+<h3>Pre-Caching Assets on Runners</h3>
+
+<p>For large shows, you can pre-cache (pre-download) assets onto specific Runners before going fully online:</p>
+
+<ol>
+<li>In the Assets window, select the assets you want to pre-cache.</li>
+<li>Right-click and choose <strong>Transfer Assets → Cache Selected Assets</strong>.</li>
+<li>Select the Runner(s) to cache the assets on.</li>
+<li>Click <strong>OK</strong> to begin the transfer.</li>
+
+</ol>
+<!-- screenshot: Pre-download Runner Assets dialog showing runner selection -->
+
+<p>This is useful when you need to transfer large volumes of media (tens or hundreds of gigabytes) before a show, without waiting for the full online process.</p>
+
 <h3>Optimizing Transfer Speed</h3>
 
 <ul>
-<li><strong>Use Gigabit or faster</strong> – 1Gbps minimum, 10Gbps recommended</li>
-
-<p><li><strong>Quality switches</strong> – Avoid consumer-grade network equipment</li></p>
-
-<p><li><strong>Dedicated network</strong> – Separate WATCHOUT traffic from other data</li></p>
-
-<p><li><strong>Pre-stage assets</strong> – Copy large files manually before going online</li></p>
-
-</ul>
-<h3>Pre-Staging Assets</h3>
-
-<p>For very large shows, pre-stage assets on display servers:</p>
-
-<ul>
-<li>Copy optimized asset folder to display server</li>
-
-<p><li>Place in the designated asset cache location</li></p>
-
-<p><li>When going online, existing assets are used without transfer</li></p>
+<li><strong>Use high-speed networking</strong> – 1 Gbps minimum, 10 Gbps recommended for large shows.</li>
+<li><strong>Dedicated network</strong> – isolate WATCHOUT traffic from other network data to avoid contention.</li>
+<li><strong>Quality switches</strong> – use managed switches with sufficient backplane bandwidth.</li>
+<li><strong>Bandwidth limit</strong> – the Asset Manager Settings dialog allows you to set a bandwidth limit (in Mbit/s). Set to 0 for unlimited. This is useful when sharing the network with other traffic.</li>
 
 </ul>
 <h3>Managing Disk Space</h3>
 
 <ul>
-<li><strong>Optimized cache</strong> – Located in the show's asset folder</li>
-
-<p><li><strong>Server cache</strong> – Stored on each display server's local drive</li></p>
-
-<p><li><strong>Cleanup</strong> – Remove unused optimized assets via File menu</li></p>
+<li><strong>Asset Manager cache</strong> – the Asset Manager stores both source and optimized files. The optimized versions can be significantly larger than the source (especially with HAP encoding).</li>
+<li><strong>Runner cache</strong> – each Runner stores optimized assets on its local drive. When a show changes, unused cached files may remain. Consult the WATCHOUT administration guide for cache cleanup procedures.</li>
+<li><strong>Monitoring</strong> – keep an eye on disk space on both the Asset Manager node and each Runner, particularly for shows with many large video assets.</li>
 
 </ul></div><div class="section-nav">
                 <a href="asset-watcher.html" class="nav-btn">

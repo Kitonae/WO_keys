@@ -845,22 +845,117 @@
                 <div class="section-content" style="display: block;">
                     <div class="section-content-body"><h2>Compositions</h2>
 
-<p><!-- STUB: This article should cover WATCHOUT's composition system — the ability to group cues into reusable, nested timeline units that behave as a single entity. --></p>
+<p>Compositions are nested timeline units that allow you to group multiple cues into a single, self-contained entity. A composition appears on its parent timeline as a single media cue, but internally it contains its own layers, cues, and timing — effectively a timeline within a timeline. This makes compositions ideal for creating reusable visual building blocks that can be placed across multiple timelines or repeated at different points in a show.</p>
 
-<h3>Content to include</h3>
+<h3>What Compositions Are</h3>
+
+<p>A composition is a special cue sequence with its own internal layers and cue arrangement. When you group cues into a composition, WATCHOUT:</p>
+
+<ol>
+<li>Creates a new composition object with its own cue sequence (layers, cues, and duration)</li>
+<li>Removes the original cues from the parent timeline</li>
+<li>Inserts a single <strong>composition cue</strong> in their place — a media cue whose source is the composition rather than an asset file</li>
+
+</ol>
+The composition cue inherits position and anchor properties from the grouped cues, so it appears in the same location on the Stage. Internally, the composition preserves the relative timing and layer arrangement of its constituent cues.
+
+<p>Compositions also have a <strong>reference frame</strong> that defines their internal coordinate space, and they can optionally be linked to a source asset (for example, when created from a 3D model import).</p>
+
+<h3>Creating a Composition</h3>
+
+<p>To create a composition:</p>
+
+<ol>
+<li>Select one or more cues on the same timeline</li>
+<li>Go to <strong>Timeline → Group Cues into Composition</strong>, or press <strong>Ctrl+G</strong></li>
+
+</ol>
+The selected cues must all belong to the same timeline. WATCHOUT collects them, determines the required number of layers, creates a new composition named sequentially (e.g. "Composition 1", "Composition 2"), and replaces the selected cues with a single composition cue at the position of the first selected cue.
+
+<p>The composition cue's duration matches the span of the grouped cues. Its blend mode, tier mask, and other media options are set to defaults (Normal blend, first tier only, no depth check).</p>
+
+<div class='info-box'><p>When importing 3D models, WATCHOUT automatically creates compositions for multi-mesh models — each mesh surface becomes a separate cue inside the composition, allowing independent texturing while keeping the model as a single unit on the timeline.
+</p></div>
+
+<h3>Ungrouping a Composition</h3>
+
+<p>To dissolve a composition back into individual cues:</p>
+
+<ol>
+<li>Select one or more composition cues on the timeline</li>
+<li>Go to <strong>Timeline → Ungroup Cues</strong>, or press <strong>Ctrl+Shift+G</strong></li>
+
+</ol>
+When you ungroup, WATCHOUT:
 
 <ul>
-<li><strong>What compositions are</strong> — explain that compositions are nested timelines created by grouping multiple cues together. A composition appears as a single cue on its parent timeline but internally contains its own layers, cues, and timing.</li>
-<li><strong>Creating a composition</strong> — select multiple cues and use Timeline → Group Cues into Composition (Ctrl+G). Describe what happens to the selected cues and how the composition cue is created.</li>
-<li><strong>Ungrouping</strong> — how to dissolve a composition back into individual cues using Ctrl+Shift+G.</li>
-<li><strong>Editing a composition</strong> — double-clicking or right-clicking to open a composition for editing. Explain the composition editing mode indicator on the Stage and the restriction that projector mode is not available while editing a composition.</li>
-<li><strong>Composition properties</strong> — name, duration, and how the composition's internal timeline relates to its parent's timing.</li>
-<li><strong>Compositions as assets</strong> — explain that compositions appear in the asset types and can be reused across timelines.</li>
-<li><strong>Nesting</strong> — whether compositions can contain other compositions and any depth limitations.</li>
-<li><strong>Stage behavior</strong> — the "Composition mode is active" indicator and how the Stage filters to show only cues from the active composition.</li>
-<li><strong>Best practices</strong> — when to group (stable, reusable clusters), naming conventions, and avoiding excessive regrouping late in production.</li>
+<li>Extracts all cues from the composition's internal cue sequence</li>
+<li>Adjusts their start times relative to the composition cue's position on the parent timeline</li>
+<li>Adjusts their positions based on the composition cue's position and anchor offset</li>
+<li>Creates any additional layers needed on the parent timeline to accommodate the composition's layer structure</li>
+<li>Removes the composition cue from the parent timeline</li>
 
-</ul></div><div class="section-nav">
+</ul>
+The ungrouped cues appear on the parent timeline at the correct times and positions, as if the composition never existed.
+
+<h3>Editing a Composition</h3>
+
+<p>To edit a composition's internal contents without ungrouping it:</p>
+
+<ul>
+<li><strong>From the Cue List</strong>: Right-click a composition cue and select <strong>Open Composition</strong></li>
+<li><strong>From the Timeline</strong>: Double-click the composition cue, or select it and open it via the context menu</li>
+
+</ul>
+When you open a composition for editing, a new Timeline window appears showing the composition's internal cue sequence. The Stage window switches to <strong>composition mode</strong>, indicated by a gantt chart icon in the top bar. While in composition mode:
+
+<ul>
+<li>The Stage shows only the cues belonging to the active composition</li>
+<li><strong>Projector mode is not available</strong> — the Stage automatically exits projector mode when a composition is opened</li>
+<li>The Stage switches to cue edit mode (display editing is disabled)</li>
+<li>Cue selections on the Stage are scoped to the composition's cue sequence</li>
+
+</ul>
+To exit composition mode, activate a regular timeline window. The Stage will return to its normal display.
+
+<h3>Composition Properties</h3>
+
+<p>Compositions have the following properties, visible in the Properties panel:</p>
+
+<ul>
+<li><strong>Name</strong> — a descriptive name for the composition</li>
+<li><strong>Duration</strong> — the internal duration of the composition's cue sequence</li>
+<li><strong>Reference Frame</strong> — the internal coordinate space (x, y, width, height) used for composition layout</li>
+
+</ul>
+The composition cue on the parent timeline has its own start time and duration, which determines how much of the composition's internal timeline is played.
+
+<h3>Compositions as Reusable Assets</h3>
+
+<p>Compositions appear in the show's asset statistics alongside other asset types (images, video, audio, etc.) under the <strong>Compositions</strong> category. A composition can be used as the media source for cues on any timeline in the show, making it possible to reuse a single composition in multiple places.</p>
+
+<p>When a composition is referenced by cues on different timelines, editing its internal contents affects all instances simultaneously — the composition is a shared resource, not a copy.</p>
+
+<h3>Nesting Compositions</h3>
+
+<p>Compositions can contain other compositions. There is no explicit depth limit on nesting, so you can build layered hierarchies of grouped content. However, deeply nested compositions increase the complexity of the show and can make debugging visual issues more difficult.</p>
+
+<div class='note-box'><p>Composition cues do not support cue set (variant) assignments. If you need variant-based media switching, the individual cues inside the composition should be assigned to cue sets before grouping, or the composition should be ungrouped first.
+</p></div>
+
+<h3>Blind Editing Compositions</h3>
+
+<p>Compositions participate in the blind edit system. When a blind edit is started on a timeline, a temporary composition is created that mirrors the timeline's content. Edits are made to this temporary composition and can be applied (committed) or discarded without affecting the live show. See the [Blind Edit Mode](../06-timeline-and-cues/15-blind-edit-mode) article for details.</p>
+
+<h3>Best Practices</h3>
+
+<p><strong>Group stable, reusable clusters.</strong> Compositions work best for content that is logically self-contained — a lower-third graphic with multiple layers, a multi-mesh 3D model, or a complex animated sequence that appears in several places.</p>
+
+<p><strong>Name compositions descriptively.</strong> Default names like "Composition 1" become hard to distinguish in large shows. Rename compositions to reflect their content (e.g. "Speaker Intro Lower Third", "Stage Left Model").</p>
+
+<p><strong>Avoid excessive regrouping late in production.</strong> Grouping and ungrouping involves restructuring cue positions and layers. Making major composition changes close to showtime increases the risk of unintended visual shifts.</p>
+
+<p><strong>Use compositions for 3D model management.</strong> When working with multi-surface 3D models, compositions keep all mesh cues organized as a single timeline entity while still allowing independent texture assignment per surface.</p></div><div class="section-nav">
                 <a href="artnet-fixture-cues.html" class="nav-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"

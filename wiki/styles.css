@@ -977,6 +977,28 @@ body::before {
     color: #fbbf24;
 }
 
+.note-box {
+    padding: 16px 20px;
+    border-radius: var(--border-radius);
+    margin: 24px 0;
+    border-left: 4px solid;
+    background: rgba(20, 184, 166, 0.1);
+    /* Turquoise background */
+    border-left-color: #14b8a6;
+    /* Turquoise border */
+}
+
+.note-box p {
+    margin-bottom: 0;
+    color: var(--text-primary);
+    line-height: 1.6;
+}
+
+.note-box strong {
+    color: #2dd4bf;
+    /* Lighter turquoise for strong text */
+}
+
 /* Horizontal Divider / Splitter */
 .section-body hr {
     border: none;

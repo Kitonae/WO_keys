@@ -845,29 +845,126 @@
                 <div class="section-content" style="display: block;">
                     <div class="section-content-body"><h2>SVG Shapes</h2>
 
-<p><!-- STUB: This article should cover WATCHOUT's built-in SVG shape creation system, which lets users create vector-based assets directly within the application without external tools. --></p>
+<p>WATCHOUT 7 includes a built-in SVG shape editor that lets you create vector-based assets — rectangles, ellipses, and text — directly within the application. These shapes are stored as SVG data and rendered to pixels at a configurable resolution, so they remain crisp at any size.</p>
 
-<h3>Content to include</h3>
+<h3>Why Use Shapes?</h3>
+
+<p>Shapes are useful for:</p>
 
 <ul>
-<li><strong>What SVG shapes are</strong> — explain that WATCHOUT can generate SVG-based assets internally for use as media cues, eliminating the need to import shapes from external editors.</li>
-<li><strong>Creating shapes</strong> — how to create a new shape from the Assets window context menu. Available geometry types: Rectangle, Ellipse, and Text.</li>
-<li><strong>Shape properties</strong> — describe the properties panel for shapes:</li>
-<li><strong>Geometry kind</strong> — switching between Rectangle, Ellipse, and Text.</li>
-<li><strong>Base size</strong> — width and height of the shape canvas.</li>
-<li><strong>Fill color</strong> — solid color fill.</li>
-<li><strong>Stroke</strong> — stroke color and stroke width.</li>
-<li><strong>Crop to fit</strong> — toggle for cropping the shape to its bounding box.</li>
-<li><strong>Text shapes</strong> — additional properties for text geometry:</li>
-<li><strong>Font selection</strong> — choosing from available font families and faces (including weight, style, stretch, monospaced options).</li>
-<li><strong>Font size and line height</strong> — controlling text dimensions.</li>
-<li><strong>Text value</strong> — the text content to render, which can include expressions for dynamic text.</li>
-<li><strong>Font mapping for SVG assets</strong> — how imported SVG files can reference fonts, and the font mapping UI for assigning system/asset fonts to SVG font references.</li>
-<li><strong>SVG render resolution</strong> — the per-cue SVG render resolution override (width/height with lock aspect ratio), allowing you to control the rasterization quality. Explain the "Reset" option that reverts to the base size defined on the asset.</li>
-<li><strong>Previewing shapes</strong> — the live preview in the shape properties panel and how to apply changes.</li>
-<li><strong>Using shapes in cues</strong> — dragging shape assets onto timelines like any other media asset.</li>
+<li><strong>Title cards and labels</strong> — create text overlays without leaving WATCHOUT.</li>
+<li><strong>Solid backgrounds</strong> — colored rectangles to place behind content or fill gaps.</li>
+<li><strong>Geometric overlays</strong> — circles, rectangles, and stroked outlines for visual accents.</li>
+<li><strong>Dynamic text</strong> — text content that can be changed during a show (when combined with expressions).</li>
 
-</ul></div><div class="section-nav">
+</ul>
+Because shapes are generated internally, there is no need to round-trip through an external graphics editor for simple visual elements.
+
+<h3>Creating a Shape</h3>
+
+<ol>
+<li>Right-click in the Assets window.</li>
+<li>Choose <strong>New</strong> and select one of:</li>
+</ol>
+<ul>
+<li><strong>New Rectangle Shape</strong></li>
+<li><strong>New Ellipse Shape</strong></li>
+<li><strong>New Text Shape</strong></li>
+</ul>
+<ol>
+<li>Enter a name for the shape asset and click <strong>OK</strong>.</li>
+
+</ol>
+<!-- screenshot: New Shape dialog showing name field and OK/Cancel buttons -->
+
+<p>The new shape asset appears in the Assets window with a default white fill and a canvas size of 1920 × 1080 pixels. You can also create shapes inside folders — if a folder is selected when you create the shape, it is placed in that folder.</p>
+
+<p>> <strong>Note:</strong> Shapes cannot be created inside composition folders or non-visual dynamic asset folders.</p>
+
+<h3>Shape Properties Panel</h3>
+
+<p>Select a shape asset to view its dedicated properties panel. Unlike other asset types, shapes display an interactive editor rather than the standard property fields.</p>
+
+<p><!-- screenshot: Shape Properties panel showing preview, base size, geometry, and color sections --></p>
+
+<h4>Preview</h4>
+
+<p>The top section shows a <strong>live preview</strong> of the shape on a checkerboard background (indicating transparency). The preview updates in real time as you modify properties. When multiple shapes are selected with different values, the preview displays a "Multiple values" message.</p>
+
+<h4>Base Size</h4>
+
+<p>The <strong>Base Size</strong> section controls the canvas dimensions:</p>
+
+<ul>
+<li><strong>Width</strong> and <strong>Height</strong> — the SVG canvas size in pixels. Must be positive integers.</li>
+<li>The total pixel area must not exceed approximately 16K (3840 × 2160 × 8 pixels). This prevents creation of shapes that would consume excessive GPU memory.</li>
+
+</ul>
+For text shapes, a <strong>Crop to Fit</strong> button appears that automatically adjusts the canvas size to tightly fit the rendered text.
+
+<h4>Geometry</h4>
+
+<p>The <strong>Geometry</strong> section lets you switch between shape types and set visual properties:</p>
+
+<ul>
+<li><strong>Kind</strong> — toggle between <strong>Ellipse</strong>, <strong>Rectangle</strong>, and <strong>Text</strong>. Switching the kind preserves the canvas size and colors, but resets type-specific properties.</li>
+<li><strong>Fill</strong> — the fill color, including alpha (transparency). Click to open a color picker with a spectrum view.</li>
+<li><strong>Stroke</strong> — the stroke (outline) color, also with alpha support.</li>
+<li><strong>Stroke Width</strong> — the thickness of the stroke in pixels. Set to 0 for no stroke.</li>
+
+</ul>
+Both fill and stroke show a reset button when their value differs from the original, allowing you to quickly revert individual properties.
+
+<h4>Text Properties</h4>
+
+<p>When the geometry kind is set to <strong>Text</strong>, an additional section appears:</p>
+
+<ul>
+<li><strong>Text</strong> — a multiline text field for the content to render.</li>
+<li><strong>Alignment</strong> — left, center, or right alignment buttons.</li>
+<li><strong>Line Height</strong> — the spacing multiplier between lines (e.g. 1.0 = normal, 1.5 = 150%).</li>
+<li><strong>Font Size</strong> — the size of the text in pixels.</li>
+<li><strong>Fit Text</strong> — a button that automatically calculates the largest font size that fits the current canvas dimensions.</li>
+<li><strong>Font</strong> — a dropdown listing all available font assets in the show. Each option shows a thumbnail preview of the typeface.</li>
+
+</ul>
+<!-- screenshot: Text shape properties showing text field, alignment buttons, font size, and font dropdown -->
+
+<p>> <strong>Tip:</strong> To use a custom font, first add the font file as an asset in the Assets window. It will then appear in the font dropdown.</p>
+
+<h4>Applying Changes</h4>
+
+<p>Shape property changes are <strong>not</strong> applied automatically. After making edits, click the <strong>Apply Changes</strong> button at the bottom of the properties panel to commit the new shape data. This regenerates the SVG and updates all cues referencing the shape.</p>
+
+<h3>SVG Render Resolution</h3>
+
+<p>When an SVG shape is placed on the timeline as a cue, you can override its render resolution on a per-cue basis. This is configured in the cue's properties:</p>
+
+<ul>
+<li><strong>Width</strong> and <strong>Height</strong> — the rasterization resolution. By default, this matches the shape's base size.</li>
+<li><strong>Lock Aspect Ratio</strong> — keeps the width-to-height ratio constant when adjusting one dimension.</li>
+<li><strong>Reset</strong> — reverts the render resolution to the shape's base size.</li>
+
+</ul>
+Increasing the render resolution produces sharper output when the cue is scaled up on stage, at the cost of more GPU memory.
+
+<h3>Importing External SVGs</h3>
+
+<p>In addition to creating shapes internally, you can import <code>.svg</code> files as assets by dragging them into the Assets window. Imported SVGs are treated as SVG-type assets and can be placed on the timeline like any other media.</p>
+
+<p>If an imported SVG references fonts, you may need to add matching font assets to the show and map them in the font selector.</p>
+
+<h3>Using Shapes on the Timeline</h3>
+
+<p>Shape assets work like any other visual asset:</p>
+
+<ol>
+<li>Drag the shape from the Assets window onto a timeline layer.</li>
+<li>A media cue is created with the shape as its source.</li>
+<li>Apply position, scale, opacity, and other tweens as usual.</li>
+<li>If the shape content changes (e.g. text is updated), all cues referencing it are updated the next time the shape is applied.</li>
+
+</ol></div><div class="section-nav">
                 <a href="formats-codecs.html" class="nav-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"

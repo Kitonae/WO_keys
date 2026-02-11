@@ -845,51 +845,54 @@
                 <div class="section-content" style="display: block;">
                     <div class="section-content-body"><h2>Web User Interface</h2>
 
-<p>WATCHOUT 7 includes a web-based interface for managing assets remotely. This allows team members to upload and organize media without direct access to the production computer.</p>
+<p>The Asset Manager includes a built-in web server that provides a browser-based interface for uploading and managing assets. This allows team members to contribute media from any device on the network without needing the WATCHOUT Producer application.</p>
 
 <h3>Accessing the Web UI</h3>
 
-<ul>
-<li>Open a web browser on any device on the same network</li>
+<ol>
+<li>Ensure the Asset Manager node is running and connected.</li>
+<li>Open a web browser on any device on the same network.</li>
+<li>Navigate to <code>http://<asset-manager-ip>:3023</code>.</li>
 
-<p><li>Navigate to <code>http://[producer-ip]:3040</code></li></p>
+</ol>
+The web interface loads automatically. You can also open it from the Producer by right-clicking in the Assets window and choosing <strong>Asset Web</strong> — this opens your default browser and navigates to the correct address.
 
-<p><li>The Asset Manager web interface loads automatically</li></p>
+<p><!-- screenshot: Web UI landing page showing asset browser and upload area --></p>
 
-</ul>
+<p>> <strong>Note:</strong> The port is <strong>3023</strong> and is fixed. The URL uses the IP address of the node designated as the Asset Manager, not necessarily the Producer machine.</p>
+
 <h3>Features</h3>
 
+<p>The web interface provides:</p>
+
 <ul>
-<li><strong>Upload Files</strong> – Drag and drop or browse to upload media</li>
-
-<p><li><strong>Browse Assets</strong> – View all assets in the current show</li></p>
-
-<p><li><strong>Create Folders</strong> – Organize assets into folders</li></p>
-
-<p><li><strong>Preview Media</strong> – View thumbnails and preview video</li></p>
-
-<p><li><strong>Check Status</strong> – Monitor optimization progress</li></p>
-
-<p><li><strong>Delete Assets</strong> – Remove unwanted media</li></p>
+<li><strong>Upload files</strong> – drag and drop files or use the file browser to upload media. Multiple files can be uploaded simultaneously.</li>
+<li><strong>Browse assets</strong> – view all assets in the current show in a folder tree.</li>
+<li><strong>Create folders</strong> – organize assets into folders.</li>
+<li><strong>Preview media</strong> – view thumbnails for images, video, SVGs, and fonts.</li>
+<li><strong>Monitor status</strong> – check optimization progress and asset states.</li>
+<li><strong>Delete assets</strong> – remove unwanted media.</li>
 
 </ul>
+Uploaded files are processed through the same optimization pipeline as files added from the Producer — they appear in the Assets window and are optimized and distributed to display servers automatically.
+
 <h3>Upload Progress</h3>
 
-<p>Large files show upload progress in the web interface. Once uploaded, optimization begins automatically.</p>
+<p>Large files display upload progress in the web interface. Once the upload completes, optimization begins immediately. The asset appears in the Producer's Assets window as soon as the upload is received.</p>
 
 <h3>Security Considerations</h3>
 
+<p>The web UI has no authentication — it is accessible to anyone who can reach the Asset Manager's IP address and port on the network. For production environments:</p>
+
 <ul>
-<li>The web UI is accessible to anyone on the local network</li>
-
-<p><li>Consider network segmentation for production environments</li></p>
-
-<p><li>Use firewall rules to restrict access if needed</li></p>
+<li>Use a <strong>dedicated network</strong> for WATCHOUT systems, separate from general-purpose networks.</li>
+<li>Apply <strong>firewall rules</strong> to restrict access to port 3023 if needed.</li>
+<li>Consider <strong>network segmentation</strong> (VLANs) to isolate the WATCHOUT network.</li>
 
 </ul>
 <h3>Mobile Access</h3>
 
-<p>The web interface is responsive and works on tablets and smartphones for on-the-go asset management.</p></div><div class="section-nav">
+<p>The web interface is responsive and works on tablets and smartphones, making it convenient for on-the-go asset management during setup and rehearsals.</p></div><div class="section-nav">
                 <a href="image-sequences.html" class="nav-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"

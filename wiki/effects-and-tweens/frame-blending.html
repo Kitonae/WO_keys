@@ -845,18 +845,53 @@
                 <div class="section-content" style="display: block;">
                     <div class="section-content-body"><h2>Frame Blending</h2>
 
-<p><!-- STUB: This article should cover the per-cue Frame Blending option, which smooths playback when the source media frame rate differs from the show frame rate. --></p>
+<p>Frame Blending is a per-cue option that smooths video playback when the source media's native frame rate does not match the show's output frame rate. Instead of repeating or dropping frames to fill the gap, WATCHOUT interpolates between adjacent video frames, producing a crossfade that results in visibly smoother motion.</p>
 
-<h3>Content to include</h3>
+<h3>How It Works</h3>
+
+<p>When a video plays at a different rate than the show's output (for example, 24 fps content in a 60 fps show), some output frames fall between two source frames. Without frame blending, WATCHOUT displays the nearest available source frame, which can cause stuttering or judder — especially noticeable in panning shots or smooth animations.</p>
+
+<p>With Frame Blending enabled, the renderer blends the two neighboring source frames together for any output frame that falls between them. The blend ratio is determined by the fractional position between the two source frames, producing a smooth temporal crossfade.</p>
+
+<h3>Enabling Frame Blending</h3>
+
+<p>To enable Frame Blending on a cue:</p>
+
+<ol>
+<li>Select the media cue in the Timeline.</li>
+<li>Open the <strong>Properties</strong> panel.</li>
+<li>In the <strong>Playback</strong> page, locate the <strong>Frame Blending</strong> toggle.</li>
+<li>Enable the checkbox.</li>
+
+</ol>
+Frame Blending is disabled by default and must be enabled on each cue individually.
+
+<h3>When to Use It</h3>
+
+<p>Frame Blending is most beneficial in these scenarios:</p>
 
 <ul>
-<li><strong>What frame blending is</strong> — explain that Frame Blending interpolates between video frames when the media's native frame rate does not match the show's playback frame rate, producing smoother motion rather than repeated or dropped frames.</li>
-<li><strong>Enabling frame blending</strong> — how to toggle the Frame Blending property on a media cue (under the Playback page in cue properties).</li>
-<li><strong>When to use it</strong> — scenarios where frame blending improves quality: playing 24fps content in a 60fps show, slow-motion playback, or variable-speed tween playback.</li>
-<li><strong>When to avoid it</strong> — cases where frame blending may produce undesirable ghosting or artifacts, such as text overlays, sharp-edged graphics, or content already matching the show frame rate.</li>
-<li><strong>Performance implications</strong> — the additional GPU cost of blending two frames per output frame.</li>
+<li><strong>Mismatched frame rates</strong> — playing 24 fps or 25 fps film content in a 50 fps or 60 fps show. The interpolation eliminates the 3:2 pulldown stutter that would otherwise occur.</li>
+<li><strong>Slow-motion playback</strong> — when slowing down video via playback speed adjustments or tween-controlled playback rate. Frame blending fills in the gaps between source frames to maintain smooth motion.</li>
+<li><strong>Variable-speed tweens</strong> — when a playback rate tween causes the media to play at non-integer speed ratios, frame blending smooths the transitions.</li>
 
-</ul></div><div class="section-nav">
+</ul>
+<h3>When to Avoid It</h3>
+
+<p>Frame Blending is not ideal for all content types. Avoid it when:</p>
+
+<ul>
+<li><strong>Text and sharp-edged graphics</strong> — the crossfade between frames can produce visible ghosting on high-contrast edges, making text appear blurry during motion.</li>
+<li><strong>Content already matching the show frame rate</strong> — if the source frame rate matches the output rate, every output frame maps exactly to a source frame and blending provides no benefit.</li>
+<li><strong>Rapid cuts or flash sequences</strong> — frame blending across hard cuts produces brief double-exposure artifacts that may be undesirable.</li>
+
+</ul>
+<div class='note-box'><p>Frame Blending interpolates by crossfading pixel values between frames. It does not perform optical flow or motion-vector interpolation, so very fast motion may still show some ghosting.
+</p></div>
+
+<h3>Performance Considerations</h3>
+
+<p>When Frame Blending is enabled, the renderer must decode and hold <strong>two adjacent frames</strong> in memory simultaneously and perform a per-pixel blend for every output frame. This roughly doubles the texture memory and bandwidth required for that cue compared to non-blended playback. On systems with many simultaneous video cues, enabling Frame Blending on all of them may impact overall GPU performance. Enable it selectively on the cues where smooth motion matters most.</p></div><div class="section-nav">
                 <a href="blend-modes.html" class="nav-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"

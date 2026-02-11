@@ -845,21 +845,98 @@
                 <div class="section-content" style="display: block;">
                     <div class="section-content-body"><h2>Time Synchronization</h2>
 
-<p><!-- STUB: This article should cover how WATCHOUT synchronizes time across nodes using NTP and the WATCHOUT-managed vs user-managed sync modes. --></p>
+<p>Frame-accurate multi-display playback is one of WATCHOUT's core capabilities, and it depends on all nodes sharing a precisely aligned clock. Without proper time synchronization, content on different Runner machines drifts apart — even a few milliseconds of offset can produce visible misalignment across adjacent displays.</p>
 
-<h3>Content to include</h3>
+<p>WATCHOUT uses <strong>NTP (Network Time Protocol)</strong> to synchronize the system clocks of all nodes in the network. The Windows Time Service (<code>w32time</code>) on each machine handles the actual clock adjustment.</p>
+
+<h3>Synchronization Modes</h3>
+
+<p>WATCHOUT offers two approaches to time sync management:</p>
+
+<p><strong>WATCHOUT-managed (default):</strong> WATCHOUT automatically configures the NTP settings on each node. One node acts as the NTP server (the time reference), and all other nodes are configured as NTP clients that synchronize to it. This is the simplest and recommended mode for most installations.</p>
+
+<p><strong>User-managed (Advanced):</strong> The operator manages NTP configuration externally, outside of WATCHOUT. In this mode, WATCHOUT does not modify the node's NTP settings. This is useful when the nodes are part of a larger infrastructure with its own time synchronization policy (e.g., a facility-wide NTP server).</p>
+
+<div class='warning-box'><p>User-managed mode includes a warning about potential synchronization issues. If your external NTP configuration is incorrect or if nodes synchronize to different time sources, playback drift will occur. Only use this mode if you are confident in your NTP setup.
+</p></div>
+
+<h3>Configuring Sync Mode</h3>
+
+<p>To change the synchronization mode:</p>
+
+<ol>
+<li>Open the <strong>Nodes</strong> window and select one or more nodes.</li>
+<li>In <strong>Node Properties</strong>, look for the <strong>Sync Settings</strong> option.</li>
+<li>The <strong>Sync Settings</strong> dialog presents two choices:</li>
+</ol>
+<ul>
+<li><strong>WATCHOUT</strong> — WATCHOUT controls time synchronization.</li>
+<li><strong>User</strong> — the operator controls time synchronization externally.</li>
+</ul>
+<ol>
+<li>Confirm your selection.</li>
+
+</ol>
+Changing the sync mode may require a <strong>service restart</strong> on the affected nodes.
+
+<h3>NTP Server Configuration</h3>
+
+<p>In Node Properties, the <strong>NTP Server</strong> field allows you to specify which NTP server the node should synchronize to.</p>
+
+<div class='info-box'><p>Leave the NTP Server field blank to keep the node's current NTP server configuration unchanged. This is useful when you want WATCHOUT to manage the sync mode but not override an existing NTP server setting.
+</p></div>
+
+<h3>Designating a Time Server</h3>
+
+<p>In a WATCHOUT-managed setup, one node should act as the authoritative time reference. When a node is designated as the WATCHOUT time source, its NTP diff display shows <strong>"N/A (is WATCHOUT time source)"</strong> instead of a numeric offset — because it is the reference against which all other nodes are measured.</p>
+
+<p>The time server node can itself synchronize to an external NTP source (such as <code>pool.ntp.org</code> or a facility GPS clock) for absolute time accuracy, or it can run as a free-running local clock.</p>
+
+<h3>Monitoring NTP Status</h3>
+
+<p>Each node displays an <strong>NTP Diff</strong> indicator in its node information, showing the time offset (in seconds) between that node's clock and the NTP reference. This is visible in:</p>
 
 <ul>
-<li><strong>Why time sync matters</strong> — explain that frame-accurate multi-display playback requires all nodes to share a common time reference. Without proper sync, content on different nodes drifts apart.</li>
-<li><strong>NTP synchronization</strong> — WATCHOUT uses NTP (Network Time Protocol) to synchronize clocks. Describe the NTP server configuration on nodes and the option to leave it blank to preserve the node's existing NTP settings.</li>
-<li><strong>Sync modes</strong> — the two sync management approaches:</li>
-<li><strong>WATCHOUT-managed</strong> — WATCHOUT controls NTP configuration automatically.</li>
-<li><strong>User-managed (Advanced)</strong> — the operator manages NTP configuration externally. This mode includes a warning about potential sync issues.</li>
-<li><strong>Time server designation</strong> — how to designate a specific node as the WATCHOUT time source. Explain the "Use as Time Server" option and the NTP diff display showing "N/A (is WATCHOUT time source)" for the designated server.</li>
-<li><strong>NTP status monitoring</strong> — the NTP diff indicator on each node showing the time offset from the reference, and the automatic resync behavior when the offset exceeds a threshold.</li>
-<li><strong>Sync settings dialog</strong> — the dialog for changing sync mode on nodes, including the restart warning.</li>
-<li><strong>Multiple Producer warning</strong> — the warning when multiple Producer instances run on the same machine, which may affect time synchronization.</li>
-<li><strong>Troubleshooting sync issues</strong> — common symptoms (frame offset between displays), diagnostic steps (check NTP diff in node info), and resolutions.</li>
+<li>The <strong>Nodes</strong> window overview (as a compact status indicator).</li>
+<li>The <strong>Node Properties</strong> panel under the <strong>NTP</strong> section, which also shows the configured NTP server address.</li>
+
+</ul>
+Under normal operation, the NTP diff should be very small (a few milliseconds or less). Larger offsets indicate synchronization problems.
+
+<h3>Automatic Resync</h3>
+
+<p>When the time offset on a node exceeds a safety threshold, WATCHOUT logs a warning: <strong>"NTP offset is too high — resyncing."</strong> The system then triggers an automatic resynchronization to bring the node's clock back in line with the reference.</p>
+
+<p>This typically happens when a node has been offline for an extended period, when a network interruption delays NTP packets, or when the system clock has drifted due to hardware issues.</p>
+
+<h3>Multiple Producer Warning</h3>
+
+<p>Running multiple Producer instances on the same machine can affect time synchronization. When this condition is detected, WATCHOUT displays a warning:</p>
+
+<p>> "Multiple Producer instances are running on this machine. This may affect time synchronization. For best results, run only one Producer per machine, or ensure all machines share the same NTP settings."</p>
+
+<p>The warning notes that delays may occur between time needle changes and updates when multiple instances compete for the same system clock.</p>
+
+<h3>Troubleshooting Sync Issues</h3>
+
+<p><strong>Symptom:</strong> Content on different displays appears offset by a consistent number of frames.</p>
+
+<p><strong>Diagnostic steps:</strong></p>
+
+<ol>
+<li>Open the <strong>Nodes</strong> window and check the <strong>NTP Diff</strong> value for each node. Values significantly above zero (e.g., more than 10ms) indicate a sync problem.</li>
+<li>Verify that all nodes are configured to synchronize to the <strong>same NTP server</strong>.</li>
+<li>Check that the NTP server node is reachable on <strong>UDP port 123</strong> from all client nodes.</li>
+<li>Ensure the Windows Time Service (<code>w32time</code>) is running on all nodes.</li>
+
+</ol>
+<strong>Resolutions:</strong>
+
+<ul>
+<li>If nodes show high NTP diff values, try restarting the Windows Time Service or triggering a manual resync.</li>
+<li>If using User-managed mode, verify your external NTP configuration is correct and that all nodes point to the same reference.</li>
+<li>Switch to WATCHOUT-managed mode for automatic configuration if your external NTP setup is unreliable.</li>
+<li>For hardware-level frame accuracy across multiple displays, consider using <strong>NVIDIA Quadro Sync</strong> (genlock/framelock) in addition to NTP synchronization.</li>
 
 </ul></div><div class="section-nav">
                 <a href="software-updates.html" class="nav-btn">

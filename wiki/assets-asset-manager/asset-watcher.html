@@ -845,68 +845,56 @@
                 <div class="section-content" style="display: block;">
                     <div class="section-content-body"><h2>Asset Watcher</h2>
 
-<p>The Asset Watcher automatically monitors designated folders for new or changed files, streamlining the content workflow.</p>
+<p>The Asset Watcher monitors designated folders on the Asset Manager node’s file system. When new or changed files appear in a watched folder, they are automatically imported into the show and processed through the optimization pipeline.</p>
 
-<h3>Setting Up Watch Folders</h3>
+<h3>Setting Up a Watch Folder</h3>
 
+<p>Watch folders are configured in the Network window, under the Asset Manager node's settings:</p>
+
+<ol>
+<li>In the Network window, locate the node designated as the Asset Manager.</li>
+<li>Click <strong>Add Folder to Watch</strong>.</li>
+<li>In the dialog, configure:</li>
+</ol>
 <ul>
-<li>Go to <strong>Settings → Asset Manager</strong></li>
-
-<p><li>Click <strong>Add Watch Folder</strong></li></p>
-
-<p><li>Browse to the folder you want to monitor</li></p>
-
-<p><li>Configure import options</li></p>
-
-<p><li>Click <strong>OK</strong> to enable watching</li></p>
-
+<li><strong>Folder to Watch</strong> – the path on the Asset Manager’s file system to monitor. Use the file browser or type the path directly.</li>
+<li><strong>Asset Path</strong> – an optional sub-path within the show’s asset tree where imported files should be placed. Leave empty to place them at the root.</li>
 </ul>
-<h3>Watch Folder Options</h3>
+<ol>
+<li>Click <strong>OK</strong> to start watching.</li>
 
-<table>
-<tr><th>Option</th><th>Description</th></tr>
-<tr><td>Include Subfolders</td><td>Monitor subdirectories recursively</td></tr>
-<tr><td>File Types</td><td>Filter which file types to import</td></tr>
-<tr><td>Target Folder</td><td>Where to place imported assets in the show</td></tr>
-<tr><td>Auto-Delete Source</td><td>Remove source after successful import</td></tr>
-</table>
+</ol>
+<!-- screenshot: Add Watch Folder dialog showing folder path field and asset path field -->
+
+<p>The folder path is validated before the watcher is created. The system checks that the path exists and is accessible on the Asset Manager node, and that it does not conflict with the Asset Manager’s internal storage directories.</p>
 
 <h3>How It Works</h3>
 
-<ul>
-<li>Place new media files in the watched folder</li>
+<p>The Asset Watcher continuously scans the watched folder for changes:</p>
 
-<p><li>Asset Watcher detects the new files</li></p>
+<ol>
+<li><strong>New files</strong> – when a new file appears in the folder, it is automatically imported as an asset. The file is copied into the Asset Manager’s storage and optimization begins.</li>
+<li><strong>Modified files</strong> – if a source file that was previously imported is modified (detected by file system events), the asset is re-imported and re-optimized. The updated content is distributed to display servers.</li>
+<li><strong>Organization</strong> – imported files are placed in the asset path specified when the watch folder was created. If no path was specified, they go to the root of the asset tree.</li>
 
-<p><li>Files are automatically imported into the show</li></p>
+</ol>
+The watcher processes files using the same optimization settings (codec mapping, quality, track management) as manually added assets.
 
-<p><li>Optimization begins immediately</li></p>
+<h3>Removing a Watch Folder</h3>
 
-<p><li>Assets appear in the Assets window when ready</li></p>
+<p>To stop watching a folder, locate it in the Asset Manager node’s settings in the Network window and remove it. Existing assets that were imported from the folder remain in the show.</p>
 
-</ul>
-<h3>File Change Detection</h3>
+<h3>Local vs. Remote Configuration</h3>
 
-<p>If a source file is modified:</p>
+<p>If the Asset Manager runs on the same machine as the Producer, the folder path is validated as a local disk folder (checking that the directory exists). If the Asset Manager runs on a remote node, the path is validated on that remote machine.</p>
 
-<ul>
-<li>The Asset Watcher detects the change</li>
-
-<p><li>The asset is marked as modified (orange icon)</li></p>
-
-<p><li>Re-optimization is triggered automatically</li></p>
-
-<p><li>Updated content is distributed to display servers</li></p>
-
-</ul>
 <h3>Use Cases</h3>
 
 <ul>
-<li><strong>Collaborative Workflows</strong> – Content creators drop files for operators</li>
-
-<p><li><strong>Live Updates</strong> – Update content during a show</li></p>
-
-<p><li><strong>Automated Pipelines</strong> – Integrate with render farms or CMS</li></p>
+<li><strong>Collaborative workflows</strong> – content creators drop rendered files into a shared folder. The operator’s show picks them up automatically.</li>
+<li><strong>Live content updates</strong> – update content during a running show by overwriting files in the watched folder. The watcher detects the change and triggers re-optimization.</li>
+<li><strong>Render farm integration</strong> – point the watcher at a render output directory. Completed renders are imported as they finish.</li>
+<li><strong>Dynamic asset updates</strong> – combine the watcher with dynamic assets to automatically rotate content versions. New files dropped into the folder become new versions of the corresponding dynamic asset.</li>
 
 </ul></div><div class="section-nav">
                 <a href="web-user-interface.html" class="nav-btn">

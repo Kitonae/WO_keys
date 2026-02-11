@@ -845,19 +845,91 @@
                 <div class="section-content" style="display: block;">
                     <div class="section-content-body"><h2>Dynamic Assets</h2>
 
-<p><!-- STUB: This article should cover the dynamic asset system, which allows assets to have multiple versions that can be swapped at runtime without modifying timelines. --></p>
+<p>A dynamic asset is a named container that holds one or more versions of the same content. Timeline cues reference the dynamic asset by name, and the currently active version determines which actual media file plays. This lets you swap content — different language tracks, updated sponsor logos, seasonal variations — without editing any timelines.</p>
 
-<h3>Content to include</h3>
+<h3>How It Works</h3>
+
+<p>A dynamic asset appears in the Assets window as a special folder (marked with a recycle icon) containing its version assets. The most recently added version is treated as the <strong>active version</strong> by default. When a cue plays the dynamic asset, the runner loads the active version's media.</p>
+
+<p>If you update the active version — by adding a new file or changing the selection — every cue referencing that dynamic asset picks up the change immediately.</p>
+
+<h3>Categories</h3>
+
+<p>When creating a dynamic asset, you choose a <strong>category</strong> that determines what type of content it holds:</p>
 
 <ul>
-<li><strong>What dynamic assets are</strong> — explain the concept of a dynamic asset as a named placeholder that can point to different versions of content. Cues reference the dynamic asset; the active version determines which actual media file plays.</li>
-<li><strong>Creating a dynamic asset</strong> — the "Create Dynamic Asset" dialog: choosing a name, selecting a category (visual or audible), and the resulting asset structure.</li>
-<li><strong>Asset versions</strong> — how to add versions to a dynamic asset (creating new versions from existing assets), and the distinction between "Latest" and "Fixed" version modes on cues.</li>
-<li><strong>Active version</strong> — how to set which version is currently active, and how changing the active version immediately affects all cues referencing that dynamic asset.</li>
-<li><strong>Automatic updates</strong> — the relationship between the "Auto Update Assets" show property and dynamic assets. The maximum auto-revision limit.</li>
-<li><strong>Version management</strong> — adding, removing, and reordering versions. The rule that a dynamic asset used in the show must have at least one version.</li>
-<li><strong>Use cases</strong> — content swapping for multi-language shows, updating sponsor logos without re-editing timelines, A/B testing content variations, and seasonal content rotation.</li>
-<li><strong>Limitations</strong> — dynamic asset versions cannot be dragged directly to the timeline (the parent dynamic asset should be used instead).</li>
+<li><strong>Visual</strong> — images, video, and SVG content.</li>
+<li><strong>Audible</strong> — audio content.</li>
+<li><strong>Display Data</strong> — projection mapping data (MPCDI, etc.).</li>
+
+</ul>
+The category is shown as a suffix in the asset name (e.g. "MyContent (Visual)") and restricts which file types can be added as versions. A visual dynamic asset cannot hold audio files, and vice versa.
+
+<h3>Creating a Dynamic Asset</h3>
+
+<p>There are two ways to create a dynamic asset:</p>
+
+<p><strong>From scratch:</strong></p>
+
+<ol>
+<li>Right-click in the Assets window.</li>
+<li>Choose <strong>New → Create Dynamic Asset</strong>.</li>
+<li>Enter a name and select a category (Visual, Audible, or Display Data).</li>
+<li>Click <strong>Save</strong>.</li>
+
+</ol>
+<!-- screenshot: New Dynamic Asset dialog showing name field and category dropdown -->
+
+<p>An empty dynamic asset folder is created. You can then add versions to it.</p>
+
+<p><strong>From an existing asset:</strong></p>
+
+<ol>
+<li>Select an existing asset (not a folder) in the Assets window.</li>
+<li>Right-click and choose <strong>New → Create Dynamic Asset</strong>.</li>
+<li>The existing asset is converted into the first version of a new dynamic asset. The asset's type determines the category automatically.</li>
+
+</ol>
+> <strong>Tip:</strong> Converting an existing asset preserves all cue references. Cues that pointed to the original asset now point to the dynamic asset, which contains the original file as its first version.
+
+<h3>Adding Versions</h3>
+
+<p>To add a new version to an existing dynamic asset:</p>
+
+<ul>
+<li><strong>Drag and drop</strong> — drag a file from your file manager onto the dynamic asset folder.</li>
+<li><strong>Create Version</strong> — select the dynamic asset or one of its versions, right-click, and choose <strong>New → Create Version</strong>. This opens a dialog where you can set the version name, frame rate (for video), and color space.</li>
+<li><strong>Move into folder</strong> — drag an existing asset into the dynamic asset folder. Because versions must be cloned (not moved) into a dynamic asset, WATCHOUT creates a copy automatically.</li>
+
+</ul>
+Versions within a dynamic asset are sorted by creation date, newest first. The newest version is the active version.
+
+<h3>Version Limits</h3>
+
+<p>Dynamic assets have a maximum revision count of <strong>2</strong> by default. When a new version is added and the limit is exceeded, the oldest version is automatically removed. This keeps the asset folder from growing unbounded during automated update workflows.</p>
+
+<h3>Managing Versions</h3>
+
+<ul>
+<li><strong>Deleting a version</strong> — select the version inside the dynamic asset folder and delete it. If the dynamic asset is used on the timeline, at least one version must remain — WATCHOUT prevents you from deleting the last version of a used dynamic asset.</li>
+<li><strong>The active version</strong> — is always the newest version (by creation time). You can remove newer versions to effectively revert to an older one.</li>
+
+</ul>
+<h3>Use Cases</h3>
+
+<ul>
+<li><strong>Multi-language shows</strong> — create a visual dynamic asset for each content piece, with one version per language. Swap the language set by replacing the active versions.</li>
+<li><strong>Sponsor updates</strong> — replace sponsor logos without re-editing timelines. Drop a new logo file into the dynamic asset; it becomes the active version.</li>
+<li><strong>Content rotation</strong> — automatically cycle content on a schedule by updating the dynamic asset versions through the Asset Watcher or Web UI.</li>
+<li><strong>A/B testing</strong> — keep two content variations as versions and switch between them during rehearsals.</li>
+
+</ul>
+<h3>Limitations</h3>
+
+<ul>
+<li><strong>Version assets cannot be placed on the timeline directly.</strong> Always use the parent dynamic asset when creating cues. Individual version files are internal to the dynamic asset.</li>
+<li><strong>Category is fixed at creation.</strong> You cannot change a visual dynamic asset to an audible one after creation.</li>
+<li><strong>Folders and compositions cannot be converted</strong> to dynamic assets. Only regular media assets support conversion.</li>
 
 </ul></div><div class="section-nav">
                 <a href="svg-shapes.html" class="nav-btn">

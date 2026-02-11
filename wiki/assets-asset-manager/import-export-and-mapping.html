@@ -845,67 +845,82 @@
                 <div class="section-content" style="display: block;">
                     <div class="section-content-body"><h2>Import, Export, and Mapping</h2>
 
-<p>Beyond normal drag-and-drop ingest, the Assets window includes transfer workflows for moving asset sets between systems and controlling optimization behavior.</p>
+<p>The Assets window provides workflows for exporting assets to external storage, importing them onto another system, and controlling how the optimizer maps source codecs to output formats.</p>
 
-<h3>Export Workflows</h3>
+<h3>Exporting Assets</h3>
 
-<p>From the Assets context menu, use:</p>
+<p>Export copies optimized asset files from the Asset Manager to a destination path on any accessible node. Use this to archive a show’s media, transfer it to another system, or prepare a backup.</p>
 
-<ul>
-<li><strong>Export All Assets...</strong></li>
-<li><strong>Export Selected Assets...</strong></li>
-
-</ul>
-Both open a destination dialog and validate the target path before export.
-
-<p>Use export when you need to:</p>
+<p>From the Assets window context menu, choose <strong>Transfer Assets</strong> and then:</p>
 
 <ul>
-<li>Hand over media to another system</li>
-<li>Archive a show media package</li>
-<li>Prepare a controlled import on another production machine</li>
+<li><strong>Export All</strong> – exports every asset in the show.</li>
+<li><strong>Export Selected</strong> – exports only the currently selected assets.</li>
 
 </ul>
-<h3>Import Workflows</h3>
+Both options open a dialog where you select:
 
-<p>Use <strong>Import Assets...</strong> to import an exported asset package.</p>
+<ol>
+<li><strong>Target node</strong> – the machine to export to (can be the local machine or any connected node).</li>
+<li><strong>Destination path</strong> – the folder on the target node where files will be written.</li>
 
-<p>Key options:</p>
+</ol>
+<!-- screenshot: Export dialog showing node selection and destination path -->
+
+<p>Once started, the export job tracks progress through the standard transfer stages (Scanning → Transferring → Success). You can monitor progress in the Assets window’s activity panel.</p>
+
+<h3>Importing Assets</h3>
+
+<p>Import reads an asset package from a path on a connected node and adds the contents to the current show.</p>
+
+<p>From the Assets context menu, choose <strong>Transfer Assets → Import</strong>.</p>
+
+<ol>
+<li><strong>Source node</strong> – the machine where the asset package resides.</li>
+<li><strong>Source path</strong> – the folder containing the exported assets.</li>
+
+</ol>
+The import process copies files into the Asset Manager’s storage. If the source node is the local machine but the Asset Manager runs on a remote node, WATCHOUT checks that the path is accessible via the remote file access allowlist. If the path is not permitted, a dialog appears explaining how to configure remote access.
+
+<p>> <strong>Tip:</strong> Importing is a copy operation. The source files are not modified or deleted.</p>
+
+<h3>Pre-Caching on Runners</h3>
+
+<p>For shows with large media libraries, you can pre-cache selected assets onto specific Runners without going fully online:</p>
+
+<ol>
+<li>Select the assets to cache.</li>
+<li>Right-click → <strong>Transfer Assets → Cache Selected Assets</strong>.</li>
+<li>Choose one or more Runners.</li>
+<li>Click <strong>OK</strong>.</li>
+
+</ol>
+This pushes the optimized files to the selected Runners ahead of time, reducing the time needed when the show goes online.
+
+<h3>Codec Settings (Optimizer Mapping)</h3>
+
+<p>The <strong>Asset Manager Settings</strong> dialog (accessible from the Assets context menu) includes the codec mapping section. This controls how the optimizer converts source codecs to output formats.</p>
+
+<p>Each row in the mapping table shows:</p>
 
 <ul>
-<li><strong>Import path</strong> on the current Asset Manager host</li>
-<li><strong>Merge Assets</strong> toggle</li>
+<li><strong>In</strong> – the source codec detected in the imported file.</li>
+<li><strong>Out</strong> – the output codec the optimizer will produce.</li>
+<li><strong>Default</strong> – the system’s recommended output for that source.</li>
 
 </ul>
-<code>Merge Assets</code> can be much faster than copy-based import, but it is intended for specific cases:
+You can override individual mappings by changing the output dropdown. Non-default mappings are highlighted. Use the <strong>Reset All</strong> button to revert all overrides.
 
-<ul>
-<li>Source and target must be on the same disk/volume</li>
-<li>The export package should be treated as a one-time merge source</li>
+<p>For details on quality levels, track management, and bandwidth settings, see [Asset Manager Settings](../11-asset-manager-settings).</p>
 
-</ul>
-<h3>Optimizer Mapping</h3>
-
-<p>Use <strong>Mapping...</strong> from the Assets context menu to manage optimizer mapping.</p>
-
-<p>This workflow lets you map source format groups ("in") to optimization targets ("out"), then save the mapping for future optimization jobs.</p>
-
-<p>Supported operations in the mapping dialog:</p>
-
-<ul>
-<li>Override individual mappings</li>
-<li>Restore a row to default</li>
-<li>Reset all non-default mappings</li>
-<li>Store the updated mapping</li>
-
-</ul>
 <h3>Practical Workflow</h3>
 
 <ol>
-<li>Export before major cleanup or migration.</li>
-<li>Import on the target system and verify optimization status.</li>
-<li>Apply mapping changes only when there is a clear format/performance goal.</li>
-<li>Use <strong>Find Cues</strong> on critical assets before delete/replace operations.</li>
+<li><strong>Before migration</strong> – export all assets to a portable drive or network share.</li>
+<li><strong>On the target system</strong> – open the show and import from the export location.</li>
+<li><strong>Verify</strong> – check that all assets appear and are in the correct optimization state.</li>
+<li><strong>Adjust mappings</strong> – if the target system has different hardware capabilities, update codec mappings before re-optimizing.</li>
+<li><strong>Use Find Cues</strong> – before deleting or replacing critical assets, use <strong>Find Cues</strong> to ensure no timeline references will break.</li>
 
 </ol></div><div class="section-nav">
                 <a href="asset-manager-settings.html" class="nav-btn">

@@ -845,75 +845,62 @@
                 <div class="section-content" style="display: block;">
                     <div class="section-content-body"><h2>Asset Manager Settings</h2>
 
-<p>Configure the Asset Manager behavior through the Settings dialog.</p>
+<p>The Asset Manager Settings dialog controls how assets are optimized, transferred, and managed. Open it by right-clicking in the Assets window and choosing <strong>Asset Manager Settings</strong>.</p>
 
-<h3>Accessing Settings</h3>
+<p><!-- screenshot: Asset Manager Settings dialog showing all sections --></p>
 
-<p>Go to <strong>Edit → Preferences → Asset Manager</strong> or access from the Assets window menu.</p>
+<h3>Bandwidth Limit</h3>
 
-<h3>General Settings</h3>
-
-<table>
-<tr><th>Setting</th><th>Description</th></tr>
-<tr><td>Cache Location</td><td>Where optimized assets are stored</td></tr>
-<tr><td>Max Cache Size</td><td>Limit on disk space for optimized files</td></tr>
-<tr><td>Auto-Optimize</td><td>Automatically optimize new imports</td></tr>
-<tr><td>Parallel Optimize</td><td>Number of simultaneous optimization jobs</td></tr>
-</table>
-
-<h3>Optimization Defaults</h3>
-
-<table>
-<tr><th>Setting</th><th>Description</th></tr>
-<tr><td>Target Codec</td><td>Default codec for optimized video (HAP recommended)</td></tr>
-<tr><td>Quality Level</td><td>Balance between quality and file size</td></tr>
-<tr><td>Max Resolution</td><td>Cap on output resolution</td></tr>
-<tr><td>Frame Rate</td><td>Target frame rate for optimization</td></tr>
-</table>
-
-<h3>Network Settings</h3>
-
-<table>
-<tr><th>Setting</th><th>Description</th></tr>
-<tr><td>Web UI Port</td><td>HTTP port for web interface (default: 3040)</td></tr>
-<tr><td>Transfer Port</td><td>Port for asset distribution</td></tr>
-<tr><td>Bandwidth Limit</td><td>Maximum network speed for transfers</td></tr>
-</table>
-
-<h3>Watch Folder Settings</h3>
+<p>The <strong>Bandwidth Limit</strong> setting caps the data rate (in Mbit/s) used when transferring optimized assets to display servers.</p>
 
 <ul>
-<li>Add, remove, and configure watched directories</li>
-
-<p><li>Set default import behavior</li></p>
-
-<p><li>Enable/disable watching per folder</li></p>
+<li>Set to <strong>0</strong> for unlimited bandwidth (default).</li>
+<li>Set a positive value (e.g. 500) to limit transfers to that rate, useful when sharing the network with other traffic.</li>
 
 </ul>
-<h3>Advanced Settings</h3>
+<h3>Track Management</h3>
+
+<p>The <strong>Track Management</strong> section controls how the optimizer handles source files that contain both video and audio tracks. The <strong>Composition Logic</strong> dropdown provides four options:</p>
 
 <ul>
-<li><strong>GPU Acceleration</strong> – Use graphics card for encoding/decoding</li>
-
-<p><li><strong>Hardware Encoder</strong> – Select specific GPU for optimization</li></p>
-
-<p><li><strong>Thread Count</strong> – CPU threads for software encoding</li></p>
-
-<p><li><strong>Memory Limit</strong> – Maximum RAM for optimization processes</li></p>
+<li><strong>Skip Audio</strong> – only the video track is optimized; audio is discarded.</li>
+<li><strong>Skip Video</strong> – only the audio track is optimized; video is discarded.</li>
+<li><strong>Composition</strong> – both tracks are kept together as a single composition asset.</li>
+<li><strong>Individual Assets</strong> – video and audio are split into separate assets.</li>
 
 </ul>
-<h3>Maintenance</h3>
+This setting applies globally to all newly imported assets.
+
+<h3>Output Properties</h3>
+
+<p>The <strong>Output Properties</strong> section lists codecs that support quality configuration. For each codec, you can set a <strong>Quality Level</strong>:</p>
+
+<ol>
+<li><strong>Good</strong> – smallest output, lower visual quality.</li>
+<li><strong>Very Good</strong> – balanced.</li>
+<li><strong>Excellent</strong> – higher quality, larger files.</li>
+<li><strong>Optimal</strong> – near-maximum quality.</li>
+<li><strong>Best</strong> – maximum quality, largest files.</li>
+
+</ol>
+Not all codecs expose a quality setting. Codecs that don’t have a configurable quality (e.g. some passthrough formats) appear in the list without a dropdown.
+
+<h3>Codec Mapping</h3>
+
+<p>The <strong>Codecs</strong> section shows the input-to-output codec mapping. Each row maps a source codec ("in") to the codec used for the optimized output ("out").</p>
 
 <ul>
-<li><strong>Clear Cache</strong> – Remove all optimized files (will re-optimize on demand)</li>
+<li><strong>Default mapping</strong> – each source codec has a default output target (typically HAP for video).</li>
+<li><strong>Custom mapping</strong> – click the output dropdown to choose a different output codec. Rows with non-default mappings are highlighted with a colored arrow.</li>
+<li><strong>Restore individual row</strong> – hover over the arrow on a non-default row and click the restore icon to revert that row to its default.</li>
+<li><strong>Reset All</strong> – the <strong>Reset All</strong> button at the bottom reverts every row to the default mapping.</li>
 
-<p><li><strong>Rebuild Database</strong> – Fix corruption in asset database</li></p>
+</ul>
+> <strong>Tip:</strong> Codec mapping changes take effect for all future optimizations. Assets already optimized are not re-processed unless you manually trigger re-optimization.
 
-<p><li><strong>Verify Assets</strong> – Check all source files exist and are valid</li></p>
+<h3>Saving Changes</h3>
 
-<p><li><strong>Export Asset List</strong> – Generate report of all show assets</li></p>
-
-</ul></div><div class="section-nav">
+<p>Click <strong>Save</strong> to apply the current settings. The <strong>Save</strong> button is only enabled when changes have been made. Click <strong>Cancel</strong> to discard changes and close the dialog.</p></div><div class="section-nav">
                 <a href="asset-transfer.html" class="nav-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"

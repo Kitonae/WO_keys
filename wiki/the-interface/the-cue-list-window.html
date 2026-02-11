@@ -845,23 +845,178 @@
                 <div class="section-content" style="display: block;">
                     <div class="section-content-body"><h2>The Cue List Window</h2>
 
-<p><!-- STUB: This article should cover the Cue List window — a flat, filterable table view of all cues across the show, complementing the graphical Timeline view. --></p>
+<p>The <strong>Cue List</strong> window provides a flat, tabular view of all cues across every timeline in your show. While the Timeline window displays cues graphically along a time axis within a single timeline, the Cue List presents them as sortable, filterable rows in a table — making it ideal for auditing, searching, and managing cues across the entire production.</p>
 
-<h3>Content to include</h3>
+<p>The Cue List is especially valuable in large shows where cues are spread across many timelines. It lets you quickly locate specific cues by name, type, or media source without switching between timelines.</p>
+
+<h3>Opening the Cue List</h3>
+
+<p>Open the Cue List window from <strong>Window → Cues</strong>. The window operates alongside the Timeline and Stage windows — selecting a cue in the Cue List also selects it in the Timeline and updates the Properties panel, and vice versa.</p>
+
+<h3>Column Layout</h3>
+
+<p>The Cue List displays cues in a table with the following columns. Not all columns are visible by default — you can choose which to show or hide.</p>
 
 <ul>
-<li><strong>Opening the Cue List</strong> — how to open the window from the Window menu and how it relates to the Timeline window.</li>
-<li><strong>Column layout</strong> — describe available columns: Timeline, Name, Type, Start, Duration, Countdown, Source, Image (thumbnail), and Cue Set.</li>
-<li><strong>Choosing visible columns</strong> — explain the column chooser and how to show/hide columns.</li>
-<li><strong>Sorting</strong> — how clicking column headers cycles through ascending, descending, and no-sort (flat vs. tree view behavior).</li>
-<li><strong>Filtering</strong> — the filter panel with options to include by cue kind (Media, Control, Output, Variable, Marker), media source type (Assets, Virtual Displays, Compositions, Captures), and the "Follow Selected" feature that synchronizes the list with selections in the Assets, Timelines, or Captures windows.</li>
-<li><strong>Filter presets</strong> — saving, loading, updating, and deleting named filter presets for quick recall.</li>
-<li><strong>Selecting cues</strong> — how selection in the Cue List reflects in the Timeline and Properties panel, and vice versa.</li>
-<li><strong>Blind Edit from Cue List</strong> — how to enter Blind Edit mode for a timeline directly from the cue list.</li>
-<li><strong>Locking and unlocking cues</strong> — lock/unlock individual or multiple selected cues from the list context.</li>
-<li><strong>Opening compositions</strong> — right-click to open a composition cue for editing.</li>
+<li><strong>Timeline</strong> — the name of the timeline containing the cue. A lock icon appears next to the name indicating the cue's lock state. If the cue belongs to a Blind Edit timeline, an eye-off icon appears to identify it.</li>
+<li><strong>Image</strong> — a thumbnail preview of the cue's media asset, when applicable.</li>
+<li><strong>Name</strong> — the cue's name. Cues with errors (such as missing assets) display their name in a warning color.</li>
+<li><strong>Type</strong> — the cue kind, such as Media, Control, Output, Variable, or Marker. For media cues, the source type is shown in parentheses (e.g., "Media (Asset)", "Media (Capture)", "Media (Composition)").</li>
+<li><strong>Tier</strong> — the stage tier(s) the cue is assigned to. Hidden by default.</li>
+<li><strong>Start</strong> — the cue's start time in the timeline, displayed in timecode format.</li>
+<li><strong>Duration</strong> — the cue's duration. Hidden by default.</li>
+<li><strong>Countdown</strong> — for marker cues, shows a live countdown to the cue's position relative to the current playback time.</li>
+<li><strong>Cue Set</strong> — shows the cue set (group) name and current variant, if the cue belongs to a cue set. Hidden by default.</li>
 
-</ul></div><div class="section-nav">
+</ul>
+<h3>Choosing Visible Columns</h3>
+
+<p>Click the <strong>column chooser</strong> button in the top-right corner of the window to open a menu listing all available columns. Toggle columns on or off by clicking their names. The column chooser also includes a <strong>Reset Columns</strong> option to restore the default column visibility and ordering.</p>
+
+<p>Columns can be reordered by dragging their headers in the table. Column widths are adjustable by dragging the borders between column headers.</p>
+
+<h3>Sorting</h3>
+
+<p>Click any sortable column header to cycle through three states:</p>
+
+<ol>
+<li><strong>Ascending</strong> — rows sorted A→Z or earliest→latest. The table switches to a flat view (no tree grouping).</li>
+<li><strong>Descending</strong> — rows sorted Z→A or latest→earliest.</li>
+<li><strong>No sort</strong> — returns to the default ordering (by timeline, then start time).</li>
+
+</ol>
+You can sort by multiple columns simultaneously. The first column you click is the primary sort key; additional columns serve as tiebreakers. The sort indicator on each column header shows the current direction.
+
+<h3>Filtering</h3>
+
+<p>The Cue List includes a powerful filter panel for narrowing down the displayed cues. Click the <strong>filter icon</strong> in the toolbar to expand the filter panel, or press <code>Ctrl+F</code>.</p>
+
+<p>The filter panel offers several filter dimensions that work together — only cues matching all active filters are shown:</p>
+
+<h4>Text Search</h4>
+
+<p>The <strong>Cue Name</strong> field filters by name. Type a search term and the list updates in real time (with a short debounce for performance). Clear the field to remove the text filter.</p>
+
+<h4>Include by Cue Kind</h4>
+
+<p>Toggle which cue kinds are included in the list:</p>
+
+<ul>
+<li><strong>Control</strong> — playback control cues (go, pause, stop, etc.)</li>
+<li><strong>Output</strong> — output-level cues</li>
+<li><strong>Variable</strong> — variable/input cues</li>
+<li><strong>Marker</strong> — comment/marker cues used for notes and countdown triggers</li>
+
+</ul>
+Media cues are controlled separately through the media source filter below.
+
+<h4>Media Source Filter</h4>
+
+<p>The <strong>Media</strong> multi-select dropdown controls which types of media cues are shown:</p>
+
+<ul>
+<li><strong>Assets</strong> — cues referencing media assets (images, video, audio)</li>
+<li><strong>Virtual Displays</strong> — cues sourcing from virtual displays</li>
+<li><strong>Compositions</strong> — cues referencing compositions</li>
+<li><strong>Captures</strong> — cues sourcing from NDI/capture inputs</li>
+
+</ul>
+<h4>Cue Sets and Tiers</h4>
+
+<p>Additional multi-select dropdowns let you filter by:</p>
+
+<ul>
+<li><strong>Cue Sets</strong> — show only cues belonging to specific cue set groups</li>
+<li><strong>Tier</strong> — show only cues assigned to specific stage tiers (this filter appears only when stage tiers are defined)</li>
+
+</ul>
+<h4>Follow Selected</h4>
+
+<p>The <strong>Follow Selected</strong> toggles synchronize the Cue List with selections made in other windows:</p>
+
+<ul>
+<li><strong>Assets</strong> — when enabled, the list shows only cues that use the currently selected asset(s) in the Assets window</li>
+<li><strong>Timelines</strong> — limits the list to cues in the currently selected timeline(s)</li>
+<li><strong>Captures</strong> — limits to cues using the selected capture source(s)</li>
+<li><strong>Virtual Displays</strong> — limits to cues using the selected virtual display(s)</li>
+<li><strong>Active Timeline</strong> — limits to cues in the currently active (focused) timeline</li>
+
+</ul>
+These follow filters are additive — enabling multiple follow options shows cues matching any of them.
+
+<h4>Selected Cues Only</h4>
+
+<p>The <strong>Selected Cues Only</strong> toggle restricts the list to display only cues that are currently selected. This is useful when you have a multi-selection and want to inspect or operate on just those cues.</p>
+
+<h3>Filter Presets</h3>
+
+<p>You can save filter configurations as named presets for quick recall:</p>
+
+<ul>
+<li><strong>Save</strong> — click the save/plus button to create a new preset with the current filter settings. You'll be prompted to enter a name.</li>
+<li><strong>Load</strong> — select a preset from the <strong>Preset</strong> dropdown to apply its saved filter configuration.</li>
+<li><strong>Update</strong> — if you've modified a loaded preset, click the save button to update it with the current settings.</li>
+<li><strong>Delete</strong> — click the delete button to remove the currently selected preset.</li>
+<li><strong>Restore</strong> — if you've changed the filter after loading a preset, click the restore button to revert to the preset's saved settings.</li>
+
+</ul>
+The toolbar displays the active preset name when one is loaded. If the filter has been modified from the preset, the indicator shows "No Preset" to reflect the unsaved state.
+
+<h3>Selecting Cues</h3>
+
+<p>Cue selection in the Cue List is synchronized with the rest of the application through a shared global cue selection:</p>
+
+<ul>
+<li><strong>Click</strong> a row to select a single cue</li>
+<li><strong>Shift+Click</strong> to extend the selection to a range</li>
+<li><strong>Ctrl+Click</strong> to toggle individual cues in and out of the selection</li>
+<li><strong>Ctrl+A</strong> selects all visible cues in the list</li>
+
+</ul>
+Selecting a cue in the Cue List highlights it in the Timeline window and loads its properties in the Properties panel. Conversely, selecting a cue in the Timeline updates the Cue List selection.
+
+<p><strong>Double-clicking</strong> a cue row activates the corresponding Timeline window and scrolls to that cue's position, making it easy to jump from the list view to the graphical timeline context. Hold <code>Alt</code> while double-clicking to also jump the play cursor to the cue's start time.</p>
+
+<h3>Locking and Unlocking Cues</h3>
+
+<p>Each row in the Cue List displays a lock icon to the left of the timeline name:</p>
+
+<ul>
+<li><strong>Unlocked</strong> (open lock icon) — click to lock the cue, preventing accidental edits</li>
+<li><strong>Locked</strong> (closed lock icon) — click to unlock the cue and allow editing</li>
+<li><strong>Locked upstream</strong> (dimmed lock icon) — the cue is locked because its parent timeline is locked. This cannot be toggled from the cue level; unlock the timeline instead.</li>
+
+</ul>
+When multiple cues are selected, clicking the lock/unlock icon on any selected cue applies the action to all selected cues simultaneously.
+
+<h3>Blind Edit Indicator</h3>
+
+<p>Cues belonging to a Blind Edit timeline are visually distinguished with a special highlight style and an eye-off icon in the Timeline column. Blind Edit mode allows you to make changes to a timeline that is currently playing without those changes taking effect until you apply them. The Cue List makes it easy to identify which cues are in this state.</p>
+
+<h3>Context Menu</h3>
+
+<p>Right-click a cue (or the table background) to access context menu actions:</p>
+
+<ul>
+<li><strong>Cut / Copy / Paste / Delete</strong> — standard clipboard operations for cues</li>
+<li><strong>Open Composition</strong> — for composition cues, opens the composition's internal timeline for editing in a new window</li>
+<li><strong>Lock / Unlock</strong> — toggle the lock state of selected cues</li>
+
+</ul>
+<h3>Drag and Drop</h3>
+
+<p>The Cue List supports drag-and-drop interactions:</p>
+
+<ul>
+<li><strong>Drag assets</strong> from the Assets window onto a cue row to replace that cue's media source</li>
+<li><strong>Drag assets</strong> onto the table background to apply the media to all selected cues</li>
+<li><strong>Drag devices</strong> (virtual displays, captures) onto cues to assign them as media sources</li>
+
+</ul>
+When dropping media onto a selection that includes cues both inside and outside the visible list, a dialog asks whether you want to update only the cues in the list, only the target cue, or all selected cues.
+
+<div class='info-box'><p>Use the Cue List's filter presets to set up common views for different stages of production — for example, a "Media Only" preset for content review, a "Markers" preset for show calling, and an "All Cues" preset for full auditing.
+</p></div></div><div class="section-nav">
                 <a href="the-timeline-window.html" class="nav-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"

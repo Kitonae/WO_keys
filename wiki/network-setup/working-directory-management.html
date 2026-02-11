@@ -845,19 +845,64 @@
                 <div class="section-content" style="display: block;">
                     <div class="section-content-body"><h2>Working Directory Management</h2>
 
-<p><!-- STUB: This article should cover the per-node working directory configuration, which controls where WATCHOUT stores essential data including cached assets. --></p>
+<p>Every WATCHOUT node has a <strong>working directory</strong> — the location on disk where the node stores essential runtime data, including cached media assets, show files, and internal state. By default, WATCHOUT creates this directory automatically in a system-managed location relative to the installation path (a <code>.wo</code> subfolder).</p>
 
-<h3>Content to include</h3>
+<p>You can change the working directory on any node to redirect data storage to a different drive or partition — for example, a faster SSD or a larger data volume.</p>
+
+<h3>What the Working Directory Contains</h3>
+
+<p>The working directory stores:</p>
 
 <ul>
-<li><strong>What the working directory is</strong> — explain that each WATCHOUT node has a working directory where it stores cached assets, show data, and other runtime files. By default this is a system-managed location.</li>
-<li><strong>Changing the working directory</strong> — how to change the path from node properties: the dialog, path entry, validation requirements (must be an existing directory on the target node), and the warnings about asset availability.</li>
-<li><strong>Resetting to default</strong> — how to reset the working directory to the system default location.</li>
-<li><strong>Impact on assets</strong> — when the working directory changes, all previously cached assets become unavailable and must be re-transferred.</li>
-<li><strong>Use cases</strong> — moving data to a faster/larger drive, separating show data across storage volumes, and standardizing paths across fleet nodes.</li>
-<li><strong>Warnings</strong> — the temporary loss of asset availability and error messages that occur during the transition.</li>
+<li><strong>Cached assets</strong> — local copies of media files downloaded from the Asset Manager for playback.</li>
+<li><strong>Show data</strong> — show files that have been loaded or uploaded to the node.</li>
+<li><strong>Runtime files</strong> — internal state and temporary data used by WATCHOUT services.</li>
 
-</ul></div><div class="section-nav">
+</ul>
+All of this data is tied to the working directory's location. If the directory changes, the node loses access to previously stored data at the old path.
+
+<h3>Changing the Working Directory</h3>
+
+<p>To change a node's working directory:</p>
+
+<ol>
+<li>Open the <strong>Nodes</strong> window and select the target node.</li>
+<li>In <strong>Node Properties</strong>, locate the <strong>Working Directory</strong> section.</li>
+<li>Click the change button to open the <strong>Change Working Directory</strong> dialog.</li>
+<li>Enter the new path or browse to select it.</li>
+<li>Confirm the change.</li>
+
+</ol>
+The dialog displays the following important warnings:
+
+<ul>
+<li>The specified path must be an <strong>existing directory</strong> on the selected node. WATCHOUT validates that the path exists before accepting it.</li>
+<li><strong>All assets used in the show will no longer be available.</strong> The cached asset copies at the old location are not moved — they remain on disk but are no longer referenced.</li>
+<li><strong>Some error messages will appear</strong> temporarily as the connection to the old asset manager storage is lost and re-established at the new location.</li>
+
+</ul>
+<div class='warning-box'><p>Changing the working directory means all previously cached assets must be <strong>re-transferred</strong> from the Asset Manager. This can take significant time depending on the size of your asset library and network speed. Plan this operation for a maintenance window, not during a live show.
+</p></div>
+
+<h3>Resetting to Default</h3>
+
+<p>To reset a node's working directory to the default system-managed location, click the <strong>Reset to Default</strong> button in the Working Directory section of Node Properties. The default location is a <code>.wo</code> subfolder relative to the WATCHOUT installation path.</p>
+
+<p>The same warnings about asset availability apply when resetting to default — assets cached at the custom location will need to be re-transferred.</p>
+
+<h3>Use Cases</h3>
+
+<ul>
+<li><strong>Moving to a faster or larger drive</strong> — if the default system drive has limited space or slower I/O, point the working directory to a dedicated high-performance SSD or a larger data volume.</li>
+<li><strong>Separating show data across storage volumes</strong> — keep the operating system and WATCHOUT installation on one drive, and all show/asset data on a separate data drive for easier backup and management.</li>
+<li><strong>Standardizing paths across a fleet</strong> — in multi-node installations, set the same working directory path (e.g., <code>D:\watchout-data</code>) on all Runner machines for consistency.</li>
+
+</ul>
+<h3>Troubleshooting</h3>
+
+<p>If the working directory path becomes invalid (e.g., the target drive is removed), WATCHOUT will attempt to fall back to the default location. If neither the configured path nor the default path is available, the Process Manager will log an error and may be unable to start services.</p>
+
+<p>To recover, either restore the target drive or reset the working directory by editing the WATCHOUT Manager settings file directly on the affected node.</p></div><div class="section-nav">
                 <a href="remote-file-access.html" class="nav-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"

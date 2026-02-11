@@ -845,22 +845,75 @@
                 <div class="section-content" style="display: block;">
                     <div class="section-content-body"><h2>Stacking Order</h2>
 
-<p><!-- STUB: This article should explain how WATCHOUT determines the visual stacking (z-order) of cues and timelines when multiple elements overlap on displays. --></p>
+<p>When multiple cues overlap on the same display area, WATCHOUT needs to determine which content appears in front of (on top of) which other content. This is controlled by <strong>stacking order</strong> — a system that operates at both the cue level and the timeline level to give you precise control over visual layering.</p>
 
-<h3>Content to include</h3>
+<h3>Per-Cue Stacking Mode</h3>
+
+<p>Every media cue has a <strong>Stacking</strong> property in the Cue Properties panel (under the Presentation page) that determines how it composites relative to other cues on the same timeline. There are two modes:</p>
+
+<h4>By Layer</h4>
+
+<p>The default stacking mode. Cues are composited based on their <strong>layer order</strong> within the timeline. Cues on higher-numbered layers (further down in the Timeline window) render behind cues on lower-numbered layers (higher in the Timeline window). The Z position of the cue has no effect on stacking — only the layer arrangement matters.</p>
+
+<p>This is the most predictable mode and is recommended for most 2D content workflows, where you want explicit control over what appears in front of what.</p>
+
+<h4>By Z</h4>
+
+<p>Cues are composited based on their <strong>Z position</strong> value (depth in 3D space). Cues with smaller Z values (closer to the viewer) render in front of cues with larger Z values (further from the viewer). The layer order is ignored for stacking purposes.</p>
+
+<p>This mode is primarily useful for 3D scenes where you want the natural depth ordering of objects to determine visibility, such as projection mapping onto 3D models or scenes with multiple depth planes.</p>
+
+<div class='info-box'><p>You can mix stacking modes within the same timeline. Some cues can use By Layer while others use By Z. Cues using By Z participate in depth testing against each other, while By Layer cues are composited strictly by their layer position.
+</p></div>
+
+<h3>Per-Timeline Stacking Order</h3>
+
+<p>Timelines also have a <strong>Stacking</strong> property (found in the Timeline Properties panel under General) that controls how the timeline's content composites relative to other timelines. There are two options:</p>
+
+<h4>Timeline Order</h4>
+
+<p>The default setting. Timelines render in the order they appear in the <strong>Timelines panel</strong> — timelines listed lower in the panel render on top of timelines listed higher. You can reorder timelines by dragging them in the panel to change their stacking priority.</p>
+
+<p>This means the visual front-to-back order of timelines matches their top-to-bottom order in the panel, with the <strong>bottom-most timeline rendering on top</strong>.</p>
+
+<h4>Always on Top</h4>
+
+<p>A timeline set to <strong>Always on Top</strong> renders above all other timelines that use the default Timeline Order, regardless of its position in the Timelines panel. If multiple timelines are set to Always on Top, they composite among themselves in their panel order.</p>
+
+<p>This is useful for overlay timelines (e.g. a logo or emergency messaging layer) that must always appear in front of all other content.</p>
+
+<h3>Layer Order Within Timelines</h3>
+
+<p>Within a single timeline, the vertical arrangement of layers determines the default rendering priority for cues using the By Layer stacking mode. Layers are numbered starting from the top of the Timeline window:</p>
 
 <ul>
-<li><strong>Per-cue stacking</strong> — explain the two stacking modes available on media cues:</li>
-<li><strong>By Z</strong> — cues stack based on their Z position value (depth in 3D space).</li>
-<li><strong>By Layer</strong> — cues stack based on their layer order within the timeline, regardless of Z position.</li>
-<li><strong>Per-timeline stacking order</strong> — the timeline-level stacking property:</li>
-<li><strong>Timeline Order</strong> — timelines render in the order they appear in the Timelines panel.</li>
-<li><strong>Always on Top</strong> — a timeline with this setting renders above all other timelines regardless of its position in the list.</li>
-<li><strong>Layer order within timelines</strong> — how the vertical position of layers in the Timeline window determines rendering priority (top layers render on top of bottom layers).</li>
-<li><strong>Cross-timeline stacking</strong> — how content from different timelines composites together, especially when multiple timelines contribute content to the same display region.</li>
-<li><strong>Practical implications</strong> — how stacking order affects blend modes, transparency, and visual layering in complex multi-timeline shows.</li>
+<li><strong>Layer 1</strong> (topmost) renders <strong>in front of</strong> all other layers</li>
+<li><strong>Layer 2</strong> renders behind Layer 1 but in front of Layer 3</li>
+<li>And so on, with higher-numbered layers rendering further behind</li>
 
-</ul></div><div class="section-nav">
+</ul>
+This ordering is consistent with common compositing conventions — the topmost layer in the timeline view is the frontmost visual layer.
+
+<h3>Cross-Timeline Compositing</h3>
+
+<p>When multiple timelines contribute content to the same display area, the compositing order is:</p>
+
+<ol>
+<li><strong>Always on Top timelines</strong> render last (in front), in their panel order</li>
+<li><strong>Regular timelines</strong> render in their panel order (bottom of panel = front)</li>
+
+</ol>
+Within each timeline, cues composite according to their per-cue stacking mode (By Layer or By Z). The result of each timeline's internal compositing is then layered according to the timeline stacking order.
+
+<h3>Practical Implications</h3>
+
+<p><strong>Blend modes and transparency.</strong> Stacking order directly affects how blend modes (Add, Multiply, Screen, etc.) interact between overlapping cues. A cue using the Add blend mode on a higher layer adds its pixel values to whatever is rendered on lower layers. Changing the stacking order changes which content is "below" the blended cue.</p>
+
+<p><strong>Opacity and fade effects.</strong> When a cue fades to transparent, the content behind it (as determined by stacking order) becomes visible. Incorrect stacking can result in unexpected content showing through during fades.</p>
+
+<p><strong>Performance considerations.</strong> Stacking order affects the rendering pipeline. Cues using By Z stacking require depth buffer operations, which can be slightly more expensive than By Layer compositing. For purely 2D shows, By Layer is the more efficient choice.</p>
+
+<p><strong>Multi-timeline shows.</strong> In complex productions with many overlapping timelines, use the Always on Top setting sparingly for true overlay layers (emergency messages, persistent logos) and rely on panel ordering for the main content timelines.</p></div><div class="section-nav">
                 <a href="media-snapshots.html" class="nav-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"

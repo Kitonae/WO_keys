@@ -57,6 +57,7 @@ function markdownToHtml(markdown) {
     html = html.replace(/^:::\s*info\s*\n([\s\S]*?)^:::/gm, "<div class='info-box'><p>$1</p></div>");
     html = html.replace(/^:::\s*warning\s*\n([\s\S]*?)^:::/gm, "<div class='warning-box'><p>$1</p></div>");
     html = html.replace(/^:::\s*tip\s*\n([\s\S]*?)^:::/gm, "<div class='info-box'><p>$1</p></div>");
+    html = html.replace(/^:::\s*note\s*\n([\s\S]*?)^:::/gm, "<div class='note-box'><p>$1</p></div>");
 
     // Bold and italic
     // Use slightly stricter regex to avoid matching across lines or mismatched tags

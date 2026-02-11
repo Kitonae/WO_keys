@@ -845,67 +845,85 @@
                 <div class="section-content" style="display: block;">
                     <div class="section-content-body"><h2>Asset Properties</h2>
 
-<p>Each asset has properties that control how it behaves in your show. Access properties by selecting an asset and viewing the Properties panel, or double-click to open the Asset Properties dialog.</p>
+<p>Select one or more assets in the Assets window to view their properties in the Properties panel. Double-click an asset or press <strong>Enter</strong> to focus the Properties panel directly.</p>
 
-<h3>General Properties</h3>
+<p>The Properties panel adapts to the asset type, showing only the fields relevant to the selected asset.</p>
 
-<table>
-<tr><th>Property</th><th>Description</th></tr>
-<tr><td>Name</td><td>Display name in the Assets window</td></tr>
-<tr><td>Source Path</td><td>Location of the original file</td></tr>
-<tr><td>Duration</td><td>Length for video/audio assets</td></tr>
-<tr><td>Dimensions</td><td>Width × Height in pixels</td></tr>
-<tr><td>Frame Rate</td><td>Playback speed for video/sequences</td></tr>
-</table>
+<h3>General Information</h3>
 
-<h3>Video Properties</h3>
-
-<table>
-<tr><th>Property</th><th>Description</th></tr>
-<tr><td>Codec</td><td>Video compression format</td></tr>
-<tr><td>Bit Depth</td><td>Color depth (8-bit, 10-bit, etc.)</td></tr>
-<tr><td>Alpha Channel</td><td>Transparency support</td></tr>
-<tr><td>In Point</td><td>Start trim point</td></tr>
-<tr><td>Out Point</td><td>End trim point</td></tr>
-<tr><td>Loop Mode</td><td>None, Loop, or Ping-Pong</td></tr>
-</table>
-
-<h3>Audio Properties</h3>
-
-<table>
-<tr><th>Property</th><th>Description</th></tr>
-<tr><td>Sample Rate</td><td>44.1kHz, 48kHz, 96kHz, etc.</td></tr>
-<tr><td>Bit Depth</td><td>16-bit, 24-bit, 32-bit float</td></tr>
-<tr><td>Channels</td><td>Mono, Stereo, 5.1, 7.1, etc.</td></tr>
-<tr><td>Volume</td><td>Default playback level</td></tr>
-</table>
-
-<h3>Optimization Status</h3>
+<p>All assets display the following read-only fields in the Info section:</p>
 
 <ul>
-<li><strong>Pending</strong> (gray) – Not yet optimized</li>
-
-<p><li><strong>Optimizing</strong> (yellow) – Currently being processed</li></p>
-
-<p><li><strong>Ready</strong> (green) – Optimized and ready for playback</li></p>
-
-<p><li><strong>Error</strong> (red) – Optimization failed</li></p>
-
-<p><li><strong>Modified</strong> (orange) – Source file has changed, needs re-optimization</li></p>
+<li><strong>Name</strong> – the display name. Click the name field to rename the asset (editable unless the asset is in an error state).</li>
+<li><strong>Type</strong> – the asset kind (Video, Image, Audio, SVG, Composition, etc.).</li>
+<li><strong>UUID</strong> – the unique identifier assigned to the asset.</li>
+<li><strong>Original Path</strong> – the original file location from which the asset was imported.</li>
 
 </ul>
-<h3>Actions</h3>
+<h3>Visual Asset Properties</h3>
+
+<p>For image and video assets, the following additional fields appear:</p>
 
 <ul>
-<li><strong>Re-optimize</strong> – Regenerate optimized version</li>
+<li><strong>Codec</strong> – the optimized codec (if different from the original, both are shown, e.g. "H.264 → HAP").</li>
+<li><strong>Color Space</strong> – the color standard and transfer function. If the input and output differ, both are displayed with an arrow (e.g. "sRGB → Rec. 709"). Recognized standards include Rec. 709, Rec. 2020, Rec. 2100 PQ, Rec. 2100 HLG, and sRGB.</li>
+<li><strong>Dimensions</strong> – width × height in pixels for 2D assets, or X × Y × Z bounding box for 3D models.</li>
+<li><strong>Bitrate</strong> – the video bitrate (video assets only).</li>
+<li><strong>Compression Ratio</strong> – the ratio between uncompressed and compressed file size (video and image assets).</li>
 
-<p><li><strong>Reveal in Explorer</strong> – Open source file location</li></p>
+</ul>
+<h3>Video-Specific Properties</h3>
 
-<p><li><strong>Find Cues</strong> – Locate all timeline cues using this asset</li></p>
+<ul>
+<li><strong>Frame Rate</strong> – displayed in frames per second. Fractional rates (e.g. 29.97) are shown with two decimal places.</li>
+<li><strong>Duration</strong> – total playback length, formatted as HH:MM:SS.ms.</li>
+<li><strong>Progress</strong> – optimization or upload progress percentage (visible only while the asset is being processed).</li>
 
-<p><li><strong>Replace Asset</strong> – Swap with a different file</li></p>
+</ul>
+<h3>Audio-Specific Properties</h3>
 
-</ul></div><div class="section-nav">
+<ul>
+<li><strong>Channels</strong> – the number of audio channels (1 = mono, 2 = stereo, etc.).</li>
+<li><strong>Sample Rate</strong> – displayed in kHz (e.g. 48 kHz).</li>
+<li><strong>Duration</strong> – total playback length.</li>
+
+</ul>
+<h3>Display Data Properties</h3>
+
+<p>For MPCDI display data assets:</p>
+
+<ul>
+<li><strong>Version</strong> – the MPCDI file version.</li>
+<li><strong>Canvases Size</strong> – the total canvas dimensions.</li>
+
+</ul>
+<h3>Dynamic Asset Properties</h3>
+
+<p>When a dynamic (auto-updating) asset is selected, an additional <strong>Active Version</strong> section appears showing:</p>
+
+<ul>
+<li>The currently active version and its details.</li>
+<li>A version count indicator (e.g. "2 versions").</li>
+<li>Controls for managing and switching between versions.</li>
+
+</ul>
+See [Dynamic Assets](../06-dynamic-assets) for details on version management.
+
+<h3>SVG Shape Properties</h3>
+
+<p>SVG shape assets display a dedicated shape editor instead of the standard property fields. This includes a live preview, geometry controls, fill and stroke colors, and (for text shapes) font and text properties.</p>
+
+<p>See [SVG Shapes](../05-svg-shapes) for full documentation.</p>
+
+<h3>Error Information</h3>
+
+<p>If an asset failed to optimize, the Properties panel displays:</p>
+
+<ul>
+<li><strong>Error</strong> – the error message explaining why optimization failed.</li>
+
+</ul>
+Assets in an error state show their name in red in the Assets window and cannot be renamed or used until the issue is resolved.</div><div class="section-nav">
                 <a href="asset-types.html" class="nav-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"

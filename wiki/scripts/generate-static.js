@@ -478,3 +478,158 @@ chapters.forEach(chapter => {
 });
 
 console.log("Static generation complete.");
+
+// --- Generate Stats Page ---
+function generateStatsPage() {
+    console.log("Generating stats.html...");
+
+    // Calculate Stats
+    let totalChapters = 0;
+    let totalSections = 0;
+    let totalWords = 0;
+    const emptySections = [];
+    const chapterStats = [];
+
+    // Iterate through chapters
+    chapters.forEach(chapter => {
+        if (chapter.disabled) return;
+
+        totalChapters++;
+        let chapterSections = 0;
+        let chapterWords = 0;
+
+        const chapterContentData = wikiContent[chapter.title];
+
+        // Check overview (if it counts as a section? usually yes)
+        if (chapterContentData && chapterContentData.overview) {
+            const words = countWords(chapterContentData.overview);
+            totalWords += words;
+            chapterWords += words;
+        }
+
+        chapter.subsections.forEach(sub => {
+            totalSections++;
+            chapterSections++;
+
+            let sectionWords = 0;
+            let contentFound = false;
+
+            if (chapterContentData && chapterContentData.sections) {
+                // Try fuzzy match again
+                let sectionHtml = chapterContentData.sections[sub.title];
+
+                // Reuse fuzzy match logic
+                if (!sectionHtml) {
+                    const sectionKeys = Object.keys(chapterContentData.sections);
+                    for (const key of sectionKeys) {
+                        if (key.toUpperCase() === sub.title.toUpperCase() ||
+                            key.toUpperCase().includes(sub.title.toUpperCase()) ||
+                            sub.title.toUpperCase().includes(key.toUpperCase())) {
+                            sectionHtml = chapterContentData.sections[key];
+                            break;
+                        }
+                    }
+                }
+
+                if (sectionHtml) {
+                    contentFound = true;
+                    sectionWords = countWords(sectionHtml);
+                }
+            }
+
+            if (!contentFound || sectionWords < 50) { // arbitrary threshold for "empty"
+                emptySections.push({
+                    chapter: chapter.title,
+                    title: sub.title,
+                    words: sectionWords
+                });
+            }
+
+            totalWords += sectionWords;
+            chapterWords += sectionWords;
+        });
+
+        chapterStats.push({
+            title: chapter.title,
+            sections: chapterSections,
+            words: chapterWords
+        });
+    });
+
+    // Build HTML Content
+    const statsBody = `
+        <h1>Wiki Statistics</h1>
+        
+        <div class="stats-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 40px;">
+            <div class="stat-card" style="background: var(--bg-secondary); padding: 20px; border-radius: var(--border-radius); border: 1px solid var(--border-subtle); text-align: center;">
+                <div style="font-size: 2.5rem; font-weight: 700; color: var(--accent-primary);">${totalChapters}</div>
+                <div style="color: var(--text-secondary); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px;">Chapters</div>
+            </div>
+            <div class="stat-card" style="background: var(--bg-secondary); padding: 20px; border-radius: var(--border-radius); border: 1px solid var(--border-subtle); text-align: center;">
+                <div style="font-size: 2.5rem; font-weight: 700; color: var(--accent-secondary);">${totalSections}</div>
+                <div style="color: var(--text-secondary); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px;">Articles</div>
+            </div>
+            <div class="stat-card" style="background: var(--bg-secondary); padding: 20px; border-radius: var(--border-radius); border: 1px solid var(--border-subtle); text-align: center;">
+                <div style="font-size: 2.5rem; font-weight: 700; color: var(--accent-tertiary);">${totalWords.toLocaleString()}</div>
+                <div style="color: var(--text-secondary); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px;">Total Words</div>
+            </div>
+        </div>
+
+        <h2>Chapter Breakdown</h2>
+        <div style="overflow-x: auto; margin-bottom: 40px;">
+            <table style="width: 100%; border-collapse: collapse;">
+                <thead>
+                    <tr style="background: var(--bg-secondary);">
+                        <th style="padding: 12px; text-align: left; border-bottom: 1px solid var(--border-subtle);">Chapter</th>
+                        <th style="padding: 12px; text-align: right; border-bottom: 1px solid var(--border-subtle);">Articles</th>
+                        <th style="padding: 12px; text-align: right; border-bottom: 1px solid var(--border-subtle);">Words</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${chapterStats.map(stat => `
+                        <tr>
+                            <td style="padding: 12px; border-bottom: 1px solid var(--border-subtle); color: var(--text-primary);">${stat.title}</td>
+                            <td style="padding: 12px; text-align: right; border-bottom: 1px solid var(--border-subtle); color: var(--text-secondary);">${stat.sections}</td>
+                            <td style="padding: 12px; text-align: right; border-bottom: 1px solid var(--border-subtle); color: var(--text-secondary);">${stat.words.toLocaleString()}</td>
+                        </tr>
+                    `).join('')}
+                </tbody>
+            </table>
+        </div>
+
+        <h2>Content Needs Attention (${emptySections.length})</h2>
+        <p style="color: var(--text-muted); margin-bottom: 20px;">Sections with less than 50 words.</p>
+        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 10px;">
+            ${emptySections.map(item => `
+                <div style="background: rgba(255, 100, 100, 0.1); border: 1px solid rgba(255, 100, 100, 0.2); padding: 10px; border-radius: var(--border-radius);">
+                    <div style="font-weight: 600; color: var(--text-primary); font-size: 0.9rem;">${item.title}</div>
+                    <div style="font-size: 0.8rem; color: var(--text-muted);">${item.chapter} • ${item.words} words</div>
+                </div>
+            `).join('')}
+        </div>
+    `;
+
+    const breadcrumbs = `
+        <a href="index.html" class="breadcrumb-item">Home</a>
+        <span class="breadcrumb-separator">›</span>
+        <span class="breadcrumb-item current">Statistics</span>
+    `;
+
+    // Generate page with Sidebar (active chapter none)
+    // We can pick a random slug or empty string for sidebar generation
+    const sidebar = generateSidebar('', 0);
+    const html = generatePageHtml("Wiki Statistics", statsBody, sidebar, 0, breadcrumbs);
+
+    fs.writeFileSync(path.join(OUTPUT_DIR, 'stats.html'), html);
+    console.log("Generated: stats.html");
+}
+
+function countWords(html) {
+    if (!html) return 0;
+    // Strip HTML tags
+    const text = html.replace(/<[^>]*>/g, ' ');
+    // Split by whitespace and filter empty strings
+    return text.split(/\s+/).filter(w => w.length > 0).length;
+}
+
+generateStatsPage();

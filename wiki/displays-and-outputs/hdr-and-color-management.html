@@ -845,22 +845,119 @@
                 <div class="section-content" style="display: block;">
                     <div class="section-content-body"><h2>HDR and Color Management</h2>
 
-<p><!-- STUB: This article should cover WATCHOUT's color management pipeline, including HDR output support and color space handling across the rendering chain. --></p>
+<p>WATCHOUT includes a color-managed rendering pipeline that handles the full chain from media decode through compositing to display output. This pipeline supports both standard dynamic range (SDR) and high dynamic range (HDR) workflows, with configurable color spaces and transfer functions at the asset, cue, and display levels.</p>
 
-<h3>Content to include</h3>
+<p>Understanding how color spaces, transfer functions, and bit depth interact is important for achieving accurate, consistent color across multi-display setups — especially when mixing SDR and HDR content or driving displays with different capabilities.</p>
+
+<h3>Color Spaces</h3>
+
+<p>A color space defines the range of colors (the "gamut") that can be represented, specified by three color primaries and a white point. WATCHOUT supports the following color spaces for display output:</p>
 
 <ul>
-<li><strong>Color spaces</strong> — explain the supported color spaces: Rec. 709 and Rec. 2020, and when each applies.</li>
-<li><strong>Transfer functions</strong> — describe the available electro-optical transfer functions: sRGB, SDR, PQ (Perceptual Quantizer for HDR10), and HLG (Hybrid Log-Gamma). Explain which display types and workflows require each.</li>
-<li><strong>Display color depth</strong> — 8-bit vs. 10-bit output and how it relates to HDR capability.</li>
-<li><strong>SDR white point</strong> — the per-cue SDR White Point property (range 80–10000 nits) that controls how SDR content maps into an HDR output pipeline.</li>
-<li><strong>Per-display color settings</strong> — configuring color space and transfer function on individual display outputs.</li>
-<li><strong>NDI color space</strong> — the separate NDI color space setting available on NDI display outputs.</li>
-<li><strong>Asset color space</strong> — how asset metadata (detected or overridden) feeds into the rendering pipeline.</li>
-<li><strong>White point calibration</strong> — the display-level white point setting for per-projector color temperature correction.</li>
-<li><strong>Practical workflow</strong> — recommended approach for mixed SDR/HDR content on HDR-capable displays, and tips for consistent color across a multi-display setup.</li>
+<li><strong>sRGB</strong> — the standard color space for computer displays, using Rec. 709 primaries with the sRGB transfer function. This is appropriate for most conventional displays and projectors.</li>
+<li><strong>sRGB (gamma 2.2)</strong> — identical primaries to sRGB but using a simple 2.2 power-law gamma curve instead of the sRGB piecewise function. Some display hardware and workflows assume a pure gamma 2.2 characteristic. This is the default color space for new displays.</li>
+<li><strong>Rec. 601</strong> — the legacy standard-definition color space, sometimes relevant for SD broadcast or older equipment.</li>
+<li><strong>Rec. 709</strong> — the HD broadcast standard, sharing primaries with sRGB but using the SDR (BT.1886) transfer function. Use this for broadcast-oriented outputs and SDI feeds.</li>
+<li><strong>Rec. 2020</strong> — a wide-gamut color space that covers a significantly larger portion of visible colors than Rec. 709. Used for UHD/4K SDR content that requires extended color accuracy. Because no current display hardware can reproduce the full Rec. 2020 gamut, this space serves as a target for wide-gamut content that will be displayed on the best available hardware.</li>
+<li><strong>Rec. 2100 PQ</strong> — combines Rec. 2020 wide-gamut primaries with the Perceptual Quantizer (PQ) transfer function, as defined in the SMPTE ST 2084 standard. PQ maps absolute luminance levels up to 10,000 nits, making it the foundation of HDR10 delivery.</li>
+<li><strong>Rec. 2100 PQ (HDR10)</strong> — the same as Rec. 2100 PQ but with HDR10 static metadata signaling enabled. Use this when the display or downstream equipment expects HDR10 metadata (MaxCLL, MaxFALL) in the signal.</li>
+<li><strong>Rec. 2100 HLG</strong> — combines Rec. 2020 primaries with the Hybrid Log-Gamma (HLG) transfer function. HLG is designed to be backward-compatible with SDR displays — the lower portion of the curve resembles a standard gamma curve, while the upper portion extends into HDR. This is commonly used in live broadcast HDR workflows.</li>
 
-</ul></div><div class="section-nav">
+</ul>
+When rendering, WATCHOUT performs all pixel operations (blending, interpolation, compositing) in linear light. Source media is linearized on decode, processed internally, and then delinearized to the target transfer function on output. If the source and destination color primaries differ, a 3×3 matrix transform converts between them.
+
+<h3>Transfer Functions</h3>
+
+<p>Transfer functions define how linear light values are encoded into the non-linear signal that displays expect. Encoding fewer bits for bright values and more bits for dark values matches human visual perception, reducing visible banding:</p>
+
+<ul>
+<li><strong>sRGB</strong> — a piecewise curve with a linear segment near black and a power-law segment for the rest. Standard peak brightness is 80 nits. Used with sRGB and standard computer displays.</li>
+<li><strong>SDR (BT.1886)</strong> — the broadcast SDR transfer function with a standard peak brightness of 100 nits. Used with Rec. 709 and Rec. 601 outputs.</li>
+<li><strong>PQ (Perceptual Quantizer)</strong> — an absolute luminance curve covering 0–10,000 nits. PQ encodes luminance values that map directly to real-world brightness levels, enabling HDR content to specify exact nit values. Used with Rec. 2100 PQ and HDR10.</li>
+<li><strong>HLG (Hybrid Log-Gamma)</strong> — a relative luminance curve with a standard peak of 1,000 nits. The lower half uses a gamma-like curve (backward-compatible with SDR displays), and the upper half uses a logarithmic extension for HDR highlights. Used with Rec. 2100 HLG.</li>
+
+</ul>
+The choice of transfer function is determined by the color space you select on the display. For example, selecting Rec. 2100 PQ automatically uses the PQ transfer function.
+
+<h3>Display Color Depth</h3>
+
+<p>Color depth determines how many bits are used per color component in the output signal. Higher bit depth reduces banding artifacts, which is especially important for HDR content:</p>
+
+<ul>
+<li><strong>8 bpc (bits per component)</strong> — 256 levels per channel. Standard for SDR content on most displays. Adequate for sRGB and Rec. 709 workflows.</li>
+<li><strong>10 bpc</strong> — 1,024 levels per channel. Recommended for HDR output and wide-gamut content. PQ-encoded HDR10 requires at least 10-bit output to avoid visible banding in dark areas and gradients.</li>
+<li><strong>12 bpc</strong> — 4,096 levels per channel. Available for display hardware that supports it; useful for professional mastering and reference monitoring.</li>
+<li><strong>16 bpc</strong> — 65,536 levels per channel. The highest precision available, suitable for specialized workflows requiring extreme accuracy.</li>
+
+</ul>
+Color depth is configured per display in <strong>Device Properties → Output → Signal</strong> and is available for GPU output types. SDI outputs currently operate at 8 bpc.
+
+<h3>SDR White Point (Per-Cue)</h3>
+
+<p>When SDR content plays on an HDR display, the system needs to know how bright "white" in the SDR content should appear relative to the HDR luminance range. The <strong>SDR White Point</strong> property on media cues controls this mapping.</p>
+
+<p>The value is specified in nits (candelas per square meter) and ranges from 80 to 10,000. For example:</p>
+
+<ul>
+<li>A value of <strong>100 nits</strong> means SDR white maps to 100 nits on the HDR display — typical for content mastered to broadcast SDR standards.</li>
+<li>A value of <strong>200 nits</strong> boosts SDR content to appear brighter, which may be appropriate for content viewed in bright ambient light.</li>
+
+</ul>
+This setting only takes effect when the display is configured for an HDR color space. On SDR displays, it has no impact.
+
+<h3>Per-Display Color Settings</h3>
+
+<p>Each display in WATCHOUT has independent color configuration in the <strong>Output → Signal</strong> section of Device Properties:</p>
+
+<ul>
+<li><strong>Color Space</strong> — selects the target color space and transfer function for GPU outputs. The available options are the full list described above (sRGB, sRGB gamma 2.2, Rec. 709, Rec. 2020, Rec. 2100 PQ, Rec. 2100 PQ HDR10, Rec. 2100 HLG).</li>
+<li><strong>Color Depth</strong> — selects the output bit depth (8, 10, 12, or 16 bpc) for GPU outputs.</li>
+
+</ul>
+These settings tell the renderer what format to output. They should match the capabilities of the physical display hardware. Setting an HDR color space on a display that only supports SDR will result in incorrect rendering.
+
+<h3>NDI Color Space</h3>
+
+<p>Displays configured with NDI output have a separate <strong>NDI Color Space</strong> setting that controls the color encoding of the NDI stream. The available options are:</p>
+
+<ul>
+<li><strong>Auto</strong> — lets the system choose based on resolution and context.</li>
+<li><strong>Rec. 601</strong> — for SD-resolution NDI streams or legacy receivers.</li>
+<li><strong>Rec. 709</strong> — the standard for HD NDI streams.</li>
+<li><strong>Rec. 2020</strong> — for wide-gamut NDI delivery to compatible receivers.</li>
+
+</ul>
+The NDI color space is independent of the GPU color space setting, since NDI and GPU outputs may serve different destinations with different requirements. NDI outputs also support the <strong>Interlaced</strong> toggle for compatibility with interlaced NDI receivers.
+
+<h3>Asset Color Space</h3>
+
+<p>Media assets carry color metadata that tells the renderer how to interpret the source pixels. WATCHOUT's decode pipeline detects the color space from the media container or codec metadata when available. If the metadata is missing or incorrect, you can override the asset's color space in the asset properties.</p>
+
+<p>The renderer uses this information to linearize the source correctly and, if necessary, convert from the asset's color primaries to the display's target primaries during compositing. Accurate asset color metadata is essential for correct rendering — if a Rec. 2020 asset is incorrectly tagged as Rec. 709, the colors will be desaturated on output.</p>
+
+<h3>White Point Calibration</h3>
+
+<p>Every display has a <strong>White Point</strong> setting in Device Properties, consisting of separate Red, Green, and Blue sliders (each ranging from 0.0 to 1.0, defaulting to 1.0). This is a per-display color temperature correction that adjusts the white balance of the output.</p>
+
+<p>The primary use case is <strong>projector color matching</strong> in multi-projector setups. When adjacent projectors have slightly different color temperatures (one appears warmer, another cooler), adjusting the white point sliders brings them into visual alignment. For example, if a projector's output appears too blue, reduce the Blue slider slightly until the white tone matches neighboring units.</p>
+
+<p>White point correction is applied as a per-pixel RGB multiplier in the output shader, after all other compositing and color space conversion has been completed. It affects the entire output of the display uniformly.</p>
+
+<h3>Tone Mapping</h3>
+
+<p>When HDR content is rendered to an SDR display, the high dynamic range must be compressed to fit the SDR output range without losing important detail in highlights and shadows. WATCHOUT uses a <strong>Hable tone mapping operator</strong> for this conversion, which preserves natural-looking midtones while smoothly compressing highlights toward peak white.</p>
+
+<p>Tone mapping is applied automatically when the source content has a wider dynamic range than the target display. No manual configuration is required — the system handles the conversion based on the source and destination transfer functions.</p>
+
+<h3>Practical Workflow</h3>
+
+<p><strong>Pure SDR setup:</strong> For conventional SDR workflows, set displays to sRGB (gamma 2.2) or Rec. 709 with 8-bpc output. No additional color management configuration is needed beyond matching the display's native capability.</p>
+
+<p><strong>Pure HDR setup:</strong> Set displays to Rec. 2100 PQ (or HDR10) with 10-bpc output. Ensure the physical display hardware supports HDR10 signaling. All content should be mastered or tagged with the correct HDR color metadata.</p>
+
+<p><strong>Mixed SDR/HDR content on HDR displays:</strong> Set the display to an HDR color space and use the per-cue SDR White Point property to control how SDR assets map into the HDR luminance range. Start with 100–200 nits and adjust based on the ambient viewing environment.</p>
+
+<p><strong>Multi-display color consistency:</strong> Use the per-display white point sliders to visually match color temperature across all outputs. Work with a neutral test image (gray ramp or white field) and adjust under final show lighting conditions. Lock display settings once calibration is approved to prevent accidental changes.</p></div><div class="section-nav">
                 <a href="sdi-output.html" class="nav-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"

@@ -845,20 +845,116 @@
                 <div class="section-content" style="display: block;">
                     <div class="section-content-body"><h2>Tween Expressions</h2>
 
-<p><!-- STUB: This article should cover the expression system for tween properties, allowing tween values to be driven dynamically by variables and mathematical expressions rather than fixed keyframes. --></p>
+<p>Tween expressions allow any tween property — position, opacity, scale, color adjustments, and more — to be driven dynamically by a mathematical expression instead of relying solely on static keyframe values. Expressions are evaluated at runtime on every frame, making tween values responsive to show variables, external inputs, and mathematical functions.</p>
 
-<h3>Content to include</h3>
+<p>This is one of the most powerful features in WATCHOUT for creating interactive, data-driven, and externally controllable presentations.</p>
+
+<h3>How Expressions Work</h3>
+
+<p>Every tween in WATCHOUT has an <strong>expression field</strong> alongside its keyframe data. At runtime, the system first interpolates the keyframe curve at the current time to produce a base value called <code>tweenValue</code>. This value is then passed into the expression, which can transform, replace, or augment it.</p>
+
+<p>The expression language is a mathematical formula evaluator (powered by the [fasteval](https://crates.io/crates/fasteval) library) that supports standard arithmetic, mathematical functions, and variable references. The expression must resolve to a single numeric value, which becomes the final tween output for that frame.</p>
+
+<h3>Setting an Expression</h3>
+
+<p>To add an expression to a tween:</p>
+
+<ol>
+<li>Select a cue that has the desired tween applied.</li>
+<li>In the <strong>Properties</strong> panel, expand the tween's properties.</li>
+<li>Locate the <strong>Expression</strong> field.</li>
+
+</ol>
+The expression field varies depending on the tween type:
 
 <ul>
-<li><strong>What tween expressions are</strong> — explain that any tween property (position, opacity, scale, color, etc.) can be driven by an expression instead of (or in addition to) static keyframe values. The expression is evaluated at runtime, making the tween value responsive to variables, inputs, or mathematical functions.</li>
-<li><strong>Setting an expression</strong> — how to add an expression to a tween via the tween properties panel. The expression field for single-value tweens and the separate X/Y/Z expression fields for positional tweens.</li>
-<li><strong>Expression syntax</strong> — describe the expression language: variable references, arithmetic operators, mathematical functions, and how the expression resolves to a numeric value.</li>
-<li><strong>Interaction with keyframes</strong> — how expressions combine with or override keyframed values. Explain whether the expression adds to, multiplies, or replaces the keyframe value.</li>
-<li><strong>Variable references</strong> — using show variables in expressions to create externally controllable animations (e.g., an OSC fader driving opacity, or an ArtNet channel driving position).</li>
-<li><strong>Practical examples</strong> — position driven by a tracking system variable, opacity controlled by a MIDI fader, color cycling via a time-based expression.</li>
-<li><strong>Relationship to timeline expressions</strong> — clarify the difference between tween expressions (per-tween value control) and timeline trigger expressions (play/pause/stop triggers on timelines), covered in the Timeline Triggers and Expressions article.</li>
+<li><strong>Single-value tweens</strong> (Opacity, Blur, Crop, Color adjustments, Volume, etc.) have one <strong>Expression</strong> field.</li>
+<li><strong>Scale tweens</strong> have separate <strong>X Expression</strong> and <strong>Y Expression</strong> fields.</li>
+<li><strong>Position tweens</strong> have separate <strong>X Expression</strong>, <strong>Y Expression</strong>, and <strong>Z Expression</strong> fields.</li>
 
-</ul></div><div class="section-nav">
+</ul>
+Leave the expression field at its default value (<code>tweenValue</code>) to pass the keyframe-interpolated value through unmodified.
+
+<h3>The <code>tweenValue</code> Variable</h3>
+
+<p>The built-in variable <code>tweenValue</code> represents the keyframe-interpolated value at the current point in time. This is the default expression for all tweens — when the expression field contains <code>tweenValue</code> (or is empty), the tween behaves as if no expression is set, outputting the pure keyframe value.</p>
+
+<p>You can use <code>tweenValue</code> in more complex expressions to modify the keyframed animation:</p>
+
+<ul>
+<li><code>tweenValue * 2</code> — doubles the keyframed value</li>
+<li><code>tweenValue + 10</code> — offsets the keyframed value by 10</li>
+<li><code>tweenValue * myVariable / 100</code> — scales the keyframed value by an external variable</li>
+
+</ul>
+For position tweens, the same concept applies per axis: the X expression receives the X component of the interpolated position as <code>tweenValue</code>, the Y expression receives the Y component, and so on.
+
+<h3>Expression Syntax</h3>
+
+<p>Expressions support standard mathematical syntax:</p>
+
+<p><strong>Arithmetic operators:</strong> <code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>, <code>%</code> (modulo), <code>^</code> (power)</p>
+
+<p><strong>Comparison and logic:</strong> <code><</code>, <code>></code>, <code><=</code>, <code>>=</code>, <code>==</code>, <code>!=</code>, <code>and</code>, <code>or</code>, <code>not</code></p>
+
+<p><strong>Built-in math functions:</strong> <code>sin()</code>, <code>cos()</code>, <code>tan()</code>, <code>asin()</code>, <code>acos()</code>, <code>atan()</code>, <code>sqrt()</code>, <code>abs()</code>, <code>log()</code>, <code>log10()</code>, <code>ceil()</code>, <code>floor()</code>, <code>round()</code>, <code>min()</code>, <code>max()</code></p>
+
+<p><strong>Constants:</strong> <code>pi</code>, <code>e</code></p>
+
+<p><strong>Conditional expressions:</strong> <code>if(condition, then_value, else_value)</code></p>
+
+<div class='note-box'><p>Expression evaluation is case-insensitive. <code>TweenValue</code>, <code>tweenvalue</code>, and <code>TWEENVALUE</code> all refer to the same variable.
+</p></div>
+
+<h3>Variable References</h3>
+
+<p>Expressions can reference <strong>show variables</strong> (defined in the Variables panel) by name. This is what makes expressions truly powerful: you can bind any tween property to an external input.</p>
+
+<p>For example, if you have a show variable called <code>faderLevel</code> that is controlled by an OSC input, you could write:</p>
+
+<ul>
+<li><strong>Opacity expression:</strong> <code>faderLevel</code> — directly maps the fader to opacity</li>
+<li><strong>Position X expression:</strong> <code>tweenValue + trackerX</code> — offsets the keyframed position by a tracking variable</li>
+<li><strong>Scale X expression:</strong> <code>max(tweenValue, minScale)</code> — clamps the scale to never go below a variable-defined minimum</li>
+
+</ul>
+When a variable referenced in an expression changes (because an external system sent a new value via OSC, ArtNet, MIDI, etc.), the tween output updates immediately on the next frame. This enables real-time interactive control without modifying the show's timeline.
+
+<div class='warning-box'><p>All variables referenced in an expression must exist in the show's Variables panel. If an expression references an unknown variable, it will produce an error. WATCHOUT validates expressions when they are entered and reports any unknown references.
+</p></div>
+
+<h3>Interaction with Keyframes</h3>
+
+<p>Expressions and keyframes are not mutually exclusive — they work together:</p>
+
+<ul>
+<li>The keyframe curve is evaluated first to produce <code>tweenValue</code>.</li>
+<li>The expression is then evaluated with <code>tweenValue</code> available as a variable.</li>
+<li>The expression's result becomes the final output.</li>
+
+</ul>
+This means you can use keyframes to define the base animation and an expression to modulate it. For instance, keyframes might define a smooth opacity fade from 0 to 100, while the expression <code>tweenValue * masterDim / 100</code> allows an external dimmer to scale the entire animation.
+
+<p>If you want the expression to completely replace the keyframe value, simply write an expression that doesn't reference <code>tweenValue</code> (e.g., just <code>myVariable</code>). In this case, the keyframe curve is still computed but its value is ignored.</p>
+
+<h3>Practical Examples</h3>
+
+<p><strong>Externally controlled opacity:</strong> Set the Opacity tween expression to <code>oscFader1</code> where <code>oscFader1</code> is a show variable mapped to an OSC input. A lighting console or control surface can now directly control the cue's opacity in real time.</p>
+
+<p><strong>Position tracking:</strong> Set the Position X expression to <code>trackerX</code> and Y expression to <code>trackerY</code>, where these variables come from a tracking system (via OSC or similar protocol). The cue follows the tracked object in real time.</p>
+
+<p><strong>Scaled animation:</strong> Keyframe a position animation along a path, then set the expression to <code>tweenValue * intensity / 100</code> where <code>intensity</code> is a variable. The animation plays its keyframed path but the displacement is scaled by the external value.</p>
+
+<h3>Relationship to Timeline Expressions</h3>
+
+<p>Tween expressions and <strong>timeline trigger expressions</strong> are different features that serve different purposes:</p>
+
+<ul>
+<li><strong>Tween expressions</strong> (this article) control the <strong>value</strong> of a tween property. They are evaluated continuously on every frame and produce a numeric result that drives a visual property (position, opacity, color, etc.).</li>
+<li><strong>Timeline trigger expressions</strong> (covered in the Timeline Triggers and Expressions article) control the <strong>playback state</strong> of a timeline. They are evaluated as boolean conditions that trigger play, pause, or stop actions on timelines.</li>
+
+</ul>
+Both systems use the same expression language and can reference the same show variables, but they operate at different levels of the system.</div><div class="section-nav">
                 <a href="key-and-fill.html" class="nav-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"

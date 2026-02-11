@@ -95,7 +95,7 @@ const tocData = [
         "level": 2,
         "title": "The Cue List Window",
         "page": 4,
-        "description": "- Opening the Cue List — how to open the window from the Window menu and how it relates to the Timeline window.\n- Col..."
+        "description": "The Cue List window provides a flat, tabular view of all cues across every timeline in your show. While the Timeline ..."
     },
     {
         "level": 2,
@@ -161,13 +161,13 @@ const tocData = [
         "level": 2,
         "title": "Show Consolidation",
         "page": 5,
-        "description": "- What consolidation does — explain that consolidation copies all referenced assets into a self-contained show packag..."
+        "description": "In a typical WATCHOUT workflow, your show file references media assets stored on an Asset Manager. The show file itse..."
     },
     {
         "level": 2,
         "title": "Show Information",
         "page": 6,
-        "description": "- Accessing Show Information — how to open the dialog from the File menu.\n- General details — show name, creation dat..."
+        "description": "The Show Information dialog provides a statistical overview of the current show, giving you a quick summary of its co..."
     },
     {
         "level": 1,
@@ -221,31 +221,31 @@ const tocData = [
         "level": 2,
         "title": "Display Masks",
         "page": 8,
-        "description": "- What display masks are — masks define regions of a display where pixels are visible or hidden, using alpha-based ge..."
+        "description": "Display masks control which pixels on a display are visible and how their edges are shaped. Unlike warp geometry, whi..."
     },
     {
         "level": 2,
         "title": "SDI Output",
         "page": 9,
-        "description": "- SDI output type — explain SDI as a display output type alongside GPU and NDI, and when to choose SDI.\n- SDI link ty..."
+        "description": "SDI (Serial Digital Interface) is a professional video transport standard used widely in broadcast, live event, and A..."
     },
     {
         "level": 2,
         "title": "HDR and Color Management",
         "page": 10,
-        "description": "- Color spaces — explain the supported color spaces: Rec. 709 and Rec. 2020, and when each applies.\n- Transfer functi..."
+        "description": "WATCHOUT includes a color-managed rendering pipeline that handles the full chain from media decode through compositin..."
     },
     {
         "level": 2,
         "title": "Test Patterns",
         "page": 11,
-        "description": "- What test patterns are — built-in diagnostic patterns rendered directly by the Runner on a display, independent of ..."
+        "description": "Test patterns are built-in diagnostic output modes rendered directly by the Runner on a per-display basis. They are i..."
     },
     {
         "level": 2,
         "title": "Display Calibration",
         "page": 12,
-        "description": "- Display calibration mode — explain the per-display calibration mode setting and what it enables.\n- NDI calibration ..."
+        "description": "Calibration is the process of aligning WATCHOUT's rendered output to the physical reality of the display surface. Thi..."
     },
     {
         "level": 1,
@@ -263,67 +263,67 @@ const tocData = [
         "level": 2,
         "title": "Asset Types",
         "page": 2,
-        "description": "WATCHOUT 7 supports a wide variety of media types, each with specific capabilities and use cases."
+        "description": "WATCHOUT 7 supports a range of asset types, each serving a different role in a show. The Asset Manager classifies eve..."
     },
     {
         "level": 2,
         "title": "Asset Properties",
         "page": 3,
-        "description": "Each asset has properties that control how it behaves in your show. Access properties by selecting an asset and viewi..."
+        "description": "Select one or more assets in the Assets window to view their properties in the Properties panel. Double-click an asse..."
     },
     {
         "level": 2,
         "title": "Formats & Codecs",
         "page": 4,
-        "description": "Choosing the right format and codec is crucial for optimal playback performance."
+        "description": "Choosing the right source format and optimization codec is crucial for reliable, high-performance playback. This arti..."
     },
     {
         "level": 2,
         "title": "SVG Shapes",
         "page": 5,
-        "description": "- What SVG shapes are — explain that WATCHOUT can generate SVG-based assets internally for use as media cues, elimina..."
+        "description": "WATCHOUT 7 includes a built-in SVG shape editor that lets you create vector-based assets — rectangles, ellipses, and ..."
     },
     {
         "level": 2,
         "title": "Dynamic Assets",
         "page": 6,
-        "description": "- What dynamic assets are — explain the concept of a dynamic asset as a named placeholder that can point to different..."
+        "description": "A dynamic asset is a named container that holds one or more versions of the same content. Timeline cues reference the..."
     },
     {
         "level": 2,
         "title": "Image Sequences",
         "page": 7,
-        "description": "- What image sequences are — explain that a series of numbered image files (e.g., frame0001.png, frame0002.png, ...) ..."
+        "description": "An image sequence is a series of numbered image files — for example, render0001.png, render0002.png, render0003.png —..."
     },
     {
         "level": 2,
         "title": "Web User Interface",
         "page": 8,
-        "description": "WATCHOUT 7 includes a web-based interface for managing assets remotely. This allows team members to upload and organi..."
+        "description": "The Asset Manager includes a built-in web server that provides a browser-based interface for uploading and managing a..."
     },
     {
         "level": 2,
         "title": "Asset Watcher",
         "page": 9,
-        "description": "The Asset Watcher automatically monitors designated folders for new or changed files, streamlining the content workflow."
+        "description": "The Asset Watcher monitors designated folders on the Asset Manager node’s file system. When new or changed files appe..."
     },
     {
         "level": 2,
         "title": "Asset Transfer",
         "page": 10,
-        "description": "When going online, optimized assets must be transferred to display servers. WATCHOUT manages this automatically."
+        "description": "When a show goes online, the Asset Manager distributes optimized assets to every display server (Runner) in the syste..."
     },
     {
         "level": 2,
         "title": "Asset Manager Settings",
         "page": 11,
-        "description": "Configure the Asset Manager behavior through the Settings dialog."
+        "description": "The Asset Manager Settings dialog controls how assets are optimized, transferred, and managed. Open it by right-click..."
     },
     {
         "level": 2,
         "title": "Import, Export, and Mapping",
         "page": 12,
-        "description": "Beyond normal drag-and-drop ingest, the Assets window includes transfer workflows for moving asset sets between syste..."
+        "description": "The Assets window provides workflows for exporting assets to external storage, importing them onto another system, an..."
     },
     {
         "level": 1,
@@ -389,25 +389,25 @@ const tocData = [
         "level": 2,
         "title": "Compositions",
         "page": 10,
-        "description": "- What compositions are — explain that compositions are nested timelines created by grouping multiple cues together. ..."
+        "description": "Compositions are nested timeline units that allow you to group multiple cues into a single, self-contained entity. A ..."
     },
     {
         "level": 2,
         "title": "Cue Sets and Variants",
         "page": 11,
-        "description": "- What cue sets are — explain that a Cue Set is a named group that can contain multiple variants. Cues assigned to a ..."
+        "description": "Cue Sets allow you to create multiple named variants of media content for the same cue, and switch between them at ru..."
     },
     {
         "level": 2,
         "title": "Media Snapshots",
         "page": 12,
-        "description": "- What media snapshots are — a system for saving the current property state of selected cues as a named preset, and l..."
+        "description": "Media Snapshots allow you to save the current property state of selected cues as a named preset, and later recall tha..."
     },
     {
         "level": 2,
         "title": "Stacking Order",
         "page": 13,
-        "description": "- Per-cue stacking — explain the two stacking modes available on media cues:\n  - By Z — cues stack based on their Z p..."
+        "description": "When multiple cues overlap on the same display area, WATCHOUT needs to determine which content appears in front of (o..."
     },
     {
         "level": 2,
@@ -419,19 +419,19 @@ const tocData = [
         "level": 2,
         "title": "Blind Edit Mode",
         "page": 15,
-        "description": "- What Blind Edit is — explain that Blind Edit mode lets you make changes to a timeline's cues and properties in isol..."
+        "description": "Blind Edit mode lets you make changes to a timeline's cues and properties in isolation, without those changes immedia..."
     },
     {
         "level": 2,
         "title": "Insert and Delete Time",
         "page": 16,
-        "description": "- What Insert/Delete Time does — explain that this operation shifts all cues after a given point forward (insert) or ..."
+        "description": "The Insert/Delete Time operation shifts cues in bulk by inserting or removing a time range at a specific point on a t..."
     },
     {
         "level": 2,
         "title": "Conditional Cues",
         "page": 17,
-        "description": "- What conditional cues are — explain that any media cue can have a condition attached that controls whether it rende..."
+        "description": "Any cue in WATCHOUT can have a condition attached that controls whether it is active during playback. For media cues,..."
     },
     {
         "level": 1,
@@ -497,43 +497,43 @@ const tocData = [
         "level": 2,
         "title": "Corner Pinning",
         "page": 10,
-        "description": "- What corner pinning is — explain that the Corners tween allows you to independently move each of the four corners o..."
+        "description": "Corner pinning is a per-cue distortion effect that lets you independently reposition each of the four corners of a me..."
     },
     {
         "level": 2,
         "title": "Linear Wipe",
         "page": 11,
-        "description": "- What linear wipe is — a transition effect that reveals or hides content using a moving edge/boundary, defined by an..."
+        "description": "Linear Wipe is a transition effect that progressively reveals or hides a cue's content using a straight-line boundary..."
     },
     {
         "level": 2,
         "title": "Blend Modes",
         "page": 12,
-        "description": "- What blend modes are — explain that each media cue has a blend mode property that determines how its rendered pixel..."
+        "description": "Every media cue in WATCHOUT has a Blend Mode property that determines how its rendered pixels are composited with the..."
     },
     {
         "level": 2,
         "title": "Frame Blending",
         "page": 13,
-        "description": "- What frame blending is — explain that Frame Blending interpolates between video frames when the media's native fram..."
+        "description": "Frame Blending is a per-cue option that smooths video playback when the source media's native frame rate does not mat..."
     },
     {
         "level": 2,
         "title": "Chroma Key",
         "page": 14,
-        "description": "- What chroma key is — a compositing technique that removes a specific color from a cue's rendered output, making tho..."
+        "description": "Chroma Key is a per-cue compositing technique that removes a specific color from a cue's rendered output, making thos..."
     },
     {
         "level": 2,
         "title": "Key and Fill",
         "page": 15,
-        "description": "- What Key & Fill is — explain that Key & Fill is a layer-level compositing operation where one layer (the key layer)..."
+        "description": "Key & Fill is a layer-level compositing feature that uses the content of one layer (the key layer) to generate a tran..."
     },
     {
         "level": 2,
         "title": "Tween Expressions",
         "page": 16,
-        "description": "- What tween expressions are — explain that any tween property (position, opacity, scale, color, etc.) can be driven ..."
+        "description": "Tween expressions allow any tween property — position, opacity, scale, color adjustments, and more — to be driven dyn..."
     },
     {
         "level": 1,
@@ -623,25 +623,25 @@ const tocData = [
         "level": 2,
         "title": "Remote File Access",
         "page": 8,
-        "description": "- What remote file access is — explain that WATCHOUT allows Producer to browse and upload files to remote nodes over ..."
+        "description": "WATCHOUT allows Producer to browse, upload, and manage files on remote nodes across the network. This enables central..."
     },
     {
         "level": 2,
         "title": "Working Directory Management",
         "page": 9,
-        "description": "- What the working directory is — explain that each WATCHOUT node has a working directory where it stores cached asse..."
+        "description": "Every WATCHOUT node has a working directory — the location on disk where the node stores essential runtime data, incl..."
     },
     {
         "level": 2,
         "title": "Software Updates",
         "page": 10,
-        "description": "- Update mechanism — explain that Producer can push its own software version to remote nodes, ensuring all nodes in t..."
+        "description": "WATCHOUT provides a built-in mechanism for pushing software updates from Producer to remote nodes over the network. T..."
     },
     {
         "level": 2,
         "title": "Time Synchronization",
         "page": 11,
-        "description": "- Why time sync matters — explain that frame-accurate multi-display playback requires all nodes to share a common tim..."
+        "description": "Frame-accurate multi-display playback is one of WATCHOUT's core capabilities, and it depends on all nodes sharing a p..."
     },
     {
         "level": 1,
