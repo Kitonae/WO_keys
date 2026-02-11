@@ -23,6 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const overlapVInput = document.getElementById('display-overlap-v');
     const showBordersCheckbox = document.getElementById('show-borders');
     const showRulerCheckbox = document.getElementById('show-ruler');
+    const normalizeGridCheckbox = document.getElementById('normalize-grid');
 
     // UI Groups
     const gridControlsGroup = document.getElementById('grid-controls');
@@ -87,6 +88,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const showInfo = showInfoCheckbox.checked;
         const showBorders = showBordersCheckbox.checked;
+        const normalizeGrid = normalizeGridCheckbox.checked;
         const showRuler = showRulerCheckbox.checked;
         const showStamps = showStampsCheckbox.checked;
         const showCircle = showCircleCheckbox.checked;
@@ -106,7 +108,16 @@ document.addEventListener('DOMContentLoaded', () => {
         const majorColor = gridMajorColorInput.value;
         const minorColor = gridMinorColorInput.value;
 
-        // Repeat grid/circle for each display
+        // Calculate Normalized Grid for Displays
+        let gridW = majorSize;
+        let gridH = majorSize;
+
+        if (normalizeGrid) {
+            gridW = dWidth / Math.ceil(dWidth / majorSize);
+            gridH = dHeight / Math.ceil(dHeight / majorSize);
+        }
+
+        // 1. Display Grids
         for (let r = 0; r < rows; r++) {
             for (let c = 0; c < cols; c++) {
                 const x = c * (dWidth + overlapH);
@@ -118,23 +129,43 @@ document.addEventListener('DOMContentLoaded', () => {
                 ctx.rect(0, 0, dWidth, dHeight);
                 ctx.clip();
 
-                if (showStamps) {
-                    drawStamps(dWidth, dHeight, x, y);
-                }
-
-                drawGrid(dWidth, dHeight, majorSize, subdivs, majorColor, minorColor, showCircle, showCrosshair);
+                drawGrid(dWidth, dHeight, gridW, gridH, subdivs, majorColor, minorColor);
                 ctx.restore();
             }
         }
 
-        // Draw Display Borders & Overlaps
-        if (showBorders && (cols > 1 || rows > 1)) {
-            drawDisplayBorders(dWidth, dHeight, cols, rows, overlapH, overlapV);
+        // 2. Overlap Grids
+        if (cols > 1 || rows > 1) {
+            drawOverlapGrids(dWidth, dHeight, cols, rows, overlapH, overlapV, majorSize, subdivs, majorColor, minorColor, normalizeGrid);
         }
 
-        // Draw Rulers
+        // 3. Ruler
         if (showRuler) {
             drawRulers(totalWidth, totalHeight, dWidth, dHeight, cols, rows, overlapH, overlapV);
+        }
+
+        // 4. Display Labels and Boundaries
+        if (showBorders && (cols > 1 || rows > 1)) {
+            drawDisplayBoundaries(dWidth, dHeight, cols, rows, overlapH, overlapV);
+        }
+
+        // 5. Extras (Stamps, Circle, Crosshair, Overlays)
+        for (let r = 0; r < rows; r++) {
+            for (let c = 0; c < cols; c++) {
+                const x = c * (dWidth + overlapH);
+                const y = r * (dHeight + overlapV);
+                ctx.save();
+                ctx.translate(x, y);
+                ctx.beginPath();
+                ctx.rect(0, 0, dWidth, dHeight);
+                ctx.clip();
+
+                if (showStamps) drawStamps(dWidth, dHeight, x, y);
+                if (showCircle) drawCenterCircle(dWidth, dHeight);
+                if (showCrosshair) drawCenterCrosshair(dWidth, dHeight);
+
+                ctx.restore();
+            }
         }
 
         // Draw Info Overlay
@@ -168,7 +199,136 @@ document.addEventListener('DOMContentLoaded', () => {
         ctx.lineWidth = 1;
     }
 
-    function drawDisplayBorders(dW, dH, cols, rows, ovH, ovV) {
+    function drawOverlapGrids(dW, dH, cols, rows, ovH, ovV, majorSize, subdivs, majorColor, minorColor, normalizeGrid) {
+        ctx.save();
+
+        // Horizontal Overlaps
+        if (ovH < 0 && cols > 1) {
+            for (let c = 1; c < cols; c++) {
+                const x = c * (dW + ovH);
+
+                if (normalizeGrid) {
+                    // Clear & Grid
+                    ctx.fillStyle = '#000000';
+                    ctx.fillRect(x, 0, -ovH, canvas.height);
+
+                    ctx.save();
+                    ctx.translate(x, 0);
+
+                    // Scale grid to fit full tiles
+                    const ovW = -ovH;
+                    const ovH_total = canvas.height;
+                    const majorW = ovW / Math.ceil(ovW / majorSize);
+                    const majorH = ovH_total / Math.ceil(ovH_total / majorSize);
+
+                    drawGrid(ovW, ovH_total, majorW, majorH, subdivs, majorColor, minorColor);
+                    ctx.restore();
+                }
+
+                // Highlight (always add a bit of tint)
+                ctx.fillStyle = 'rgba(255, 255, 0, 0.15)';
+                ctx.fillRect(x, 0, -ovH, canvas.height);
+            }
+        }
+
+        // Vertical Overlaps
+        if (ovV < 0 && rows > 1) {
+            for (let r = 1; r < rows; r++) {
+                const y = r * (dH + ovV);
+
+                if (normalizeGrid) {
+                    // Clear & Grid
+                    ctx.fillStyle = '#000000';
+                    ctx.fillRect(0, y, canvas.width, -ovV);
+
+                    ctx.save();
+                    ctx.translate(0, y);
+
+                    // Scale grid to fit full tiles
+                    const ovW_total = canvas.width;
+                    const ovH_local = -ovV;
+                    const majorW = ovW_total / Math.ceil(ovW_total / majorSize);
+                    const majorH = ovH_local / Math.ceil(ovH_local / majorSize);
+
+                    drawGrid(ovW_total, ovH_local, majorW, majorH, subdivs, majorColor, minorColor);
+                    ctx.restore();
+                }
+
+                // Highlight
+                ctx.fillStyle = 'rgba(255, 255, 0, 0.15)';
+                ctx.fillRect(0, y, canvas.width, -ovV);
+            }
+        }
+
+        ctx.restore();
+    }
+
+    function drawDisplayBoundaries(dW, dH, cols, rows, ovH, ovV) {
+        ctx.save();
+
+        // 1. Draw individual display borders (dashed Cyan)
+        ctx.setLineDash([10, 10]);
+        ctx.strokeStyle = 'rgba(0, 255, 255, 0.8)';
+        ctx.lineWidth = 2;
+
+        for (let r = 0; r < rows; r++) {
+            for (let c = 0; c < cols; c++) {
+                const x = c * (dW + ovH);
+                const y = r * (dH + ovV);
+                ctx.strokeRect(x + 1, y + 1, dW - 2, dH - 2);
+
+                // Display Index
+                ctx.fillStyle = 'rgba(0, 255, 255, 0.8)';
+                ctx.font = 'bold 24px Inter, sans-serif';
+                ctx.textAlign = 'left';
+                ctx.textBaseline = 'top';
+                ctx.fillText(`Display ${r * cols + c + 1}`, x + 20, y + 20);
+            }
+        }
+
+        // 2. Overlap Lines & Diagonals
+        ctx.setLineDash([]);
+
+        // Horizontal Overlaps
+        if (ovH < 0 && cols > 1) {
+            for (let c = 1; c < cols; c++) {
+                const x = c * (dW + ovH);
+
+                // Overlap lines
+                ctx.strokeStyle = 'rgba(255, 255, 0, 0.5)';
+                ctx.beginPath();
+                ctx.moveTo(x, 0); ctx.lineTo(x, canvas.height);
+                ctx.moveTo(x - ovH, 0); ctx.lineTo(x - ovH, canvas.height);
+
+                // Diagonals
+                ctx.moveTo(x, 0); ctx.lineTo(x - ovH, canvas.height);
+                ctx.moveTo(x, canvas.height); ctx.lineTo(x - ovH, 0);
+                ctx.stroke();
+            }
+        }
+
+        // Vertical Overlaps
+        if (ovV < 0 && rows > 1) {
+            for (let r = 1; r < rows; r++) {
+                const y = r * (dH + ovV);
+
+                // Overlap lines
+                ctx.strokeStyle = 'rgba(255, 255, 0, 0.5)';
+                ctx.beginPath();
+                ctx.moveTo(0, y); ctx.lineTo(canvas.width, y);
+                ctx.moveTo(0, y - ovV); ctx.lineTo(canvas.width, y - ovV);
+
+                // Diagonals
+                ctx.moveTo(0, y); ctx.lineTo(canvas.width, y - ovV);
+                ctx.moveTo(0, y - ovV); ctx.lineTo(canvas.width, y);
+                ctx.stroke();
+            }
+        }
+
+        ctx.restore();
+    }
+
+    function unused_drawDisplayBorders(dW, dH, cols, rows, ovH, ovV, majorSize, subdivs, majorColor, minorColor, normalizeGrid) {
         ctx.save();
 
         // 1. Draw individual display borders (dashed Cyan)
@@ -199,13 +359,46 @@ document.addEventListener('DOMContentLoaded', () => {
         if (ovH < 0 && cols > 1) {
             for (let c = 1; c < cols; c++) {
                 const x = c * (dW + ovH);
-                ctx.fillRect(x, 0, -ovH, canvas.height);
 
-                // Overlap lines
+                if (normalizeGrid) {
+                    // Clear & Grid
+                    ctx.fillStyle = '#000000';
+                    ctx.fillRect(x, 0, -ovH, canvas.height);
+
+                    ctx.save();
+                    ctx.translate(x, 0);
+
+                    // Scale grid to fit full tiles
+                    const ovW = -ovH;
+                    const ovH_total = canvas.height;
+                    const majorW = ovW / Math.ceil(ovW / majorSize);
+                    const majorH = ovH_total / Math.ceil(ovH_total / majorSize);
+
+                    drawGrid(ovW, ovH_total, majorW, majorH, subdivs, majorColor, minorColor, false, false);
+                    ctx.restore();
+                } else {
+                    // Just highlight, letting underlying grids mesh
+                    ctx.fillStyle = 'rgba(255, 255, 0, 0.15)';
+                    ctx.fillRect(x, 0, -ovH, canvas.height);
+                }
+
+                // Highlight (always add a bit of tint)
+                if (normalizeGrid) {
+                    ctx.fillStyle = 'rgba(255, 255, 0, 0.15)';
+                    ctx.fillRect(x, 0, -ovH, canvas.height);
+                } else {
+                    // Start of highlight already applied above if not clearing
+                }
+
+                // Diagonals
                 ctx.strokeStyle = 'rgba(255, 255, 0, 0.5)';
                 ctx.beginPath();
                 ctx.moveTo(x, 0); ctx.lineTo(x, canvas.height);
                 ctx.moveTo(x - ovH, 0); ctx.lineTo(x - ovH, canvas.height);
+
+                // Diagonals
+                ctx.moveTo(x, 0); ctx.lineTo(x - ovH, canvas.height);
+                ctx.moveTo(x, canvas.height); ctx.lineTo(x - ovH, 0);
                 ctx.stroke();
             }
         }
@@ -214,13 +407,44 @@ document.addEventListener('DOMContentLoaded', () => {
         if (ovV < 0 && rows > 1) {
             for (let r = 1; r < rows; r++) {
                 const y = r * (dH + ovV);
-                ctx.fillRect(0, y, canvas.width, -ovV);
 
-                // Overlap lines
+                if (normalizeGrid) {
+                    // Clear & Grid
+                    ctx.fillStyle = '#000000';
+                    ctx.fillRect(0, y, canvas.width, -ovV);
+
+                    ctx.save();
+                    ctx.translate(0, y);
+
+                    // Scale grid to fit full tiles
+                    const ovW_total = canvas.width;
+                    const ovH_local = -ovV;
+                    const majorW = ovW_total / Math.ceil(ovW_total / majorSize);
+                    const majorH = ovH_local / Math.ceil(ovH_local / majorSize);
+
+                    drawGrid(ovW_total, ovH_local, majorW, majorH, subdivs, majorColor, minorColor, false, false);
+                    ctx.restore();
+                } else {
+                    // Just highlight
+                    ctx.fillStyle = 'rgba(255, 255, 0, 0.15)';
+                    ctx.fillRect(0, y, canvas.width, -ovV);
+                }
+
+                // Highlight (if showed grid, add tint on top)
+                if (normalizeGrid) {
+                    ctx.fillStyle = 'rgba(255, 255, 0, 0.15)';
+                    ctx.fillRect(0, y, canvas.width, -ovV);
+                }
+
+                // Diagonals & Lines
                 ctx.strokeStyle = 'rgba(255, 255, 0, 0.5)';
                 ctx.beginPath();
                 ctx.moveTo(0, y); ctx.lineTo(canvas.width, y);
                 ctx.moveTo(0, y - ovV); ctx.lineTo(canvas.width, y - ovV);
+
+                // Diagonals
+                ctx.moveTo(0, y); ctx.lineTo(canvas.width, y - ovV);
+                ctx.moveTo(0, y - ovV); ctx.lineTo(canvas.width, y);
                 ctx.stroke();
             }
         }
@@ -349,8 +573,9 @@ document.addEventListener('DOMContentLoaded', () => {
         ctx.restore();
     }
 
-    function drawGrid(w, h, majorSize, subdivs, majorColor, minorColor, showCircle, showCrosshair) {
-        const minorSize = majorSize / subdivs;
+    function drawGrid(w, h, majorW, majorH, subdivs, majorColor, minorColor) {
+        const minorW = majorW / subdivs;
+        const minorH = majorH / subdivs;
 
         // 1. Draw Minor Lines
         if (subdivs > 1) {
@@ -359,17 +584,21 @@ document.addEventListener('DOMContentLoaded', () => {
             ctx.lineWidth = 1;
 
             // Vertical Minor
-            for (let x = 0; x <= w; x += minorSize) {
-                // Skip if this is also a major line position (approx)
-                if (Math.abs(x % majorSize) > 0.1 && Math.abs(x % majorSize - majorSize) > 0.1) {
-                    ctx.moveTo(Math.floor(x) + 0.5, 0); // +0.5 for crisp lines
+            for (let x = 0; x <= w; x += minorW) {
+                // Skip if this is also a major line position
+                const ratio = x / majorW;
+                const distToInt = Math.abs(ratio - Math.round(ratio));
+                if (distToInt > 0.001) {
+                    ctx.moveTo(Math.floor(x) + 0.5, 0);
                     ctx.lineTo(Math.floor(x) + 0.5, h);
                 }
             }
 
             // Horizontal Minor
-            for (let y = 0; y <= h; y += minorSize) {
-                if (Math.abs(y % majorSize) > 0.1 && Math.abs(y % majorSize - majorSize) > 0.1) {
+            for (let y = 0; y <= h; y += minorH) {
+                const ratio = y / majorH;
+                const distToInt = Math.abs(ratio - Math.round(ratio));
+                if (distToInt > 0.001) {
                     ctx.moveTo(0, Math.floor(y) + 0.5);
                     ctx.lineTo(w, Math.floor(y) + 0.5);
                 }
@@ -383,49 +612,48 @@ document.addEventListener('DOMContentLoaded', () => {
         ctx.lineWidth = 2; // Thicker major lines
 
         // Vertical Major
-        for (let x = 0; x <= w; x += majorSize) {
+        for (let x = 0; x <= w + 0.1; x += majorW) {
             ctx.moveTo(Math.floor(x), 0);
             ctx.lineTo(Math.floor(x), h);
         }
 
         // Horizontal Major
-        for (let y = 0; y <= h; y += majorSize) {
+        for (let y = 0; y <= h + 0.1; y += majorH) {
             ctx.moveTo(0, Math.floor(y));
             ctx.lineTo(w, Math.floor(y));
         }
         ctx.stroke();
 
-        // 3. Center Crosshair (Always Red to stand out)
-        if (showCrosshair) {
-            ctx.beginPath();
-            ctx.strokeStyle = '#ff0000';
-            ctx.lineWidth = 3;
+        ctx.lineWidth = 1; // Reset
+    }
 
-            const centerX = w / 2;
-            const centerY = h / 2;
-            const crossSize = 50;
-
-            // Cross
-            ctx.moveTo(centerX - crossSize, centerY);
-            ctx.lineTo(centerX + crossSize, centerY);
-            ctx.moveTo(centerX, centerY - crossSize);
-            ctx.lineTo(centerX, centerY + crossSize);
-            ctx.stroke();
-        }
+    function drawCenterCrosshair(w, h) {
+        ctx.beginPath();
+        ctx.strokeStyle = '#ff0000';
+        ctx.lineWidth = 3;
 
         const centerX = w / 2;
         const centerY = h / 2;
+        const crossSize = 50;
 
-        // Circle (fill the display)
-        if (showCircle) {
-            const circleRadius = Math.min(w, h) / 2;
-            ctx.beginPath();
-            ctx.arc(centerX, centerY, circleRadius, 0, Math.PI * 2);
-            ctx.strokeStyle = '#ff0000';
-            ctx.stroke();
-        }
+        // Cross
+        ctx.moveTo(centerX - crossSize, centerY);
+        ctx.lineTo(centerX + crossSize, centerY);
+        ctx.moveTo(centerX, centerY - crossSize);
+        ctx.lineTo(centerX, centerY + crossSize);
+        ctx.stroke();
+        ctx.lineWidth = 1;
+    }
 
-        ctx.lineWidth = 1; // Reset
+    function drawCenterCircle(w, h) {
+        const centerX = w / 2;
+        const centerY = h / 2;
+        const circleRadius = Math.min(w, h) / 2;
+        ctx.beginPath();
+        ctx.arc(centerX, centerY, circleRadius, 0, Math.PI * 2);
+        ctx.strokeStyle = '#ff0000';
+        ctx.stroke();
+        ctx.lineWidth = 1;
     }
 
     function drawStamps(w, h, globalOffsetX, globalOffsetY) {
@@ -602,6 +830,7 @@ document.addEventListener('DOMContentLoaded', () => {
             showCircle: showCircleCheckbox.checked,
             showCrosshair: showCrosshairCheckbox.checked,
             showInfo: showInfoCheckbox.checked,
+            normalizeGrid: normalizeGridCheckbox.checked,
             customLabel: document.getElementById('custom-label').value
         };
     }
@@ -614,6 +843,7 @@ document.addEventListener('DOMContentLoaded', () => {
         overlapHInput.value = s.overlapH;
         overlapVInput.value = s.overlapV;
         showBordersCheckbox.checked = s.borders;
+        normalizeGridCheckbox.checked = s.normalizeGrid;
         showRulerCheckbox.checked = s.ruler;
         gridMajorSizeInput.value = s.majorSize;
         gridSubdivisionsInput.value = s.subdivisions;
