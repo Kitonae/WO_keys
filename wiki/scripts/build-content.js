@@ -79,6 +79,15 @@ function markdownToHtml(markdown) {
         return `<video src="${src}?t=${timestamp++}" class="content-video" autoplay muted loop playsinline title="${alt}"></video>`;
     });
 
+    // Widgets (custom syntax: [[WIDGET:filename]])
+    // Process widgets early and protect them from paragraph wrapping
+    const widgets = [];
+    html = html.replace(/\[\[WIDGET:(.*?)\]\]/g, (match, widgetName) => {
+        const index = widgets.length;
+        widgets.push(getWidgetContent(widgetName));
+        return `___WIDGET_${index}___`;
+    });
+
     // Paragraphs - wrap lines that aren't already wrapped in block-level elements
     html = html.split(/\r?\n\r?\n/).map(block => {
         block = block.trim();
@@ -86,6 +95,7 @@ function markdownToHtml(markdown) {
         // Skip blocks that are already block-level HTML elements (including closing tags)
         if (/^<\/?(h[1-6]|table|ul|ol|div|pre|blockquote|img|video)/i.test(block)) return block;
         if (block.startsWith('___CODEBLOCK_')) return block;
+        if (block.startsWith('___WIDGET_')) return block;
         if (/^[-*\d]/.test(block)) return block; // List items handled separately
         return `<p>${block.replace(/\n/g, ' ')}</p>`;
     }).join('\n\n');
@@ -95,10 +105,29 @@ function markdownToHtml(markdown) {
         html = html.replace(`___CODEBLOCK_${index}___`, block);
     });
 
+    // Restore widgets
+    widgets.forEach((widget, index) => {
+        html = html.replace(`___WIDGET_${index}___`, widget);
+    });
+
     // Clean up extra whitespace
     html = html.replace(/\n{3,}/g, '\n\n');
 
     return html.trim();
+}
+
+// Helper to load widget content
+function getWidgetContent(widgetName) {
+    // Sanitize widget name to prevent path traversal
+    const safeName = widgetName.replace(/[^a-zA-Z0-9-]/g, '');
+    const widgetPath = path.join(__dirname, '..', 'widgets', `${safeName}.html`);
+
+    if (fs.existsSync(widgetPath)) {
+        return fs.readFileSync(widgetPath, 'utf-8');
+    } else {
+        console.warn(`Warning: Widget "${safeName}" not found at ${widgetPath}`);
+        return `<div class="widget-error">Widget not found: ${widgetName}</div>`;
+    }
 }
 
 function escapeHtml(text) {

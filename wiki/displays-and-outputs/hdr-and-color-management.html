@@ -864,7 +864,118 @@
 <li><strong>Rec. 2100 HLG</strong> — combines Rec. 2020 primaries with the Hybrid Log-Gamma (HLG) transfer function. HLG is designed to be backward-compatible with SDR displays — the lower portion of the curve resembles a standard gamma curve, while the upper portion extends into HDR. This is commonly used in live broadcast HDR workflows.</li>
 
 </ul>
-When rendering, WATCHOUT performs all pixel operations (blending, interpolation, compositing) in linear light. Source media is linearized on decode, processed internally, and then delinearized to the target transfer function on output. If the source and destination color primaries differ, a 3×3 matrix transform converts between them.
+<div class="interactive-widget" id="gamut-comparison-widget">
+    <canvas id="gamut-canvas" width="600" height="600"></canvas>
+    <div class="widget-controls">
+        <label><input type="checkbox" id="show-srgb" checked> sRGB / Rec. 709</label>
+        <label><input type="checkbox" id="show-rec2020"> Rec. 2020</label>
+        <label><input type="checkbox" id="show-rec601"> Rec. 601</label>
+    </div>
+    <div class="widget-explainer">
+        The <strong>Rec. 2020</strong> triangle covers a significantly larger area of visible colors than the standard
+        <strong>sRGB</strong> space.
+    </div>
+</div>
+<script>
+    (function () {
+        const canvas = document.getElementById('gamut-canvas');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+
+        // Spectral locus approximation (simplified)
+        const locus = [
+            [0.175596, 0.005296], [0.172787, 0.0048], [0.1708, 0.0054], [0.1703, 0.0058], [0.1664, 0.0086], [0.1606, 0.0145], [0.1566, 0.0177],
+            [0.151, 0.0227], [0.1415, 0.0379], [0.1355, 0.0525], [0.1266, 0.0813], [0.1193, 0.1187], [0.1111, 0.1857], [0.1009, 0.2974], [0.0931, 0.4079],
+            [0.0818, 0.5284], [0.074, 0.6481], [0.0766, 0.7251], [0.0863, 0.7761], [0.1205, 0.8175], [0.163, 0.8177], [0.2078, 0.7892], [0.2647, 0.7297],
+            [0.3204, 0.6635], [0.3703, 0.5968], [0.4193, 0.5317], [0.465, 0.4687], [0.5097, 0.4101], [0.5518, 0.3585], [0.591, 0.3093], [0.627, 0.2625],
+            [0.6586, 0.2206], [0.6865, 0.1834], [0.7088, 0.153], [0.7231, 0.1332], [0.7347, 0.1172], [0.7347, 0.005296], [0.175596, 0.005296]
+        ];
+
+        const primaries = {
+            srgb: { r: [0.64, 0.33], g: [0.30, 0.60], b: [0.15, 0.06], color: 'rgba(255, 215, 0, 0.8)', label: 'sRGB/709' },
+            rec2020: { r: [0.708, 0.292], g: [0.170, 0.797], b: [0.131, 0.046], color: 'rgba(0, 255, 0, 0.8)', label: 'Rec.2020' },
+            rec601: { r: [0.630, 0.340], g: [0.310, 0.595], b: [0.155, 0.070], color: 'rgba(50, 150, 255, 0.8)', label: 'Rec.601' }
+        };
+
+        function toCanvas(x, y) {
+            const scale = 500; // ample scale
+            const offsetX = 50;
+            const offsetY = 550;
+            return { x: x * scale + offsetX, y: offsetY - y * scale };
+        }
+
+        function drawTriangle(p, style, fill) {
+            const r = toCanvas(p.r[0], p.r[1]);
+            const g = toCanvas(p.g[0], p.g[1]);
+            const b = toCanvas(p.b[0], p.b[1]);
+
+            ctx.beginPath();
+            ctx.moveTo(r.x, r.y);
+            ctx.lineTo(g.x, g.y);
+            ctx.lineTo(b.x, b.y);
+            ctx.closePath();
+
+            ctx.lineWidth = 2;
+            ctx.strokeStyle = style;
+            ctx.stroke();
+
+            if (fill) {
+                ctx.fillStyle = style.replace('0.8', '0.2');
+                ctx.fill();
+            }
+
+            // Draw points
+            [r, g, b].forEach(pt => {
+                ctx.beginPath();
+                ctx.arc(pt.x, pt.y, 4, 0, Math.PI * 2);
+                ctx.fillStyle = style;
+                ctx.fill();
+            });
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Fill canvas background to ensure contrast
+            ctx.fillStyle = '#222';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Draw Locus Background
+            ctx.beginPath();
+            const first = toCanvas(locus[0][0], locus[0][1]);
+            ctx.moveTo(first.x, first.y);
+            locus.forEach(pt => {
+                const p = toCanvas(pt[0], pt[1]);
+                ctx.lineTo(p.x, p.y);
+            });
+            ctx.closePath();
+            ctx.fillStyle = '#111';
+            ctx.fill();
+            ctx.strokeStyle = '#333';
+            ctx.stroke();
+
+            // Draw Grid (Labels)
+            ctx.fillStyle = '#888';
+            ctx.font = '10px sans-serif';
+            for (let i = 0; i <= 0.8; i += 0.1) {
+                const pX = toCanvas(i, 0);
+                ctx.fillText(i.toFixed(1), pX.x, pX.y + 15);
+                const pY = toCanvas(0, i);
+                ctx.fillText(i.toFixed(1), pY.x - 25, pY.y);
+            }
+
+            if (document.getElementById('show-rec2020').checked) drawTriangle(primaries.rec2020, primaries.rec2020.color, true);
+            if (document.getElementById('show-srgb').checked) drawTriangle(primaries.srgb, primaries.srgb.color, true);
+            if (document.getElementById('show-rec601').checked) drawTriangle(primaries.rec601, primaries.rec601.color, true);
+        }
+
+        ['show-srgb', 'show-rec2020', 'show-rec601'].forEach(id => {
+            document.getElementById(id).addEventListener('change', draw);
+        });
+
+        draw();
+    })();
+</script>
 
 <h3>Transfer Functions</h3>
 
@@ -877,7 +988,309 @@ When rendering, WATCHOUT performs all pixel operations (blending, interpolation,
 <li><strong>HLG (Hybrid Log-Gamma)</strong> — a relative luminance curve with a standard peak of 1,000 nits. The lower half uses a gamma-like curve (backward-compatible with SDR displays), and the upper half uses a logarithmic extension for HDR highlights. Used with Rec. 2100 HLG.</li>
 
 </ul>
-The choice of transfer function is determined by the color space you select on the display. For example, selecting Rec. 2100 PQ automatically uses the PQ transfer function.
+<div class="interactive-widget" id="transfer-function-widget">
+    <canvas id="tf-canvas" width="800" height="500"></canvas>
+    <div class="widget-controls">
+        <label><input type="checkbox" id="show-srgb-tf" checked> sRGB</label>
+        <label><input type="checkbox" id="show-gamma22-tf" checked> Gamma 2.2</label>
+        <label><input type="checkbox" id="show-pq-tf" checked> PQ (ST 2084)</label>
+        <label><input type="checkbox" id="show-hlg-tf" checked> HLG</label>
+    </div>
+    <div class="widget-explainer">
+        Compare how different transfer functions map signal values to luminance. Note the <strong>logarithmic
+            scale</strong> on the Y-axis.
+    </div>
+</div>
+<script>
+    (function () {
+        const canvas = document.getElementById('tf-canvas');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        const width = canvas.width;
+        const height = canvas.height;
+
+        // Margins
+        const margin = { top: 20, right: 100, bottom: 40, left: 60 };
+        const graphW = width - margin.left - margin.right;
+        const graphH = height - margin.top - margin.bottom;
+
+        // Data curves
+        // X = Input (0..1)
+        // Y = Luminance (nits)
+        // sRGB: max 80 nits
+        // Gamma 2.2: max 100 nits (ref) or 80? Let's say 100 for SDR ref
+        // HLG: max 1000 nits
+        // PQ: max 10000 nits
+
+        // We use a log scale for Y axis 1..10000
+        const minNits = 1;
+        const maxNits = 10000;
+        const minLog = Math.log10(minNits);
+        const maxLog = Math.log10(maxNits);
+        const logRange = maxLog - minLog;
+
+        function toY(nits) {
+            let n = Math.max(minNits, nits);
+            let log = Math.log10(n);
+            let norm = (log - minLog) / logRange; // 0..1
+            return margin.top + graphH - (norm * graphH);
+        }
+
+        function toX(val) {
+            return margin.left + val * graphW;
+        }
+
+        // Transfer Functions (approx)
+
+        // --- EOTF Implementations ---
+
+        // sRGB EOTF (Signal 0..1 -> Luminance 0..80 nits)
+        // Piecewise function: Linear near black, Power law (approx 2.4) elsewhere
+        function sRGB_EOTF(v) {
+            let val;
+            if (v <= 0.04045) {
+                val = v / 12.92;
+            } else {
+                val = Math.pow((v + 0.055) / 1.055, 2.4);
+            }
+            return val * 80; // Standard definition maps roughly to 80 nits peak
+        }
+
+        // Gamma 2.2 EOTF (Signal 0..1 -> Luminance 0..100 nits)
+        // Simple power law
+        function Gamma22_EOTF(v) {
+            return Math.pow(v, 2.2) * 100; // Reference 100 nits
+        }
+
+        // PQ (Perceptual Quantizer) EOTF (Signal 0..1 -> Luminance 0..10000 nits)
+        // SMPTE ST 2084
+        function PQ_EOTF(v) {
+            // Constants
+            // Standard constants from SMPTE ST 2084
+            const m1_val = 2610 / 16384; // 0.1593017578125
+            const m2_val = 2523 / 4096 * 128; // 78.84375
+            const c1 = 3424 / 4096; // 0.8359375
+            const c2 = 2413 / 4096 * 32; // 18.8515625
+            const c3 = 2392 / 4096 * 32; // 18.6875
+
+            // Proper EOTF Formula:
+            // L = ( ( max( N^(1/m2) - c1, 0 ) ) / ( c2 - c3 * N^(1/m2) ) ) ^ (1/m1)
+            // Where N is the non-linear signal 0..1 (v in this function)
+
+            const N_p = Math.pow(v, 1 / m2_val);
+            const num = Math.max(N_p - c1, 0);
+            const den = c2 - c3 * N_p;
+
+            // Handle potential division by zero, though for v in [0,1] and standard constants, den should be > 0
+            if (den === 0) return 10000; // Max luminance
+
+            const val = Math.pow(num / den, 1 / m1_val);
+
+            return val * 10000; // Scale to 10000 nits peak
+        }
+
+        // HLG (Hybrid Log-Gamma) EOTF (Signal 0..1 -> Luminance 0..1000 nits)
+        // ARIB STD-B67
+        // HLG is relative. We assume a 1000 nit peak display for this visualization.
+        function HLG_EOTF(v) {
+            // Constants from ARIB STD-B67
+            const a = 0.17883277;
+            const b = 1 - 4 * a; // 0.28466892
+            const c = 0.5 - a * Math.log(4 * a); // 0.55991073
+
+            // Inverse OETF (Signal -> Scene Linear Light 0..1)
+            // This converts the HLG signal (v) back to linear scene light (E)
+            let E;
+            if (v <= 0.5) {
+                // For v <= 0.5, OETF is E' = sqrt(3E)
+                // So, E = (E')^2 / 3 = v^2 / 3
+                E = (v * v) / 3;
+            } else {
+                // For v > 0.5, OETF is E' = a * ln(12E - b) + c
+                // So, E = (exp((E' - c) / a) + b) / 12 = (exp((v - c) / a) + b) / 12
+                E = (Math.exp((v - c) / a) + b) / 12;
+            }
+
+            // OOTF (Opto-Optical Transfer Function) for display
+            // HLG EOTF includes a system gamma (OOTF) for display adaptation.
+            // L = Lw * E^gamma
+            // Lw is the nominal peak luminance of the display (e.g., 1000 nits).
+            // gamma is typically 1.2 for HLG.
+            const gamma = 1.2;
+            const Lw = 1000; // Assuming a 1000 nit reference display
+
+            return Lw * Math.pow(E, gamma);
+        }
+
+
+        function drawCurve(func, color, label, show) {
+            if (!show) return;
+            ctx.beginPath();
+            ctx.strokeStyle = color;
+            ctx.lineWidth = 2;
+
+            let moved = false;
+            for (let i = 0; i <= 200; i++) {
+                const x = i / 200; // 0..1
+                const nits = func(x);
+
+                const px = toX(x);
+                const py = toY(nits);
+
+                if (nits < minNits) continue; // Out of log graph range (below 1 nit)
+
+                if (!moved) {
+                    ctx.moveTo(px, py);
+                    moved = true;
+                } else {
+                    ctx.lineTo(px, py);
+                }
+            }
+            ctx.stroke();
+
+            // Draw label at end
+            const endNits = func(1.0);
+            const pEnd = { x: toX(1.0), y: toY(endNits) };
+            ctx.fillStyle = color;
+            ctx.font = '12px sans-serif';
+            ctx.fillText(label, pEnd.x + 5, pEnd.y + 4);
+        }
+
+        // Interaction state
+        let mouseX = -1;
+
+        function draw() {
+            ctx.clearRect(0, 0, width, height);
+
+            // Background
+            ctx.fillStyle = '#1e1e24';
+            ctx.fillRect(margin.left, margin.top, graphW, graphH);
+
+            // Grid lines (Log Y)
+            ctx.strokeStyle = '#333';
+            ctx.lineWidth = 1;
+            ctx.fillStyle = '#888';
+            ctx.font = '10px sans-serif';
+            ctx.textAlign = 'right';
+
+            // Powers of 10
+            for (let p = 0; p <= 4; p++) {
+                const nits = Math.pow(10, p);
+                const y = toY(nits);
+                ctx.beginPath();
+                ctx.moveTo(margin.left, y);
+                ctx.lineTo(width - margin.right, y);
+                ctx.stroke();
+                ctx.fillText(nits + (p === 4 ? ' nits' : ''), margin.left - 5, y + 4);
+            }
+
+            // Grid X (Input 0..1)
+            ctx.textAlign = 'center';
+            for (let i = 0; i <= 10; i++) {
+                const v = i / 10;
+                const x = toX(v);
+                ctx.beginPath();
+                ctx.moveTo(x, margin.top);
+                ctx.lineTo(x, height - margin.bottom);
+                ctx.stroke();
+                if (i % 2 === 0) ctx.fillText(v, x, height - margin.bottom + 15);
+            }
+
+            // Axis labels
+            ctx.save();
+            ctx.translate(15, height / 2);
+            ctx.rotate(-Math.PI / 2);
+            ctx.textAlign = 'center';
+            ctx.font = '12px sans-serif';
+            ctx.fillStyle = '#aaa';
+            ctx.fillText("Luminance (nits) - Log Scale", 0, 0);
+            ctx.restore();
+
+            ctx.textAlign = 'center';
+            ctx.fillText("Input Signal (0.0 - 1.0)", margin.left + graphW / 2, height - 10);
+
+
+            // Draw Curves
+            const showSRGB = document.getElementById('show-srgb-tf').checked;
+            const showGamma = document.getElementById('show-gamma22-tf').checked;
+            const showPQ = document.getElementById('show-pq-tf').checked;
+            const showHLG = document.getElementById('show-hlg-tf').checked;
+
+            if (showSRGB) drawCurve(sRGB_EOTF, '#fcd34d', 'sRGB', true);
+            if (showGamma) drawCurve(Gamma22_EOTF, '#f87171', 'Gamma 2.2', true);
+            if (showHLG) drawCurve(HLG_EOTF, '#34d399', 'HLG', true);
+            if (showPQ) drawCurve(PQ_EOTF, '#60a5fa', 'PQ', true);
+
+            // Interaction - Crosshair
+            if (mouseX >= margin.left && mouseX <= width - margin.right) {
+                const v = (mouseX - margin.left) / graphW;
+                const x = mouseX;
+
+                ctx.beginPath();
+                ctx.strokeStyle = '#fff';
+                ctx.setLineDash([5, 5]);
+                ctx.moveTo(x, margin.top);
+                ctx.lineTo(x, height - margin.bottom);
+                ctx.stroke();
+                ctx.setLineDash([]);
+
+                // Draw dots and values
+                const curves = [
+                    { name: 'PQ', func: PQ_EOTF, color: '#60a5fa', show: showPQ },
+                    { name: 'HLG', func: HLG_EOTF, color: '#34d399', show: showHLG },
+                    { name: 'Gamma', func: Gamma22_EOTF, color: '#f87171', show: showGamma },
+                    { name: 'sRGB', func: sRGB_EOTF, color: '#fcd34d', show: showSRGB },
+                ];
+
+                // Avoid overlap in labels
+                // We sort by Y position 
+                const points = curves.filter(c => c.show).map(c => {
+                    const nits = c.func(v);
+                    return { ...c, nits, y: toY(nits) };
+                }).sort((a, b) => a.y - b.y); // top to bottom
+
+                points.forEach(p => {
+                    // Dot
+                    ctx.beginPath();
+                    ctx.arc(x, p.y, 4, 0, Math.PI * 2);
+                    ctx.fillStyle = p.color;
+                    ctx.fill();
+
+                    // Box background for text
+                    const txt = `${Math.round(p.nits)}`;
+                    ctx.font = 'bold 12px monospace';
+                    const tw = ctx.measureText(txt).width;
+
+                    ctx.fillStyle = 'rgba(0,0,0,0.8)';
+                    ctx.fillRect(x + 10, p.y - 10, tw + 10, 20);
+
+                    ctx.fillStyle = p.color;
+                    ctx.textAlign = 'left';
+                    ctx.fillText(txt, x + 15, p.y + 4);
+                });
+            }
+        }
+
+        ['show-srgb-tf', 'show-gamma22-tf', 'show-pq-tf', 'show-hlg-tf'].forEach(id => {
+            document.getElementById(id).addEventListener('change', draw);
+        });
+
+        canvas.addEventListener('mousemove', (e) => {
+            const rect = canvas.getBoundingClientRect();
+            mouseX = e.clientX - rect.left;
+            draw();
+        });
+
+        canvas.addEventListener('mouseleave', () => {
+            mouseX = -1;
+            draw();
+        });
+
+        draw();
+    })();
+</script>
+
+<p>The choice of transfer function is determined by the color space you select on the display. For example, selecting Rec. 2100 PQ automatically uses the PQ transfer function.</p>
 
 <h3>Display Color Depth</h3>
 
@@ -890,7 +1303,90 @@ The choice of transfer function is determined by the color space you select on t
 <li><strong>16 bpc</strong> — 65,536 levels per channel. The highest precision available, suitable for specialized workflows requiring extreme accuracy.</li>
 
 </ul>
-Color depth is configured per display in <strong>Device Properties → Output → Signal</strong> and is available for GPU output types. SDI outputs currently operate at 8 bpc.
+<div class="interactive-widget" id="bit-depth-widget">
+    <canvas id="bit-depth-canvas" width="800" height="200"></canvas>
+    <div class="widget-controls">
+        <label>Bit Depth: <select id="bit-depth-select">
+                <option value="8">8 bpc</option>
+                <option value="10">10 bpc</option>
+                <option value="12">12 bpc</option>
+            </select></label>
+        <label>Zoom Dark End: <input type="range" id="bit-depth-zoom" min="1" max="50" value="1" step="0.1"></label>
+    </div>
+    <div class="widget-explainer">
+        Select a lower bit depth (e.g., <strong>8 bpc</strong>) and increase <strong>Zoom</strong> to see quantization
+        banding artifacts in the dark gradients.
+    </div>
+</div>
+<script>
+    (function () {
+        const canvas = document.getElementById('bit-depth-canvas');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        const width = canvas.width;
+        const height = canvas.height;
+
+        function draw() {
+            const depth = parseInt(document.getElementById('bit-depth-select').value);
+            const zoom = parseFloat(document.getElementById('bit-depth-zoom').value);
+
+            const levels = Math.pow(2, depth) - 1;
+            const imageData = ctx.createImageData(width, height);
+            const data = imageData.data;
+
+            // We draw a linear gradient from black to white.
+            // Zoom focuses on the dark end (0..1/zoom)
+
+            for (let x = 0; x < width; x++) {
+                // Normalized position 0..1
+                let t = x / width;
+
+                // Apply zoom (focus on darks)
+                t = t / zoom;
+
+                // Linear value 0..1
+                let val = t;
+
+                // Quantize
+                val = Math.floor(val * levels) / levels;
+
+                // Apply gamma correction (approx 2.2) for display
+                // We simulate Linear -> sRGB display
+                // If we didn't apply gamma, thebanding would be less visible in darks on a standard monitor
+                // But here we want to show the banding in the values themselves.
+                // To make it visible on screen, we convert linear value to sRGB byte
+
+                let displayVal = Math.pow(val, 1 / 2.2);
+
+                // Convert to 8-bit component for canvas
+                let pixelVal = Math.floor(displayVal * 255);
+
+                // Fill column
+                for (let y = 0; y < height; y++) {
+                    const idx = (y * width + x) * 4;
+                    data[idx] = pixelVal;
+                    data[idx + 1] = pixelVal;
+                    data[idx + 2] = pixelVal;
+                    data[idx + 3] = 255;
+                }
+            }
+
+            ctx.putImageData(imageData, 0, 0);
+
+            // Draw text info
+            ctx.fillStyle = zoom > 10 ? '#fff' : '#000';
+            ctx.font = '14px sans-serif';
+            ctx.fillText(`Displaying 0 - ${(100 / zoom).toFixed(1)}% Luminance`, 10, 30);
+        }
+
+        document.getElementById('bit-depth-select').addEventListener('change', draw);
+        document.getElementById('bit-depth-zoom').addEventListener('input', draw);
+
+        draw();
+    })();
+</script>
+
+<p>Color depth is configured per display in <strong>Device Properties → Output → Signal</strong> and is available for GPU output types. SDI outputs currently operate at 8 bpc.</p>
 
 <h3>SDR White Point (Per-Cue)</h3>
 
@@ -904,6 +1400,184 @@ Color depth is configured per display in <strong>Device Properties → Output �
 
 </ul>
 This setting only takes effect when the display is configured for an HDR color space. On SDR displays, it has no impact.
+
+<div class="interactive-widget" id="sdr-white-widget">
+    <div style="position: relative; height: 60px; background: linear-gradient(to right, #111, #fff); border-radius: 4px; margin-bottom: 30px; margin-top: 30px; width: 600px;"
+        id="nit-bar">
+        <!-- HDR Headroom Highlight -->
+        <div id="hdr-headroom"
+            style="position: absolute; right: 0; top: 0; bottom: 0; background: repeating-linear-gradient(45deg, rgba(139, 92, 246, 0.1), rgba(139, 92, 246, 0.1) 10px, rgba(139, 92, 246, 0.25) 10px, rgba(139, 92, 246, 0.25) 20px); border-left: 1px dashed rgba(255,255,255,0.3); pointer-events: none; overflow: hidden;">
+            <div
+                style="position: absolute; top: 50%; left: 10px; transform: translateY(-50%); color: rgba(255,255,255,0.6); font-size: 11px; font-weight: 700; letter-spacing: 1px; white-space: nowrap; text-shadow: 0 1px 2px rgba(0,0,0,0.5);">
+                HDR HEADROOM</div>
+        </div>
+
+        <!-- Markers -->
+        <div style="position: absolute; left: 0; bottom: -25px; font-size: 12px; color: #888;">0 nits (SDR Black)</div>
+        <div style="position: absolute; right: 0; bottom: -25px; font-size: 12px; color: #888;">10,000 nits</div>
+
+        <!-- Draggable Handle -->
+        <div id="white-point-handle"
+            style="position: absolute; top: -5px; bottom: -5px; width: 4px; background: var(--accent-primary); cursor: ew-resize; left: 50%; z-index: 10;">
+            <div style="position: absolute; top: -30px; left: 50%; transform: translateX(-50%); background: var(--accent-primary); color: white; padding: 2px 8px; border-radius: 4px; font-size: 12px; font-weight: bold; white-space: nowrap; box-shadow: 0 2px 4px rgba(0,0,0,0.3);"
+                id="white-point-label">203 nits</div>
+            <div
+                style="position: absolute; bottom: -25px; left: 50%; transform: translateX(-50%); color: var(--text-primary); font-size: 12px; font-weight: 600; white-space: nowrap;">
+                SDR White</div>
+        </div>
+    </div>
+
+    <style>
+        #sdr-white-widget .widget-controls {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        #sdr-white-widget button {
+            padding: 10px 24px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50px;
+            font-family: inherit;
+            font-weight: 500;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all var(--transition-normal);
+            background: var(--bg-tertiary, #292524);
+            color: var(--text-secondary, #a8a29e);
+            box-shadow: none;
+        }
+
+        #sdr-white-widget button:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-primary);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        #sdr-white-widget button:active {
+            transform: translateY(1px);
+        }
+
+        #sdr-white-widget button.active {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: white;
+            border-color: transparent;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+        }
+
+        #sdr-white-widget button.active:hover {
+            box-shadow: 0 8px 20px rgba(99, 102, 241, 0.4);
+        }
+    </style>
+
+    <div class="widget-controls">
+        <button data-nits="100" onclick="setNits(100)">Set 100 nits (Broadcast)</button>
+        <button data-nits="203" onclick="setNits(203)">Set 203 nits (Reference)</button>
+        <button data-nits="400" onclick="setNits(400)">Set 400 nits</button>
+    </div>
+    <div class="widget-explainer">
+        Adjust the <strong>SDR White Point</strong> to define how bright standard content appears.
+        <br>The hatched area shows the remaining <strong>HDR Headroom</strong> for highlights.
+    </div>
+</div>
+<script>
+    // We need to attach this to the window or use a closure that exposes the setter
+    (function () {
+        const bar = document.getElementById('nit-bar');
+        const handle = document.getElementById('white-point-handle');
+        const label = document.getElementById('white-point-label');
+        const headroom = document.getElementById('hdr-headroom');
+
+        // Log scale: min 1 nit (for log), max 10000
+        const minLog = Math.log10(1);
+        const maxLog = Math.log10(10000);
+        const logRange = maxLog - minLog;
+
+        // Current nits
+        let currentNits = 203;
+
+        function nitsToPercent(nits) {
+            // Avoid log(0)
+            const n = Math.max(1, nits);
+            const log = Math.log10(n);
+            return ((log - minLog) / logRange) * 100;
+        }
+
+        function percentToNits(pct) {
+            const log = (pct / 100) * logRange + minLog;
+            return Math.pow(10, log);
+        }
+
+        function updateUI() {
+            const pct = nitsToPercent(currentNits);
+            handle.style.left = pct + '%';
+            label.textContent = Math.round(currentNits) + ' nits';
+
+            // Update Headroom
+            if (headroom) {
+                headroom.style.left = pct + '%';
+            }
+
+            // Update buttons active state
+            const buttons = document.querySelectorAll('#sdr-white-widget button');
+            buttons.forEach(btn => {
+                const btnNits = parseInt(btn.getAttribute('data-nits'));
+                if (Math.round(currentNits) === btnNits) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+        }
+
+        // Global exposed function for buttons
+        window.setNits = function (n) {
+            currentNits = n;
+            updateUI();
+        };
+
+        // Dragging logic
+        let isDragging = false;
+
+        handle.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            document.body.style.userSelect = 'none';
+        });
+
+        document.addEventListener('mouseup', () => {
+            isDragging = false;
+            document.body.style.userSelect = '';
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            const rect = bar.getBoundingClientRect();
+            let x = e.clientX - rect.left;
+            x = Math.max(0, Math.min(x, rect.width));
+            const pct = (x / rect.width) * 100;
+
+            // Clamp to SDR typical range for the handle dragging?
+            // User requirement: "SDR white point ... ranges from 80 to 500 nits" (actually 80-10000 in WATCHOUT, but handle for SDR white)
+            // The widget requirement says "draggable marker... range 80-500 nits"
+            // So we should clamp the *value* we can drag to, OR just let them drag anywhere but highlight valid range?
+            // "Draggable marker for the SDR white point (range 80–500 nits)"
+
+            let nits = percentToNits(pct);
+
+            // Clamp nits
+            nits = Math.max(80, Math.min(500, nits));
+
+            currentNits = nits;
+            updateUI();
+        });
+
+        // Init
+        updateUI();
+    })();
+</script>
 
 <h3>Per-Display Color Settings</h3>
 
@@ -941,8 +1615,6 @@ The NDI color space is independent of the GPU color space setting, since NDI and
 
 <p>The primary use case is <strong>projector color matching</strong> in multi-projector setups. When adjacent projectors have slightly different color temperatures (one appears warmer, another cooler), adjusting the white point sliders brings them into visual alignment. For example, if a projector's output appears too blue, reduce the Blue slider slightly until the white tone matches neighboring units.</p>
 
-<p>White point correction is applied as a per-pixel RGB multiplier in the output shader, after all other compositing and color space conversion has been completed. It affects the entire output of the display uniformly.</p>
-
 <h3>Tone Mapping</h3>
 
 <p>When HDR content is rendered to an SDR display, the high dynamic range must be compressed to fit the SDR output range without losing important detail in highlights and shadows. WATCHOUT uses a <strong>Hable tone mapping operator</strong> for this conversion, which preserves natural-looking midtones while smoothly compressing highlights toward peak white.</p>
@@ -978,7 +1650,7 @@ The NDI color space is independent of the GPU color space setting, since NDI and
             </article>
 
             <footer class="content-footer">
-                <p>WATCHOUT User Guide • Dataton Documentation • Generated January 2026</p>
+                <p>WATCHOUT User Guide • Dataton Documentation • Generated February 2026</p>
             </footer>
         </main>
     </div>

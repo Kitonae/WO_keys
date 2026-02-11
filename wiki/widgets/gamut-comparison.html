@@ -1,0 +1,112 @@
+<div class="interactive-widget" id="gamut-comparison-widget">
+    <canvas id="gamut-canvas" width="600" height="600"></canvas>
+    <div class="widget-controls">
+        <label><input type="checkbox" id="show-srgb" checked> sRGB / Rec. 709</label>
+        <label><input type="checkbox" id="show-rec2020"> Rec. 2020</label>
+        <label><input type="checkbox" id="show-rec601"> Rec. 601</label>
+    </div>
+    <div class="widget-explainer">
+        The <strong>Rec. 2020</strong> triangle covers a significantly larger area of visible colors than the standard
+        <strong>sRGB</strong> space.
+    </div>
+</div>
+<script>
+    (function () {
+        const canvas = document.getElementById('gamut-canvas');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+
+        // Spectral locus approximation (simplified)
+        const locus = [
+            [0.175596, 0.005296], [0.172787, 0.0048], [0.1708, 0.0054], [0.1703, 0.0058], [0.1664, 0.0086], [0.1606, 0.0145], [0.1566, 0.0177],
+            [0.151, 0.0227], [0.1415, 0.0379], [0.1355, 0.0525], [0.1266, 0.0813], [0.1193, 0.1187], [0.1111, 0.1857], [0.1009, 0.2974], [0.0931, 0.4079],
+            [0.0818, 0.5284], [0.074, 0.6481], [0.0766, 0.7251], [0.0863, 0.7761], [0.1205, 0.8175], [0.163, 0.8177], [0.2078, 0.7892], [0.2647, 0.7297],
+            [0.3204, 0.6635], [0.3703, 0.5968], [0.4193, 0.5317], [0.465, 0.4687], [0.5097, 0.4101], [0.5518, 0.3585], [0.591, 0.3093], [0.627, 0.2625],
+            [0.6586, 0.2206], [0.6865, 0.1834], [0.7088, 0.153], [0.7231, 0.1332], [0.7347, 0.1172], [0.7347, 0.005296], [0.175596, 0.005296]
+        ];
+
+        const primaries = {
+            srgb: { r: [0.64, 0.33], g: [0.30, 0.60], b: [0.15, 0.06], color: 'rgba(255, 215, 0, 0.8)', label: 'sRGB/709' },
+            rec2020: { r: [0.708, 0.292], g: [0.170, 0.797], b: [0.131, 0.046], color: 'rgba(0, 255, 0, 0.8)', label: 'Rec.2020' },
+            rec601: { r: [0.630, 0.340], g: [0.310, 0.595], b: [0.155, 0.070], color: 'rgba(50, 150, 255, 0.8)', label: 'Rec.601' }
+        };
+
+        function toCanvas(x, y) {
+            const scale = 500; // ample scale
+            const offsetX = 50;
+            const offsetY = 550;
+            return { x: x * scale + offsetX, y: offsetY - y * scale };
+        }
+
+        function drawTriangle(p, style, fill) {
+            const r = toCanvas(p.r[0], p.r[1]);
+            const g = toCanvas(p.g[0], p.g[1]);
+            const b = toCanvas(p.b[0], p.b[1]);
+
+            ctx.beginPath();
+            ctx.moveTo(r.x, r.y);
+            ctx.lineTo(g.x, g.y);
+            ctx.lineTo(b.x, b.y);
+            ctx.closePath();
+
+            ctx.lineWidth = 2;
+            ctx.strokeStyle = style;
+            ctx.stroke();
+
+            if (fill) {
+                ctx.fillStyle = style.replace('0.8', '0.2');
+                ctx.fill();
+            }
+
+            // Draw points
+            [r, g, b].forEach(pt => {
+                ctx.beginPath();
+                ctx.arc(pt.x, pt.y, 4, 0, Math.PI * 2);
+                ctx.fillStyle = style;
+                ctx.fill();
+            });
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Fill canvas background to ensure contrast
+            ctx.fillStyle = '#222';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Draw Locus Background
+            ctx.beginPath();
+            const first = toCanvas(locus[0][0], locus[0][1]);
+            ctx.moveTo(first.x, first.y);
+            locus.forEach(pt => {
+                const p = toCanvas(pt[0], pt[1]);
+                ctx.lineTo(p.x, p.y);
+            });
+            ctx.closePath();
+            ctx.fillStyle = '#111';
+            ctx.fill();
+            ctx.strokeStyle = '#333';
+            ctx.stroke();
+
+            // Draw Grid (Labels)
+            ctx.fillStyle = '#888';
+            ctx.font = '10px sans-serif';
+            for (let i = 0; i <= 0.8; i += 0.1) {
+                const pX = toCanvas(i, 0);
+                ctx.fillText(i.toFixed(1), pX.x, pX.y + 15);
+                const pY = toCanvas(0, i);
+                ctx.fillText(i.toFixed(1), pY.x - 25, pY.y);
+            }
+
+            if (document.getElementById('show-rec2020').checked) drawTriangle(primaries.rec2020, primaries.rec2020.color, true);
+            if (document.getElementById('show-srgb').checked) drawTriangle(primaries.srgb, primaries.srgb.color, true);
+            if (document.getElementById('show-rec601').checked) drawTriangle(primaries.rec601, primaries.rec601.color, true);
+        }
+
+        ['show-srgb', 'show-rec2020', 'show-rec601'].forEach(id => {
+            document.getElementById(id).addEventListener('change', draw);
+        });
+
+        draw();
+    })();
+</script>

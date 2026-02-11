@@ -22,7 +22,7 @@ A color space defines the range of colors (the "gamut") that can be represented,
 - **Rec. 2100 PQ (HDR10)** — the same as Rec. 2100 PQ but with HDR10 static metadata signaling enabled. Use this when the display or downstream equipment expects HDR10 metadata (MaxCLL, MaxFALL) in the signal.
 - **Rec. 2100 HLG** — combines Rec. 2020 primaries with the Hybrid Log-Gamma (HLG) transfer function. HLG is designed to be backward-compatible with SDR displays — the lower portion of the curve resembles a standard gamma curve, while the upper portion extends into HDR. This is commonly used in live broadcast HDR workflows.
 
-When rendering, WATCHOUT performs all pixel operations (blending, interpolation, compositing) in linear light. Source media is linearized on decode, processed internally, and then delinearized to the target transfer function on output. If the source and destination color primaries differ, a 3×3 matrix transform converts between them.
+[[WIDGET:gamut-comparison]]
 
 ### Transfer Functions
 
@@ -32,6 +32,8 @@ Transfer functions define how linear light values are encoded into the non-linea
 - **SDR (BT.1886)** — the broadcast SDR transfer function with a standard peak brightness of 100 nits. Used with Rec. 709 and Rec. 601 outputs.
 - **PQ (Perceptual Quantizer)** — an absolute luminance curve covering 0–10,000 nits. PQ encodes luminance values that map directly to real-world brightness levels, enabling HDR content to specify exact nit values. Used with Rec. 2100 PQ and HDR10.
 - **HLG (Hybrid Log-Gamma)** — a relative luminance curve with a standard peak of 1,000 nits. The lower half uses a gamma-like curve (backward-compatible with SDR displays), and the upper half uses a logarithmic extension for HDR highlights. Used with Rec. 2100 HLG.
+
+[[WIDGET:transfer-functions]]
 
 The choice of transfer function is determined by the color space you select on the display. For example, selecting Rec. 2100 PQ automatically uses the PQ transfer function.
 
@@ -43,6 +45,8 @@ Color depth determines how many bits are used per color component in the output 
 - **10 bpc** — 1,024 levels per channel. Recommended for HDR output and wide-gamut content. PQ-encoded HDR10 requires at least 10-bit output to avoid visible banding in dark areas and gradients.
 - **12 bpc** — 4,096 levels per channel. Available for display hardware that supports it; useful for professional mastering and reference monitoring.
 - **16 bpc** — 65,536 levels per channel. The highest precision available, suitable for specialized workflows requiring extreme accuracy.
+
+[[WIDGET:bit-depth]]
 
 Color depth is configured per display in **Device Properties → Output → Signal** and is available for GPU output types. SDI outputs currently operate at 8 bpc.
 
@@ -56,6 +60,8 @@ The value is specified in nits (candelas per square meter) and ranges from 80 to
 - A value of **200 nits** boosts SDR content to appear brighter, which may be appropriate for content viewed in bright ambient light.
 
 This setting only takes effect when the display is configured for an HDR color space. On SDR displays, it has no impact.
+
+[[WIDGET:sdr-white-point]]
 
 ### Per-Display Color Settings
 
@@ -88,8 +94,6 @@ The renderer uses this information to linearize the source correctly and, if nec
 Every display has a **White Point** setting in Device Properties, consisting of separate Red, Green, and Blue sliders (each ranging from 0.0 to 1.0, defaulting to 1.0). This is a per-display color temperature correction that adjusts the white balance of the output.
 
 The primary use case is **projector color matching** in multi-projector setups. When adjacent projectors have slightly different color temperatures (one appears warmer, another cooler), adjusting the white point sliders brings them into visual alignment. For example, if a projector's output appears too blue, reduce the Blue slider slightly until the white tone matches neighboring units.
-
-White point correction is applied as a per-pixel RGB multiplier in the output shader, after all other compositing and color space conversion has been completed. It affects the entire output of the display uniformly.
 
 ### Tone Mapping
 

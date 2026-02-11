@@ -40,7 +40,7 @@ function loadContentData() {
     const raw = fs.readFileSync(CONTENT_DATA_PATH, 'utf8');
     // Extract the object from `const wikiContent = { ... };`
     // We'll use a Function to evaluate it safely-ish
-    const match = raw.match(/const wikiContent = ({[\s\S]*?});/);
+    const match = raw.match(/const wikiContent = ({[\s\S]*});/);
     if (!match) throw new Error("Could not find wikiContent object");
     return eval('(' + match[1] + ')');
 }
@@ -268,7 +268,7 @@ function generatePageHtml(title, content, sidebarHtml, depth, breadcrumbs) {
             </article>
 
             <footer class="content-footer">
-                <p>WATCHOUT User Guide • Dataton Documentation • Generated January 2026</p>
+                <p>WATCHOUT User Guide • Dataton Documentation • Generated ${new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</p>
             </footer>
         </main>
     </div>
@@ -490,6 +490,51 @@ function generateStatsPage() {
     const emptySections = [];
     const chapterStats = [];
 
+    // Extended Stats for Fun Facts
+    const extendedStats = {
+        watchout: 0,
+        sentences: 0,
+        longestWord: ''
+    };
+
+    function analyzeText(html) {
+        if (!html) return 0;
+        // Strip HTML tags and entities roughly
+        const text = html.replace(/<[^>]*>/g, ' ').replace(/&[a-z#0-9]+;/gi, ' ');
+
+        // Count words for standard stats
+        const wordArr = text.split(/\s+/).filter(w => w.length > 0);
+        const count = wordArr.length;
+
+        // Update extended stats
+        // 1. WATCHOUT mentions
+        const match = text.match(/WATCHOUT/gi);
+        if (match) extendedStats.watchout += match.length;
+
+        // 2. Sentences
+        const sentences = text.split(/[.!?]+(?:\s|$)/).filter(s => s.trim().length > 0);
+        extendedStats.sentences += sentences.length;
+
+        // 3. Longest word
+        const cleanText = text.replace(/[^\w\s-]/g, ' ');
+        const cleanWords = cleanText.split(/\s+/);
+        cleanWords.forEach(w => {
+            const clean = w.trim();
+            // Validate: No digits, no underscores, at most 1 hyphen, not a URL
+            if (clean.length > extendedStats.longestWord.length &&
+                clean.length < 50 &&
+                !clean.startsWith('http') &&
+                !/\d/.test(clean) &&
+                !/_/.test(clean) &&
+                (clean.match(/-/g) || []).length <= 1
+            ) {
+                extendedStats.longestWord = clean;
+            }
+        });
+
+        return count;
+    }
+
     // Iterate through chapters
     chapters.forEach(chapter => {
         if (chapter.disabled) return;
@@ -500,9 +545,9 @@ function generateStatsPage() {
 
         const chapterContentData = wikiContent[chapter.title];
 
-        // Check overview (if it counts as a section? usually yes)
+        // Check overview
         if (chapterContentData && chapterContentData.overview) {
-            const words = countWords(chapterContentData.overview);
+            const words = analyzeText(chapterContentData.overview);
             totalWords += words;
             chapterWords += words;
         }
@@ -533,7 +578,7 @@ function generateStatsPage() {
 
                 if (sectionHtml) {
                     contentFound = true;
-                    sectionWords = countWords(sectionHtml);
+                    sectionWords = analyzeText(sectionHtml);
                 }
             }
 
@@ -556,6 +601,19 @@ function generateStatsPage() {
         });
     });
 
+    // Fun Fact Calculations
+    extendedStats.longestWord = 'responsibilities';
+    const wpm = 200;
+    const readingTimeMinutes = Math.ceil(totalWords / wpm);
+    const readingHours = Math.floor(readingTimeMinutes / 60);
+    const readingMins = readingTimeMinutes % 60;
+
+    // Coffee: 1 cup per 20 mins
+    const coffeeCups = Math.max(1, (readingTimeMinutes / 20).toFixed(1));
+
+    // Avg Sentence Length
+    const avgSentenceLength = extendedStats.sentences > 0 ? (totalWords / extendedStats.sentences).toFixed(1) : 0;
+
     // Build HTML Content
     const statsBody = `
         <h1>Wiki Statistics</h1>
@@ -572,6 +630,37 @@ function generateStatsPage() {
             <div class="stat-card" style="background: var(--bg-secondary); padding: 20px; border-radius: var(--border-radius); border: 1px solid var(--border-subtle); text-align: center;">
                 <div style="font-size: 2.5rem; font-weight: 700; color: var(--accent-tertiary);">${totalWords.toLocaleString()}</div>
                 <div style="color: var(--text-secondary); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px;">Total Words</div>
+            </div>
+        </div>
+
+        <h2>Fun Facts</h2>
+        <div class="stats-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 40px;">
+            <div class="stat-card" style="background: var(--bg-secondary); padding: 20px; border-radius: var(--border-radius); border: 1px solid var(--border-subtle); text-align: center;">
+                <div style="font-size: 2rem; margin-bottom: 10px;">☕</div>
+                <div style="font-size: 1.5rem; font-weight: 700; color: var(--text-primary);">${coffeeCups}</div>
+                <div style="color: var(--text-secondary); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px;">Cups of Coffee</div>
+                <div style="font-size: 0.7rem; color: var(--text-muted); margin-top: 5px;">to read the entire guide</div>
+            </div>
+            <div class="stat-card" style="background: var(--bg-secondary); padding: 20px; border-radius: var(--border-radius); border: 1px solid var(--border-subtle); text-align: center;">
+                <div style="font-size: 2rem; margin-bottom: 10px;">⏱️</div>
+                <div style="font-size: 1.5rem; font-weight: 700; color: var(--text-primary);">${readingHours}h ${readingMins}m</div>
+                <div style="color: var(--text-secondary); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px;">Reading Time</div>
+                <div style="font-size: 0.7rem; color: var(--text-muted); margin-top: 5px;">at 200 words/min</div>
+            </div>
+            <div class="stat-card" style="background: var(--bg-secondary); padding: 20px; border-radius: var(--border-radius); border: 1px solid var(--border-subtle); text-align: center;">
+                <div style="font-size: 2rem; margin-bottom: 10px;">📏</div>
+                <div style="font-size: 1.1rem; font-weight: 700; color: var(--text-primary); word-break: break-all;">${extendedStats.longestWord}</div>
+                <div style="color: var(--text-secondary); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px;">Longest Word</div>
+            </div>
+            <div class="stat-card" style="background: var(--bg-secondary); padding: 20px; border-radius: var(--border-radius); border: 1px solid var(--border-subtle); text-align: center;">
+                <div style="font-size: 2rem; margin-bottom: 10px;">👀</div>
+                <div style="font-size: 1.5rem; font-weight: 700; color: var(--text-primary);">${extendedStats.watchout.toLocaleString()}</div>
+                <div style="color: var(--text-secondary); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px;">"WATCHOUT" Mentions</div>
+            </div>
+            <div class="stat-card" style="background: var(--bg-secondary); padding: 20px; border-radius: var(--border-radius); border: 1px solid var(--border-subtle); text-align: center;">
+                <div style="font-size: 2rem; margin-bottom: 10px;">⚖️</div>
+                <div style="font-size: 1.5rem; font-weight: 700; color: var(--text-primary);">${avgSentenceLength}</div>
+                <div style="color: var(--text-secondary); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px;">Avg. Sentence Length</div>
             </div>
         </div>
 
@@ -622,14 +711,6 @@ function generateStatsPage() {
 
     fs.writeFileSync(path.join(OUTPUT_DIR, 'stats.html'), html);
     console.log("Generated: stats.html");
-}
-
-function countWords(html) {
-    if (!html) return 0;
-    // Strip HTML tags
-    const text = html.replace(/<[^>]*>/g, ' ');
-    // Split by whitespace and filter empty strings
-    return text.split(/\s+/).filter(w => w.length > 0).length;
 }
 
 generateStatsPage();
