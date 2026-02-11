@@ -34,7 +34,7 @@
                             <h3 class="section-header">Display Setup</h3>
 
                             <div class="control-row">
-                                <div class="control-group">
+                                <div class="control-group" data-tooltip="Total output resolution of the pattern">
                                     <label>Resolution</label>
                                     <div class="input-row input-compact">
                                         <input type="number" id="pattern-width" value="1920" placeholder="W">
@@ -43,7 +43,7 @@
                                         <span class="unit">px</span>
                                     </div>
                                 </div>
-                                <div class="control-group">
+                                <div class="control-group" data-tooltip="Number of displays in grid (Columns × Rows)">
                                     <label>Layout</label>
                                     <div class="input-row input-compact">
                                         <input type="number" id="display-cols" value="1" min="1" placeholder="C">
@@ -51,7 +51,8 @@
                                         <input type="number" id="display-rows" value="1" min="1" placeholder="R">
                                     </div>
                                 </div>
-                                <div class="control-group">
+                                <div class="control-group"
+                                    data-tooltip="Edge blend overlap (positive) or physical gap (negative)">
                                     <label>Overlap / Gap</label>
                                     <div class="input-row input-compact">
                                         <span>H</span>
@@ -66,13 +67,14 @@
                             <div class="control-group">
                                 <label>Style</label>
                                 <div class="options-row">
-                                    <label class="checkbox-label">
+                                    <label class="checkbox-label"
+                                        data-tooltip="Show individual display boundaries (dashed cyan)">
                                         <input type="checkbox" id="show-borders" checked> Borders
                                     </label>
-                                    <label class="checkbox-label">
+                                    <label class="checkbox-label" data-tooltip="Show pixel ruler on edges/overlaps">
                                         <input type="checkbox" id="show-ruler"> Ruler
                                     </label>
-                                    <label class="checkbox-label">
+                                    <label class="checkbox-label" data-tooltip="Show resolution/grid info text">
                                         <input type="checkbox" id="show-info" checked> Info
                                     </label>
                                 </div>
@@ -84,7 +86,7 @@
                             <h3 class="section-header">Grid Settings</h3>
 
                             <div class="control-row">
-                                <div class="control-group">
+                                <div class="control-group" data-tooltip="Spacing and color of primary grid lines">
                                     <label>Major Lines</label>
                                     <div class="input-row input-compact">
                                         <input type="number" id="grid-major-size" value="100" step="10">
@@ -92,7 +94,7 @@
                                         <input type="color" id="grid-major-color" value="#828282" title="Major Color">
                                     </div>
                                 </div>
-                                <div class="control-group">
+                                <div class="control-group" data-tooltip="Subdivisions between major grid lines">
                                     <label>Subdivisions</label>
                                     <div class="input-row input-compact">
                                         <input type="number" id="grid-subdivisions" value="4" min="1" max="20">
@@ -104,16 +106,17 @@
                             <div class="control-group">
                                 <label>Extras</label>
                                 <div class="options-row">
-                                    <label class="checkbox-label">
+                                    <label class="checkbox-label"
+                                        data-tooltip="Scale grid to fit full tiles in display/overlap">
                                         <input type="checkbox" id="normalize-grid" checked> Normalize
                                     </label>
-                                    <label class="checkbox-label">
+                                    <label class="checkbox-label" data-tooltip="Show text stamps in grid cells">
                                         <input type="checkbox" id="show-stamps"> Stamps
                                     </label>
-                                    <label class="checkbox-label">
+                                    <label class="checkbox-label" data-tooltip="Show geometry check circle">
                                         <input type="checkbox" id="show-circle" checked> Circle
                                     </label>
-                                    <label class="checkbox-label">
+                                    <label class="checkbox-label" data-tooltip="Show center crosshair">
                                         <input type="checkbox" id="show-crosshair" checked> Center
                                     </label>
                                 </div>
@@ -163,7 +166,8 @@
                             </div>
 
                             <div class="control-row">
-                                <div class="control-group" id="group-wall-res">
+                                <div class="control-group" id="group-wall-res"
+                                    data-tooltip="Total pixel resolution of the LED wall">
                                     <label>Wall Size</label>
                                     <div class="input-row input-compact">
                                         <input type="number" id="led-wall-width" value="1920" placeholder="W">
@@ -174,7 +178,8 @@
                                 </div>
 
                                 <div class="control-group" id="group-tile-count"
-                                    style="opacity: 0.5; pointer-events: none;">
+                                    style="opacity: 0.5; pointer-events: none;"
+                                    data-tooltip="Number of tiles (Cols × Rows)">
                                     <label>Tile Count</label>
                                     <div class="input-row input-compact">
                                         <input type="number" id="led-cols" value="15" placeholder="Cols">
@@ -184,7 +189,7 @@
                                 </div>
                             </div>
 
-                            <div class="control-group">
+                            <div class="control-group" data-tooltip="Resolution of a single LED cabinet">
                                 <label>Tile Size</label>
                                 <div class="input-row input-compact">
                                     <input type="number" id="led-tile-width" value="128" placeholder="W">
@@ -200,7 +205,7 @@
                             <h3 class="section-header">Display Options</h3>
 
                             <div class="control-row">
-                                <div class="control-group">
+                                <div class="control-group" data-tooltip="Coordinate system for tile identification">
                                     <label>Numbering</label>
                                     <select id="led-numbering">
                                         <option value="row-col">1-1 (Row-Col)</option>
@@ -213,7 +218,7 @@
                                     </select>
                                 </div>
 
-                                <div class="control-group">
+                                <div class="control-group" data-tooltip="Starting point for coordinates">
                                     <label>Coord Origin</label>
                                     <select id="led-coords">
                                         <option value="tl">Top-Left</option>
@@ -227,13 +232,13 @@
                             <div class="control-group">
                                 <label>Style</label>
                                 <div class="options-row">
-                                    <label class="checkbox-label">
+                                    <label class="checkbox-label" data-tooltip="Cycle colors across tiles">
                                         <input type="checkbox" id="led-rainbow"> Rainbow
                                     </label>
-                                    <label class="checkbox-label">
+                                    <label class="checkbox-label" data-tooltip="Fill tiles with solid/rainbow color">
                                         <input type="checkbox" id="led-background"> Fill
                                     </label>
-                                    <label class="checkbox-label">
+                                    <label class="checkbox-label" data-tooltip="Show tile separation lines">
                                         <input type="checkbox" id="led-borders" checked> Borders
                                     </label>
                                     <input type="color" id="led-color" value="#8b5cf6" title="Tile Color">
