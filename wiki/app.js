@@ -183,7 +183,7 @@ function renderTocPreview() {
     if (!tocPreviewGrid || typeof chaptersData === 'undefined') return;
 
     tocPreviewGrid.innerHTML = chaptersData.map(chapter => `
-        <a href="${slugify(chapter.title)}/index.html" class="toc-card ${chapter.disabled ? 'disabled' : ''}" style="text-decoration: none; color: inherit; display: block;">
+        <a href="${slugify(chapter.title)}/index.html" class="toc-card ${chapter.disabled ? 'disabled' : ''}" style="text-decoration: none; display: block;">
             <h4>
                 <span class="toc-card-icon">${getIcon(chapter.icon)}</span>
                 ${chapter.title}
@@ -214,7 +214,7 @@ function setupSidebar() {
 
         return `
         <div class="toc-chapter ${chapter.disabled ? 'disabled' : ''}">
-            <a href="${chapterSlug}/index.html" class="toc-chapter-header" style="text-decoration: none; color: inherit; display: flex;">
+            <a href="${chapterSlug}/index.html" class="toc-chapter-header" style="text-decoration: none; display: flex;">
                 <span class="toc-chapter-icon">${getIcon(chapter.icon)}</span>
                 <span class="toc-chapter-title">${chapter.title}</span>
                  ${chapter.subsections.length > 0 ? `

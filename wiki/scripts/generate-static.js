@@ -300,7 +300,7 @@ function generateSidebar(activeSlug, depth) {
 
         return `
         <div class="toc-chapter ${expandedClass} ${disabledClass}" data-index="${index}">
-            <a href="${chapterUrl}" class="toc-chapter-header ${activeClass} ${expandedClass}" style="text-decoration: none; color: inherit; display: flex;">
+            <a href="${chapterUrl}" class="toc-chapter-header ${activeClass} ${expandedClass}" style="text-decoration: none; display: flex;">
                 <span class="toc-chapter-icon">${iconSvg}</span>
                 <span class="toc-chapter-title">${chapter.title}</span>
                 ${chapter.subsections.length > 0 ? `

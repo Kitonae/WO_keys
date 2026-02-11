@@ -57,17 +57,17 @@
     --bg-secondary: #ffffff;
     --bg-tertiary: #e2e8f0;
     --bg-glass: #ffffff;
-    --accent-primary: #6B25DD;
-    --accent-secondary: #7c3aed;
-    --accent-tertiary: #8b5cf6;
-    --accent-glow: rgba(107, 37, 221, 0.10);
+    --accent-primary: #6200EA;
+    --accent-secondary: #7C3AFF;
+    --accent-tertiary: #B388FF;
+    --accent-glow: rgba(98, 0, 234, 0.10);
     --text-primary: #0f172a;
     --text-secondary: #475569;
     --text-muted: #94a3b8;
     --key-bg: linear-gradient(145deg, #ffffff, #f1f5f9);
     --key-border: #cbd5e1;
-    --bg-gradient-1: rgba(107, 37, 221, 0.03);
-    --bg-gradient-2: rgba(139, 92, 246, 0.02);
+    --bg-gradient-1: rgba(98, 0, 234, 0.03);
+    --bg-gradient-2: rgba(124, 58, 255, 0.02);
     --border-subtle: #cbd5e1;
     --input-bg: #ffffff;
     --input-bg-hover: #f1f5f9;
@@ -378,10 +378,11 @@ body::before {
 }
 
 .toc-chapter-header.active {
-    background: linear-gradient(135deg, rgba(107, 37, 221, 0.08), rgba(139, 92, 246, 0.05));
-    border: 1px solid rgba(107, 37, 221, 0.2);
+    background: var(--accent-primary);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     color: #ffffff;
     z-index: 2;
+    box-shadow: 0 4px 12px var(--shadow-color);
 }
 
 .toc-chapter-icon {
@@ -456,10 +457,11 @@ body::before {
 }
 
 .toc-subsection.active {
-    background: rgba(107, 37, 221, 0.15);
-    border: 1px solid rgba(107, 37, 221, 0.2);
+    background: var(--accent-primary);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     color: #ffffff;
     opacity: 1;
+    box-shadow: 0 2px 8px var(--shadow-color);
 }
 
 /* Disabled state */
