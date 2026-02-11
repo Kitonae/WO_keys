@@ -1,8 +1,5 @@
 ---
 title: "3D Mapping Projectors"
-author: Karol
-editor: Jacquie
-quality-check: JME
 ---
 
 

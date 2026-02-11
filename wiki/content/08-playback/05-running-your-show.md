@@ -1,8 +1,5 @@
 ---
 title: "Running Your Show"
-author: Karol
-editor: Jacquie
-quality-check: JME
 ---
 
 

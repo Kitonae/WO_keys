@@ -1,8 +1,5 @@
 ---
 title: "Cropping"
-author: Karol
-editor: Jacquie
-quality-check: JME
 ---
 
 

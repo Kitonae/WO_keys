@@ -1,8 +1,5 @@
 ---
 title: "Rotation Effects"
-author: Karol
-editor: Jacquie
-quality-check: JME
 ---
 
 

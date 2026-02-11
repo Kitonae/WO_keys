@@ -1,8 +1,5 @@
 ---
 title: "Display Servers"
-author: Karol
-editor: Jacquie
-quality-check: JME
 ---
 
 

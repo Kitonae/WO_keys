@@ -1,8 +1,5 @@
 ---
 title: "Starting and Stopping"
-author: Karol
-editor: Jacquie
-quality-check: JME
 ---
 
 

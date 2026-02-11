@@ -15,10 +15,74 @@ document.addEventListener('DOMContentLoaded', () => {
     setupSidebarAccordion();
     setupVideoModals();
     setupSearch();
+    setupBadges();
 
     renderTocPreview();
     setupDiagramTheme();
 });
+
+// ... existing code ...
+
+function setupBadges() {
+    // Generate a unique key for the current page
+    const getStorageKey = () => {
+        const pageId = document.body.getAttribute('data-page-id') || window.location.pathname;
+        return `watchout-wiki-badges-${pageId}`;
+    };
+
+    // Get active badges array for THIS page
+    const getActiveBadges = () => {
+        try {
+            return JSON.parse(localStorage.getItem(getStorageKey())) || [];
+        } catch (e) {
+            return [];
+        }
+    };
+
+    const contentBody = document.getElementById('content-body');
+
+    // Initial Application
+    applyBadgeFilters(getActiveBadges());
+
+    // Toggle logic
+    contentBody.addEventListener('click', (e) => {
+        if (e.target.classList.contains('article-badge')) {
+            const badge = e.target.getAttribute('data-badge');
+            let activeBadges = getActiveBadges();
+
+            if (activeBadges.includes(badge)) {
+                // Deactivate: Remove from array
+                activeBadges = activeBadges.filter(b => b !== badge);
+            } else {
+                // Activate: Add to array
+                activeBadges.push(badge);
+            }
+
+            localStorage.setItem(getStorageKey(), JSON.stringify(activeBadges));
+            applyBadgeFilters(activeBadges);
+        }
+    });
+
+    function applyBadgeFilters(activeBadges) {
+        // Highlight active badges
+        document.querySelectorAll('.article-badge').forEach(el => {
+            const badge = el.getAttribute('data-badge');
+            if (activeBadges.includes(badge)) {
+                el.classList.add('active');
+            } else {
+                el.classList.remove('active');
+            }
+        });
+
+        // Filter Sidebar (Future Check: Filter based on all active badges)
+        if (activeBadges.length > 0) {
+            console.log(`Filtering by badges: ${activeBadges.join(', ')}`);
+        } else {
+            console.log('Badge filters cleared');
+        }
+    }
+}
+
 
 // Update diagram based on theme
 function setupDiagramTheme() {

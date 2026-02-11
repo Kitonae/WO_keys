@@ -1,7 +1,8 @@
 ---
-author: Karol
-editor: Jacquie
-quality-check: Miro
+badge: Anton
+badge: Jacquie
+badge: JME
+badge: Karol
 ---
 
 ## Network Configuration

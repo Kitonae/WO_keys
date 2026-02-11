@@ -1,8 +1,5 @@
 ---
 title: "Scale and Size"
-author: Karol
-editor: Jacquie
-quality-check: JME
 ---
 
 

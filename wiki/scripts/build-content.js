@@ -247,7 +247,15 @@ function parseFrontmatter(content) {
                 (value.startsWith("'") && value.endsWith("'"))) {
                 value = value.slice(1, -1);
             }
-            metadata[key] = value;
+            if (Object.prototype.hasOwnProperty.call(metadata, key)) {
+                if (Array.isArray(metadata[key])) {
+                    metadata[key].push(value);
+                } else {
+                    metadata[key] = [metadata[key], value];
+                }
+            } else {
+                metadata[key] = value;
+            }
         }
     });
 
@@ -374,27 +382,15 @@ function buildContent() {
             else if (statusClass.includes('edit-finished')) statusClass = 'edit-finished';
             else if (statusClass.includes('final')) statusClass = 'final';
             else if (statusClass.includes('draft')) statusClass = 'draft';
-            let metadataHtml = `<div class="article-metadata">`;
-            metadataHtml += `<span class="article-status status-${statusClass}">Status: ${sectionStatus}</span>`;
-
-            if (metadata.author) {
-                metadataHtml += `<span class="article-author-badge">Author: ${metadata.author}</span>`;
+            let metadataHtml = '';
+            if (metadata.badge) {
+                const badges = Array.isArray(metadata.badge) ? metadata.badge : [metadata.badge];
+                metadataHtml += `<div class="article-metadata">`;
+                badges.forEach(badge => {
+                    metadataHtml += `<span class="article-badge" data-badge="${badge.trim()}">${badge.trim()}</span>`;
+                });
+                metadataHtml += `</div>`;
             }
-
-            if (metadata.editor) {
-                metadataHtml += `<span class="article-editor-badge">Editor: ${metadata.editor}</span>`;
-            }
-
-            if (metadata['quality-check']) {
-                metadataHtml += `<span class="article-qc-badge">Quality Check: ${metadata['quality-check']}</span>`;
-            }
-
-            const stats = fs.statSync(sectionPath);
-            const lastEdit = metadata['last-edit'] || stats.mtime.toISOString().split('T')[0];
-            metadataHtml += `<span class="article-date-badge">Last Edit: ${lastEdit}</span>`;
-            metadataHtml += `<a href="[[RELATIVE_PATH]]content/${chapterDir}/${sectionFile}" class="article-source-badge" download>Source MD</a>`;
-
-            metadataHtml += `</div>`;
 
             const sectionHtml = metadataHtml + markdownToHtml(content);
 

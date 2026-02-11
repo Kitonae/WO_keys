@@ -1,8 +1,5 @@
 ---
 title: "Firewall Configuration"
-author: Karol
-editor: Jacquie
-quality-check: JME
 ---
 
 

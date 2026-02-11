@@ -1,8 +1,5 @@
 ---
 title: "Understanding Tweens"
-author: Karol
-editor: Jacquie
-quality-check: JME
 ---
 
 

@@ -1,8 +1,5 @@
 ---
 title: "Network Overview"
-author: Karol
-editor: Jacquie
-quality-check: JME
 ---
 
 

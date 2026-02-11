@@ -1,8 +1,5 @@
 ---
 title: "Node Management and Maintenance"
-author: Karol
-editor: Jacquie
-quality-check: JME
 ---
 
 

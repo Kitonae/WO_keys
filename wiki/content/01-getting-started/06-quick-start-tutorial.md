@@ -1,7 +1,7 @@
 ---
-author: Karol
-editor: Jacquie
-quality-check: Morgan
+badge: Jacquie
+badge: JME
+badge: Karol
 ---
 
 ## Quick Start Tutorial

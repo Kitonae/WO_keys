@@ -1,9 +1,7 @@
 ---
-title: Welcome To Watchout 7
-status: content finished - ready to check
-author: Karol
-editor: Jacquie
-quality-check: JME
+badge: Jacquie
+badge: JME
+badge: Karol
 ---
 
 

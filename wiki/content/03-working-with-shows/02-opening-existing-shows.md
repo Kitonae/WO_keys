@@ -1,8 +1,5 @@
 ---
 title: "Opening Existing Shows"
-author: Karol
-editor: Jacquie
-quality-check: JME
 ---
 
 

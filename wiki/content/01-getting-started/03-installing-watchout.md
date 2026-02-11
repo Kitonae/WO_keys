@@ -1,7 +1,8 @@
 ---
-author: Karol
-editor: Jacquie
-quality-check: Anton
+badge: Miro
+badge: Jacquie
+badge: JME
+badge: Karol
 ---
 
 ## Installing WATCHOUT

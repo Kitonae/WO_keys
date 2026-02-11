@@ -1,8 +1,5 @@
 ---
 title: "Adding Media Cues"
-author: Karol
-editor: Jacquie
-quality-check: JME
 ---
 
 

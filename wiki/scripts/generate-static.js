@@ -107,6 +107,7 @@ function generatePageHtml(title, content, sidebarHtml, depth, breadcrumbs) {
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="${relPath}styles.css">
+    <link rel="stylesheet" href="${relPath}styles-badges.css">
     <script>
         // Apply saved theme immediately to prevent flash
         (function () {
@@ -115,7 +116,7 @@ function generatePageHtml(title, content, sidebarHtml, depth, breadcrumbs) {
         })();
     </script>
 </head>
-<body>
+<body data-page-id="${slugify(title)}">
     <div class="app">
         <!-- Sidebar Navigation -->
         <aside class="sidebar" id="sidebar">

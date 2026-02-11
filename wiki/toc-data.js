@@ -93,33 +93,39 @@ const tocData = [
     },
     {
         "level": 2,
-        "title": "The Assets Window",
+        "title": "The Cue List Window",
         "page": 4,
+        "description": "- Opening the Cue List — how to open the window from the Window menu and how it relates to the Timeline window.\n- Col..."
+    },
+    {
+        "level": 2,
+        "title": "The Assets Window",
+        "page": 5,
         "description": "The Assets window is your media library—the central repository for all images, videos, audio files, and other resourc..."
     },
     {
         "level": 2,
         "title": "The Properties Panel",
-        "page": 5,
+        "page": 6,
         "description": "The Properties panel is a context-sensitive inspector that displays settings for whatever is currently selected—displ..."
     },
     {
         "level": 2,
         "title": "The Network Window",
-        "page": 6,
-        "description": "The Network window shows all WATCHOUT devices on your network and their status. It provides centralized management of..."
-    },
-    {
-        "level": 2,
-        "title": "Customizing Your Workspace",
         "page": 7,
-        "description": "WATCHOUT 7's interface is fully customizable to match your workflow. The flexible window system allows you to arrange..."
+        "description": "The Network window shows all WATCHOUT devices on your network and their status. It provides centralized management of..."
     },
     {
         "level": 2,
         "title": "The Nodes Window",
         "page": 8,
         "description": "The Nodes window (also known as the Devices & Network window) provides a unified view of your show's output devices a..."
+    },
+    {
+        "level": 2,
+        "title": "Customizing Your Workspace",
+        "page": 9,
+        "description": "WATCHOUT 7's interface is fully customizable to match your workflow. The flexible window system allows you to arrange..."
     },
     {
         "level": 1,
@@ -150,6 +156,18 @@ const tocData = [
         "title": "Show Properties",
         "page": 4,
         "description": "Every show carries a set of properties that define how it behaves globally—settings that affect all timelines, all di..."
+    },
+    {
+        "level": 2,
+        "title": "Show Consolidation",
+        "page": 5,
+        "description": "- What consolidation does — explain that consolidation copies all referenced assets into a self-contained show packag..."
+    },
+    {
+        "level": 2,
+        "title": "Show Information",
+        "page": 6,
+        "description": "- Accessing Show Information — how to open the dialog from the File menu.\n- General details — show name, creation dat..."
     },
     {
         "level": 1,
@@ -195,9 +213,39 @@ const tocData = [
     },
     {
         "level": 2,
-        "title": "Geometry Correction",
+        "title": "Warp Geometry",
         "page": 7,
         "description": "Geometry correction aligns rendered imagery to real-world surfaces. In WATCHOUT, this is handled through warp geometr..."
+    },
+    {
+        "level": 2,
+        "title": "Display Masks",
+        "page": 8,
+        "description": "- What display masks are — masks define regions of a display where pixels are visible or hidden, using alpha-based ge..."
+    },
+    {
+        "level": 2,
+        "title": "SDI Output",
+        "page": 9,
+        "description": "- SDI output type — explain SDI as a display output type alongside GPU and NDI, and when to choose SDI.\n- SDI link ty..."
+    },
+    {
+        "level": 2,
+        "title": "HDR and Color Management",
+        "page": 10,
+        "description": "- Color spaces — explain the supported color spaces: Rec. 709 and Rec. 2020, and when each applies.\n- Transfer functi..."
+    },
+    {
+        "level": 2,
+        "title": "Test Patterns",
+        "page": 11,
+        "description": "- What test patterns are — built-in diagnostic patterns rendered directly by the Runner on a display, independent of ..."
+    },
+    {
+        "level": 2,
+        "title": "Display Calibration",
+        "page": 12,
+        "description": "- Display calibration mode — explain the per-display calibration mode setting and what it enables.\n- NDI calibration ..."
     },
     {
         "level": 1,
@@ -209,7 +257,7 @@ const tocData = [
         "level": 2,
         "title": "Asset Manager",
         "page": 1,
-        "description": "The Asset Manager is a core component of WATCHOUT 7 that manages all media files used in your shows."
+        "description": "The Asset Manager is the background service that handles all media in a WATCHOUT 7 show. It accepts source files, opt..."
     },
     {
         "level": 2,
@@ -231,32 +279,50 @@ const tocData = [
     },
     {
         "level": 2,
-        "title": "Web User Interface",
+        "title": "SVG Shapes",
         "page": 5,
+        "description": "- What SVG shapes are — explain that WATCHOUT can generate SVG-based assets internally for use as media cues, elimina..."
+    },
+    {
+        "level": 2,
+        "title": "Dynamic Assets",
+        "page": 6,
+        "description": "- What dynamic assets are — explain the concept of a dynamic asset as a named placeholder that can point to different..."
+    },
+    {
+        "level": 2,
+        "title": "Image Sequences",
+        "page": 7,
+        "description": "- What image sequences are — explain that a series of numbered image files (e.g., frame0001.png, frame0002.png, ...) ..."
+    },
+    {
+        "level": 2,
+        "title": "Web User Interface",
+        "page": 8,
         "description": "WATCHOUT 7 includes a web-based interface for managing assets remotely. This allows team members to upload and organi..."
     },
     {
         "level": 2,
         "title": "Asset Watcher",
-        "page": 6,
+        "page": 9,
         "description": "The Asset Watcher automatically monitors designated folders for new or changed files, streamlining the content workflow."
     },
     {
         "level": 2,
         "title": "Asset Transfer",
-        "page": 7,
+        "page": 10,
         "description": "When going online, optimized assets must be transferred to display servers. WATCHOUT manages this automatically."
     },
     {
         "level": 2,
         "title": "Asset Manager Settings",
-        "page": 8,
+        "page": 11,
         "description": "Configure the Asset Manager behavior through the Settings dialog."
     },
     {
         "level": 2,
         "title": "Import, Export, and Mapping",
-        "page": 9,
+        "page": 12,
         "description": "Beyond normal drag-and-drop ingest, the Assets window includes transfer workflows for moving asset sets between syste..."
     },
     {
@@ -297,7 +363,7 @@ const tocData = [
     },
     {
         "level": 2,
-        "title": "Comment Cues",
+        "title": "Marker Cues",
         "page": 6,
         "description": "Comment cues (marker cues) provide timeline annotations for operators, programmers, and show callers."
     },
@@ -309,27 +375,63 @@ const tocData = [
     },
     {
         "level": 2,
-        "title": "Grouping Cues",
-        "page": 8,
-        "description": "Grouping lets you treat multiple cues as a single composition unit."
-    },
-    {
-        "level": 2,
         "title": "Variables and Variable Cues",
-        "page": 9,
+        "page": 8,
         "description": "WATCHOUT variables let you drive timeline behavior and runtime values with explicit numeric controls."
     },
     {
         "level": 2,
-        "title": "Timeline Triggers and Expressions",
+        "title": "ArtNet Fixture Cues",
+        "page": 9,
+        "description": "WATCHOUT includes an ArtNet fixture workflow spanning Assets and Cue Properties."
+    },
+    {
+        "level": 2,
+        "title": "Compositions",
         "page": 10,
+        "description": "- What compositions are — explain that compositions are nested timelines created by grouping multiple cues together. ..."
+    },
+    {
+        "level": 2,
+        "title": "Cue Sets and Variants",
+        "page": 11,
+        "description": "- What cue sets are — explain that a Cue Set is a named group that can contain multiple variants. Cues assigned to a ..."
+    },
+    {
+        "level": 2,
+        "title": "Media Snapshots",
+        "page": 12,
+        "description": "- What media snapshots are — a system for saving the current property state of selected cues as a named preset, and l..."
+    },
+    {
+        "level": 2,
+        "title": "Stacking Order",
+        "page": 13,
+        "description": "- Per-cue stacking — explain the two stacking modes available on media cues:\n  - By Z — cues stack based on their Z p..."
+    },
+    {
+        "level": 2,
+        "title": "Timeline Triggers and Expressions",
+        "page": 14,
         "description": "Timelines can react automatically to expression-based trigger rules for play, pause, and stop."
     },
     {
         "level": 2,
-        "title": "ArtNet Fixture Cues",
-        "page": 11,
-        "description": "WATCHOUT includes an ArtNet fixture workflow spanning Assets and Cue Properties."
+        "title": "Blind Edit Mode",
+        "page": 15,
+        "description": "- What Blind Edit is — explain that Blind Edit mode lets you make changes to a timeline's cues and properties in isol..."
+    },
+    {
+        "level": 2,
+        "title": "Insert and Delete Time",
+        "page": 16,
+        "description": "- What Insert/Delete Time does — explain that this operation shifts all cues after a given point forward (insert) or ..."
+    },
+    {
+        "level": 2,
+        "title": "Conditional Cues",
+        "page": 17,
+        "description": "- What conditional cues are — explain that any media cue can have a condition attached that controls whether it rende..."
     },
     {
         "level": 1,
@@ -390,6 +492,48 @@ const tocData = [
         "title": "Audio Volume",
         "page": 9,
         "description": "Volume tweens automate cue loudness over time."
+    },
+    {
+        "level": 2,
+        "title": "Corner Pinning",
+        "page": 10,
+        "description": "- What corner pinning is — explain that the Corners tween allows you to independently move each of the four corners o..."
+    },
+    {
+        "level": 2,
+        "title": "Linear Wipe",
+        "page": 11,
+        "description": "- What linear wipe is — a transition effect that reveals or hides content using a moving edge/boundary, defined by an..."
+    },
+    {
+        "level": 2,
+        "title": "Blend Modes",
+        "page": 12,
+        "description": "- What blend modes are — explain that each media cue has a blend mode property that determines how its rendered pixel..."
+    },
+    {
+        "level": 2,
+        "title": "Frame Blending",
+        "page": 13,
+        "description": "- What frame blending is — explain that Frame Blending interpolates between video frames when the media's native fram..."
+    },
+    {
+        "level": 2,
+        "title": "Chroma Key",
+        "page": 14,
+        "description": "- What chroma key is — a compositing technique that removes a specific color from a cue's rendered output, making tho..."
+    },
+    {
+        "level": 2,
+        "title": "Key and Fill",
+        "page": 15,
+        "description": "- What Key & Fill is — explain that Key & Fill is a layer-level compositing operation where one layer (the key layer)..."
+    },
+    {
+        "level": 2,
+        "title": "Tween Expressions",
+        "page": 16,
+        "description": "- What tween expressions are — explain that any tween property (position, opacity, scale, color, etc.) can be driven ..."
     },
     {
         "level": 1,
@@ -476,8 +620,98 @@ const tocData = [
         "description": "Node maintenance actions are available in host/device properties under Network Actions."
     },
     {
+        "level": 2,
+        "title": "Remote File Access",
+        "page": 8,
+        "description": "- What remote file access is — explain that WATCHOUT allows Producer to browse and upload files to remote nodes over ..."
+    },
+    {
+        "level": 2,
+        "title": "Working Directory Management",
+        "page": 9,
+        "description": "- What the working directory is — explain that each WATCHOUT node has a working directory where it stores cached asse..."
+    },
+    {
+        "level": 2,
+        "title": "Software Updates",
+        "page": 10,
+        "description": "- Update mechanism — explain that Producer can push its own software version to remote nodes, ensuring all nodes in t..."
+    },
+    {
+        "level": 2,
+        "title": "Time Synchronization",
+        "page": 11,
+        "description": "- Why time sync matters — explain that frame-accurate multi-display playback requires all nodes to share a common tim..."
+    },
+    {
         "level": 1,
-        "title": "10. Keyboard Shortcuts",
+        "title": "10. External Control",
+        "page": 1,
+        "icon": "radio"
+    },
+    {
+        "level": 2,
+        "title": "External Control Overview",
+        "page": 1,
+        "description": "- Control architecture — explain the overall input flow: external signals arrive at the Operative (or directly at the..."
+    },
+    {
+        "level": 2,
+        "title": "Variables and Inputs",
+        "page": 2,
+        "description": "- Variables window — how to manage show variables: adding, removing, editing live values with sliders, and saving cur..."
+    },
+    {
+        "level": 2,
+        "title": "OSC Protocol",
+        "page": 3,
+        "description": "- What OSC is — brief explanation of Open Sound Control as a flexible, message-based protocol commonly used in media ..."
+    },
+    {
+        "level": 2,
+        "title": "MIDI Bridge",
+        "page": 4,
+        "description": "- What the MIDI Bridge is — a standalone service that receives MIDI Control Change messages from connected MIDI devic..."
+    },
+    {
+        "level": 2,
+        "title": "LTC Bridge",
+        "page": 5,
+        "description": "- What the LTC Bridge is — a standalone service that decodes Linear Time Code from an audio input and makes it availa..."
+    },
+    {
+        "level": 2,
+        "title": "HTTP REST API",
+        "page": 6,
+        "description": "- API overview — WATCHOUT exposes HTTP endpoints on the Operative for external control. Describe the base URL structu..."
+    },
+    {
+        "level": 2,
+        "title": "ArtNet Input",
+        "page": 7,
+        "description": "- What ArtNet input is — explain that WATCHOUT can receive ArtNet DMX data and map DMX channel values to show variabl..."
+    },
+    {
+        "level": 2,
+        "title": "PosiStageNet",
+        "page": 8,
+        "description": "- What PosiStageNet is — a protocol for transmitting 3D position data from tracking systems (BlackTrax, Mo-Sys, etc.)..."
+    },
+    {
+        "level": 2,
+        "title": "MIDI Show Control",
+        "page": 9,
+        "description": "- What MSC is — MIDI Show Control is a standard (part of the MIDI specification) for controlling show equipment using..."
+    },
+    {
+        "level": 2,
+        "title": "WATCHOUT 6 Protocol",
+        "page": 10,
+        "description": "- What the WO6 protocol is — WATCHOUT 7 includes a backward-compatible TCP control interface that accepts commands in..."
+    },
+    {
+        "level": 1,
+        "title": "11. Keyboard Shortcuts",
         "page": 1,
         "icon": "keyboard"
     },
@@ -519,7 +753,7 @@ const tocData = [
     },
     {
         "level": 1,
-        "title": "11. Troubleshooting",
+        "title": "12. Troubleshooting",
         "page": 1,
         "icon": "alertCircle"
     },
@@ -555,8 +789,14 @@ const tocData = [
     },
     {
         "level": 2,
-        "title": "Getting Help",
+        "title": "Feedback Reports",
         "page": 6,
+        "description": "- What feedback reports are — explain that a feedback report bundles logs from the Director and connected nodes into ..."
+    },
+    {
+        "level": 2,
+        "title": "Getting Help",
+        "page": 7,
         "description": "When escalation is needed, gather diagnostics first so support can reproduce and resolve quickly."
     }
 ];

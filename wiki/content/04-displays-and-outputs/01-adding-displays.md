@@ -1,8 +1,5 @@
 ---
 title: "Adding Displays"
-author: Karol
-editor: Jacquie
-quality-check: JME
 ---
 
 

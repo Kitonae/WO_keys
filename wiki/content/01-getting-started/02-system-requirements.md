@@ -1,8 +1,8 @@
 ---
-author: Karol
-status: content verified - ready to edit
-editor: Jacquie
-quality-check: Miro
+badge: Miro
+badge: Jacquie
+badge: JME
+badge: Karol
 ---
 
 ## System Requirements

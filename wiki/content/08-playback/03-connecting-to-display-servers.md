@@ -1,8 +1,5 @@
 ---
 title: "Connecting to Display Servers"
-author: Karol
-editor: Jacquie
-quality-check: JME
 ---
 
 

@@ -1,63 +1,72 @@
 ---
 title: "Asset Properties"
-author: Karol
-editor: Jacquie
-quality-check: JME
 ---
 
 
 ## Asset Properties
 
-Each asset has properties that control how it behaves in your show. Access properties by selecting an asset and viewing the Properties panel, or double-click to open the Asset Properties dialog.
+Select one or more assets in the Assets window to view their properties in the Properties panel. Double-click an asset or press **Enter** to focus the Properties panel directly.
 
-### General Properties
+The Properties panel adapts to the asset type, showing only the fields relevant to the selected asset.
 
-| Property | Description |
-| --- | --- |
-| Name | Display name in the Assets window |
-| Source Path | Location of the original file |
-| Duration | Length for video/audio assets |
-| Dimensions | Width × Height in pixels |
-| Frame Rate | Playback speed for video/sequences |
+### General Information
 
-### Video Properties
+All assets display the following read-only fields in the Info section:
 
-| Property | Description |
-| --- | --- |
-| Codec | Video compression format |
-| Bit Depth | Color depth (8-bit, 10-bit, etc.) |
-| Alpha Channel | Transparency support |
-| In Point | Start trim point |
-| Out Point | End trim point |
-| Loop Mode | None, Loop, or Ping-Pong |
+- **Name** – the display name. Click the name field to rename the asset (editable unless the asset is in an error state).
+- **Type** – the asset kind (Video, Image, Audio, SVG, Composition, etc.).
+- **UUID** – the unique identifier assigned to the asset.
+- **Original Path** – the original file location from which the asset was imported.
 
-### Audio Properties
+### Visual Asset Properties
 
-| Property | Description |
-| --- | --- |
-| Sample Rate | 44.1kHz, 48kHz, 96kHz, etc. |
-| Bit Depth | 16-bit, 24-bit, 32-bit float |
-| Channels | Mono, Stereo, 5.1, 7.1, etc. |
-| Volume | Default playback level |
+For image and video assets, the following additional fields appear:
 
-### Optimization Status
+- **Codec** – the optimized codec (if different from the original, both are shown, e.g. "H.264 → HAP").
+- **Color Space** – the color standard and transfer function. If the input and output differ, both are displayed with an arrow (e.g. "sRGB → Rec. 709"). Recognized standards include Rec. 709, Rec. 2020, Rec. 2100 PQ, Rec. 2100 HLG, and sRGB.
+- **Dimensions** – width × height in pixels for 2D assets, or X × Y × Z bounding box for 3D models.
+- **Bitrate** – the video bitrate (video assets only).
+- **Compression Ratio** – the ratio between uncompressed and compressed file size (video and image assets).
 
-- **Pending** (gray) – Not yet optimized
+### Video-Specific Properties
 
-- **Optimizing** (yellow) – Currently being processed
+- **Frame Rate** – displayed in frames per second. Fractional rates (e.g. 29.97) are shown with two decimal places.
+- **Duration** – total playback length, formatted as HH:MM:SS.ms.
+- **Progress** – optimization or upload progress percentage (visible only while the asset is being processed).
 
-- **Ready** (green) – Optimized and ready for playback
+### Audio-Specific Properties
 
-- **Error** (red) – Optimization failed
+- **Channels** – the number of audio channels (1 = mono, 2 = stereo, etc.).
+- **Sample Rate** – displayed in kHz (e.g. 48 kHz).
+- **Duration** – total playback length.
 
-- **Modified** (orange) – Source file has changed, needs re-optimization
+### Display Data Properties
 
-### Actions
+For MPCDI display data assets:
 
-- **Re-optimize** – Regenerate optimized version
+- **Version** – the MPCDI file version.
+- **Canvases Size** – the total canvas dimensions.
 
-- **Reveal in Explorer** – Open source file location
+### Dynamic Asset Properties
 
-- **Find Cues** – Locate all timeline cues using this asset
+When a dynamic (auto-updating) asset is selected, an additional **Active Version** section appears showing:
 
-- **Replace Asset** – Swap with a different file
+- The currently active version and its details.
+- A version count indicator (e.g. "2 versions").
+- Controls for managing and switching between versions.
+
+See [Dynamic Assets](../06-dynamic-assets) for details on version management.
+
+### SVG Shape Properties
+
+SVG shape assets display a dedicated shape editor instead of the standard property fields. This includes a live preview, geometry controls, fill and stroke colors, and (for text shapes) font and text properties.
+
+See [SVG Shapes](../05-svg-shapes) for full documentation.
+
+### Error Information
+
+If an asset failed to optimize, the Properties panel displays:
+
+- **Error** – the error message explaining why optimization failed.
+
+Assets in an error state show their name in red in the Assets window and cannot be renamed or used until the issue is resolved.

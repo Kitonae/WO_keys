@@ -1,8 +1,5 @@
 ---
 title: "The Nodes Window"
-author: Karol
-editor: Jacquie
-quality-check: JME
 ---
 
 

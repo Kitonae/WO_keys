@@ -1,8 +1,5 @@
 ---
 title: "Virtual Displays"
-author: Karol
-editor: Jacquie
-quality-check: JME
 ---
 
 

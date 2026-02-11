@@ -1,8 +1,5 @@
 ---
 title: "Connecting Devices"
-author: Karol
-editor: Jacquie
-quality-check: JME
 ---
 
 

@@ -1,8 +1,5 @@
 ---
 title: "Preview Mode"
-author: Karol
-editor: Jacquie
-quality-check: JME
 ---
 
 
