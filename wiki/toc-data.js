@@ -791,7 +791,7 @@ const tocData = [
         "level": 2,
         "title": "Feedback Reports",
         "page": 6,
-        "description": "- What feedback reports are — explain that a feedback report bundles logs from the Director and connected nodes into ..."
+        "description": "A feedback report is a compressed diagnostic archive that bundles logs, system information, and optionally the curren..."
     },
     {
         "level": 2,

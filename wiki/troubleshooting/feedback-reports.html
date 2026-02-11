@@ -845,23 +845,75 @@
                 <div class="section-content" style="display: block;">
                     <div class="section-content-body"><h2>Feedback Reports</h2>
 
-<p><!-- STUB: This article should cover the Feedback Report feature for collecting diagnostic logs and system information for troubleshooting. --></p>
+<p>A feedback report is a compressed diagnostic archive that bundles logs, system information, and optionally the current show file into a single package. You can send this archive to Dataton support or use it for internal analysis when troubleshooting issues.</p>
 
-<h3>Content to include</h3>
+<h3>Creating a Report</h3>
+
+<p>The <strong>Create Feedback Report</strong> dialog is accessible from two places:</p>
 
 <ul>
-<li><strong>What feedback reports are</strong> — explain that a feedback report bundles logs from the Director and connected nodes into a downloadable archive for submission to Dataton support or internal analysis.</li>
-<li><strong>Creating a report</strong> — how to open the Create Feedback Report dialog from the Help menu or Welcome screen:</li>
-<li><strong>Director selection</strong> — choose which Director to fetch logs from (including localhost).</li>
-<li><strong>Start time</strong> — the beginning of the time window to collect (must be within the last 2 weeks and not in the future).</li>
-<li><strong>Duration</strong> — how many hours of logs to include (0.1–720 hours).</li>
-<li><strong>Include show file</strong> — option to attach the current show file to the report.</li>
-<li><strong>Output</strong> — where the report is saved and what it contains (logs, system information, optionally the show file).</li>
-<li><strong>Size and data limits</strong> — the maximum report size warning (with file size in MB), the maximum log line limit, and the "no data" warning when the selected time range has no logs.</li>
-<li><strong>When to create a report</strong> — after experiencing crashes, unexpected behavior, performance issues, or when requested by Dataton support.</li>
-<li><strong>Loki log server</strong> — brief mention that WATCHOUT uses a Loki-based logging service for centralized log collection, and that the feedback report pulls from this service. Note the error messages if Loki fails to start or stops unexpectedly.</li>
+<li><strong>Help menu</strong> → <strong>Create Feedback Report</strong></li>
+<li><strong>Welcome screen</strong> → <strong>Your Feedback</strong></li>
 
-</ul></div><div class="section-nav">
+</ul>
+The dialog presents the following options:
+
+<p><strong>Director</strong> — Select which Director to fetch logs from. The dropdown lists all discovered Directors on the network by host alias and IP address. If no Director is found, the option defaults to localhost (<code>127.0.0.1</code>). If a show is currently open, the dialog pre-selects the Director associated with that show.</p>
+
+<p><strong>Start Time</strong> — The beginning of the time window for log collection. Use the calendar and clock icons to pick a date and time. The start time must be within the <strong>last 2 weeks</strong> and cannot be in the future. By default, this is set to 8 hours before the current time.</p>
+
+<p><strong>Duration</strong> — How many hours of logs to collect, from <strong>0.1 to 720 hours</strong> (30 days). The default is 8 hours. A shorter duration produces a smaller, more focused report.</p>
+
+<p><strong>Include Show File</strong> — A toggle to attach the current show file to the report. This is enabled by default. Including the show file helps support reproduce issues in context, but you may want to disable it if the show contains sensitive content.</p>
+
+<p>Click <strong>Create</strong> to generate the report.</p>
+
+<h3>What the Report Contains</h3>
+
+<p>The feedback report is saved as a <strong>7z archive</strong> named <code>dataton_feedback.7z</code> in a <code>feedback</code> folder next to the Producer log directory. When the report is created, the folder opens automatically in the file explorer.</p>
+
+<p>The archive contains:</p>
+
+<ul>
+<li><strong>services_log.txt</strong> — Logs from all WATCHOUT services (Director, Runner, Operative, etc.) collected from the centralized logging service for the selected time range. Limited to 500,000 log lines.</li>
+<li><strong>error_log.txt</strong> — A filtered extract of error-level log entries from the past 2 weeks (up to 5,000 entries), providing a quick overview of recent problems.</li>
+<li><strong>producer_log.txt</strong> — The Producer's local log file, trimmed to the last 3 sessions for relevance.</li>
+<li><strong>asset_watcher_log.txt</strong> — The Asset Watcher's log file, if available.</li>
+<li><strong>hosts_info.json</strong> — Information about all discovered nodes on the network.</li>
+<li><strong>show_info.json</strong> — Metadata about the current show.</li>
+<li><strong>show.watch</strong> — The current show file (only if "Include Show File" was enabled).</li>
+
+</ul>
+<h3>Size and Data Limits</h3>
+
+<p>The report generation process enforces several safeguards:</p>
+
+<ul>
+<li><strong>Maximum report size: 500 MB</strong> — If the compressed archive exceeds this limit, the report is discarded and an error is shown. Reduce the duration to capture fewer logs.</li>
+<li><strong>Maximum log lines: 500,000</strong> — If the selected time range contains more log lines than this limit, the report is still created but a warning is shown advising you to reduce the time range.</li>
+<li><strong>No data warning</strong> — If the archive is smaller than 1 KB (essentially empty), the report is discarded with a message suggesting you try a different time range or verify that services were running during the selected period.</li>
+
+</ul>
+<h3>The Loki Log Server</h3>
+
+<p>WATCHOUT uses a <strong>Loki-based logging service</strong> for centralized log collection across all services in the system. Every WATCHOUT service (Director, Runner, Operative, Process Manager, etc.) sends its log output to Loki, which runs on the same node as the Process Manager.</p>
+
+<p>The feedback report pulls logs from Loki via its query API, which is why you need to select a Director — the report fetches logs from the Loki instance running on that node.</p>
+
+<div class='warning-box'><p>If Loki fails to start or stops unexpectedly, a message will appear in the log window: "Logging service (Loki) failed to start" or "Logging service (Loki) has stopped unexpectedly and will attempt to restart." Without a running Loki instance, feedback reports will not contain service logs for the affected node.
+</p></div>
+
+<h3>When to Create a Report</h3>
+
+<ul>
+<li><strong>After a crash or unexpected behavior</strong> — Capture logs as soon as possible while they are still available.</li>
+<li><strong>Performance issues</strong> — Include a time window that covers the period when the issue occurred.</li>
+<li><strong>When requested by Dataton support</strong> — Support may ask for a feedback report with a specific time range.</li>
+<li><strong>Before making system changes</strong> — A baseline report can be useful for comparison if issues arise later.</li>
+
+</ul>
+<div class='info-box'><p>Create the report promptly after an issue occurs. Loki retains logs for a limited period, and the 2-week start time limit means older logs may no longer be available.
+</p></div></div><div class="section-nav">
                 <a href="media-playback-issues.html" class="nav-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
