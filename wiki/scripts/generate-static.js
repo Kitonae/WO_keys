@@ -497,7 +497,12 @@ function generateStatsPage() {
         longestWord: ''
     };
 
-    function analyzeText(html) {
+    const wordCounts = {};
+    const stopWords = new Set([
+        'the', 'of', 'and', 'to', 'a', 'in', 'is', 'that', 'for', 'it', 'as', 'was', 'with', 'on', 'by', 'be', 'at', 'this', 'are', 'we', 'you', 'or', 'an', 'your', 'from', 'can', 'which', 'if', 'will', 'not', 'use', 'has', 'have', 'but', 'more', 'when', 'all', 'one', 'new', 'their', 'other', 'also', 'time', 'into', 'up', 'out', 'so', 'what', 'some', 'see', 'only', 'do', 'its', 'them', 'two', 'then', 'over', 'may', 'no', 'there', 'any', 'after', 'how', 'most', 'such', 'these', 'used', 'using', 'way', 'about', 'get', 'than', 'just', 'make', 'where', 'like', 'should'
+    ]);
+
+    function analyzeText(html, trackFrequency = false) {
         if (!html) return 0;
         // Strip HTML tags and entities roughly
         const text = html.replace(/<[^>]*>/g, ' ').replace(/&[a-z#0-9]+;/gi, ' ');
@@ -505,6 +510,15 @@ function generateStatsPage() {
         // Count words for standard stats
         const wordArr = text.split(/\s+/).filter(w => w.length > 0);
         const count = wordArr.length;
+
+        if (trackFrequency) {
+            wordArr.forEach(w => {
+                const clean = w.toLowerCase().replace(/[^\w]/g, ''); // Remove punctuation
+                if (clean.length > 3 && !stopWords.has(clean) && !/^\d+$/.test(clean)) {
+                    wordCounts[clean] = (wordCounts[clean] || 0) + 1;
+                }
+            });
+        }
 
         // Update extended stats
         // 1. WATCHOUT mentions
@@ -547,7 +561,7 @@ function generateStatsPage() {
 
         // Check overview
         if (chapterContentData && chapterContentData.overview) {
-            const words = analyzeText(chapterContentData.overview);
+            const words = analyzeText(chapterContentData.overview, true);
             totalWords += words;
             chapterWords += words;
         }
@@ -578,7 +592,7 @@ function generateStatsPage() {
 
                 if (sectionHtml) {
                     contentFound = true;
-                    sectionWords = analyzeText(sectionHtml);
+                    sectionWords = analyzeText(sectionHtml, true);
                 }
             }
 
@@ -614,6 +628,26 @@ function generateStatsPage() {
     // Avg Sentence Length
     const avgSentenceLength = extendedStats.sentences > 0 ? (totalWords / extendedStats.sentences).toFixed(1) : 0;
 
+    // Generate Word Cloud HTML
+    const sortedWords = Object.entries(wordCounts)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 60);
+
+    const maxCount = sortedWords.length > 0 ? sortedWords[0][1] : 1;
+    const minCount = sortedWords.length > 0 ? sortedWords[sortedWords.length - 1][1] : 1;
+
+    // Shuffle for visual effect
+    const shuffledWords = sortedWords.sort(() => Math.random() - 0.5);
+
+    const wordCloudHtml = shuffledWords.map(([word, count]) => {
+        // Logarithmic scale for better distribution
+        const weight = (Math.log(count) - Math.log(minCount)) / (Math.log(maxCount) - Math.log(minCount));
+        const fontSize = 1 + (weight * 2.5); // 1rem to 3.5rem
+        const opacity = 0.6 + (weight * 0.4); // 0.6 to 1.0
+
+        return `<span style="font-size: ${fontSize.toFixed(2)}rem; opacity: ${opacity.toFixed(2)}; margin: 5px 10px; display: inline-block;">${word}</span>`;
+    }).join('');
+
     // Build HTML Content
     const statsBody = `
         <h1>Wiki Statistics</h1>
@@ -631,6 +665,11 @@ function generateStatsPage() {
                 <div style="font-size: 2.5rem; font-weight: 700; color: var(--accent-tertiary);">${totalWords.toLocaleString()}</div>
                 <div style="color: var(--text-secondary); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px;">Total Words</div>
             </div>
+        </div>
+
+        <h2>Word Cloud</h2>
+        <div class="word-cloud" style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center; padding: 40px; background: var(--bg-secondary); border-radius: var(--border-radius); border: 1px solid var(--border-subtle); margin-bottom: 40px;">
+            ${wordCloudHtml}
         </div>
 
         <h2>Fun Facts</h2>

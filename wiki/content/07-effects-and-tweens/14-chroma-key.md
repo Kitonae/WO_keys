@@ -52,6 +52,8 @@ Pixels with a color distance greater than Max are left fully opaque.
 Start with the default tolerance values and adjust gradually. Increasing Min expands the fully transparent region; increasing Max softens the transition between transparent and opaque areas. The goal is to fully remove the background while preserving fine edge details like hair or translucent materials.
 :::
 
+[[WIDGET:chroma-key-tolerance]]
+
 ### Spill Removal
 
 The **Spill Removal** control (default: 0.5) reduces color contamination — the colored fringe that often appears on foreground edges when the key color reflects onto the subject. Higher values apply more aggressive spill suppression, neutralizing the color cast on edge pixels.

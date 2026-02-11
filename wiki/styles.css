@@ -1972,3 +1972,33 @@ button:focus-visible {
     color: var(--accent-primary);
     font-weight: 600;
 }
+
+/* Word Cloud Styles */
+.word-cloud span {
+    transition: all var(--transition-normal);
+    cursor: default;
+    color: var(--text-primary);
+    line-height: 1;
+}
+
+.word-cloud span:hover {
+    transform: scale(1.2);
+    color: var(--accent-primary);
+    text-shadow: 0 0 20px var(--accent-glow);
+    z-index: 10;
+}
+
+.word-cloud span:hover {
+    opacity: 1 !important;
+}
+
+.interactive-widget {
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--border-radius);
+    padding: 30px;
+    margin: 30px auto;
+    width: fit-content;
+    max-width: 100%;
+    box-shadow: 0 4px 20px var(--shadow-color);
+}

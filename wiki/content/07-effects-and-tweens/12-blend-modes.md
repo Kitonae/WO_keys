@@ -21,6 +21,8 @@ WATCHOUT provides seven blend modes:
 - **Darken** — for each color channel, the darker of the two pixel values is kept. Only areas darker than the underlying content show through. Useful for combining shadow elements.
 - **Linear Burn** — adds the pixel values of both layers and subtracts white (1.0), producing a result darker than Multiply. Creates high-contrast darkening effects and deep shadow blends.
 
+[[WIDGET:blend-modes]]
+
 ### Setting the Blend Mode
 
 To change a cue's blend mode:
