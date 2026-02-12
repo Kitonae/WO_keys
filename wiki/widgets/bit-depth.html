@@ -70,8 +70,9 @@
 
             // Draw text info
             ctx.fillStyle = zoom > 10 ? '#fff' : '#000';
-            ctx.font = '14px sans-serif';
-            ctx.fillText(`Displaying 0 - ${(100 / zoom).toFixed(1)}% Luminance`, 10, 30);
+            ctx.font = '24px "Futura Now Headline", Futura, sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText(`Displaying 0 - ${(100 / zoom).toFixed(1)}% Luminance`, width / 2, 30);
         }
 
         document.getElementById('bit-depth-select').addEventListener('change', draw);

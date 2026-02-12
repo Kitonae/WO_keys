@@ -33,14 +33,7 @@
                     </span>
                     <h1>WATCHOUT GUIDE</h1>
                 </a>
-                <button class="sidebar-toggle" id="sidebar-toggle" aria-label="Toggle Sidebar">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <line x1="3" y1="12" x2="21" y2="12"></line>
-                        <line x1="3" y1="6" x2="21" y2="6"></line>
-                        <line x1="3" y1="18" x2="21" y2="18"></line>
-                    </svg>
-                </button>
+
             </div>
 
             <div class="search-container">
@@ -1374,8 +1367,9 @@ Color depth determines how many bits are used per color component in the output 
 
             // Draw text info
             ctx.fillStyle = zoom > 10 ? '#fff' : '#000';
-            ctx.font = '14px sans-serif';
-            ctx.fillText(`Displaying 0 - ${(100 / zoom).toFixed(1)}% Luminance`, 10, 30);
+            ctx.font = '24px "Futura Now Headline", Futura, sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText(`Displaying 0 - ${(100 / zoom).toFixed(1)}% Luminance`, width / 2, 30);
         }
 
         document.getElementById('bit-depth-select').addEventListener('change', draw);

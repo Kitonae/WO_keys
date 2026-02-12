@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setupThemeToggle();
     setupMobileMenu();
     setupHeroVideo();
-    setupSidebarToggle();
+
     setupSidebarAccordion();
     setupVideoModals();
     setupSearch();
@@ -345,23 +345,7 @@ function setupMobileMenu() {
     }
 }
 
-function setupSidebarToggle() {
-    const toggle = document.getElementById('sidebar-toggle');
-    const sidebar = document.getElementById('sidebar');
-    const overlay = document.getElementById('sidebar-overlay');
 
-    if (toggle && sidebar) {
-        toggle.addEventListener('click', () => {
-            // Toggle collapsed state
-            sidebar.classList.toggle('collapsed');
-            // Also handle mobile close
-            if (sidebar.classList.contains('open')) {
-                sidebar.classList.remove('open');
-                if (overlay) overlay.classList.remove('active');
-            }
-        });
-    }
-}
 
 function setupHeroVideo() {
     const heroMedia = document.getElementById('hero-media');

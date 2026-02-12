@@ -148,14 +148,7 @@ function generatePageHtml(title, content, sidebarHtml, depth, breadcrumbs) {
                     </span>
                     <h1>WATCHOUT GUIDE</h1>
                 </a>
-                <button class="sidebar-toggle" id="sidebar-toggle" aria-label="Toggle Sidebar">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <line x1="3" y1="12" x2="21" y2="12"></line>
-                        <line x1="3" y1="6" x2="21" y2="6"></line>
-                        <line x1="3" y1="18" x2="21" y2="18"></line>
-                    </svg>
-                </button>
+
             </div>
 
             <div class="search-container">
@@ -671,15 +664,15 @@ function generateStatsPage() {
         
         <div class="stats-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 40px;">
             <div class="stat-card" style="background: var(--bg-secondary); padding: 20px; border-radius: var(--border-radius); border: 1px solid var(--border-subtle); text-align: center;">
-                <div style="font-size: 2.5rem; font-weight: 700; color: var(--accent-primary);">${totalChapters}</div>
+                <div class="counter" data-target="${totalChapters}" style="font-size: 2.5rem; font-weight: 700; color: var(--accent-primary);">0</div>
                 <div style="color: var(--text-secondary); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px;">Chapters</div>
             </div>
             <div class="stat-card" style="background: var(--bg-secondary); padding: 20px; border-radius: var(--border-radius); border: 1px solid var(--border-subtle); text-align: center;">
-                <div style="font-size: 2.5rem; font-weight: 700; color: var(--accent-secondary);">${totalSections}</div>
+                <div class="counter" data-target="${totalSections}" style="font-size: 2.5rem; font-weight: 700; color: var(--accent-secondary);">0</div>
                 <div style="color: var(--text-secondary); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px;">Articles</div>
             </div>
             <div class="stat-card" style="background: var(--bg-secondary); padding: 20px; border-radius: var(--border-radius); border: 1px solid var(--border-subtle); text-align: center;">
-                <div style="font-size: 2.5rem; font-weight: 700; color: var(--accent-tertiary);">${totalWords.toLocaleString()}</div>
+                <div class="counter" data-target="${totalWords}" style="font-size: 2.5rem; font-weight: 700; color: var(--accent-tertiary);">0</div>
                 <div style="color: var(--text-secondary); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px;">Total Words</div>
             </div>
         </div>
@@ -752,6 +745,33 @@ function generateStatsPage() {
                 </div>
             `).join('')}
         </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                const counters = document.querySelectorAll('.counter');
+                const speed = 200; // The lower the slower
+
+                counters.forEach(counter => {
+                    const updateCount = () => {
+                        const target = +counter.getAttribute('data-target');
+                        const count = +counter.innerText.replace(/,/g, '');
+                        
+                        // Lower inc to slow and higher to slow
+                        const inc = target / speed;
+
+                        if (count < target) {
+                            // Add inc to count and output in counter
+                            counter.innerText = Math.ceil(count + inc).toLocaleString();
+                            // Call function every ms
+                            setTimeout(updateCount, 1);
+                        } else {
+                            counter.innerText = target.toLocaleString();
+                        }
+                    };
+
+                    updateCount();
+                });
+            });
+        </script>
     `;
 
     const breadcrumbs = `
