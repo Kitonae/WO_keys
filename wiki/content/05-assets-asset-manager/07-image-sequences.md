@@ -34,7 +34,9 @@ Image sequences are the preferred delivery format when:
 
 The resulting asset appears in the Assets window with a video-style icon. Its duration is determined by the number of frames and the configured frame rate.
 
-> **Tip:** Ensure your image files use a consistent numbering scheme with leading zeros (e.g. `frame_0001.png` through `frame_2400.png`). The Asset Manager relies on the numbering pattern to determine frame order.
+:::info
+**Tip:** Ensure your image files use a consistent numbering scheme with leading zeros (e.g. `frame_0001.png` through `frame_2400.png`). The Asset Manager relies on the numbering pattern to determine frame order.
+:::
 
 ### Frame Rate
 
@@ -52,7 +54,9 @@ When an image sequence is added, the Asset Manager processes it through the same
 
 This means that even though you import individual frames, the display servers receive a standard optimized video — they do not need to read thousands of individual image files during playback.
 
-> **Note:** Image sequences receive a higher optimization priority than standalone video files to ensure they are processed promptly, since the source data (many small files) is less efficient to stream directly.
+:::info
+**Note:** Image sequences receive a higher optimization priority than standalone video files to ensure they are processed promptly, since the source data (many small files) is less efficient to stream directly.
+:::
 
 ### Playback Behavior
 

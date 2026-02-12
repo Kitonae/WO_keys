@@ -843,7 +843,7 @@
 
             <article class="content-body" id="content-body">
                 <div class="section-content" style="display: block;">
-                    <div class="section-content-body"><h2>HDR and Color Management</h2>
+                    <div class="section-content-body"><div class="article-metadata"><span class="article-badge" data-badge="Miro">Miro</span><span class="article-badge" data-badge="Karol">Karol</span><span class="article-badge" data-badge="Jacquie">Jacquie</span></div><h2>HDR and Color Management</h2>
 
 <p>WATCHOUT includes a color-managed rendering pipeline that handles the full chain from media decode through compositing to display output. This pipeline supports both standard dynamic range (SDR) and high dynamic range (HDR) workflows, with configurable color spaces and transfer functions at the asset, cue, and display levels.</p>
 
@@ -852,10 +852,20 @@
 <div class='note-box'><p>In simple terms, color management is about making sure colors look the way they should on every screen in your setup. "SDR" is standard brightness (what most screens have shown for decades), while "HDR" allows much brighter highlights and deeper darks — closer to what your eyes see in the real world.
 </p></div>
 
+<h3>The Rendering Pipeline</h3>
+
+<p>WATCHOUT's color-managed pipeline processes every pixel through a consistent chain of operations, regardless of the source format. Each input asset's encoded pixel values are first linearized by applying the appropriate Electro-Optical Transfer Function (EOTF), which reverses the transfer curve and converts the signal back to linear light. The linear values are then converted from the asset's native color primaries into the internal compositing color space — 16-bit linear Rec. 2020.</p>
+
+<p>All compositing, blending, effects, and layer mixing happen in this single wide-gamut linear space (referred to as "Optical Space" in the diagram below). Working in linear light ensures that operations like alpha blending, color correction, and gradient rendering are physically accurate.</p>
+
+<p>Once the final composited image is ready, it is converted from the internal Rec. 2020 primaries to the target display's color space, and the appropriate Opto-Electronic Transfer Function (OETF) is applied to encode the result for the output signal — for example, PQ encoding for an HDR display or a gamma curve for an SDR display.</p>
+
+<img src="../media/watchout-pipeline.svg" alt="The WATCHOUT Pipeline" class="content-image" style="width: 100%;">
+
 <h3>Color Spaces</h3>
 A color space defines the range of colors (the "gamut") that can be represented, specified by three color primaries and a white point. WATCHOUT supports the following color spaces for display output:
 
-<div class='note-box'><p>Think of a color space like a box of crayons. A small box has fewer colors to pick from, while a big box has many more. sRGB is like the standard box most screens use. Rec. 2020 and Rec. 2100 are much bigger boxes that can show richer, more vivid colors — but you need a screen that supports them.
+<div class='note-box'><p>A color space's gamut determines the range of colors it can represent. sRGB and Rec. 709 have a relatively narrow gamut suitable for conventional displays, while Rec. 2020 covers a significantly wider range — enabling more saturated and vivid color reproduction. The display hardware must support the target gamut for the wider color space to produce a visible benefit.
 </p></div>
 
 <ul>
@@ -899,10 +909,11 @@ A color space defines the range of colors (the "gamut") that can be represented,
         };
 
         // Alignment values for native 2705x2970 image
-        const scaleX = 3193.75;
-        const scaleY = 3133.35;
-        const offsetX = 100;
-        const offsetY = 2870;
+        // Calibrated on 2026-02-12
+        const scaleX = 2820;
+        const scaleY = 2820;
+        const offsetX = 312;
+        const offsetY = 2745;
 
         function toCanvas(x, y) {
             return { x: x * scaleX + offsetX, y: offsetY - y * scaleY };
@@ -1382,11 +1393,11 @@ When SDR content plays on an HDR display, the system needs to know how bright "w
 <div class='note-box'><p>Imagine you have a regular photo (SDR) and you want to show it on a screen that can go super bright (HDR). The SDR White Point tells the system "this is how bright the photo's white should be" — so it doesn't look washed out or blindingly overexposed on the HDR screen.
 </p></div>
 
-<p>The value is specified in nits The value is specified in nits (candelas per square meter) and ranges from 80 to 10,000. For example:</p>
+<p>The value is specified in nits (candelas per square meter) and ranges from 80 to 10,000. The default is <strong>200 nits</strong>, which provides a good balance for most projection and LED setups. For example:</p>
 
 <ul>
 <li>A value of <strong>100 nits</strong> means SDR white maps to 100 nits on the HDR display — typical for content mastered to broadcast SDR standards.</li>
-<li>A value of <strong>200 nits</strong> boosts SDR content to appear brighter, which may be appropriate for content viewed in bright ambient light.</li>
+<li>A value of <strong>200 nits</strong> (default) maps SDR white to 200 nits, which works well for content viewed in typical ambient light conditions.</li>
 
 </ul>
 This setting only takes effect when the display is configured for an HDR color space. On SDR displays, it has no impact.
@@ -1611,20 +1622,10 @@ The NDI color space is independent of the GPU color space setting, since NDI and
 <h3>Tone Mapping</h3>
 When HDR content is rendered to an SDR display, the high dynamic range must be compressed to fit the SDR output range without losing important detail in highlights and shadows. WATCHOUT uses a <strong>Hable tone mapping operator</strong> for this conversion, which preserves natural-looking midtones while smoothly compressing highlights toward peak white.
 
-<div class='note-box'><p>Tone mapping is like fitting a wide landscape into a small picture frame — you can't keep every detail at full scale, so the system intelligently compresses the brightest and darkest parts to look natural on a screen with less range. WATCHOUT does this automatically whenever needed.
-</p></div>
+<p>Tone mapping is applied automatically when the source content has a wider dynamic range than the target display. No manual configuration is required — the system handles the conversion based on the source and destination transfer functions.</p>
 
-<p>Tone mapping is applied automatically Tone mapping is applied automatically when the source content has a wider dynamic range than the target display. No manual configuration is required — the system handles the conversion based on the source and destination transfer functions.</p>
-
-<h3>Practical Workflow</h3>
-
-<p><strong>Pure SDR setup:</strong> For conventional SDR workflows, set displays to sRGB (gamma 2.2) or Rec. 709 with 8-bpc output. No additional color management configuration is needed beyond matching the display's native capability.</p>
-
-<p><strong>Pure HDR setup:</strong> Set displays to Rec. 2100 PQ (or HDR10) with 10-bpc output. Ensure the physical display hardware supports HDR10 signaling. All content should be mastered or tagged with the correct HDR color metadata.</p>
-
-<p><strong>Mixed SDR/HDR content on HDR displays:</strong> Set the display to an HDR color space and use the per-cue SDR White Point property to control how SDR assets map into the HDR luminance range. Start with 100–200 nits and adjust based on the ambient viewing environment.</p>
-
-<p><strong>Multi-display color consistency:</strong> Use the per-display white point sliders to visually match color temperature across all outputs. Work with a neutral test image (gray ramp or white field) and adjust under final show lighting conditions. Lock display settings once calibration is approved to prevent accidental changes.</p></div><div class="section-nav">
+<div class='info-box'><p><strong>Multi-display color consistency:</strong> Use the per-display white point sliders to visually match color temperature across all outputs. Work with a neutral test image (gray ramp or white field) and adjust under final show lighting conditions. Lock display settings once calibration is approved to prevent accidental changes.
+</p></div></div><div class="section-nav">
                 <a href="sdi-output.html" class="nav-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"

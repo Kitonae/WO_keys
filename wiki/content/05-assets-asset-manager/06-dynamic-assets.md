@@ -44,7 +44,9 @@ An empty dynamic asset folder is created. You can then add versions to it.
 2. Right-click and choose **New → Create Dynamic Asset**.
 3. The existing asset is converted into the first version of a new dynamic asset. The asset's type determines the category automatically.
 
-> **Tip:** Converting an existing asset preserves all cue references. Cues that pointed to the original asset now point to the dynamic asset, which contains the original file as its first version.
+:::info
+**Tip:** Converting an existing asset preserves all cue references. Cues that pointed to the original asset now point to the dynamic asset, which contains the original file as its first version.
+:::
 
 ### Adding Versions
 

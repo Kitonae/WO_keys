@@ -36,7 +36,9 @@ From the Assets context menu, choose **Transfer Assets → Import**.
 
 The import process copies files into the Asset Manager’s storage. If the source node is the local machine but the Asset Manager runs on a remote node, WATCHOUT checks that the path is accessible via the remote file access allowlist. If the path is not permitted, a dialog appears explaining how to configure remote access.
 
-> **Tip:** Importing is a copy operation. The source files are not modified or deleted.
+:::info
+**Tip:** Importing is a copy operation. The source files are not modified or deleted.
+:::
 
 ### Pre-Caching on Runners
 

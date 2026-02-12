@@ -31,7 +31,9 @@ Because shapes are generated internally, there is no need to round-trip through 
 
 The new shape asset appears in the Assets window with a default white fill and a canvas size of 1920 × 1080 pixels. You can also create shapes inside folders — if a folder is selected when you create the shape, it is placed in that folder.
 
-> **Note:** Shapes cannot be created inside composition folders or non-visual dynamic asset folders.
+:::info
+**Note:** Shapes cannot be created inside composition folders or non-visual dynamic asset folders.
+:::
 
 ### Shape Properties Panel
 
@@ -76,7 +78,9 @@ When the geometry kind is set to **Text**, an additional section appears:
 
 <!-- screenshot: Text shape properties showing text field, alignment buttons, font size, and font dropdown -->
 
-> **Tip:** To use a custom font, first add the font file as an asset in the Assets window. It will then appear in the font dropdown.
+:::info
+**Tip:** To use a custom font, first add the font file as an asset in the Assets window. It will then appear in the font dropdown.
+:::
 
 #### Applying Changes
 

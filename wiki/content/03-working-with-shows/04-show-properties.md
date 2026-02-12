@@ -11,8 +11,6 @@ Every show carries a set of properties that define how it behaves globally—set
 
 Show properties are accessible through the **Properties** panel when no specific element is selected. Alternatively, you can access them via the **Show > Show Properties** menu option. The properties panel displays all configurable settings organized into logical sections.
 
----
-
 ## General Properties
 
 ### Frame Rate
@@ -34,7 +32,9 @@ The **Frame Rate** determines the temporal resolution for all timeline operation
 
 When selecting **Custom**, you can specify the exact numerator and denominator. The denominator options are **1** (for integer frame rates) or **1.001** (for NTSC-compatible fractional rates).
 
-> **Note:** Frame rate changes affect how timeline positions are calculated. Changing this setting mid-production may shift the timing of existing cues.
+:::info
+**Note:** Frame rate changes affect how timeline positions are calculated. Changing this setting mid-production may shift the timing of existing cues.
+:::
 
 ### Eye Point
 
@@ -58,7 +58,9 @@ When enabled, the **Auto Update Assets** option automatically refreshes media fi
 | **Enabled** | WATCHOUT monitors source files and updates cues when files change |
 | **Disabled** | Assets remain static until manually refreshed |
 
-> **Caution:** Enable this setting during content development, but consider disabling it for live shows to prevent unexpected visual changes.
+:::info
+**Caution:** Enable this setting during content development, but consider disabling it for live shows to prevent unexpected visual changes.
+:::
 
 ### SDI Genlock
 
@@ -91,8 +93,6 @@ The **Default Anchor Position** determines the reference point for newly created
 
 The anchor position is represented visually using a 3×3 grid selector in the Properties panel.
 
----
-
 ## Sync Groups
 
 **Sync Groups** coordinate playback timing across multiple display servers. By grouping nodes together, you ensure their timelines run in lockstep, which is essential for seamless multi-display presentations.
@@ -112,9 +112,9 @@ Each sync group displays its member nodes, which can be added or removed using t
 - **Edge-blended displays** – Where precise frame alignment prevents visible seams
 - **Redundant systems** – To keep backup servers synchronized with primary units
 
-> **Note:** Nodes must be network-accessible to participate in sync group coordination. Verify network connectivity before adding nodes to sync groups.
-
----
+:::info
+**Note:** Nodes must be network-accessible to participate in sync group coordination. Verify network connectivity before adding nodes to sync groups.
+:::
 
 ## Host Configuration
 
@@ -145,8 +145,6 @@ The optional **Time Server** provides network time synchronization for the show.
 ### Log Server
 
 The optional **Log Server** receives logging output from all nodes in the production. Centralizing logs simplifies troubleshooting and provides a unified view of system activity.
-
----
 
 ## Best Practices
 

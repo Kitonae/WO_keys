@@ -64,7 +64,9 @@ There are several ways to add media to a show:
 - **Asset Watcher** – configure watched folders that automatically import new or changed files (see [Asset Watcher](../09-asset-watcher)).
 - **Web User Interface** – upload files remotely through the browser-based interface (see [Web User Interface](../08-web-user-interface)).
 
-> **Tip:** When a single folder or dynamic asset is selected, newly added files are placed inside that folder automatically.
+:::info
+**Tip:** When a single folder or dynamic asset is selected, newly added files are placed inside that folder automatically.
+:::
 
 ### Organizing Assets with Folders
 
@@ -80,7 +82,9 @@ Folder operations:
 - **Drag and drop reorder** – drag assets or folders to reorder them within the same parent.
 - Folder open/closed states are remembered per-node and persist between sessions.
 
-> **Note:** Composition and dynamic asset folders are special containers managed by the system. You cannot move assets into or out of composition folders.
+:::info
+**Note:** Composition and dynamic asset folders are special containers managed by the system. You cannot move assets into or out of composition folders.
+:::
 
 ### Searching and Filtering
 

@@ -67,7 +67,9 @@ This typically happens when a node has been offline for an extended period, when
 
 Running multiple Producer instances on the same machine can affect time synchronization. When this condition is detected, WATCHOUT displays a warning:
 
-> "Multiple Producer instances are running on this machine. This may affect time synchronization. For best results, run only one Producer per machine, or ensure all machines share the same NTP settings."
+:::info
+"Multiple Producer instances are running on this machine. This may affect time synchronization. For best results, run only one Producer per machine, or ensure all machines share the same NTP settings."
+:::
 
 The warning notes that delays may occur between time needle changes and updates when multiple instances compete for the same system clock.
 

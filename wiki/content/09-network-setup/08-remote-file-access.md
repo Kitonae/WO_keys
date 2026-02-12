@@ -73,7 +73,9 @@ Remote file access is needed for several operations:
 
 If you attempt to browse a node that does not permit remote access, you will see the error:
 
-> "Remote file browsing is not allowed on [node name]"
+:::info
+"Remote file browsing is not allowed on [node name]"
+:::
 
 This means either the `allow_list.json` file does not exist on the target node, or the requested path is not covered by any entry in the allow list. Follow the setup steps above to resolve it.
 

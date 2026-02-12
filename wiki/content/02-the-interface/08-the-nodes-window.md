@@ -18,8 +18,6 @@ The Nodes window is split into two resizable panes:
 
 Drag the splitter between panes to adjust their relative sizes.
 
----
-
 ## Devices Pane
 
 The **Devices** pane lists all output devices configured in your show, including displays, audio devices, and capture sources.
@@ -98,8 +96,6 @@ Create new devices using:
 *   **Drag** devices to reorder (when enabled)
 *   Select multiple devices with `Shift+Click` or `Ctrl+Click`
 
----
-
 ## Network Pane
 
 The **Network** pane displays all WATCHOUT nodes discovered on your local network. For detailed information, see [The Network Window](06-the-network-window.md).
@@ -124,8 +120,6 @@ Nodes display real-time status:
 
 *   Normal text – Online and responsive
 *   Dimmed text – Offline or not responding recently
-
----
 
 ## Workflow Tips
 

@@ -88,24 +88,31 @@ function setupBadges() {
 function setupDiagramTheme() {
     const updateDiagram = () => {
         const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
-        const diagram = document.querySelector('img[src$="system_architecture_diagram.svg"], img[src$="system_architecture_diagram_dark.svg"]');
+        const diagrams = document.querySelectorAll('img[src$="system_architecture_diagram.svg"], img[src$="system_architecture_diagram_dark.svg"], img[src$="watchout-pipeline.svg"], img[src$="watchout-pipeline_dark.svg"]');
 
-        if (diagram) {
+        diagrams.forEach(diagram => {
             const isDark = ['dark', 'midnight', 'rust'].includes(currentTheme);
             const src = diagram.getAttribute('src');
             // Determine base path (e.g., "../media/")
             const basePath = src.substring(0, src.lastIndexOf('/') + 1);
+            const filename = src.substring(src.lastIndexOf('/') + 1);
+
+            // Get the base filename (without _dark suffix)
+            let baseFilename = filename;
+            if (filename.endsWith('_dark.svg')) {
+                baseFilename = filename.replace('_dark.svg', '.svg');
+            }
 
             if (isDark) {
                 if (!src.endsWith('_dark.svg')) {
-                    diagram.setAttribute('src', basePath + 'system_architecture_diagram_dark.svg');
+                    diagram.setAttribute('src', basePath + baseFilename.replace('.svg', '_dark.svg'));
                 }
             } else {
                 if (src.endsWith('_dark.svg')) {
-                    diagram.setAttribute('src', basePath + 'system_architecture_diagram.svg');
+                    diagram.setAttribute('src', basePath + baseFilename);
                 }
             }
-        }
+        });
     };
 
     // Run initially

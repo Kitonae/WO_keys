@@ -17,7 +17,9 @@ The web interface loads automatically. You can also open it from the Producer by
 
 <!-- screenshot: Web UI landing page showing asset browser and upload area -->
 
-> **Note:** The port is **3023** and is fixed. The URL uses the IP address of the node designated as the Asset Manager, not necessarily the Producer machine.
+:::info
+**Note:** The port is **3023** and is fixed. The URL uses the IP address of the node designated as the Asset Manager, not necessarily the Producer machine.
+:::
 
 ### Features
 

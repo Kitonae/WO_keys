@@ -48,7 +48,9 @@ The **Codecs** section shows the input-to-output codec mapping. Each row maps a 
 - **Restore individual row** – hover over the arrow on a non-default row and click the restore icon to revert that row to its default.
 - **Reset All** – the **Reset All** button at the bottom reverts every row to the default mapping.
 
-> **Tip:** Codec mapping changes take effect for all future optimizations. Assets already optimized are not re-processed unless you manually trigger re-optimization.
+:::info
+**Tip:** Codec mapping changes take effect for all future optimizations. Assets already optimized are not re-processed unless you manually trigger re-optimization.
+:::
 
 ### Saving Changes
 

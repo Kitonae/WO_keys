@@ -1,5 +1,8 @@
 ---
 title: "HDR and Color Management"
+badge: "Miro"
+badge: "Karol"
+badge: "Jacquie"
 ---
 
 
@@ -13,11 +16,21 @@ Understanding how color spaces, transfer functions, and bit depth interact is im
 In simple terms, color management is about making sure colors look the way they should on every screen in your setup. "SDR" is standard brightness (what most screens have shown for decades), while "HDR" allows much brighter highlights and deeper darks — closer to what your eyes see in the real world.
 :::
 
+### The Rendering Pipeline
+
+WATCHOUT's color-managed pipeline processes every pixel through a consistent chain of operations, regardless of the source format. Each input asset's encoded pixel values are first linearized by applying the appropriate Electro-Optical Transfer Function (EOTF), which reverses the transfer curve and converts the signal back to linear light. The linear values are then converted from the asset's native color primaries into the internal compositing color space — 16-bit linear Rec. 2020.
+
+All compositing, blending, effects, and layer mixing happen in this single wide-gamut linear space (referred to as "Optical Space" in the diagram below). Working in linear light ensures that operations like alpha blending, color correction, and gradient rendering are physically accurate.
+
+Once the final composited image is ready, it is converted from the internal Rec. 2020 primaries to the target display's color space, and the appropriate Opto-Electronic Transfer Function (OETF) is applied to encode the result for the output signal — for example, PQ encoding for an HDR display or a gamma curve for an SDR display.
+
+<img src="../media/watchout-pipeline.svg" alt="The WATCHOUT Pipeline" class="content-image" style="width: 100%;">
+
 ### Color Spaces
 A color space defines the range of colors (the "gamut") that can be represented, specified by three color primaries and a white point. WATCHOUT supports the following color spaces for display output:
 
 :::note
-Think of a color space like a box of crayons. A small box has fewer colors to pick from, while a big box has many more. sRGB is like the standard box most screens use. Rec. 2020 and Rec. 2100 are much bigger boxes that can show richer, more vivid colors — but you need a screen that supports them.
+A color space's gamut determines the range of colors it can represent. sRGB and Rec. 709 have a relatively narrow gamut suitable for conventional displays, while Rec. 2020 covers a significantly wider range — enabling more saturated and vivid color reproduction. The display hardware must support the target gamut for the wider color space to produce a visible benefit.
 :::
 
 - **sRGB** — the standard color space for computer displays, using Rec. 709 primaries with the sRGB transfer function. This is appropriate for most conventional displays and projectors.
@@ -70,11 +83,10 @@ When SDR content plays on an HDR display, the system needs to know how bright "w
 Imagine you have a regular photo (SDR) and you want to show it on a screen that can go super bright (HDR). The SDR White Point tells the system "this is how bright the photo's white should be" — so it doesn't look washed out or blindingly overexposed on the HDR screen.
 :::
 
-The value is specified in nits
-The value is specified in nits (candelas per square meter) and ranges from 80 to 10,000. For example:
+The value is specified in nits (candelas per square meter) and ranges from 80 to 10,000. The default is **200 nits**, which provides a good balance for most projection and LED setups. For example:
 
 - A value of **100 nits** means SDR white maps to 100 nits on the HDR display — typical for content mastered to broadcast SDR standards.
-- A value of **200 nits** boosts SDR content to appear brighter, which may be appropriate for content viewed in bright ambient light.
+- A value of **200 nits** (default) maps SDR white to 200 nits, which works well for content viewed in typical ambient light conditions.
 
 This setting only takes effect when the display is configured for an HDR color space. On SDR displays, it has no impact.
 
@@ -119,19 +131,8 @@ The primary use case is **projector color matching** in multi-projector setups. 
 ### Tone Mapping
 When HDR content is rendered to an SDR display, the high dynamic range must be compressed to fit the SDR output range without losing important detail in highlights and shadows. WATCHOUT uses a **Hable tone mapping operator** for this conversion, which preserves natural-looking midtones while smoothly compressing highlights toward peak white.
 
-:::note
-Tone mapping is like fitting a wide landscape into a small picture frame — you can't keep every detail at full scale, so the system intelligently compresses the brightest and darkest parts to look natural on a screen with less range. WATCHOUT does this automatically whenever needed.
-:::
-
-Tone mapping is applied automatically
 Tone mapping is applied automatically when the source content has a wider dynamic range than the target display. No manual configuration is required — the system handles the conversion based on the source and destination transfer functions.
 
-### Practical Workflow
-
-**Pure SDR setup:** For conventional SDR workflows, set displays to sRGB (gamma 2.2) or Rec. 709 with 8-bpc output. No additional color management configuration is needed beyond matching the display's native capability.
-
-**Pure HDR setup:** Set displays to Rec. 2100 PQ (or HDR10) with 10-bpc output. Ensure the physical display hardware supports HDR10 signaling. All content should be mastered or tagged with the correct HDR color metadata.
-
-**Mixed SDR/HDR content on HDR displays:** Set the display to an HDR color space and use the per-cue SDR White Point property to control how SDR assets map into the HDR luminance range. Start with 100–200 nits and adjust based on the ambient viewing environment.
-
+:::info
 **Multi-display color consistency:** Use the per-display white point sliders to visually match color temperature across all outputs. Work with a neutral test image (gray ramp or white field) and adjust under final show lighting conditions. Lock display settings once calibration is approved to prevent accidental changes.
+:::

@@ -28,10 +28,11 @@
         };
 
         // Alignment values for native 2705x2970 image
-        const scaleX = 3193.75;
-        const scaleY = 3133.35;
-        const offsetX = 100;
-        const offsetY = 2870;
+        // Calibrated on 2026-02-12
+        const scaleX = 2820;
+        const scaleY = 2820;
+        const offsetX = 312;
+        const offsetY = 2745;
 
         function toCanvas(x, y) {
             return { x: x * scaleX + offsetX, y: offsetY - y * scaleY };

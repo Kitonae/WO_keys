@@ -851,8 +851,6 @@
 
 <p>Show properties are accessible through the <strong>Properties</strong> panel when no specific element is selected. Alternatively, you can access them via the <strong>Show > Show Properties</strong> menu option. The properties panel displays all configurable settings organized into logical sections.</p>
 
----
-
 <h2>General Properties</h2>
 
 <h3>Frame Rate</h3>
@@ -864,7 +862,8 @@
 </ul>
 When selecting <strong>Custom</strong>, you can specify the exact numerator and denominator. The denominator options are <strong>1</strong> (for integer frame rates) or <strong>1.001</strong> (for NTSC-compatible fractional rates).
 
-<p>> <strong>Note:</strong> Frame rate changes affect how timeline positions are calculated. Changing this setting mid-production may shift the timing of existing cues.</p>
+<div class='info-box'><p><strong>Note:</strong> Frame rate changes affect how timeline positions are calculated. Changing this setting mid-production may shift the timing of existing cues.
+</p></div>
 
 <h3>Eye Point</h3>
 
@@ -893,7 +892,8 @@ The eye point is particularly important for:
 <tr><td><strong>Disabled</strong></td><td>Assets remain static until manually refreshed</td></tr>
 </table>
 
-<p>> <strong>Caution:</strong> Enable this setting during content development, but consider disabling it for live shows to prevent unexpected visual changes.</p>
+<div class='info-box'><p><strong>Caution:</strong> Enable this setting during content development, but consider disabling it for live shows to prevent unexpected visual changes.
+</p></div>
 
 <h3>SDI Genlock</h3>
 
@@ -928,8 +928,6 @@ The eye point is particularly important for:
 
 <p>The anchor position is represented visually using a 3×3 grid selector in the Properties panel.</p>
 
----
-
 <h2>Sync Groups</h2>
 
 <p><strong>Sync Groups</strong> coordinate playback timing across multiple display servers. By grouping nodes together, you ensure their timelines run in lockstep, which is essential for seamless multi-display presentations.</p>
@@ -949,9 +947,8 @@ Each sync group displays its member nodes, which can be added or removed using t
 <li><strong>Redundant systems</strong> – To keep backup servers synchronized with primary units</li>
 
 </ul>
-> <strong>Note:</strong> Nodes must be network-accessible to participate in sync group coordination. Verify network connectivity before adding nodes to sync groups.
-
----
+<div class='info-box'><p><strong>Note:</strong> Nodes must be network-accessible to participate in sync group coordination. Verify network connectivity before adding nodes to sync groups.
+</p></div>
 
 <h2>Host Configuration</h2>
 
@@ -978,8 +975,6 @@ The Asset Manager connection status enables or disables asset-related operations
 <h3>Log Server</h3>
 
 <p>The optional <strong>Log Server</strong> receives logging output from all nodes in the production. Centralizing logs simplifies troubleshooting and provides a unified view of system activity.</p>
-
----
 
 <h2>Best Practices</h2>
 
