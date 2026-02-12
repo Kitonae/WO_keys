@@ -849,9 +849,14 @@
 
 <p>Understanding how color spaces, transfer functions, and bit depth interact is important for achieving accurate, consistent color across multi-display setups — especially when mixing SDR and HDR content or driving displays with different capabilities.</p>
 
-<h3>Color Spaces</h3>
+<div class='note-box'><p>In simple terms, color management is about making sure colors look the way they should on every screen in your setup. "SDR" is standard brightness (what most screens have shown for decades), while "HDR" allows much brighter highlights and deeper darks — closer to what your eyes see in the real world.
+</p></div>
 
-<p>A color space defines the range of colors (the "gamut") that can be represented, specified by three color primaries and a white point. WATCHOUT supports the following color spaces for display output:</p>
+<h3>Color Spaces</h3>
+A color space defines the range of colors (the "gamut") that can be represented, specified by three color primaries and a white point. WATCHOUT supports the following color spaces for display output:
+
+<div class='note-box'><p>Think of a color space like a box of crayons. A small box has fewer colors to pick from, while a big box has many more. sRGB is like the standard box most screens use. Rec. 2020 and Rec. 2100 are much bigger boxes that can show richer, more vivid colors — but you need a screen that supports them.
+</p></div>
 
 <ul>
 <li><strong>sRGB</strong> — the standard color space for computer displays, using Rec. 709 primaries with the sRGB transfer function. This is appropriate for most conventional displays and projectors.</li>
@@ -883,16 +888,9 @@
         if (!canvas) return;
         const ctx = canvas.getContext('2d');
 
-        // Spectral locus approximation (simplified 1931 observer)
-        const locus = [
-            [0.175596, 0.005296], [0.172787, 0.0048], [0.1708, 0.0054], [0.1703, 0.0058], [0.1664, 0.0086], [0.1606, 0.0145], [0.1566, 0.0177],
-            [0.151, 0.0227], [0.1415, 0.0379], [0.1355, 0.0525], [0.1266, 0.0813], [0.1193, 0.1187], [0.1111, 0.1857], [0.1009, 0.2974], [0.0931, 0.4079],
-            [0.0818, 0.5284], [0.074, 0.6481], [0.0766, 0.7251], [0.0863, 0.7761], [0.1205, 0.8175], [0.163, 0.8177], [0.2078, 0.7892], [0.2647, 0.7297],
-            [0.3204, 0.6635], [0.3703, 0.5968], [0.4193, 0.5317], [0.465, 0.4687], [0.5097, 0.4101], [0.5518, 0.3585], [0.591, 0.3093], [0.627, 0.2625],
-            [0.6586, 0.2206], [0.6865, 0.1834], [0.7088, 0.153], [0.7231, 0.1332], [0.7347, 0.1172], [0.7347, 0.005296]
-        ];
-        // Close the loop implies the straight line of purples, but for point-in-poly we want strict closure
-        // The array above describes the curved part. The bottom is the line of purples.
+        const cieImage = new Image();
+        cieImage.src = '../cie_1931_chromaticity_diagram.png';
+        cieImage.onload = () => draw();
 
         const primaries = {
             srgb: { r: [0.64, 0.33], g: [0.30, 0.60], b: [0.15, 0.06], color: 'rgba(255, 215, 0, 0.8)', label: 'sRGB/709' },
@@ -900,124 +898,14 @@
             rec601: { r: [0.630, 0.340], g: [0.310, 0.595], b: [0.155, 0.070], color: 'rgba(50, 150, 255, 0.8)', label: 'Rec.601' }
         };
 
-        const scale = 500;
-        const offsetX = 100;
-        const offsetY = 525;
+        // Alignment values determined via overlay testing
+        const scaleX = 460;
+        const scaleY = 451.3;
+        const offsetX = 92;
+        const offsetY = 533;
 
         function toCanvas(x, y) {
-            return { x: x * scale + offsetX, y: offsetY - y * scale };
-        }
-
-        function fromCanvas(px, py) {
-            // y = offsetY - py / scale => py = offsetY - y*scale
-            // y*scale = offsetY - py => y = (offsetY - py)/scale
-            // px = x*scale + offsetX => x = (px - offsetX)/scale
-            return {
-                x: (px - offsetX) / scale,
-                y: (offsetY - py) / scale
-            };
-        }
-
-        function pointInPolygon(point, vs) {
-            // Ray-casting algorithm based on
-            // https://github.com/ substack/point-in-polygon
-            let x = point[0], y = point[1];
-            let inside = false;
-            for (let i = 0, j = vs.length - 1; i < vs.length; j = i++) {
-                let xi = vs[i][0], yi = vs[i][1];
-                let xj = vs[j][0], yj = vs[j][1];
-
-                let intersect = ((yi > y) != (yj > y))
-                    && (x < (xj - xi) * (y - yi) / (yj - yi) + xi);
-                if (intersect) inside = !inside;
-            }
-            return inside;
-        }
-
-        // Cache for the background image
-        let backgroundCache = null;
-
-        function generateGamutBackground() {
-            const tempCanvas = document.createElement('canvas');
-            tempCanvas.width = canvas.width;
-            tempCanvas.height = canvas.height;
-            const tCtx = tempCanvas.getContext('2d');
-
-            const w = tempCanvas.width;
-            const h = tempCanvas.height;
-            const imgData = tCtx.createImageData(w, h);
-            const data = imgData.data;
-
-            // Pre-calculate polygon for point checking
-            // locus points + close the loop with [0.175596, 0.005296] (start)
-            // Actually pointInPolygon handles implicit closing if we just iterate correctly or explicitly add start to end?
-            // The function uses j=vs.length-1 for the first i=0, so it closes implicitly.
-
-            for (let py = 0; py < h; py++) {
-                for (let px = 0; px < w; px++) {
-                    const xy = fromCanvas(px, py);
-                    const x = xy.x;
-                    const y = xy.y;
-
-                    // Optimization: Bounding box check first (approx)
-                    if (x < 0 || x > 0.8 || y < 0 || y > 0.9) continue;
-
-                    if (pointInPolygon([x, y], locus)) {
-                        // Convert xyY to XYZ (Y=1 for max brightness)
-                        // Avoid division by zero
-                        if (y <= 0) continue;
-
-                        const Y = 1.0;
-                        const X = (x * Y) / y;
-                        const Z = ((1 - x - y) * Y) / y;
-
-                        // XYZ to RGB (Linear sRGB / Rec. 709 primaries)
-                        // Matrix:
-                        //  3.2406 -1.5372 -0.4986
-                        // -0.9689  1.8758  0.0415
-                        //  0.0557 -0.2040  1.0570
-
-                        let r = 3.2406 * X - 1.5372 * Y - 0.4986 * Z;
-                        let g = -0.9689 * X + 1.8758 * Y + 0.0415 * Z;
-                        let b = 0.0557 * X - 0.2040 * Y + 1.0570 * Z;
-
-                        // Naive Gamut Mapping for Visualization:
-                        // 1. Desaturate/Clip negative values by adding white? 
-                        // Or just clamp to 0 and normalize max to 1?
-
-                        // Simple robust approach for CIE charts:
-                        // If any component is negative, we are out of gamut.
-                        // We preserve hue by finding the dominant primary and scaling others? 
-                        // Simplest valid visualization: Clamp negative to 0.
-                        r = Math.max(0, r);
-                        g = Math.max(0, g);
-                        b = Math.max(0, b);
-
-                        // Normalize brightness so we can see it
-                        const max = Math.max(r, g, b);
-                        if (max > 0) {
-                            r /= max;
-                            g /= max;
-                            b /= max;
-                        }
-
-                        // Gamma Correct (sRGB ~2.2) 
-                        // Just use pow 1/2.2 for simplicity
-                        r = Math.pow(r, 1 / 2.2);
-                        g = Math.pow(g, 1 / 2.2);
-                        b = Math.pow(b, 1 / 2.2);
-
-                        const idx = (py * w + px) * 4;
-                        data[idx] = Math.min(255, r * 255);
-                        data[idx + 1] = Math.min(255, g * 255);
-                        data[idx + 2] = Math.min(255, b * 255);
-                        data[idx + 3] = 255; // Alpha
-                    }
-                }
-            }
-
-            tCtx.putImageData(imgData, 0, 0);
-            return tempCanvas;
+            return { x: x * scaleX + offsetX, y: offsetY - y * scaleY };
         }
 
         function drawTriangle(p, style, fill) {
@@ -1056,37 +944,14 @@
             ctx.fillStyle = '#111';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-            // Generate bg if needed
-            if (!backgroundCache) {
-                // Show loading text on first frame if slow? 
-                // It's fast enough (~50-100ms) usually.
-                backgroundCache = generateGamutBackground();
-            }
+            // Draw CIE Diagram Image
+            if (cieImage.complete) {
+                // Constants based on alignment verification result: Scale: 0.92, X: -8, Y: 8
+                const s = 0.14403126;
+                const drawX = 92 - 100 * s;
+                const drawY = 533 - 2870 * s;
 
-            // Draw colorful gamut
-            ctx.drawImage(backgroundCache, 0, 0);
-
-            // Draw Locus Outline
-            ctx.beginPath();
-            const first = toCanvas(locus[0][0], locus[0][1]);
-            ctx.moveTo(first.x, first.y);
-            locus.forEach(pt => {
-                const p = toCanvas(pt[0], pt[1]);
-                ctx.lineTo(p.x, p.y);
-            });
-            ctx.closePath();
-            ctx.strokeStyle = '#555';
-            ctx.lineWidth = 2;
-            ctx.stroke();
-
-            // Draw Grid (Labels)
-            ctx.fillStyle = '#888';
-            ctx.font = '11px sans-serif';
-            for (let i = 0; i <= 0.8; i += 0.1) {
-                const pX = toCanvas(i, 0);
-                ctx.fillText(i.toFixed(1), pX.x, pX.y + 15);
-                const pY = toCanvas(0, i);
-                ctx.fillText(i.toFixed(1), pY.x - 25, pY.y);
+                ctx.drawImage(cieImage, drawX, drawY, cieImage.naturalWidth * s, cieImage.naturalHeight * s);
             }
 
             if (document.getElementById('show-rec2020').checked) drawTriangle(primaries.rec2020, primaries.rec2020.color, true);
@@ -1098,15 +963,15 @@
             document.getElementById(id).addEventListener('change', draw);
         });
 
-        // Initial draw might happen before style layout settles, but canvas size is fixed att 600x600 in attributes.
-        // Use requestAnimationFrame to ensure valid context? No, strictly linear is fine here.
-        setTimeout(draw, 10); // slightly async to let UI breathe
+        setTimeout(draw, 10);
     })();
 </script>
 
 <h3>Transfer Functions</h3>
+Transfer functions define how linear light values are encoded into the non-linear signal that displays expect. Encoding fewer bits for bright values and more bits for dark values matches human visual perception, reducing visible banding:
 
-<p>Transfer functions define how linear light values are encoded into the non-linear signal that displays expect. Encoding fewer bits for bright values and more bits for dark values matches human visual perception, reducing visible banding:</p>
+<div class='note-box'><p>Your eyes are more sensitive to differences in dark shades than bright ones. A transfer function takes advantage of this by spending more of the signal's precision on the darks (where you'd notice problems) and less on the brights. Different standards (sRGB, PQ, HLG) are just different strategies for doing this, optimized for different situations.
+</p></div>
 
 <ul>
 <li><strong>sRGB</strong> — a piecewise curve with a linear segment near black and a power-law segment for the rest. Standard peak brightness is 80 nits. Used with sRGB and standard computer displays.</li>
@@ -1249,7 +1114,6 @@
             return Lw * Math.pow(E, gamma);
         }
 
-
         function drawCurve(func, color, label, show) {
             if (!show) return;
             ctx.beginPath();
@@ -1336,7 +1200,6 @@
             ctx.textAlign = 'center';
             ctx.fillText("Input Signal (0.0 - 1.0)", margin.left + graphW / 2, height - 10);
 
-
             // Draw Curves
             const showSRGB = document.getElementById('show-srgb-tf').checked;
             const showGamma = document.getElementById('show-gamma22-tf').checked;
@@ -1420,8 +1283,10 @@
 <p>The choice of transfer function is determined by the color space you select on the display. For example, selecting Rec. 2100 PQ automatically uses the PQ transfer function.</p>
 
 <h3>Display Color Depth</h3>
+Color depth determines how many bits are used per color component in the output signal. Higher bit depth reduces banding artifacts, which is especially important for HDR content:
 
-<p>Color depth determines how many bits are used per color component in the output signal. Higher bit depth reduces banding artifacts, which is especially important for HDR content:</p>
+<div class='note-box'><p>Bit depth is like the number of steps in a staircase between two colors. With only a few steps (8-bit), you might see visible "bands" where one shade jumps to the next — especially in gradients like a sunset sky. More steps (10-bit or higher) make those transitions smoother and invisible to the eye.
+</p></div>
 
 <ul>
 <li><strong>8 bpc (bits per component)</strong> — 256 levels per channel. Standard for SDR content on most displays. Adequate for sRGB and Rec. 709 workflows.</li>
@@ -1516,10 +1381,12 @@
 <p>Color depth is configured per display in <strong>Device Properties → Output → Signal</strong> and is available for GPU output types. SDI outputs currently operate at 8 bpc.</p>
 
 <h3>SDR White Point (Per-Cue)</h3>
+When SDR content plays on an HDR display, the system needs to know how bright "white" in the SDR content should appear relative to the HDR luminance range. The <strong>SDR White Point</strong> property on media cues controls this mapping.
 
-<p>When SDR content plays on an HDR display, the system needs to know how bright "white" in the SDR content should appear relative to the HDR luminance range. The <strong>SDR White Point</strong> property on media cues controls this mapping.</p>
+<div class='note-box'><p>Imagine you have a regular photo (SDR) and you want to show it on a screen that can go super bright (HDR). The SDR White Point tells the system "this is how bright the photo's white should be" — so it doesn't look washed out or blindingly overexposed on the HDR screen.
+</p></div>
 
-<p>The value is specified in nits (candelas per square meter) and ranges from 80 to 10,000. For example:</p>
+<p>The value is specified in nits The value is specified in nits (candelas per square meter) and ranges from 80 to 10,000. For example:</p>
 
 <ul>
 <li>A value of <strong>100 nits</strong> means SDR white maps to 100 nits on the HDR display — typical for content mastered to broadcast SDR standards.</li>
@@ -1736,6 +1603,9 @@ The NDI color space is independent of the GPU color space setting, since NDI and
 
 <p>The renderer uses this information to linearize the source correctly and, if necessary, convert from the asset's color primaries to the display's target primaries during compositing. Accurate asset color metadata is essential for correct rendering — if a Rec. 2020 asset is incorrectly tagged as Rec. 709, the colors will be desaturated on output.</p>
 
+<div class='note-box'><p>Every image or video file has a label that says "I was made using these colors." If that label is wrong or missing, WATCHOUT won't interpret the colors correctly — like reading a recipe in the wrong units. You can fix this by manually setting the correct color space on the asset.
+</p></div>
+
 <h3>White Point Calibration</h3>
 
 <p>Every display has a <strong>White Point</strong> setting in Device Properties, consisting of separate Red, Green, and Blue sliders (each ranging from 0.0 to 1.0, defaulting to 1.0). This is a per-display color temperature correction that adjusts the white balance of the output.</p>
@@ -1743,10 +1613,12 @@ The NDI color space is independent of the GPU color space setting, since NDI and
 <p>The primary use case is <strong>projector color matching</strong> in multi-projector setups. When adjacent projectors have slightly different color temperatures (one appears warmer, another cooler), adjusting the white point sliders brings them into visual alignment. For example, if a projector's output appears too blue, reduce the Blue slider slightly until the white tone matches neighboring units.</p>
 
 <h3>Tone Mapping</h3>
+When HDR content is rendered to an SDR display, the high dynamic range must be compressed to fit the SDR output range without losing important detail in highlights and shadows. WATCHOUT uses a <strong>Hable tone mapping operator</strong> for this conversion, which preserves natural-looking midtones while smoothly compressing highlights toward peak white.
 
-<p>When HDR content is rendered to an SDR display, the high dynamic range must be compressed to fit the SDR output range without losing important detail in highlights and shadows. WATCHOUT uses a <strong>Hable tone mapping operator</strong> for this conversion, which preserves natural-looking midtones while smoothly compressing highlights toward peak white.</p>
+<div class='note-box'><p>Tone mapping is like fitting a wide landscape into a small picture frame — you can't keep every detail at full scale, so the system intelligently compresses the brightest and darkest parts to look natural on a screen with less range. WATCHOUT does this automatically whenever needed.
+</p></div>
 
-<p>Tone mapping is applied automatically when the source content has a wider dynamic range than the target display. No manual configuration is required — the system handles the conversion based on the source and destination transfer functions.</p>
+<p>Tone mapping is applied automatically Tone mapping is applied automatically when the source content has a wider dynamic range than the target display. No manual configuration is required — the system handles the conversion based on the source and destination transfer functions.</p>
 
 <h3>Practical Workflow</h3>
 

@@ -91,6 +91,23 @@ function processHierarchy(flatData) {
 }
 
 const chapters = processHierarchy(tocData);
+const ASSETS_TO_COPY = [
+    { from: path.join(WIKI_ROOT, 'widgets', 'cie_1931_chromaticity_diagram.png'), to: path.join(OUTPUT_DIR, 'cie_1931_chromaticity_diagram.png') }
+];
+
+// --- Asset Copying ---
+ASSETS_TO_COPY.forEach(asset => {
+    try {
+        if (fs.existsSync(asset.from)) {
+            fs.copyFileSync(asset.from, asset.to);
+            console.log(`Copied asset: ${path.basename(asset.from)} -> root`);
+        } else {
+            console.warn(`Warning: Asset not found for copying: ${asset.from}`);
+        }
+    } catch (err) {
+        console.error(`Error copying asset ${asset.from}:`, err);
+    }
+});
 
 // --- HTML Template ---
 function generatePageHtml(title, content, sidebarHtml, depth, breadcrumbs) {

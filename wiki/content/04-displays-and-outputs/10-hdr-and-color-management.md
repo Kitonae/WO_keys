@@ -9,9 +9,16 @@ WATCHOUT includes a color-managed rendering pipeline that handles the full chain
 
 Understanding how color spaces, transfer functions, and bit depth interact is important for achieving accurate, consistent color across multi-display setups — especially when mixing SDR and HDR content or driving displays with different capabilities.
 
-### Color Spaces
+:::note
+In simple terms, color management is about making sure colors look the way they should on every screen in your setup. "SDR" is standard brightness (what most screens have shown for decades), while "HDR" allows much brighter highlights and deeper darks — closer to what your eyes see in the real world.
+:::
 
+### Color Spaces
 A color space defines the range of colors (the "gamut") that can be represented, specified by three color primaries and a white point. WATCHOUT supports the following color spaces for display output:
+
+:::note
+Think of a color space like a box of crayons. A small box has fewer colors to pick from, while a big box has many more. sRGB is like the standard box most screens use. Rec. 2020 and Rec. 2100 are much bigger boxes that can show richer, more vivid colors — but you need a screen that supports them.
+:::
 
 - **sRGB** — the standard color space for computer displays, using Rec. 709 primaries with the sRGB transfer function. This is appropriate for most conventional displays and projectors.
 - **sRGB (gamma 2.2)** — identical primaries to sRGB but using a simple 2.2 power-law gamma curve instead of the sRGB piecewise function. Some display hardware and workflows assume a pure gamma 2.2 characteristic. This is the default color space for new displays.
@@ -25,8 +32,11 @@ A color space defines the range of colors (the "gamut") that can be represented,
 [[WIDGET:gamut-comparison]]
 
 ### Transfer Functions
-
 Transfer functions define how linear light values are encoded into the non-linear signal that displays expect. Encoding fewer bits for bright values and more bits for dark values matches human visual perception, reducing visible banding:
+
+:::note
+Your eyes are more sensitive to differences in dark shades than bright ones. A transfer function takes advantage of this by spending more of the signal's precision on the darks (where you'd notice problems) and less on the brights. Different standards (sRGB, PQ, HLG) are just different strategies for doing this, optimized for different situations.
+:::
 
 - **sRGB** — a piecewise curve with a linear segment near black and a power-law segment for the rest. Standard peak brightness is 80 nits. Used with sRGB and standard computer displays.
 - **SDR (BT.1886)** — the broadcast SDR transfer function with a standard peak brightness of 100 nits. Used with Rec. 709 and Rec. 601 outputs.
@@ -38,8 +48,11 @@ Transfer functions define how linear light values are encoded into the non-linea
 The choice of transfer function is determined by the color space you select on the display. For example, selecting Rec. 2100 PQ automatically uses the PQ transfer function.
 
 ### Display Color Depth
-
 Color depth determines how many bits are used per color component in the output signal. Higher bit depth reduces banding artifacts, which is especially important for HDR content:
+
+:::note
+Bit depth is like the number of steps in a staircase between two colors. With only a few steps (8-bit), you might see visible "bands" where one shade jumps to the next — especially in gradients like a sunset sky. More steps (10-bit or higher) make those transitions smoother and invisible to the eye.
+:::
 
 - **8 bpc (bits per component)** — 256 levels per channel. Standard for SDR content on most displays. Adequate for sRGB and Rec. 709 workflows.
 - **10 bpc** — 1,024 levels per channel. Recommended for HDR output and wide-gamut content. PQ-encoded HDR10 requires at least 10-bit output to avoid visible banding in dark areas and gradients.
@@ -51,9 +64,13 @@ Color depth determines how many bits are used per color component in the output 
 Color depth is configured per display in **Device Properties → Output → Signal** and is available for GPU output types. SDI outputs currently operate at 8 bpc.
 
 ### SDR White Point (Per-Cue)
-
 When SDR content plays on an HDR display, the system needs to know how bright "white" in the SDR content should appear relative to the HDR luminance range. The **SDR White Point** property on media cues controls this mapping.
 
+:::note
+Imagine you have a regular photo (SDR) and you want to show it on a screen that can go super bright (HDR). The SDR White Point tells the system "this is how bright the photo's white should be" — so it doesn't look washed out or blindingly overexposed on the HDR screen.
+:::
+
+The value is specified in nits
 The value is specified in nits (candelas per square meter) and ranges from 80 to 10,000. For example:
 
 - A value of **100 nits** means SDR white maps to 100 nits on the HDR display — typical for content mastered to broadcast SDR standards.
@@ -89,6 +106,10 @@ Media assets carry color metadata that tells the renderer how to interpret the s
 
 The renderer uses this information to linearize the source correctly and, if necessary, convert from the asset's color primaries to the display's target primaries during compositing. Accurate asset color metadata is essential for correct rendering — if a Rec. 2020 asset is incorrectly tagged as Rec. 709, the colors will be desaturated on output.
 
+:::note
+Every image or video file has a label that says "I was made using these colors." If that label is wrong or missing, WATCHOUT won't interpret the colors correctly — like reading a recipe in the wrong units. You can fix this by manually setting the correct color space on the asset.
+:::
+
 ### White Point Calibration
 
 Every display has a **White Point** setting in Device Properties, consisting of separate Red, Green, and Blue sliders (each ranging from 0.0 to 1.0, defaulting to 1.0). This is a per-display color temperature correction that adjusts the white balance of the output.
@@ -96,9 +117,13 @@ Every display has a **White Point** setting in Device Properties, consisting of 
 The primary use case is **projector color matching** in multi-projector setups. When adjacent projectors have slightly different color temperatures (one appears warmer, another cooler), adjusting the white point sliders brings them into visual alignment. For example, if a projector's output appears too blue, reduce the Blue slider slightly until the white tone matches neighboring units.
 
 ### Tone Mapping
-
 When HDR content is rendered to an SDR display, the high dynamic range must be compressed to fit the SDR output range without losing important detail in highlights and shadows. WATCHOUT uses a **Hable tone mapping operator** for this conversion, which preserves natural-looking midtones while smoothly compressing highlights toward peak white.
 
+:::note
+Tone mapping is like fitting a wide landscape into a small picture frame — you can't keep every detail at full scale, so the system intelligently compresses the brightest and darkest parts to look natural on a screen with less range. WATCHOUT does this automatically whenever needed.
+:::
+
+Tone mapping is applied automatically
 Tone mapping is applied automatically when the source content has a wider dynamic range than the target display. No manual configuration is required — the system handles the conversion based on the source and destination transfer functions.
 
 ### Practical Workflow
