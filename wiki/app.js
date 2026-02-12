@@ -543,25 +543,40 @@ function setupMagicWord() {
         if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
 
         keys += e.key.toLowerCase();
-        
-        // Keep buffer size manageable or trim to relevant length
-        if (keys.length > magicWord.length) {
-            keys = keys.slice(-magicWord.length);
+
+        // Keep buffer size manageable
+        if (keys.length > 20) {
+            keys = keys.slice(-20);
         }
 
-        if (keys === magicWord) {
-             let rootPrefix = '';
-             const appScript = document.querySelector('script[src*="app.js"]');
-             if (appScript) {
-                 const src = appScript.getAttribute('src');
-                 // Heuristic for root path based on app.js location
-                 if (src.includes('../')) {
-                     rootPrefix = '../';
-                 } else if (src.indexOf('/') === -1 || src.startsWith('./') || src === 'app.js') {
-                     rootPrefix = '';
-                 }
-             }
-             window.location.href = rootPrefix + 'stats.html';
+        if (keys.endsWith(magicWord)) {
+            let rootPrefix = '';
+            const appScript = document.querySelector('script[src*="app.js"]');
+            if (appScript) {
+                const src = appScript.getAttribute('src');
+                // Heuristic for root path based on app.js location
+                if (src.includes('../')) {
+                    rootPrefix = '../';
+                } else if (src.indexOf('/') === -1 || src.startsWith('./') || src === 'app.js') {
+                    rootPrefix = '';
+                }
+            }
+            window.location.href = rootPrefix + 'stats.html';
+        }
+
+        if (keys.endsWith('version')) {
+            let rootPrefix = '';
+            const appScript = document.querySelector('script[src*="app.js"]');
+            if (appScript) {
+                const src = appScript.getAttribute('src');
+                // Heuristic for root path based on app.js location
+                if (src.includes('../')) {
+                    rootPrefix = '../';
+                } else if (src.indexOf('/') === -1 || src.startsWith('./') || src === 'app.js') {
+                    rootPrefix = '';
+                }
+            }
+            window.location.href = rootPrefix + 'version.html';
         }
     });
 }

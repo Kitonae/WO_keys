@@ -790,3 +790,57 @@ function generateStatsPage() {
 }
 
 generateStatsPage();
+
+// --- Generate Version Page ---
+function generateVersionPage() {
+    console.log("Generating version.html...");
+
+    const packageJson = JSON.parse(fs.readFileSync(path.join(WIKI_ROOT, 'package.json'), 'utf8'));
+    let changelog = '';
+
+    try {
+        changelog = fs.readFileSync(path.join(WIKI_ROOT, 'CHANGELOG.md'), 'utf8');
+        // Simple markdown to HTML for changelog (very basic)
+        changelog = changelog
+            .replace(/^# (.*$)/gim, '<h1>$1</h1>')
+            .replace(/^## (.*$)/gim, '<h2>$1</h2>')
+            .replace(/^### (.*$)/gim, '<h3>$1</h3>')
+            .replace(/^- (.*$)/gim, '<li>$1</li>')
+            .replace(/\n\n/g, '<br/>');
+
+        // Wrap lists
+        // This is a quick hack, a proper parser would be better but this suffices for a simple changelog
+        changelog = changelog.replace(/<\/li><br\/><li>/g, '</li><li>');
+        changelog = changelog.replace(/<li>.*<\/li>/s, '<ul>$&</ul>');
+
+    } catch (e) {
+        changelog = '<p>Changelog not found.</p>';
+    }
+
+    const versionBody = `
+        <h1>Version Information</h1>
+        <div class="version-card" style="background: var(--bg-secondary); padding: 40px; border-radius: var(--border-radius); border: 1px solid var(--border-subtle); text-align: center; margin-bottom: 40px;">
+            <div style="font-size: 1.2rem; color: var(--text-secondary); margin-bottom: 10px;">Current Version</div>
+            <div style="font-size: 4rem; font-weight: 700; color: var(--accent-primary); font-family: 'Futura Now Headline', sans-serif;">v${packageJson.version}</div>
+            <div style="margin-top: 20px; font-size: 0.9rem; color: var(--text-muted);">Build Date: ${new Date().toISOString().split('T')[0]}</div>
+        </div>
+
+        <div class="changelog-container" style="background: var(--bg-secondary); padding: 40px; border-radius: var(--border-radius); border: 1px solid var(--border-subtle);">
+            ${changelog}
+        </div>
+    `;
+
+    const breadcrumbs = `
+        <a href="index.html" class="breadcrumb-item">Home</a>
+        <span class="breadcrumb-separator">›</span>
+        <span class="breadcrumb-item current">Version</span>
+    `;
+
+    const sidebar = generateSidebar('', 0);
+    const html = generatePageHtml("Version Info", versionBody, sidebar, 0, breadcrumbs);
+
+    fs.writeFileSync(path.join(OUTPUT_DIR, 'version.html'), html);
+    console.log("Generated: version.html");
+}
+
+generateVersionPage();
