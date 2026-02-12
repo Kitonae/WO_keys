@@ -381,6 +381,8 @@ function setupSearch() {
 
     let debounceTimer;
 
+    setupMagicWord(); // Initialize the magic word listener
+
     searchInput.addEventListener('input', (e) => {
         clearTimeout(debounceTimer);
         const query = e.target.value.trim();
@@ -530,4 +532,36 @@ function slugify(text) {
         .replace(/\s+/g, '-')
         .replace(/[^\w\-]+/g, '')
         .replace(/\-\-+/g, '-');
+}
+function setupMagicWord() {
+    let keys = '';
+    const magicWord = 'stats';
+    const timer = null;
+
+    document.addEventListener('keydown', (e) => {
+        // Reset if key is not a letter or number or space
+        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+
+        keys += e.key.toLowerCase();
+        
+        // Keep buffer size manageable or trim to relevant length
+        if (keys.length > magicWord.length) {
+            keys = keys.slice(-magicWord.length);
+        }
+
+        if (keys === magicWord) {
+             let rootPrefix = '';
+             const appScript = document.querySelector('script[src*="app.js"]');
+             if (appScript) {
+                 const src = appScript.getAttribute('src');
+                 // Heuristic for root path based on app.js location
+                 if (src.includes('../')) {
+                     rootPrefix = '../';
+                 } else if (src.indexOf('/') === -1 || src.startsWith('./') || src === 'app.js') {
+                     rootPrefix = '';
+                 }
+             }
+             window.location.href = rootPrefix + 'stats.html';
+        }
+    });
 }

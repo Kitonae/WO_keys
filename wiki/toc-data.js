@@ -69,67 +69,7 @@ const tocData = [
     },
     {
         "level": 1,
-        "title": "2. The Interface",
-        "page": 1,
-        "icon": "layout"
-    },
-    {
-        "level": 2,
-        "title": "Main Window Overview",
-        "page": 1,
-        "description": "The WATCHOUT 7 Producer interface presents a modern, flexible workspace designed for efficient show creation and mana..."
-    },
-    {
-        "level": 2,
-        "title": "The Stage Window",
-        "page": 2,
-        "description": "The Stage is your visual canvas—a representation of all your displays and how content appears on them. It provides a ..."
-    },
-    {
-        "level": 2,
-        "title": "The Timeline Window",
-        "page": 3,
-        "description": "The Timeline is where you orchestrate your show—arranging media and controlling precisely when things happen. It prov..."
-    },
-    {
-        "level": 2,
-        "title": "The Cue List Window",
-        "page": 4,
-        "description": "The Cue List window provides a flat, tabular view of all cues across every timeline in your show. While the Timeline ..."
-    },
-    {
-        "level": 2,
-        "title": "The Assets Window",
-        "page": 5,
-        "description": "The Assets window is your media library—the central repository for all images, videos, audio files, and other resourc..."
-    },
-    {
-        "level": 2,
-        "title": "The Properties Panel",
-        "page": 6,
-        "description": "The Properties panel is a context-sensitive inspector that displays settings for whatever is currently selected—displ..."
-    },
-    {
-        "level": 2,
-        "title": "The Network Window",
-        "page": 7,
-        "description": "The Network window shows all WATCHOUT devices on your network and their status. It provides centralized management of..."
-    },
-    {
-        "level": 2,
-        "title": "The Nodes Window",
-        "page": 8,
-        "description": "The Nodes window (also known as the Devices & Network window) provides a unified view of your show's output devices a..."
-    },
-    {
-        "level": 2,
-        "title": "Customizing Your Workspace",
-        "page": 9,
-        "description": "WATCHOUT 7's interface is fully customizable to match your workflow. The flexible window system allows you to arrange..."
-    },
-    {
-        "level": 1,
-        "title": "3. Working with Shows",
+        "title": "2. Working with Shows",
         "page": 1,
         "icon": "fileText"
     },
@@ -171,7 +111,7 @@ const tocData = [
     },
     {
         "level": 1,
-        "title": "4. Displays and Outputs",
+        "title": "3. Displays and Outputs",
         "page": 1,
         "icon": "monitor"
     },
@@ -249,7 +189,7 @@ const tocData = [
     },
     {
         "level": 1,
-        "title": "5. Assets & Asset Manager",
+        "title": "4. Assets & Asset Manager",
         "page": 1,
         "icon": "film"
     },
@@ -327,7 +267,7 @@ const tocData = [
     },
     {
         "level": 1,
-        "title": "6. Timeline and Cues",
+        "title": "5. Timeline and Cues",
         "page": 1,
         "icon": "clock"
     },
@@ -435,7 +375,7 @@ const tocData = [
     },
     {
         "level": 1,
-        "title": "7. Effects and Tweens",
+        "title": "6. Effects and Tweens",
         "page": 1,
         "icon": "sliders"
     },
@@ -537,7 +477,7 @@ const tocData = [
     },
     {
         "level": 1,
-        "title": "8. Playback",
+        "title": "7. Playback",
         "page": 1,
         "icon": "play"
     },
@@ -570,6 +510,66 @@ const tocData = [
         "title": "Running Your Show",
         "page": 5,
         "description": "Running a show reliably is mostly about repeatable procedure. Build a fixed preflight and execution rhythm."
+    },
+    {
+        "level": 1,
+        "title": "8. The Interface",
+        "page": 1,
+        "icon": "layout"
+    },
+    {
+        "level": 2,
+        "title": "Main Window Overview",
+        "page": 1,
+        "description": "The WATCHOUT 7 Producer interface presents a modern, flexible workspace designed for efficient show creation and mana..."
+    },
+    {
+        "level": 2,
+        "title": "The Stage Window",
+        "page": 2,
+        "description": "The Stage is your visual canvas—a representation of all your displays and how content appears on them. It provides a ..."
+    },
+    {
+        "level": 2,
+        "title": "The Timeline Window",
+        "page": 3,
+        "description": "The Timeline is where you orchestrate your show—arranging media and controlling precisely when things happen. It prov..."
+    },
+    {
+        "level": 2,
+        "title": "The Cue List Window",
+        "page": 4,
+        "description": "The Cue List window provides a flat, tabular view of all cues across every timeline in your show. While the Timeline ..."
+    },
+    {
+        "level": 2,
+        "title": "The Assets Window",
+        "page": 5,
+        "description": "The Assets window is your media library—the central repository for all images, videos, audio files, and other resourc..."
+    },
+    {
+        "level": 2,
+        "title": "The Properties Panel",
+        "page": 6,
+        "description": "The Properties panel is a context-sensitive inspector that displays settings for whatever is currently selected—displ..."
+    },
+    {
+        "level": 2,
+        "title": "The Network Window",
+        "page": 7,
+        "description": "The Network window shows all WATCHOUT devices on your network and their status. It provides centralized management of..."
+    },
+    {
+        "level": 2,
+        "title": "The Nodes Window",
+        "page": 8,
+        "description": "The Nodes window (also known as the Devices & Network window) provides a unified view of your show's output devices a..."
+    },
+    {
+        "level": 2,
+        "title": "Customizing Your Workspace",
+        "page": 9,
+        "description": "WATCHOUT 7's interface is fully customizable to match your workflow. The flexible window system allows you to arrange..."
     },
     {
         "level": 1,
