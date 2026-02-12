@@ -871,7 +871,7 @@ A color space defines the range of colors (the "gamut") that can be represented,
 </ul>
 <div class="interactive-widget" id="gamut-comparison-widget"
     style="display: flex; flex-direction: column; align-items: center;">
-    <canvas id="gamut-canvas" width="600" height="600"></canvas>
+    <canvas id="gamut-canvas" width="2705" height="2970" style="width: 600px; height: auto; display: block;"></canvas>
     <div class="widget-controls">
         <label><input type="checkbox" id="show-srgb" checked> sRGB / Rec. 709</label>
         <label><input type="checkbox" id="show-rec2020"> Rec. 2020</label>
@@ -898,11 +898,11 @@ A color space defines the range of colors (the "gamut") that can be represented,
             rec601: { r: [0.630, 0.340], g: [0.310, 0.595], b: [0.155, 0.070], color: 'rgba(50, 150, 255, 0.8)', label: 'Rec.601' }
         };
 
-        // Alignment values determined via overlay testing
-        const scaleX = 460;
-        const scaleY = 451.3;
-        const offsetX = 92;
-        const offsetY = 533;
+        // Alignment values for native 2705x2970 image
+        const scaleX = 3193.75;
+        const scaleY = 3133.35;
+        const offsetX = 100;
+        const offsetY = 2870;
 
         function toCanvas(x, y) {
             return { x: x * scaleX + offsetX, y: offsetY - y * scaleY };
@@ -919,19 +919,20 @@ A color space defines the range of colors (the "gamut") that can be represented,
             ctx.lineTo(b.x, b.y);
             ctx.closePath();
 
-            ctx.lineWidth = 2;
+            // Line width and points scaled for 2.7k resolution
+            ctx.lineWidth = 9;
             ctx.strokeStyle = style;
             ctx.stroke();
 
             if (fill) {
-                ctx.fillStyle = style.replace('0.8', '0.15'); // Very transparent fill
+                ctx.fillStyle = style.replace('0.8', '0.15');
                 ctx.fill();
             }
 
             // Draw points
             [r, g, b].forEach(pt => {
                 ctx.beginPath();
-                ctx.arc(pt.x, pt.y, 4, 0, Math.PI * 2);
+                ctx.arc(pt.x, pt.y, 18, 0, Math.PI * 2);
                 ctx.fillStyle = style;
                 ctx.fill();
             });
@@ -944,14 +945,9 @@ A color space defines the range of colors (the "gamut") that can be represented,
             ctx.fillStyle = '#111';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-            // Draw CIE Diagram Image
+            // Draw CIE Diagram Image at 1:1 scale
             if (cieImage.complete) {
-                // Constants based on alignment verification result: Scale: 0.92, X: -8, Y: 8
-                const s = 0.14403126;
-                const drawX = 92 - 100 * s;
-                const drawY = 533 - 2870 * s;
-
-                ctx.drawImage(cieImage, drawX, drawY, cieImage.naturalWidth * s, cieImage.naturalHeight * s);
+                ctx.drawImage(cieImage, 0, 0);
             }
 
             if (document.getElementById('show-rec2020').checked) drawTriangle(primaries.rec2020, primaries.rec2020.color, true);
